@@ -126,8 +126,7 @@ public class Demo_FengGUI extends TF3D_AppWrapper
         {
 	        theme = new XMLTheme("data/themes/QtCurve/QtCurve.xml");
         } catch (IOException e)
-        {
-	        // TODO Auto-generated catch block
+        {	        
 	        e.printStackTrace();
         } catch (IXMLStreamableException e)
         {
