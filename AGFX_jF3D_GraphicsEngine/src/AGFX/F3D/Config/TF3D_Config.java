@@ -35,7 +35,7 @@ public class TF3D_Config
 	public Boolean e_world_autoassign = true;
 	/**  Enable DEBUG BULLET physics when is used F10 works like ON/OFF*/
 	public Boolean use_physics_debug = true;
-	/**  enable/disable autosave mesh data to serialized format when asci is loaded*/
+	/**  enable/disable autosave mesh data to serialized format when asci file format a3da is loaded*/
 	public Boolean io_mesh_asci_to_bin = true;	
 	/**  enable/disable using Bullet physics in application*/
 	public Boolean use_physics = true;
