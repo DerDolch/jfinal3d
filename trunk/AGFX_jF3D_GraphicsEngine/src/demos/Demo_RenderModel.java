@@ -102,7 +102,6 @@ public class Demo_RenderModel extends TF3D_AppWrapper
 	}
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_RenderModel().Execute();		
 		System.exit(0); 
 	}

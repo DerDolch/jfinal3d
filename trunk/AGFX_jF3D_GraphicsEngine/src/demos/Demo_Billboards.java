@@ -198,7 +198,6 @@ public class Demo_Billboards extends TF3D_AppWrapper
 	}
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_Billboards().Execute();		
 		System.exit(0); 
 	}

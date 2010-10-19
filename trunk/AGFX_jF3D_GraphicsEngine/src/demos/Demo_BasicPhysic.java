@@ -178,7 +178,6 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 	}
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_BasicPhysic().Execute();		
 		System.exit(0); 
 	}

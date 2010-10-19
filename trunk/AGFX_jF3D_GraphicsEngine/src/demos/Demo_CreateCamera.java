@@ -82,7 +82,6 @@ public class Demo_CreateCamera extends TF3D_AppWrapper
 	}
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_CreateCamera().Execute();		
 		System.exit(0); 
 	}

@@ -36,7 +36,7 @@ public class TF3D_Pivot extends TF3D_Entity
 		if (this.IsEnabled())
 		{
 			glPushMatrix();
-			
+
 			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 			glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
 
@@ -56,20 +56,19 @@ public class TF3D_Pivot extends TF3D_Entity
 
 	}
 
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Update()
-     */
-    @Override
-    public void Update()
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Update()
+	 */
+	@Override
+	public void Update()
+	{
+	}
 
 	@Override
-	public void Destroy() {
-		// TODO Auto-generated method stub
-		
+	public void Destroy()
+	{
 	}
 
 }
