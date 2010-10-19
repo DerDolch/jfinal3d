@@ -221,7 +221,8 @@ public class TF3D_AppWrapper
 		{
 
 			F3D.Timer.Update();
-			F3D.Physic.Update();
+			
+			if (F3D.Config.use_physics) F3D.Physic.Update();
 
 			if (F3D.Display.isVisible())
 			{

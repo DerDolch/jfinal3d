@@ -174,9 +174,14 @@ public class F3D
 		F3D.Draw = new TF3D_Helpers();
 		F3D.Meshes = new TF3D_MeshManager();
 		F3D.World = new TF3D_World();
-		F3D.Physic = new TF3D_Physics();
+		if (F3D.Config.use_physics)
+		{
+			F3D.Physic = new TF3D_Physics();
+		} else
+		{
+			F3D.Physic = null;
+		}
 		F3D.Key = new TF3D_Keyboard();
-
 
 	}
 
@@ -190,8 +195,8 @@ public class F3D
 		F3D.Preloader.PreloadData();
 
 		F3D.Fonts.Load("abstract::system.font");
-		F3D.Physic.Initialize();
-
+		
+		if (F3D.Config.use_physics) F3D.Physic.Initialize();
 
 	}
 

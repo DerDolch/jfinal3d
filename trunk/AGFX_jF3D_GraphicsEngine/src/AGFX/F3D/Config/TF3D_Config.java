@@ -33,8 +33,12 @@ public class TF3D_Config
 	 * Enable/DIsable Auto assign entity to world.entities list
 	 */
 	public Boolean e_world_autoassign = true;
+	/**  Enable DEBUG BULLET physics when is used F10 works like ON/OFF*/
 	public Boolean use_physics_debug = true;
-	public Boolean io_mesh_asci_to_bin = true;
+	/**  enable/disable autosave mesh data to serialized format when asci is loaded*/
+	public Boolean io_mesh_asci_to_bin = true;	
+	/**  enable/disable using Bullet physics in application*/
+	public Boolean use_physics = true;
 	
 	
 	// -----------------------------------------------------------------------

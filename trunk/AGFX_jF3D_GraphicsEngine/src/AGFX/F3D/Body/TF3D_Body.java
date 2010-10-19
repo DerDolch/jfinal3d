@@ -51,6 +51,12 @@ public class TF3D_Body extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void CreateRigidBody(int shapemode,float mass)
 	{
+		
+		if (!F3D.Config.use_physics)
+		{
+			F3D.Log.error("TF3D_Body", "You can't create rigidbody when Bullet physics is disabled in Config.use_physics !\n Note: Use TF3D_Model instead TF3D_Body, when you don't use Bullet physics on Model.");
+		}
+		
 		this.PhysicObject = new TF3D_PhysicObject();
 		
 		Vector3f rescaled = new Vector3f();
