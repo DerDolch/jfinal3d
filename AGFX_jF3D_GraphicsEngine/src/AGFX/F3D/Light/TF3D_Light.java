@@ -59,7 +59,7 @@ public class TF3D_Light extends TF3D_Entity
 
 		if (this.IsEnabled())
 		{
-			
+
 			glPushMatrix();
 			glLoadIdentity();
 
@@ -151,8 +151,7 @@ public class TF3D_Light extends TF3D_Entity
 			}
 
 			glPopMatrix();
-			
-			
+
 		}
 	}
 
@@ -172,20 +171,19 @@ public class TF3D_Light extends TF3D_Entity
 		glDisable(GL_LIGHT0 + this.ID);
 	}
 
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Update()
-     */
-    @Override
-    public void Update()
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Update()
+	 */
+	@Override
+	public void Update()
+	{
+	}
 
 	@Override
-	public void Destroy() {
-		// TODO Auto-generated method stub
-		
+	public void Destroy()
+	{
 	}
 
 }

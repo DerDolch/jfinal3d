@@ -11,26 +11,24 @@ import AGFX.F3D.Entity.TF3D_Entity;
 
 import static org.lwjgl.opengl.GL11.*;
 
-
 public class TF3D_Camera extends TF3D_Entity
 {
 
-
-
-	public Vector3f     TargetPoint;
-	public int               cmode;
-	public int               ctype;
+	public Vector3f TargetPoint;
+	public int      cmode;
+	public int      ctype;
 
 	// -----------------------------------------------------------------------
 	// A3D_Camera: constructor
 	// -----------------------------------------------------------------------
 	// -----------------------------------------------------------------------
-	// TA3D_Camera: 
+	// TA3D_Camera:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Constructor
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Constructor <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 	public TF3D_Camera(String _name)
@@ -45,22 +43,27 @@ public class TF3D_Camera extends TF3D_Entity
 	}
 
 	// -----------------------------------------------------------------------
-	// TA3D_Camera: look at 
+	// TA3D_Camera: look at
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Set camera view matrix to target point
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param tx - X position
-	 * @param ty - Y position
-	 * @param tz - Z position
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Set camera view matrix to target point <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param tx
+	 *            - X position
+	 * @param ty
+	 *            - Y position
+	 * @param tz
+	 *            - Z position
 	 */
 	// -----------------------------------------------------------------------
 	public void LookAt(float tx, float ty, float tz)
 	{
 		Vector3f pos = new Vector3f();
 		pos = this.GetPosition();
-		
+
 		GLU.gluLookAt(pos.x, pos.y, pos.z, tx, ty, tz, 0.0f, 1.0f, 0.0f);
 	}
 
@@ -68,54 +71,58 @@ public class TF3D_Camera extends TF3D_Entity
 	// TA3D_Camera: Render
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Update [called every render loop] 
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Update [called every render loop] <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 	public void Render()
 	{
-		
+
 	}
-	
+
 	// -----------------------------------------------------------------------
-	// TA3D_Camera: 
+	// TA3D_Camera:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * create copy of Camera
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * create copy of Camera <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @return return camera
 	 */
 	// -----------------------------------------------------------------------
 	public TF3D_Camera Copy()
 	{
 		TF3D_Camera c = new TF3D_Camera(this.name);
-		
+
 		try
-        {
-	        c = (TF3D_Camera) this.clone();
-        } catch (CloneNotSupportedException e)
-        {
-	        e.printStackTrace();
-        }
-        
-        return c;
+		{
+			c = (TF3D_Camera) this.clone();
+		} catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+
+		return c;
 	}
 
 	// -----------------------------------------------------------------------
 	// TA3D_Camera: Update
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Update [called every render loop] 
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Update [called every render loop] <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
-    @Override
-    public void Update()
-    {
-    	this.UpdateAxisDirection();
+	@Override
+	public void Update()
+	{
+		this.UpdateAxisDirection();
 
 		if (this.ctype == F3D.CAMERA_TYPE_TARGET)
 		{
@@ -135,15 +142,15 @@ public class TF3D_Camera extends TF3D_Entity
 			// inverse translation
 			glTranslatef(-this.GetPosition().x, -this.GetPosition().y, -this.GetPosition().z);
 		}
-		
+
 		F3D.Frustum.Update();
-	    
-    }
+
+	}
 
 	@Override
-	public void Destroy() {
-		// TODO Auto-generated method stub
-		
+	public void Destroy()
+	{
+
 	}
 
 }

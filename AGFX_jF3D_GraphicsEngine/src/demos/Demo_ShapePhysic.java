@@ -246,7 +246,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_ShapePhysic().Execute();
 		System.exit(0);
 	}

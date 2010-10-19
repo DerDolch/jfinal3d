@@ -51,8 +51,8 @@ public class TF3D_Billboard extends TF3D_Entity
 		this.mode = F3D.BM_SPRITE;
 		this.enable = true;
 		// this.Alpha = 1.0f;
-		//this.bDepthSort = true;
-		//this.bFadeAlpha = true;
+		// this.bDepthSort = true;
+		// this.bFadeAlpha = true;
 		this.material_id = -1;
 		this.name = "none";
 	}
@@ -115,13 +115,12 @@ public class TF3D_Billboard extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	private void _BillboardPoint(Vector3f pos)
 	{
-		Vector3f look = new Vector3f(0,0,0);
+		Vector3f look = new Vector3f(0, 0, 0);
 		TF3D_Axis3f Axis = new TF3D_Axis3f();
 		float[] M = new float[16];
 		FloatBuffer fM;
 
 		look.sub(F3D.Cameras.GetCurrentCamera().GetPosition(), pos);
-		
 
 		F3D.Cameras.GetCurrentCamera().UpdateAxisDirection();
 		Axis = F3D.Cameras.GetCurrentCamera().axis;
@@ -165,7 +164,7 @@ public class TF3D_Billboard extends TF3D_Entity
 
 		look.x = 0.0f;
 		look.normalize();
-		
+
 		right.cross(up, look);
 		M = this._CreateBillboardMatrix(right, up, look, pos);
 
@@ -396,20 +395,20 @@ public class TF3D_Billboard extends TF3D_Entity
 		return c;
 	}
 
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Update()
-     */
-    @Override
-    public void Update()
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Update()
+	 */
+	@Override
+	public void Update()
+	{
+
+	}
 
 	@Override
-	public void Destroy() {
-		// TODO Auto-generated method stub
-		
+	public void Destroy()
+	{
 	}
 
 }

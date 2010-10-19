@@ -88,7 +88,6 @@ public class Demo_FirstTexturedPolygon extends TF3D_AppWrapper
 	}
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		new Demo_FirstTexturedPolygon().Execute();		
 		System.exit(0); 
 	}

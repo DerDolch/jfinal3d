@@ -148,7 +148,7 @@ public class TF3D_AppWrapper
 	                        F3D.Display.SwitchSceenMode();
                         } catch (LWJGLException e)
                         {
-	                        // TODO Auto-generated catch block
+	                        
 	                        e.printStackTrace();
                         }
 						break;
@@ -168,35 +168,6 @@ public class TF3D_AppWrapper
 			}
 			Keyboard.enableRepeatEvents(true);
 
-	
-		
-		/*
-		// CLOSE APPLICATION
-		if (F3D.Key.isHit()==Keyboard.KEY_ESCAPE)
-		{
-			this.AppTerminate = true;
-		}
-		
-		// SWITCH PHYSICS VISUAL DEBUG ON/OFF
-		if (F3D.Key.isHit()==Keyboard.KEY_F10)
-		{
-			F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
-		}
-		
-		
-		// SWITCH BETWEEN FULL/WINDOWS SCREEN MODE
-		if (F3D.Key.isHit()==Keyboard.KEY_F12)
-		{
-			try
-            {
-                F3D.Display.SwitchSceenMode();
-            } catch (LWJGLException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-		}
-		*/
 	}
 
 	public void onGUI()
@@ -319,7 +290,7 @@ public class TF3D_AppWrapper
 
 		} catch (LWJGLException e)
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			F3D.Log.error("TF3D_AppWrapper", "Failed to initialize F3D Engine/Application");
 		}

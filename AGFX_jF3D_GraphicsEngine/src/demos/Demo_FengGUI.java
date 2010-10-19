@@ -130,7 +130,6 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 	        e.printStackTrace();
         } catch (IXMLStreamableException e)
         {
-	        // TODO Auto-generated catch block
 	        e.printStackTrace();
         }
 	    FengGUI.setTheme(theme);
@@ -150,7 +149,6 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 	      {
 	        desk.fireKeyPressedEvent(EventHelper.mapKeyChar(), EventHelper.mapEventKey());
 
-	        //	    		 XXX: dirty hack to make TextEditor usable again on LWJGL. This needs to be solved nicer in the future!
 	        desk.fireKeyTypedEvent(EventHelper.mapKeyChar());
 	      }
 	      else

@@ -58,12 +58,10 @@ public class TF3D_Texture
 			
 		} catch (FileNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			F3D.Log.error("TF3D_Texture.Load(...)", "Missing file: " + filename);
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

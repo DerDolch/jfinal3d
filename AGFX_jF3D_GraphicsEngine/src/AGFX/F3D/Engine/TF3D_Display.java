@@ -81,7 +81,6 @@ public class TF3D_Display
 
 		} catch (LWJGLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			F3D.Log.error("TF3D_Display","Unsupported display resolution");
 			
