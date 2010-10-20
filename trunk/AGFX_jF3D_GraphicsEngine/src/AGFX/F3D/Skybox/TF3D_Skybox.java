@@ -5,9 +5,7 @@ package AGFX.F3D.Skybox;
 
 
 import static org.lwjgl.opengl.GL11.*;
-
 import javax.vecmath.Vector3f;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Model.TF3D_Model;
 

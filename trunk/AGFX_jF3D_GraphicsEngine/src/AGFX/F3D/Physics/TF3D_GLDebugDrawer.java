@@ -116,6 +116,7 @@ public class TF3D_GLDebugDrawer extends IDebugDraw
 	@Override
 	public void setDebugMode(int arg0)
 	{
+		debugMode = arg0;
 	}
 
 }

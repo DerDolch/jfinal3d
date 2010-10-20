@@ -11,31 +11,30 @@ import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 
-public class TF3D_MeshData  implements Serializable
+public class TF3D_MeshData implements Serializable
 {
-	 
-	 static final long serialVersionUID = 5590845905712907241L;
 
-	 public int            material_id;
+	static final long serialVersionUID = 5590845905712907241L;
 
-	public float         vertices[];
-	public float         normals[];
-	public float         colors[];
-	public float         uv0[];
-	public float         uv1[];
-	public float         uv2[];
-	public float         uv3[];
-	public int           indices[];
-	public int           facecount;
-	public int           v_id  = 0;
-	public int           f_id  = 0;
-	public int           n_id  = 0;
-	public int           c_id  = 0;
-	public int           u0_id = 0;
-	public int           u1_id = 0;
-	public int           u2_id = 0;
-	public int           u3_id = 0;
+	public int        material_id;
 
+	public float      vertices[];
+	public float      normals[];
+	public float      colors[];
+	public float      uv0[];
+	public float      uv1[];
+	public float      uv2[];
+	public float      uv3[];
+	public short      indices[];
+	public int        facecount;
+	public int        v_id             = 0;
+	public int        f_id             = 0;
+	public int        n_id             = 0;
+	public int        c_id             = 0;
+	public int        u0_id            = 0;
+	public int        u1_id            = 0;
+	public int        u2_id            = 0;
+	public int        u3_id            = 0;
 
 	public TF3D_MeshData()
 	{
@@ -43,12 +42,14 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Allocate buffer for all elements like vertex/normal/color/uv/indices 
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Allocate buffer for all elements like vertex/normal/color/uv/indices <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param fc
 	 */
 	// -----------------------------------------------------------------------
@@ -63,18 +64,21 @@ public class TF3D_MeshData  implements Serializable
 		this.uv1 = new float[this.facecount * 3 * 2];
 		this.uv2 = new float[this.facecount * 3 * 2];
 		this.uv3 = new float[this.facecount * 3 * 2];
-		this.indices = new int[this.facecount * 3];
+		this.indices = new short[this.facecount * 3];
 
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add Vertex to vertex buffer
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param v vertex
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add Vertex to vertex buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param v
+	 *            vertex
 	 */
 	// -----------------------------------------------------------------------
 	public void AddVertex(Vector3f v)
@@ -87,13 +91,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add Normal to normal buffer
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param v normal
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add Normal to normal buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param v
+	 *            normal
 	 */
 	// -----------------------------------------------------------------------
 	public void AddNormal(Vector3f v)
@@ -106,13 +113,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add Color to color buffer
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param v color
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add Color to color buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param v
+	 *            color
 	 */
 	// -----------------------------------------------------------------------
 	public void AddColor(Vector4f v)
@@ -127,14 +137,18 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add UV to UV buffer for defined texture memory unit
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param v vector2f
-	 * @param tmu texture memory unit
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add UV to UV buffer for defined texture memory unit <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param v
+	 *            vector2f
+	 * @param tmu
+	 *            texture memory unit
 	 */
 	// -----------------------------------------------------------------------
 	public void AddUV(Vector2f v, int tmu)
@@ -169,15 +183,15 @@ public class TF3D_MeshData  implements Serializable
 
 	}
 
-	
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * Add face to list - indices are created automaticaly for last 3 insertec value
-	 * vertex/uv/color/normal  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add face to list - indices are created automaticaly for last 3 insertec
+	 * value vertex/uv/color/normal <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 	public void AddFace()
@@ -192,13 +206,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get vertex[i] as array
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id vertex index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get vertex[i] as array <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            vertex index
 	 * @return float[3]
 	 */
 	// -----------------------------------------------------------------------
@@ -213,13 +230,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get vertex[i] as vector
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id vertex index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get vertex[i] as vector <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            vertex index
 	 * @return vector
 	 */
 	// -----------------------------------------------------------------------
@@ -235,13 +255,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get normal[i] as array
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id normal index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get normal[i] as array <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            normal index
 	 * @return float[3]
 	 */
 	// -----------------------------------------------------------------------
@@ -256,13 +279,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get normal[i] as vector
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id normal index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get normal[i] as vector <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            normal index
 	 * @return vector
 	 */
 	// -----------------------------------------------------------------------
@@ -278,13 +304,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get color[i] as array
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id color index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get color[i] as array <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            color index
 	 * @return float[3]
 	 */
 	// -----------------------------------------------------------------------
@@ -301,13 +330,16 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  get color[i] as vector
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id color index
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * get color[i] as vector <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            color index
 	 * @return vector
 	 */
 	// -----------------------------------------------------------------------
@@ -324,15 +356,19 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Get UV[id]
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id uv index
-	 * @param tmu texture memory unit
-	 * @return float[2] 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get UV[id] <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            uv index
+	 * @param tmu
+	 *            texture memory unit
+	 * @return float[2]
 	 */
 	// -----------------------------------------------------------------------
 	public float[] GetUVAsArray(int id, int tmu)
@@ -367,14 +403,18 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Get UV[id]
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id uv index
-	 * @param tmu texture memory unit
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get UV[id] <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            uv index
+	 * @param tmu
+	 *            texture memory unit
 	 * @return vector2f
 	 */
 	// -----------------------------------------------------------------------
@@ -410,22 +450,25 @@ public class TF3D_MeshData  implements Serializable
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_MeshData: 
+	// TF3D_MeshData:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Get indices for Face[id] 
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id face id
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get indices for Face[id] <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            face id
 	 * @return int array of indices
 	 */
 	// -----------------------------------------------------------------------
-	public int[] GetFaceIndices(int id)
+	public short[] GetFaceIndices(int id)
 	{
-		int[] res = new int[3];
-		res[0] = id * 3 + 0;
-		res[1] = id * 3 + 1;
-		res[2] = id * 3 + 2;
+		short[] res = new short[3];
+		res[0] = (short)(id * 3 + 0);
+		res[1] = (short)(id * 3 + 1);
+		res[2] = (short)(id * 3 + 2);
 
 		return res;
 	}

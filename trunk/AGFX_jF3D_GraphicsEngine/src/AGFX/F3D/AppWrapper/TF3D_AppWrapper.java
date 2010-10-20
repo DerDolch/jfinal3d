@@ -191,19 +191,19 @@ public class TF3D_AppWrapper
 		while (!this.AppTerminate && !Display.isCloseRequested())
 		{
 
+			
 			F3D.Timer.Update();
 			
 			if (F3D.Config.use_physics) F3D.Physic.Update();
 
 			if (F3D.Display.isVisible())
 			{
-
+				this.KeyPressed();
+				
 				F3D.Viewport.BeginRender3D();
-				F3D.Cameras.RenderSky();
-				F3D.World.Update();
-
+				
 				this.onUpdate3D();
-
+				F3D.World.Update();
 				F3D.World.Render();
 
 				if (F3D.Config.use_physics_debug)
@@ -219,7 +219,7 @@ public class TF3D_AppWrapper
 
 				F3D.Viewport.EndRender2D();
 
-				this.KeyPressed();
+				
 
 			}
 

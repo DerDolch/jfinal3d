@@ -31,16 +31,25 @@ public class TF3D_AbstractFiles
 	// listRecursively
 	public void listRecursively(File fdir, int depth)
 	{
-		if (F3D.ABSTARCTFILE_LOG)
-		{
-			
-			F3D.Log.info("TF3D_AbstractFiles", fdir.getAbsolutePath());			
-		}
+		
 		
 		
 		String replaced = TF3D_AbstractFiles.backlashReplace(fdir.getAbsolutePath());
 		//String replaced = fdir.getAbsolutePath();
-		this.Dir.add(  replaced); 
+		
+		if (replaced.contains(".svn"))
+		{
+			// IGNORE
+		}
+		else
+		{
+			this.Dir.add(  replaced);
+			if (F3D.ABSTARCTFILE_LOG)
+			{
+				
+				F3D.Log.info("TF3D_AbstractFiles", fdir.getAbsolutePath());			
+			}
+		}
 				
 		if (fdir.isDirectory() && depth < MAX_DEPTH)
 		{
