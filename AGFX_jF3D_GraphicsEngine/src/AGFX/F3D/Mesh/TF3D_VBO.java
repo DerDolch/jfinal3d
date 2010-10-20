@@ -1,7 +1,7 @@
 package AGFX.F3D.Mesh;
 
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -46,9 +46,10 @@ public class TF3D_VBO
 	private int texture3_buffer_id;
 	
 	/** The buffer holding the indices */
-	private IntBuffer indexBuffer;
+	private ShortBuffer indexBuffer;
 	private boolean b_indexBuffer = false;
 	private int indices_length;
+	private int indices_id;
 	
 	/** The buffer holding the normals */
 	private FloatBuffer normalBuffer;
@@ -324,12 +325,12 @@ public class TF3D_VBO
 	 *            array of faces indices
 	 */
 	// -----------------------------------------------------------------------
-	public void CreateIndicesBuffer(int[] indices)
+	public void CreateIndicesBuffer(short[] indices)
 	{
-
-		this.indexBuffer = BufferUtils.createIntBuffer(indices.length);
+		this.indexBuffer = BufferUtils.createShortBuffer(indices.length);
 		this.indexBuffer.clear();
-		this.indexBuffer.put(indices).rewind();
+		this.indexBuffer.put(indices);
+		this.indexBuffer.position(0);
 		this.b_indexBuffer = true;
 		this.indices_length = indices.length;
 	}
@@ -395,6 +396,15 @@ public class TF3D_VBO
 				this.textureBuffer3.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer3,GL_STATIC_DRAW_ARB);
 			}
+			/*
+			if (this.b_indexBuffer)
+			{
+				this.indices_id= glGenBuffersARB();
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.indices_id);
+				this.indexBuffer.rewind();
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.indexBuffer,GL_STATIC_DRAW_ARB);
+			}
+			*/
 		}
 		else
 		{
@@ -402,10 +412,13 @@ public class TF3D_VBO
 		}
 		
 		this.b_build = true;
+		
+		
 	}
 
 	public  void Bind()
 	{
+		
 		if (F3D.Extensions.VertexBufferObject)
 		{
 			if (this.b_vertexBuffer)
@@ -542,7 +555,13 @@ public class TF3D_VBO
 				
 			if (F3D.Extensions.VertexBufferObject)
 			{
-				if (this.b_indexBuffer) { glDrawElements(GL_TRIANGLES, this.indexBuffer);}
+				
+				
+				if (this.b_indexBuffer) 
+				{ 
+					glDrawElements(GL_TRIANGLES, this.indexBuffer);
+					//glDrawElemen(GL_TRIANGLES, indices_length, GL_UNSIGNED_INT, 0);
+				}
 			}
 			else
 			{

@@ -36,11 +36,15 @@ public class TF3D_World
 
 			}
 		}
-
+		
+		
 	}
 
 	public void Render()
 	{
+		
+		F3D.Cameras.RenderSky();
+		
 		for (int i = 0; i < TF3D_World.entities.size(); i++)
 		{
 			if (TF3D_World.entities.get(i).parent == null)

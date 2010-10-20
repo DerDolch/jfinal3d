@@ -183,6 +183,7 @@ public class TF3D_Mesh
 
 			this.data.AddFace();
 		}
+		
 	}
 
 
