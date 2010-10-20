@@ -29,6 +29,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 	public TF3D_Body	Pbody1;
 	public TF3D_Body	Pbody2;
 	public TF3D_Body	Pbody3;
+	public TF3D_Body	PPlane;
 	public TF3D_Model	Model;
 	
 	
@@ -63,7 +64,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 	public void onInitialize()
 	{
 		this.Camera = new TF3D_Camera("FPSCamera");
-		this.Camera.SetPosition(0.0f, 0.0f, -50.0f);
+		this.Camera.SetPosition(0.0f, 10.0f, -50.0f);
 		this.Camera.SetRotation(0, 180, 0);
 		
 		this.Camera.movespeed = 0.2f;
@@ -73,12 +74,21 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		
 		
 		F3D.Meshes.Add("abstract::CubeObj.a3da");
+		F3D.Meshes.Add("abstract::Plane.a3da");
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
+		
+		this.PPlane = new TF3D_Body("PPlane");
+		this.PPlane.AssignMesh("abstract::Plane.a3da");
+		this.PPlane.Enable();
+		this.PPlane.SetSurface("MATbase");
+		this.PPlane.SetPosition(0f, 0f, 0f);
+		this.PPlane.SetRotation(0f, 0f, 0f);		
+		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
 		
 		this.Pbody1 = new TF3D_Body("Body_0");
 		this.Pbody1.AssignMesh(F3D.Meshes.FindByName("abstract::CubeObj.a3da"));
