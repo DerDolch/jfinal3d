@@ -80,7 +80,7 @@ Type TAGFX_Wavefront_obj
 				' read UV list
 				If pline[0] = "vt" Then
 					Local x:Float = pline[1].ToFloat()
-					Local y:Float = pline[2].ToFloat()					
+					Local y:Float = -pline[2].ToFloat()					
 					Self.ObjectList[objid].UVList.Add(x, y)
 
 				End If
@@ -262,6 +262,7 @@ Type TAGFX_Wavefront_obj
 				uA = Self.ObjectList[o_id].UVList.Get(Ai)
 				uB = Self.ObjectList[o_id].UVList.Get(Bi)
 				uC = Self.ObjectList[o_id].UVList.Get(Ci)
+				
 				
 				WriteLine _out, " uv0A = " + uA.X + "," + uA.Y
 				WriteLine _out, " uv0B = " + uB.X + "," + uB.Y

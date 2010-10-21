@@ -62,7 +62,7 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		
 		this.mesh = new TF3D_Mesh();
-		this.mesh.Load("abstract::CubeObj.a3da");
+		this.mesh.Load("abstract::Cube.a3da");
 		
 		
 		// Add light to scene

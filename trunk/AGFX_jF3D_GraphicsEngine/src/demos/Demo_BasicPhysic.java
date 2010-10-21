@@ -73,7 +73,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		
 		
-		F3D.Meshes.Add("abstract::CubeObj.a3da");
+		F3D.Meshes.Add("abstract::Cube.a3da");
 		F3D.Meshes.Add("abstract::Plane.a3da");
 		
 		// Add light to scene
@@ -91,7 +91,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
 		
 		this.Pbody1 = new TF3D_Body("Body_0");
-		this.Pbody1.AssignMesh(F3D.Meshes.FindByName("abstract::CubeObj.a3da"));
+		this.Pbody1.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody1.Enable();
 		this.Pbody1.SetSurface("MAT_text_b");
 		this.Pbody1.SetPosition(0, 20f, 0);
@@ -101,7 +101,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 
 	
 		this.Pbody2 = new TF3D_Body("Body_1");
-		this.Pbody2.AssignMesh(F3D.Meshes.FindByName("abstract::CubeObj.a3da"));
+		this.Pbody2.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody2.SetPosition(0.7f, 22f, 0);
 		this.Pbody2.Enable();
 		this.Pbody2.SetSurface("MAT_text_c");
@@ -112,7 +112,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.Pbody2.PhysicObject.SetDamping(0, 0);
 
 		this.Pbody3 = new TF3D_Body("Body_2");
-		this.Pbody3.AssignMesh(F3D.Meshes.FindByName("abstract::CubeObj.a3da"));
+		this.Pbody3.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody3.SetPosition(-0.7f, 22f, 0);
 		this.Pbody3.Enable();
 		this.Pbody3.SetSurface("MAT_text_d");
