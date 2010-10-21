@@ -23,7 +23,6 @@ public class TF3D_Skybox
 		F3D.Meshes.Add("abstract::Sky_sphere.a3da");
 		this.SkyGradient = new TF3D_Model("SKyGradient");
 		this.SkyGradient.AssignMesh("abstract::Sky_sphere.a3da");
-		this.SkyGradient.SetRotation(0,0,180);
 	}
 	
 	public void Render(Vector3f pos)

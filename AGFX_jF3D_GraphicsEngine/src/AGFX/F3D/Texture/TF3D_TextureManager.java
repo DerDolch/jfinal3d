@@ -46,7 +46,7 @@ public class TF3D_TextureManager
 	 * @param mipmap generate mipmaps true/false
 	 */
 	// -----------------------------------------------------------------------
-	public void Add(String _name, String _assetpath, boolean mipmap)
+	public void Add(String _name, String _assetpath, Boolean mipmap)
 	{
 		
 		
@@ -58,7 +58,7 @@ public class TF3D_TextureManager
 		{
 		
     		TF3D_Texture tex = new TF3D_Texture(_name);
-    		tex.Load(_assetpath);
+    		tex.Load(_assetpath,mipmap);
     		this.items.add(tex);
     	
     		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
@@ -340,7 +340,7 @@ public class TF3D_TextureManager
 
 			String _name = PARSER.GetAs_STRING("name");
 			String _file = PARSER.GetAs_STRING("file");
-			boolean _mipmap = PARSER.GetAs_BOOLEAN("mipmap");
+			Boolean _mipmap = PARSER.GetAs_BOOLEAN("mipmap");
 			
 			this.Add(_name,_file,_mipmap);
 

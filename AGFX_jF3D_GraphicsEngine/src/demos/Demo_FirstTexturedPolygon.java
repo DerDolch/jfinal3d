@@ -55,9 +55,7 @@ public class Demo_FirstTexturedPolygon extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		
 		this.Tex = new TF3D_Texture("TEXTURE_A");
-		this.Tex.Load("media/bitmaps/text_a.png");
-		
-		
+		this.Tex.Load("media/bitmaps/text_a.png",true);
 		
 	}
 	
