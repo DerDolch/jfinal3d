@@ -20,6 +20,7 @@ public class TF3D_Config
 	public int r_display_height;
 	/**  define color depth (Bit Per Pixel)*/
 	public int r_display_bpp;
+	public int r_anisotropy_filtering = 0;
 	/**  Enable/Disable Vertical Sync (true/false)*/
 	public Boolean r_display_vsync;
 	/**  set application title*/
@@ -61,6 +62,7 @@ public class TF3D_Config
 		this.io_preload_data = true;
 		this.io_preload_folder = "media";
 		this.e_world_autoassign = true;
+		this.r_anisotropy_filtering = 0;
 		
 		F3D.Log.info("TF3D_Config","Config class created");
 	}

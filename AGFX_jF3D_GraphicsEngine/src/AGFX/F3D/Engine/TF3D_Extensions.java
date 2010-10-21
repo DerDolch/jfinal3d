@@ -15,6 +15,6 @@ public class TF3D_Extensions
 		// GL_ARB_vertex_buffer_object
 		this.VertexBufferObject =   GLContext.getCapabilities().GL_ARB_vertex_buffer_object;
 		F3D.Log.info("TF3D_Extensions","GL_ARB_vertex_buffer_object = "+this.VertexBufferObject.toString());
-		
+	
 	}
 }
