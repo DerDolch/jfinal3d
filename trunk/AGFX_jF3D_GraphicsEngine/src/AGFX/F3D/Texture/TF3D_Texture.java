@@ -3,9 +3,13 @@ package AGFX.F3D.Texture;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+import org.lwjgl.util.glu.MipMap;
 
 import AGFX.F3D.F3D;
 
@@ -24,7 +28,7 @@ public class TF3D_Texture
 		this.name = _name;
 	}
 
-	public void Load(String filename)
+	public void Load(String filename, Boolean mipmap)
 	{
 		
 		F3D.Log.info("TF3D_Texture", "Loading ... "+filename);
@@ -51,7 +55,8 @@ public class TF3D_Texture
 				FMT = "TGA";
 			}
 
-			this.texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
+			this.texture = this.LoadMipmap(FMT,filename,mipmap);
+					
 			this.width = this.texture.getImageWidth();
 			this.height = this.texture.getImageHeight();
 			
@@ -66,6 +71,39 @@ public class TF3D_Texture
 		}
 	}
 
+	private Texture LoadMipmap(String FMT,String filename, Boolean mipmap) throws IOException 
+	{
+        
+        Texture texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
+        
+        texture.bind();
+        int width = (int)texture.getImageWidth();
+        int height = (int)texture.getImageHeight();
+        
+        byte[] texbytes = texture.getTextureData();
+        int components = texbytes.length / (width*height);
+       
+        ByteBuffer texdata = BufferUtils.createByteBuffer(texbytes.length);
+        texdata.put(texbytes);
+        texdata.rewind();
+        
+        
+        if (mipmap)
+        {
+        	MipMap.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, components, width, height, components==3 ? GL11.GL_RGB : GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,texdata);
+        	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+        }
+        else
+        {
+        	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        }
+        
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+        
+        //GL11.glTexParameteri(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, 8);
+        
+        return texture;
+}
 	// -----------------------------------------------------------------------
 	// TA3D_Texture:
 	// -----------------------------------------------------------------------

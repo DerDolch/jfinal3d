@@ -168,7 +168,7 @@ public class TF3D_MaterialEventManager
 		}
 
 		this.items.get(id).offset.x = this.items.get(id).offset.x + (this.items.get(id).scroll.x * F3D.Timer.AppSpeed());
-		this.items.get(id).offset.y = this.items.get(id).offset.y + (this.items.get(id).scroll.y * F3D.Timer.AppSpeed());
+		this.items.get(id).offset.y = this.items.get(id).offset.y + (-this.items.get(id).scroll.y * F3D.Timer.AppSpeed());
 
 		this.items.get(id).angle = this.items.get(id).angle + this.items.get(id).rotate * F3D.Timer.AppSpeed();
 
