@@ -61,8 +61,8 @@ public class Demo_AddTextures extends TF3D_AppWrapper
 		F3D.Textures.Load("abstract::text_d.texture");
 		
 		
-		F3D.Meshes.Add("abstract::CubeObj.a3da");
-		id = F3D.Meshes.FindByName("abstract::CubeObj.a3da");
+		F3D.Meshes.Add("abstract::Cube.a3da");
+		id = F3D.Meshes.FindByName("abstract::Cube.a3da");
 		
 		this.HLP = new TF3D_Helpers();
 		

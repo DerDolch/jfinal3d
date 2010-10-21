@@ -66,22 +66,22 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 		
 		F3D.Cameras.Add(this.Camera);
 		
-		F3D.Meshes.Add("abstract::CubeObj.a3da");
+		F3D.Meshes.Add("abstract::Cube.a3da");
 		
 		this.sign = new TF3D_Model("SIGN");				
-		this.sign.AssignMesh("abstract::CubeObj.a3da");		
+		this.sign.AssignMesh("abstract::Cube.a3da");		
 		this.sign.SetScale(0.05f, 2.0f, 0.05f);
 		
 		this.mesh = new TF3D_Model("CubeObj_0");		
-		this.mesh.AssignMesh("abstract::CubeObj.a3da");
+		this.mesh.AssignMesh("abstract::Cube.a3da");
 		
 		
 		this.pmesh = new TF3D_Model("CubeObj_1");
-		this.pmesh.AssignMesh("abstract::CubeObj.a3da");
+		this.pmesh.AssignMesh("abstract::Cube.a3da");
 		this.pmesh.SetPosition(2,0,0);
 		
 		this.p2mesh = new TF3D_Model("CubeObj_2");
-		this.p2mesh.AssignMesh("abstract::CubeObj.a3da");
+		this.p2mesh.AssignMesh("abstract::Cube.a3da");
 		this.p2mesh.SetPosition(-2,0,0);
 			
 		this.mesh.AddChild(this.pmesh);

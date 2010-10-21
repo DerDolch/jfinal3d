@@ -66,7 +66,7 @@ public class Demo_Performance extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		
 		
-		F3D.Meshes.Add("abstract::CubeObj.a3da");
+		F3D.Meshes.Add("abstract::Cube.a3da");
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
@@ -85,7 +85,7 @@ public class Demo_Performance extends TF3D_AppWrapper
 				{		
 					model = new TF3D_Model("Model_test");
 					model.SetPosition(px*offset, py*offset, pz*offset);
-					model.AssignMesh(F3D.Meshes.FindByName("abstract::CubeObj.a3da"));
+					model.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 					
 					
 				}
