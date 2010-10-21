@@ -14,6 +14,7 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
+import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
 
 
@@ -27,6 +28,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public TF3D_Body	landscape;
+	public TF3D_Model	car;
 	
 	
 	public Demo_SimpleVehicle()
@@ -80,7 +82,6 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
-		
 		this.landscape = new TF3D_Body("LANDSCAPE");
 		this.landscape.AssignMesh("abstract::landscape.a3da");
 		this.landscape.Enable();
@@ -88,10 +89,10 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.landscape.SetRotation(0f, 0f, 0f);		
 		this.landscape.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
-
+		this.car = new TF3D_Model("CAR");
+		this.car.AssignMesh("abstract::jeep.a3da");
 
 	}
-	
 	
 	@Override
 	public void onUpdate3D()
@@ -135,8 +136,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		{
 			this.Camera.Move(0.1f, 0.0f, 0.0f);
 		}
-		
-	
+
 		
 	}
 	

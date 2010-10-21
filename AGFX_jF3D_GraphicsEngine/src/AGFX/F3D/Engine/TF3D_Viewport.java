@@ -50,9 +50,9 @@ public class TF3D_Viewport
 		glEnable(GL_DEPTH_TEST); // Enables Depth Testing
 		glDepthFunc(GL_LEQUAL); // The Type Of Depth Testing To Do
 		
-		glEnable(GL_CULL_FACE);
-		glFrontFace(GL_CCW); // CCW face orientation ON
-        glCullFace(GL_BACK);
+		//glEnable(GL_CULL_FACE);
+		//glFrontFace(GL_CCW); // CCW face orientation ON
+        //glCullFace(GL_BACK);
         
         
 		// Really Nice Perspective Calculations

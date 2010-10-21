@@ -158,6 +158,12 @@ public class TF3D_Mesh
 			uv0B = PARSER.GetAs_VECTOR2F("uv0B");
 			uv0C = PARSER.GetAs_VECTOR2F("uv0C");
 
+			// TODO - fix terxture Y flip 
+			/*
+			uv0A.y *= -1.0f;
+			uv0B.y *= -1.0f;
+			uv0C.y *= -1.0f;
+			*/
 			mat_name = PARSER.GetAs_STRING("mat");
 			this.data.material_id = F3D.Surfaces.FindByName(mat_name);
 			
