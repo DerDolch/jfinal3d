@@ -9,6 +9,7 @@ import javax.vecmath.*;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_Axis3f;
+import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
 /**
  * @author AndyGFX
@@ -16,12 +17,12 @@ import AGFX.F3D.Math.TF3D_Axis3f;
  */
 public abstract class TF3D_Entity
 {
-	
-	/** Entity start position - used for physics restart*/
-	public Vector3f              start_position;
-	/** Entity rotation - used for physics restart*/
-	public Vector3f              start_rotation;
-	
+
+	/** Entity start position - used for physics restart */
+	public Vector3f               start_position;
+	/** Entity rotation - used for physics restart */
+	public Vector3f               start_rotation;
+
 	/** Entity position */
 	private Vector3f              position;
 	/** Entity rotation */
@@ -31,7 +32,7 @@ public abstract class TF3D_Entity
 	/** Entity axis vectors */
 	public TF3D_Axis3f            axis;
 	/** class name of entity */
-	public int                 classname;
+	public int                    classname;
 	/** name of entity */
 	public String                 name;
 	/** move speed */
@@ -45,8 +46,7 @@ public abstract class TF3D_Entity
 	public TF3D_Entity            parent;
 	public Boolean                is_child   = false;
 
-	public Vector3f               BBOX_center;
-	public Vector3f               BBOX_size;
+	public TF3D_BoundingBox       BBOX;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Entity:
@@ -64,7 +64,7 @@ public abstract class TF3D_Entity
 
 		this.start_position = new Vector3f();
 		this.start_rotation = new Vector3f();
-		
+
 		this.position = new Vector3f();
 		this.rotation = new Vector3f();
 		this.scale = new Vector3f();
@@ -74,12 +74,14 @@ public abstract class TF3D_Entity
 		this.movespeed = 1.0f;
 		this.turnspeed = 1.0f;
 
-		this.BBOX_center = new Vector3f(0, 0, 0);
-		this.BBOX_size = new Vector3f(0, 0, 0);
+		this.BBOX = new TF3D_BoundingBox();
 
 		this.childs = new ArrayList<TF3D_Entity>();
-		
-		if (F3D.Config.e_world_autoassign) { F3D.World.Add(this);}
+
+		if (F3D.Config.e_world_autoassign)
+		{
+			F3D.World.Add(this);
+		}
 
 	}
 
@@ -347,9 +349,9 @@ public abstract class TF3D_Entity
 	// -----------------------------------------------------------------------
 	public boolean IsVisible()
 	{
-		Vector3f sum = new Vector3f(0,0,0);
-		sum.add(this.GetPosition(), BBOX_center);
-		this.visibility = F3D.Frustum.BoxInFrustum(sum, this.BBOX_size);
+		Vector3f sum = new Vector3f(0, 0, 0);
+		sum.add(this.GetPosition(), this.BBOX.center);
+		this.visibility = F3D.Frustum.BoxInFrustum(sum, this.BBOX.size);
 		return this.visibility;
 
 	}
@@ -403,10 +405,9 @@ public abstract class TF3D_Entity
 	public void RemoveChild(TF3D_Entity m)
 	{
 		m.is_child = false;
-		this.childs.remove(m);		
+		this.childs.remove(m);
 	}
 
-	
 	// -----------------------------------------------------------------------
 	// TF3D_Entity:
 	// -----------------------------------------------------------------------
@@ -422,10 +423,11 @@ public abstract class TF3D_Entity
 	public void ClearChild()
 	{
 		this.parent = null;
-		this.childs.clear();		
+		this.childs.clear();
 	}
-	
+
 	public abstract void Destroy();
+
 	// -----------------------------------------------------------------------
 	// TF3D_Entity:
 	// -----------------------------------------------------------------------
@@ -439,7 +441,7 @@ public abstract class TF3D_Entity
 	 */
 	// -----------------------------------------------------------------------
 	public abstract void Render();
-	
+
 	// -----------------------------------------------------------------------
 	// TF3D_Entity:
 	// -----------------------------------------------------------------------

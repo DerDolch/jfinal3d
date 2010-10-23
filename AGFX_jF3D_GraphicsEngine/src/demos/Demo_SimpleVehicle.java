@@ -16,6 +16,7 @@ import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
+import AGFX.F3D.Vehicle.TF3D_Vehicle;
 
 
 
@@ -28,7 +29,8 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public TF3D_Body	landscape;
-	public TF3D_Model	car;
+	public TF3D_Vehicle	car;
+	public TF3D_Body   PSphere;
 	
 	
 	public Demo_SimpleVehicle()
@@ -76,6 +78,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::jeep_wheel_L.a3da");
 		F3D.Meshes.Add("abstract::jeep_wheel_R.a3da");		
 		F3D.Meshes.Add("abstract::landscape.a3da");
+		F3D.Meshes.Add("abstract::Sphere.a3da");
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
@@ -89,8 +92,27 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.landscape.SetRotation(0f, 0f, 0f);		
 		this.landscape.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
-		this.car = new TF3D_Model("CAR");
-		this.car.AssignMesh("abstract::jeep.a3da");
+		
+		this.PSphere = new TF3D_Body("PSphere");
+		this.PSphere.AssignMesh("abstract::Sphere.a3da");
+		this.PSphere.Enable();
+		this.PSphere.SetSurface("MATbase");
+		this.PSphere.SetPosition(0.5f, 21f, 0);
+		this.PSphere.SetRotation(0f, 0f, 0f);
+		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
+		
+		
+		
+		this.car = new TF3D_Vehicle("CAR_01");
+		this.car.model_schassis = F3D.Meshes.FindByName("abstract::jeep.a3da");
+		this.car.model_wheel_FL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
+		this.car.model_wheel_FR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
+		this.car.model_wheel_RL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
+		this.car.model_wheel_RR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
+		
+		this.car.SetPosition(0, 10, 0);
+		
+		this.car.Create();
 
 	}
 	

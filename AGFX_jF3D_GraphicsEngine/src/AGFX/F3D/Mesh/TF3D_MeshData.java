@@ -11,6 +11,8 @@ import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 
+import AGFX.F3D.F3D;
+
 public class TF3D_MeshData implements Serializable
 {
 
@@ -26,7 +28,7 @@ public class TF3D_MeshData implements Serializable
 	public float      uv2[];
 	public float      uv3[];
 	public short      indices[];
-	public int        facecount;
+	public int      facecount;
 	public int        v_id             = 0;
 	public int        f_id             = 0;
 	public int        n_id             = 0;
@@ -65,6 +67,13 @@ public class TF3D_MeshData implements Serializable
 		this.uv2 = new float[this.facecount * 3 * 2];
 		this.uv3 = new float[this.facecount * 3 * 2];
 		this.indices = new short[this.facecount * 3];
+		
+		
+		F3D.Log.info("vertices", String.valueOf(this.vertices.length));
+		F3D.Log.info("colors", String.valueOf(this.colors.length));
+		F3D.Log.info("normals", String.valueOf(this.normals.length));
+		F3D.Log.info("indices", String.valueOf(this.indices.length));
+		F3D.Log.info("faces", String.valueOf(this.facecount));
 
 	}
 

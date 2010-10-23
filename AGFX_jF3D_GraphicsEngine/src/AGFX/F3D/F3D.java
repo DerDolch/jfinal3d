@@ -105,6 +105,8 @@ public class F3D
 	public static final int                 BULLET_SHAPE_CAPSULE_Z     = 12;
 	public static final int                 BULLET_SHAPE_CAPSULE       = 13;
 	public static final int                 BULLET_SHAPE_TRIMESH       = 14;
+	public static final int                 BULLET_SHAPE_CONVEXHULL    = 15;
+	
 
 	// '-----------------------------------------------------------------
 	// ' PARTICLE ENGINE: CONST

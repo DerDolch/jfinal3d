@@ -26,54 +26,16 @@ public class TF3D_Model extends TF3D_Entity
 		this.name = _name;
 	}
 
-	// -----------------------------------------------------------------------
-	// TA3D_Mesh:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Calculate BBOX values for Frustum culling <BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
-	public void CalcBBox()
-	{
-
-		int v_count = F3D.Meshes.items.get(this.mesh_id).data.vertices.length / 3;
-
-		Vector3f max = new Vector3f(-9999, -9999, -9999);
-		Vector3f min = new Vector3f(9999, 9999, 9999);
-
-		for (int i = 0; i < v_count; i++)
-		{
-			Vector3f v = F3D.Meshes.items.get(this.mesh_id).data.GetVertexAsVector(i);
-
-			max.x = v.x >= max.x ? v.x : max.x;
-			max.y = v.y >= max.y ? v.y : max.y;
-			max.z = v.z >= max.z ? v.z : max.z;
-
-			min.x = v.x <= min.x ? v.x : min.x;
-			min.y = v.y <= min.y ? v.y : min.y;
-			min.z = v.z <= min.z ? v.z : min.z;
-
-		}
-
-		this.BBOX_size.sub(max, min);
-		this.BBOX_center.add(max, min);
-		this.BBOX_center.scale(2.0f);
-
-	}
-
 	public void AssignMesh(int id)
 	{
 		this.mesh_id = id;
-		this.CalcBBox();
+		this.BBOX.CalcFromMesh(this.mesh_id);
 	}
 
 	public void AssignMesh(String name)
 	{
 		this.mesh_id = F3D.Meshes.FindByName(name);
-		this.CalcBBox();
+		this.BBOX.CalcFromMesh(this.mesh_id);
 	}
 
 	public void SetSurface(String name)
