@@ -17,6 +17,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @author AndyGFX sssss
  */
 
+
+
 public class TF3D_Body extends TF3D_Entity
 {
 	private int               mesh_id         = -1;
@@ -51,6 +53,9 @@ public class TF3D_Body extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void CreateRigidBody(int shapemode,float mass)
 	{
+		
+		this.start_position = (Vector3f) this.GetPosition().clone();
+		this.start_rotation = (Vector3f) this.GetRotation().clone();
 		
 		if (!F3D.Config.use_physics)
 		{
@@ -299,6 +304,10 @@ public class TF3D_Body extends TF3D_Entity
 		
 	}
 	
+	public void Reset()
+	{
+		this.PhysicObject.Transform.origin.set(this.start_position);
+	}
 	
 	public void Destroy()
 	{

@@ -18,6 +18,7 @@ import AGFX.F3D.Material.TF3D_MaterialEventManager;
 import AGFX.F3D.Math.TF3D_Frustum;
 import AGFX.F3D.Mesh.TF3D_MeshManager;
 import AGFX.F3D.Physics.TF3D_Physics;
+import AGFX.F3D.Pick.TF3D_Pick;
 import AGFX.F3D.Preloader.TF3D_Preloader;
 import AGFX.F3D.Surface.TF3D_SurfaceManager;
 import AGFX.F3D.Texture.TF3D_TextureManager;
@@ -152,7 +153,8 @@ public class F3D
 	public static TF3D_World                World;
 	public static TF3D_Physics              Physic;
 	public static TF3D_Keyboard             Key;
-
+	public static TF3D_Pick					Pick;
+	
 	public static void Create()
 	{
 
@@ -177,6 +179,7 @@ public class F3D
 		if (F3D.Config.use_physics)
 		{
 			F3D.Physic = new TF3D_Physics();
+			F3D.Pick = new TF3D_Pick();
 		} else
 		{
 			F3D.Physic = null;

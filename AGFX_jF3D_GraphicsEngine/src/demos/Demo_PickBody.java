@@ -18,6 +18,7 @@ import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
 
 import AGFX.F3D.Pivot.TF3D_Pivot;
+import AGFX.F3D.Skybox.TF3D_Skybox;
 
 /**
  * @author AndyGFX
@@ -30,6 +31,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 	public TF3D_Body   pbody1;
 	public TF3D_Body   pbody2;
 	public TF3D_Pivot  pivot;
+	public RigidBody body;
 
 	int odx = 0;
 	int ody = 0;
@@ -72,6 +74,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		this.Camera.movespeed = 0.2f;
 		this.Camera.ctype = F3D.CAMERA_TYPE_FPS;
 		
+		F3D.Cameras.Sky = new TF3D_Skybox();
 		F3D.Cameras.Add(this.Camera);
 		
 		
@@ -105,13 +108,15 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		this.pbody2.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 0f);
 		
 		
+		
+		
 	}
 	
 	
 	@Override
 	public void onUpdate3D()
 	{
-		F3D.Draw.Axis(2.0f);	
+		
 
 		
 
@@ -167,24 +172,42 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		
 		// Draw visual raycast line
 		F3D.Draw.Line3D(pA, pB);
+		F3D.Draw.Axis(2.0f);
 		
-		// create callback for raycast from pA to pB point
-		CollisionWorld.ClosestRayResultCallback rayCallback = new CollisionWorld.ClosestRayResultCallback(pA, pB);
-		F3D.Physic.dynamicsWorld.rayTest(pA, pB, rayCallback);
 		
-		// when exist HIT
-		if (rayCallback.hasHit()) 
+		// LINE PICK from POINT A to B
+		
+		body= F3D.Pick.LineAB(pA, pB);
+		if (body != null) 
 		{
-			// get what was touched
-			RigidBody body = RigidBody.upcast(rayCallback.collisionObject);
+			TF3D_Body pb = (TF3D_Body) body.getUserPointer();
+			F3D.Log.info("LINE PICK", pb.name);
 			
-			// when it's body, return pointer to TF3D_MODEL instance
-			if (body != null) 
-			{
-				TF3D_Body pb = (TF3D_Body) body.getUserPointer();
-				F3D.Log.info("MAIN", pb.name);
-			}
-		}	
+		}
+	
+		
+		//CAMERA PICK
+		body= F3D.Pick.CameraDirection(1000f);
+		if (body != null) 
+		{
+			TF3D_Body pb = (TF3D_Body) body.getUserPointer();
+			F3D.Log.info("CAMERA PICK", pb.name);
+			
+		}
+		
+		
+		//MOUSE PICK 
+		body= F3D.Pick.Mouse(Mouse.getX(),Mouse.getY(), 1000f);
+		if (body != null) 
+		{
+			TF3D_Body pb = (TF3D_Body) body.getUserPointer();
+			F3D.Log.info("MOUSE PICK", pb.name);
+			
+		}
+		// Draw body axis
+		F3D.Draw.Axis(pbody1, 2f);
+		F3D.Draw.Axis(pbody2, 2f);
+		
 	}
 	
 	

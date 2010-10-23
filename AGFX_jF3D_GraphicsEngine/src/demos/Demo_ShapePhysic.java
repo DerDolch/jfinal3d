@@ -226,7 +226,8 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q))		
 		{			
-			this.PCube.PhysicObject.RigidBody.clearForces();
+			this.PCube.Reset();
+			this.PCube.Reset();
 		}
 
 	}

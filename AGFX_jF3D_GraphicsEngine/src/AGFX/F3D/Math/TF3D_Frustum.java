@@ -28,7 +28,7 @@ public class TF3D_Frustum
 
 	// modelview matrix
 	//private ByteBuffer  modelBuffer;
-	private FloatBuffer modelMatrix;
+	public FloatBuffer modelMatrix;
 
 	public TF3D_Frustum()
 	{

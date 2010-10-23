@@ -72,6 +72,7 @@ public class TF3D_Physics
 
 	public void Reset()
 	{
+		// TODO - finilize reset physics world
 
 	}
 

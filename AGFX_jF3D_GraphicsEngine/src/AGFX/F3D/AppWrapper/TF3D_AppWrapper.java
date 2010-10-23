@@ -202,10 +202,11 @@ public class TF3D_AppWrapper
 				
 				F3D.Viewport.BeginRender3D();
 				
-				this.onUpdate3D();
+				
 				F3D.World.Update();
 				F3D.World.Render();
-
+				this.onUpdate3D();
+					
 				if (F3D.Config.use_physics_debug)
 				{
 					F3D.Physic.dynamicsWorld.debugDrawWorld();
