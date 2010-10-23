@@ -3,6 +3,8 @@
  */
 package AGFX.F3D.Physics;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.vecmath.Quat4f;
@@ -11,14 +13,20 @@ import javax.vecmath.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
+import AGFX.F3D.Mesh.TF3D_Mesh;
 
+import com.bulletphysics.collision.dispatch.CollisionObject;
 import com.bulletphysics.collision.shapes.BoxShape;
+import com.bulletphysics.collision.shapes.BvhTriangleMeshShape;
 import com.bulletphysics.collision.shapes.CapsuleShape;
 import com.bulletphysics.collision.shapes.CapsuleShapeX;
 import com.bulletphysics.collision.shapes.CapsuleShapeZ;
 import com.bulletphysics.collision.shapes.CollisionShape;
+import com.bulletphysics.collision.shapes.ConcaveShape;
 import com.bulletphysics.collision.shapes.ConeShape;
 import com.bulletphysics.collision.shapes.ConvexHullShape;
+import com.bulletphysics.collision.shapes.ConvexShape;
+import com.bulletphysics.collision.shapes.PolyhedralConvexShape;
 import com.bulletphysics.collision.shapes.StaticPlaneShape;
 import com.bulletphysics.collision.shapes.ConeShapeX;
 import com.bulletphysics.collision.shapes.ConeShapeZ;
@@ -26,6 +34,7 @@ import com.bulletphysics.collision.shapes.CylinderShape;
 import com.bulletphysics.collision.shapes.CylinderShapeX;
 import com.bulletphysics.collision.shapes.CylinderShapeZ;
 import com.bulletphysics.collision.shapes.SphereShape;
+import com.bulletphysics.collision.shapes.TriangleIndexVertexArray;
 
 import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.dynamics.RigidBodyConstructionInfo;
@@ -56,15 +65,17 @@ public class TF3D_PhysicObject
 		this.transformMatrix = new float[16];
 		this.transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
 	}
-	
-	
+
 	// -----------------------------------------------------------------------
-	// TF3D_PhysicObject: 
+	// TF3D_PhysicObject:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param shapemode
 	 * @param mass
 	 * @param pos
@@ -72,48 +83,47 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode,float mass, Vector3f pos, Vector3f rot, Vector3f size)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size)
 	{
 		this.mass = mass;
-		
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_PLANE)
 		{
-			
+
 			size.scale(0.5f);
-			this.Shape = new StaticPlaneShape(new Vector3f(0, 1, 0), 0.01f);			
+			this.Shape = new StaticPlaneShape(new Vector3f(0, 1, 0), 0.01f);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_BOX)
 		{
 			size.scale(0.5f);
 			this.Shape = new BoxShape(size);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_SPHERE)
 		{
 			size.scale(0.5f);
 			this.Shape = new SphereShape(size.x);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CAPSULE)
 		{
 			size.scale(0.5f);
-			this.Shape = new CapsuleShape(size.x,size.y);
+			this.Shape = new CapsuleShape(size.x, size.y);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CAPSULE_X)
 		{
 			size.scale(0.5f);
-			this.Shape = new CapsuleShapeX(size.x,size.y);
+			this.Shape = new CapsuleShapeX(size.x, size.y);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CAPSULE_Z)
 		{
 			size.scale(0.5f);
-			this.Shape = new CapsuleShapeZ(size.x,size.y);
+			this.Shape = new CapsuleShapeZ(size.x, size.y);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CYLINDER)
 		{
 			size.scale(0.5f);
@@ -132,24 +142,21 @@ public class TF3D_PhysicObject
 		if (shapemode == F3D.BULLET_SHAPE_CONE)
 		{
 			size.scale(0.5f);
-			this.Shape = new ConeShape(size.x,size.y*2.0f);
+			this.Shape = new ConeShape(size.x, size.y * 2.0f);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CONE_X)
 		{
 			size.scale(0.5f);
-			this.Shape = new ConeShapeX(size.x,size.y*2.0f);
+			this.Shape = new ConeShapeX(size.x, size.y * 2.0f);
 		}
-		
+
 		if (shapemode == F3D.BULLET_SHAPE_CONE_Z)
 		{
 			size.scale(0.5f);
-			this.Shape = new ConeShapeZ(size.x,size.y*2.0f);
+			this.Shape = new ConeShapeZ(size.x, size.y * 2.0f);
 		}
-		
-		
-		
-		
+
 		// Shape RigidBody
 
 		this.Transform = new Transform();
@@ -165,33 +172,38 @@ public class TF3D_PhysicObject
 
 		this.Transform.setRotation(qrot);
 
-		this.MotionState = new DefaultMotionState(this.Transform);
+		/*
+		 * 
+		 * this.MotionState = new DefaultMotionState(this.Transform);
+		 * 
+		 * Vector3f localInertia = new Vector3f(0, 0, 0); if (this.mass>0) {
+		 * this.Shape.calculateLocalInertia(this.mass, localInertia);
+		 * this.isDynamic = true; }
+		 * 
+		 * RigidBodyConstructionInfo rbInfo = new
+		 * RigidBodyConstructionInfo(this.mass, this.MotionState, this.Shape,
+		 * localInertia); this.RigidBody = new RigidBody(rbInfo);
+		 */
 
-		Vector3f localInertia = new Vector3f(0, 0, 0);
-		if (this.mass>0)
-		{
-			this.Shape.calculateLocalInertia(this.mass, localInertia);
-			this.isDynamic = true;
-		}
-
-		RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(this.mass, this.MotionState, this.Shape, localInertia);
-		this.RigidBody = new RigidBody(rbInfo);
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
 		this.RigidBody.setDamping(0, 0.5f);
-		
 
 		F3D.Physic.AddBody(this.RigidBody);
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_PhysicObject: 
+	// TF3D_PhysicObject:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param shapemode
 	 * @param mass
 	 * @param pos
@@ -199,18 +211,62 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode,float mass, Vector3f pos, Vector3f rot, Vector3f size, ObjectArrayList<Vector3f>  vertices)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size, TF3D_Mesh mesh)
 	{
 		this.mass = mass;
-		
-		
+
+		if (shapemode == F3D.BULLET_SHAPE_CONVEXHULL)
+		{
+			ObjectArrayList<Vector3f> vertices = new ObjectArrayList<Vector3f>();
+			for (int i = 0; i < mesh.data.vertices.length / 3; i++)
+			{
+
+				vertices.add(mesh.data.GetVertexAsVector(i));
+			}
+			this.Shape = new ConvexHullShape(vertices);
+
+		}
+
 		if (shapemode == F3D.BULLET_SHAPE_TRIMESH)
 		{
-			this.Shape = new ConvexHullShape(vertices);
+			if (mesh.data.facecount>(32768/3))
+			{
+				F3D.Log.error("TF3D_PhysicObject", "Physics body is out of triangle indices count !!!");
+			}
 			
+			ByteBuffer gIndices = ByteBuffer.allocateDirect(mesh.data.facecount * 3 * 4).order(ByteOrder.nativeOrder());
+			ByteBuffer gVertices = ByteBuffer.allocateDirect(mesh.data.vertices.length * 3 * 4).order(ByteOrder.nativeOrder());
+
+			for (int i = 0; i < mesh.data.indices.length; i++)
+			{
+				gIndices.putInt(mesh.data.indices[i]);
+			}
+			gIndices.flip();
+
+			for (int i = 0; i < mesh.data.vertices.length; i++)
+			{
+				gVertices.putFloat(mesh.data.vertices[i]);
+			}
+			gVertices.flip();
+			
+
+			
+			int count = mesh.data.facecount;
+			
+			/*
+			if (count > 10000)
+			{
+				count = 10922;
+			}
+			*/
+			TriangleIndexVertexArray indexVertexArrays = new TriangleIndexVertexArray(count, gIndices, 3 * 4, mesh.data.vertices.length, gVertices, 3 * 4);
+
+			BvhTriangleMeshShape trimeshShape = new BvhTriangleMeshShape(indexVertexArrays, true);
+
+			this.Shape = trimeshShape;
+
 		}
-		
-		
+
 		// Shape RigidBody
 
 		this.Transform = new Transform();
@@ -226,32 +282,25 @@ public class TF3D_PhysicObject
 
 		this.Transform.setRotation(qrot);
 
-		this.MotionState = new DefaultMotionState(this.Transform);
-
-		Vector3f localInertia = new Vector3f(0, 0, 0);
-		if (this.mass>0)
-		{
-			this.Shape.calculateLocalInertia(this.mass, localInertia);
-			this.isDynamic = true;
-		}
-
-		RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(this.mass, this.MotionState, this.Shape, localInertia);
-		this.RigidBody = new RigidBody(rbInfo);
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
 		this.RigidBody.setDamping(0, 0.5f);
-		
 
 		F3D.Physic.AddBody(this.RigidBody);
 	}
+
 	// -----------------------------------------------------------------------
-	// TF3D_PhysicObject: 
+	// TF3D_PhysicObject:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param rest
 	 */
 	// -----------------------------------------------------------------------
@@ -261,12 +310,15 @@ public class TF3D_PhysicObject
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_PhysicObject: 
+	// TF3D_PhysicObject:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param fr
 	 */
 	// -----------------------------------------------------------------------
@@ -274,22 +326,25 @@ public class TF3D_PhysicObject
 	{
 		this.RigidBody.setFriction(fr);
 	}
-	
+
 	// -----------------------------------------------------------------------
-	// TF3D_PhysicObject: 
+	// TF3D_PhysicObject:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param dmin
 	 * @param dmax
 	 */
 	// -----------------------------------------------------------------------
 	public void SetDamping(float dmin, float dmax)
 	{
-		
+
 		this.RigidBody.setDamping(dmin, dmax);
-		
+
 	}
 }

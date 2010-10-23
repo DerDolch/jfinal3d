@@ -65,21 +65,15 @@ public class TF3D_Body extends TF3D_Entity
 		this.PhysicObject = new TF3D_PhysicObject();
 		
 		Vector3f rescaled = new Vector3f();
-		rescaled.x = this.BBOX_size.x * this.GetScale().x;
-		rescaled.y = this.BBOX_size.y * this.GetScale().y;
-		rescaled.z = this.BBOX_size.z * this.GetScale().z;
+		rescaled.x = this.BBOX.size.x * this.GetScale().x;
+		rescaled.y = this.BBOX.size.y * this.GetScale().y;
+		rescaled.z = this.BBOX.size.z * this.GetScale().z;
 		
-		this.BBOX_size.set(rescaled);
+		this.BBOX.size.set(rescaled);
 
-		if (shapemode==F3D.BULLET_SHAPE_TRIMESH)
-		{
-			ObjectArrayList<Vector3f> vertices = new ObjectArrayList<Vector3f>();
-			for (int i=0;i<F3D.Meshes.items.get(this.mesh_id).data.vertices.length/3;i++)
-			{
-				
-				vertices.add(F3D.Meshes.items.get(this.mesh_id).data.GetVertexAsVector(i));
-			}
-			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled,vertices);
+		if ((shapemode==F3D.BULLET_SHAPE_CONVEXHULL) | (shapemode==F3D.BULLET_SHAPE_TRIMESH))
+		{			
+			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled,F3D.Meshes.items.get(this.mesh_id));
 		}
 		else
 		{
@@ -88,44 +82,6 @@ public class TF3D_Body extends TF3D_Entity
 		
 		this.PhysicObject.RigidBody.setUserPointer((Object)this);
 		
-	}
-
-	// -----------------------------------------------------------------------
-	// TF3D_Body:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Calculate BBOX values for Frustum culling <BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
-	public void CalcBBox()
-	{
-
-		int v_count = F3D.Meshes.items.get(this.mesh_id).data.vertices.length / 3;
-
-		Vector3f max = new Vector3f(-9999, -9999, -9999);
-		Vector3f min = new Vector3f(9999, 9999, 9999);
-
-		for (int i = 0; i < v_count; i++)
-		{
-			Vector3f v = F3D.Meshes.items.get(this.mesh_id).data.GetVertexAsVector(i);
-
-			max.x = v.x >= max.x ? v.x : max.x;
-			max.y = v.y >= max.y ? v.y : max.y;
-			max.z = v.z >= max.z ? v.z : max.z;
-
-			min.x = v.x <= min.x ? v.x : min.x;
-			min.y = v.y <= min.y ? v.y : min.y;
-			min.z = v.z <= min.z ? v.z : min.z;
-
-		}
-
-		this.BBOX_size.sub(max, min);
-		this.BBOX_center.add(max, min);
-		this.BBOX_center.scale(2.0f);
-
 	}
 
 	// -----------------------------------------------------------------------
@@ -143,7 +99,7 @@ public class TF3D_Body extends TF3D_Entity
 		if (id>=0)
 		{
     		this.mesh_id = id;
-    		this.CalcBBox();
+    		this.BBOX.CalcFromMesh(this.mesh_id);
 		}
 		else
 		{
@@ -168,7 +124,7 @@ public class TF3D_Body extends TF3D_Entity
 		if (id>=0)
 		{
     		this.mesh_id = id;
-    		this.CalcBBox();
+    		this.BBOX.CalcFromMesh(this.mesh_id);
 		}
 		else
 		{
@@ -211,8 +167,9 @@ public class TF3D_Body extends TF3D_Entity
 
 		if (this.IsEnabled())
 		{
-			if (this.IsVisible())
-			{
+			// TODO fix bbox frustum cullung
+			//if (this.IsVisible())
+			//{
 				if (this.surface_id < 0)
 				{
 					mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
@@ -236,7 +193,7 @@ public class TF3D_Body extends TF3D_Entity
 					glPopMatrix();
 				}
 
-			}
+			//}
 
 		}
 	}

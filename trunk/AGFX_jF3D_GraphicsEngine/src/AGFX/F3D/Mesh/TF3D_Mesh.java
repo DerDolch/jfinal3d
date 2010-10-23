@@ -120,7 +120,7 @@ public class TF3D_Mesh
 	
 		String mat_name = "none";
 
-		this.data.SetFacesCount(PARSER.GetBlocksCount());
+		this.data.SetFacesCount((short)PARSER.GetBlocksCount());
 
 		for (int i = 0; i < PARSER.GetBlocksCount(); i++)
 		{

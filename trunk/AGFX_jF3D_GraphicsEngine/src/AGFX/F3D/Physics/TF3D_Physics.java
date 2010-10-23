@@ -13,6 +13,7 @@ import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.DynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
+import com.bulletphysics.dynamics.RigidBodyConstructionInfo;
 import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
 import com.bulletphysics.linearmath.DebugDrawModes;
 import com.bulletphysics.linearmath.DefaultMotionState;
@@ -34,7 +35,6 @@ public class TF3D_Physics
 	public Transform                         groundTransform;
 	public TF3D_GLDebugDrawer                Debug;
 
-	
 	public TF3D_Physics()
 	{
 		F3D.Log.info("TF3D_Physics", "TF3D_Physics: constructor");
@@ -62,7 +62,26 @@ public class TF3D_Physics
 		this.Debug = new TF3D_GLDebugDrawer();
 		this.Debug.setDebugMode(DebugDrawModes.DRAW_WIREFRAME | DebugDrawModes.DRAW_AABB | DebugDrawModes.DRAW_CONTACT_POINTS);
 		this.dynamicsWorld.setDebugDrawer(this.Debug);
-		
+
+	}
+
+	public RigidBody localCreateRigidBody(float mass, Transform startTransform, CollisionShape shape)
+	{
+
+		boolean isDynamic = (mass != 0f);
+
+		Vector3f localInertia = new Vector3f(0f, 0f, 0f);
+		if (isDynamic)
+		{
+			shape.calculateLocalInertia(mass, localInertia);
+		}
+		DefaultMotionState myMotionState = new DefaultMotionState(startTransform);
+
+		RigidBodyConstructionInfo cInfo = new RigidBodyConstructionInfo(mass, myMotionState, shape, localInertia);
+
+		RigidBody body = new RigidBody(cInfo);
+
+		return body;
 	}
 
 	public void AddBody(RigidBody body)

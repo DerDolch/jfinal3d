@@ -19,7 +19,7 @@ import AGFX.F3D.Skybox.TF3D_Skybox;
  * @author AndyGFX
  * 
  */
-public class Demo_ShapePhysic extends TF3D_AppWrapper
+public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 {
 
 	/**
@@ -29,16 +29,16 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 	/**
 	 * 
 	 */
-	public TF3D_Body   PCube;
+	public TF3D_Body   PTerrainR;
+	public TF3D_Body   PTerrainL;
 	public TF3D_Body   PSphere;
 	public TF3D_Body   PCylinder;
 	public TF3D_Body   PCapsule;
 	public TF3D_Body   PCone;
-	public TF3D_Body   PPlane;
-	public TF3D_Body   PCubePlaneL;
-	public TF3D_Body   PCubePlaneR;
-
-	public Demo_ShapePhysic()
+	
+	public TF3D_Body   PCube;
+	
+	public Demo_TerrainShapePhysic()
 	{
 
 	}
@@ -83,41 +83,30 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Cylinder.a3da");
 		F3D.Meshes.Add("abstract::Capsule.a3da");
 		F3D.Meshes.Add("abstract::Plane.a3da");
+		F3D.Meshes.Add("abstract::landscape_L.a3da");
+		F3D.Meshes.Add("abstract::landscape_R.a3da");
 
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 
-		
-		this.PCubePlaneL = new TF3D_Body("PCubePlane");
-		this.PCubePlaneL.AssignMesh("abstract::Cube.a3da");
-		this.PCubePlaneL.Enable();
-		this.PCubePlaneL.SetSurface("MATbase");
-		this.PCubePlaneL.SetPosition(2.5f, 14f, 0f);
-		this.PCubePlaneL.SetScale(5f, 0.15f, 5f);
-		this.PCubePlaneL.SetRotation(0f, 0f, 45f);
-		this.PCubePlaneL.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 0.0f);
+
+		this.PTerrainR = new TF3D_Body("LANDSCAPE");
+		this.PTerrainR.AssignMesh("abstract::landscape_R.a3da");
+		this.PTerrainR.Enable();
+		this.PTerrainR.SetPosition(0f, 0f, 0f);
+		this.PTerrainR.SetRotation(0f, 0f, 0f);		
+		this.PTerrainR.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
 		
-		this.PCubePlaneR = new TF3D_Body("PCubePlane");
-		this.PCubePlaneR.AssignMesh("abstract::Cube.a3da");
-		this.PCubePlaneR.Enable();
-		this.PCubePlaneR.SetSurface("MATbase");
-		this.PCubePlaneR.SetPosition(-2.5f, 8f, 0f);
-		this.PCubePlaneR.SetScale(5f, 0.15f, 5f);
-		this.PCubePlaneR.SetRotation(0f, 0f, -45f);
-		this.PCubePlaneR.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 0.0f);
+		this.PTerrainL = new TF3D_Body("LANDSCAPE");
+		this.PTerrainL.AssignMesh("abstract::landscape_L.a3da");
+		this.PTerrainL.Enable();
+		this.PTerrainL.SetPosition(0f, 0f, 0f);
+		this.PTerrainL.SetRotation(0f, 0f, 0f);		
+		this.PTerrainL.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
-		
-		this.PPlane = new TF3D_Body("PPlane");
-		this.PPlane.AssignMesh("abstract::Plane.a3da");
-		this.PPlane.Enable();
-		this.PPlane.SetSurface("MATbase");
-		this.PPlane.SetPosition(0f, 0f, 0f);
-		this.PPlane.SetRotation(0f, 0f, 0f);		
-		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
-    	
 		this.PCube = new TF3D_Body("PCube");
 		this.PCube.AssignMesh("abstract::Cube.a3da");
 		this.PCube.Enable();
@@ -135,16 +124,15 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PSphere.SetPosition(0.5f, 21f, 0);
 		this.PSphere.SetRotation(0f, 0f, 0f);
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
-		//this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_CONVEXHULL, 1.0f);
-
+		
 		
 		this.PCapsule = new TF3D_Body("PCapsule");
 		this.PCapsule.AssignMesh("abstract::Capsule.a3da");
 		this.PCapsule.Enable();
 		this.PCapsule.SetSurface("MATbase");
-		this.PCapsule.SetPosition(-0.5f, 21f, 0);
+		this.PCapsule.SetPosition(-20.5f, 21f, 0);
 		this.PCapsule.SetRotation(0f, 0f, 0f);
-		this.PCapsule.CreateRigidBody(F3D.BULLET_SHAPE_CAPSULE, 1.0f);
+		this.PCapsule.CreateRigidBody(F3D.BULLET_SHAPE_CONVEXHULL, 1.0f);
 
 		this.PCylinder = new TF3D_Body("PCylinder");
 		this.PCylinder.AssignMesh("abstract::Cylinder.a3da");
@@ -247,7 +235,7 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 
 	public static void main(String[] args)
 	{
-		new Demo_ShapePhysic().Execute();
+		new Demo_TerrainShapePhysic().Execute();
 		System.exit(0);
 	}
 
