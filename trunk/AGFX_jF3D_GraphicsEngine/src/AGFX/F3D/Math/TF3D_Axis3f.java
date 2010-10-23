@@ -84,5 +84,5 @@ public class TF3D_Axis3f
 		this._forward.z = (float) (a * c);
 
 	}
-
+	
 }

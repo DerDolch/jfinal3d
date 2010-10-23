@@ -16,9 +16,14 @@ import AGFX.F3D.Math.TF3D_Axis3f;
  */
 public abstract class TF3D_Entity
 {
+	
+	/** Entity start position - used for physics restart*/
+	public Vector3f              start_position;
+	/** Entity rotation - used for physics restart*/
+	public Vector3f              start_rotation;
+	
 	/** Entity position */
 	private Vector3f              position;
-
 	/** Entity rotation */
 	private Vector3f              rotation;
 	/** Entity scale */
@@ -57,6 +62,9 @@ public abstract class TF3D_Entity
 	{
 		F3D.Log.info("TF3D_Entity", "Create - constructor");
 
+		this.start_position = new Vector3f();
+		this.start_rotation = new Vector3f();
+		
 		this.position = new Vector3f();
 		this.rotation = new Vector3f();
 		this.scale = new Vector3f();

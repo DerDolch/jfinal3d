@@ -182,6 +182,13 @@ public class TF3D_TextureManager
 		glDisable(GL_TEXTURE_2D);
 	}
 
+	public void DeactivateLayers()
+	{
+		this.DeactivateLayer(0);
+		this.DeactivateLayer(1);
+		this.DeactivateLayer(2);
+		this.DeactivateLayer(3);
+	}
 	// -----------------------------------------------------------------------
 	// TA3D_TextureManager: BeginTranslate
 	// -----------------------------------------------------------------------
