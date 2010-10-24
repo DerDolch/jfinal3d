@@ -4,10 +4,12 @@ import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 
+import com.bulletphysics.BulletStats;
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
 import com.bulletphysics.collision.dispatch.CollisionConfiguration;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
+import com.bulletphysics.collision.dispatch.CollisionObject;
 import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
@@ -63,6 +65,7 @@ public class TF3D_Physics
 		this.Debug.setDebugMode(DebugDrawModes.DRAW_WIREFRAME | DebugDrawModes.DRAW_AABB | DebugDrawModes.DRAW_CONTACT_POINTS);
 		this.dynamicsWorld.setDebugDrawer(this.Debug);
 
+		this.Reset();
 	}
 
 	public RigidBody localCreateRigidBody(float mass, Transform startTransform, CollisionShape shape)
@@ -91,7 +94,38 @@ public class TF3D_Physics
 
 	public void Reset()
 	{
-		// TODO - finilize reset physics world
+		//#ifdef SHOW_NUM_DEEP_PENETRATIONS
+		BulletStats.gNumDeepPenetrationChecks = 0;
+		BulletStats.gNumGjkChecks = 0;
+		//#endif //SHOW_NUM_DEEP_PENETRATIONS
+
+		int numObjects = 0;
+		if (F3D.Physic.dynamicsWorld != null) {
+			F3D.Physic.dynamicsWorld.stepSimulation(1f / 60f, 0);
+			numObjects = F3D.Physic.dynamicsWorld.getNumCollisionObjects();
+		}
+
+		for (int i = 0; i < numObjects; i++) {
+			CollisionObject colObj = dynamicsWorld.getCollisionObjectArray().getQuick(i);
+			RigidBody body = RigidBody.upcast(colObj);
+			if (body != null) {
+				if (body.getMotionState() != null) {
+					DefaultMotionState myMotionState = (DefaultMotionState) body.getMotionState();
+					myMotionState.graphicsWorldTrans.set(myMotionState.startWorldTrans);
+					colObj.setWorldTransform(myMotionState.graphicsWorldTrans);
+					colObj.setInterpolationWorldTransform(myMotionState.startWorldTrans);
+					colObj.activate();
+				}
+				// removed cached contact points
+				dynamicsWorld.getBroadphase().getOverlappingPairCache().cleanProxyFromPairs(colObj.getBroadphaseHandle(), getDynamicsWorld().getDispatcher());
+
+				body = RigidBody.upcast(colObj);
+				if (body != null && !body.isStaticObject()) {
+					RigidBody.upcast(colObj).setLinearVelocity(new Vector3f(0f, 0f, 0f));
+					RigidBody.upcast(colObj).setAngularVelocity(new Vector3f(0f, 0f, 0f));
+				}
+			}
+		} 
 
 	}
 
