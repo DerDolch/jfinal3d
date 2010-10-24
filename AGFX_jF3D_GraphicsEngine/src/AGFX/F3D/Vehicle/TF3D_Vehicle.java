@@ -10,14 +10,21 @@ import static org.lwjgl.opengl.GL11.glScalef;
 
 import java.nio.FloatBuffer;
 
+import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import org.lwjgl.BufferUtils;
 
+import com.bulletphysics.collision.dispatch.CollisionObject;
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.collision.shapes.CompoundShape;
 import com.bulletphysics.dynamics.RigidBody;
+import com.bulletphysics.dynamics.vehicle.DefaultVehicleRaycaster;
+import com.bulletphysics.dynamics.vehicle.RaycastVehicle;
+import com.bulletphysics.dynamics.vehicle.VehicleRaycaster;
+import com.bulletphysics.dynamics.vehicle.VehicleTuning;
+import com.bulletphysics.dynamics.vehicle.WheelInfo;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
 
@@ -31,62 +38,67 @@ import AGFX.F3D.Mesh.TF3D_BoundingBox;
  */
 public class TF3D_Vehicle extends TF3D_Entity
 {
-	
-	
-	private float gEngineForce          = 0.f;
-	private float gBreakingForce        = 0.f;
-	private float maxEngineForce        = 1000.f;
-	private float maxBreakingForce      = 100.f;
-	private float gVehicleSteering      = 0.f;
-	private float steeringIncrement     = 0.04f;
-	private float steeringClamp         = 0.3f;
-	private float wheelRadius           = 0.5f;
-	private float wheelWidth            = 0.4f;
-	private float wheelFriction         = 1000;
-	private float suspensionStiffness   = 20.f;
-	private float suspensionDamping     = 2.3f;
-	private float suspensionCompression = 4.4f;
-	private float rollInfluence         = 0.1f;
 
-	private float suspensionRestLength  = 0.6f;
+	public float                          gEngineForce                   = 0.f;
+	public float                          gBreakingForce                 = 0.f;
+	public float                          maxEngineForce                 = 1000.f;
+	public float                          maxBreakingForce               = 100.f;
+	public float                          gVehicleSteering               = 0.f;
+	public float                          steeringIncrement              = 0.04f;
+	public float                          steeringClamp                  = 0.3f;
+	private float                          wheelRadius                    = 0.5f;
+	private float                          wheelWidth                     = 0.4f;
+	private float                          wheelFriction                  = 1000;
+	private float                          suspensionStiffness            = 20.f;
+	private float                          suspensionDamping              = 2.3f;
+	private float                          suspensionCompression          = 4.4f;
+	private float                          rollInfluence                  = 0.1f;
+
+	private float                          suspensionRestLength           = 0.6f;
 
 	// assigned vehicle models
-	public int    model_wheel_FL        = -1;
-	public int    model_wheel_FR        = -1;
-	public int    model_wheel_RL        = -1;
-	public int    model_wheel_RR        = -1;
-	public int    model_schassis        = -1;
-	
+	public int                             model_wheel_FL                 = -1;
+	public float[]                         wheel_FL_transformMatrix       = new float[16];
+	public FloatBuffer                     wheel_FL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int                             model_wheel_FR                 = -1;
+	public float[]                         wheel_FR_transformMatrix       = new float[16];
+	public FloatBuffer                     wheel_FR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int                             model_wheel_BL                 = -1;
+	public float[]                         wheel_BL_transformMatrix       = new float[16];
+	public FloatBuffer                     wheel_BL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int                             model_wheel_BR                 = -1;
+	public float[]                         wheel_BR_transformMatrix       = new float[16];
+	public FloatBuffer                     wheel_BR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int                             model_chassis                  = -1;
+	public float[]                         chassis_transformMatrix        = new float[16];
+	public FloatBuffer                     chassis_transformMatrixBuffer  = BufferUtils.createFloatBuffer(16);
+
 	// Physics vehicle definition
-	public RigidBody RB_carChassis;
-	public ObjectArrayList<CollisionShape> collisionShapes = new ObjectArrayList<CollisionShape>();
-	
-	
-	public float[]  transformMatrix = new float[16];
-	public FloatBuffer transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
-	
-	
+	public RigidBody                       RB_carChassis;
+	public ObjectArrayList<CollisionShape> collisionShapes                = new ObjectArrayList<CollisionShape>();
+	public VehicleTuning                   tuning                         = new VehicleTuning();
+	public VehicleRaycaster                vehicleRayCaster;
+	public RaycastVehicle                  vehicle;
+
 	public TF3D_Vehicle(String name)
 	{
-		
+
 		F3D.Log.info("TF3D_Vehicle", "TF3D_Vehicle: constructor");
 		this.name = name;
 		F3D.Log.info("TF3D_Vehicle", "TF3D_Vehicle: done");
 	}
 
-	
 	public void Create()
 	{
 		Transform tr = new Transform();
 		tr.setIdentity();
-		
-		
+
 		// Shape of Chassis
-		
+
 		TF3D_BoundingBox chassis_bbox = new TF3D_BoundingBox();
-		chassis_bbox.CalcFromMesh(this.model_schassis);
+		chassis_bbox.CalcFromMesh(this.model_chassis);
 		chassis_bbox.size.scale(0.5f);
-		
+
 		CollisionShape chassisShape = new BoxShape(chassis_bbox.size);
 		collisionShapes.add(chassisShape);
 
@@ -95,75 +107,289 @@ public class TF3D_Vehicle extends TF3D_Entity
 		Transform localTrans = new Transform();
 		localTrans.setIdentity();
 
-		localTrans.origin.set(0, 1, 0);
-
+		localTrans.origin.set(0, 0.5f, 0);
 
 		compound.addChildShape(localTrans, chassisShape);
 
 		tr.origin.set(this.GetPosition());
 
-		// RigidBody of Chassis
-		
+		// Quat4f qrot = new Quat4f();
+
+		tr.setRotation(AnglesToQuat4f(this.GetRotation().z * F3D.DEGTORAD, this.GetRotation().y * F3D.DEGTORAD, this.GetRotation().x * F3D.DEGTORAD));
+
 		RB_carChassis = F3D.Physic.localCreateRigidBody(800, tr, compound);
 		F3D.Physic.AddBody(RB_carChassis);
-		
-		
+
+		// create vehicle
+		{
+			this.vehicleRayCaster = new DefaultVehicleRaycaster(F3D.Physic.dynamicsWorld);
+			this.vehicle = new RaycastVehicle(tuning, RB_carChassis, vehicleRayCaster);
+
+			// never deactivate the vehicle
+			RB_carChassis.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
+
+			F3D.Physic.dynamicsWorld.addVehicle(vehicle);
+
+			float connectionWidth = 1.15f;
+			float connectionHeight = 0.4f;
+			float connectionLength = 1.40f;
+
+			boolean isFrontWheel = true;
+
+			// choose coordinate system
+			vehicle.setCoordinateSystem(0, 1, 2);
+
+			Vector3f wheelDirectionCS0 = new Vector3f(0, -1, 0);
+			Vector3f wheelAxleCS = new Vector3f(-1, 0, 0);
+
+			// WHEEL FL
+			Vector3f connectionPointCS0 = new Vector3f(-connectionWidth, connectionHeight, connectionLength);
+			vehicle.addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, isFrontWheel);
+
+			// WHEEL FR
+			connectionPointCS0 = new Vector3f(connectionWidth, connectionHeight, connectionLength);
+			vehicle.addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, isFrontWheel);
+
+			// WHEEL BL
+			connectionPointCS0 = new Vector3f(-connectionWidth, connectionHeight, -connectionLength);
+			vehicle.addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, isFrontWheel);
+
+			// WHEEL BR
+			connectionPointCS0 = new Vector3f(connectionWidth, connectionHeight, -connectionLength);
+			vehicle.addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, isFrontWheel);
+
+			for (int i = 0; i < vehicle.getNumWheels(); i++)
+			{
+				WheelInfo wheel = vehicle.getWheelInfo(i);
+				wheel.suspensionStiffness = suspensionStiffness;
+				wheel.wheelsDampingRelaxation = suspensionDamping;
+				wheel.wheelsDampingCompression = suspensionCompression;
+				wheel.frictionSlip = wheelFriction;
+				wheel.rollInfluence = rollInfluence;
+			}
+		}
+
 	}
 
-	
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Destroy()
-     */
-    @Override
-    public void Destroy()
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
+	// TODO - fix convert Eulwr angles to Quat4f
+	public Quat4f AnglesToQuat4f(double heading, double attitude, double bank)
+	{
 
+		Quat4f q = new Quat4f();
+		// Assuming the angles are in radians.
+		double c1 = Math.cos(heading / 2.0f);
+		double s1 = Math.sin(heading / 2.0f);
+		double c2 = Math.cos(attitude / 2.0f);
+		double s2 = Math.sin(attitude / 2.0f);
+		double c3 = Math.cos(bank / 2.0f);
+		double s3 = Math.sin(bank / 2.0f);
+		double c1c2 = c1 * c2;
+		double s1s2 = s1 * s2;
+		q.w = (float) (c1c2 * c3 - s1s2 * s3);
+		q.x = (float) (c1c2 * s3 + s1s2 * c3);
+		q.y = (float) (s1 * c2 * c3 + c1 * s2 * s3);
+		q.z = (float) (c1 * s2 * c3 - s1 * c2 * s3);
 
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Render()
-     */
-    @Override
-    public void Render()
-    {
-    	if (this.model_schassis >= 0)
+		return q;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Destroy()
+	 */
+	@Override
+	public void Destroy()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Render()
+	 */
+	@Override
+	public void Render()
+	{
+		if (this.model_chassis >= 0)
 		{
-    		
-    		int mid;
-    		mid = F3D.Meshes.items.get(this.model_schassis).data.material_id;
-    		if (mid >= 0)
+
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_chassis).data.material_id;
+			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
 			}
-    		
-			glPushMatrix();					
-			glMultMatrix(this.transformMatrixBuffer);
+
+			glPushMatrix();
+			glMultMatrix(this.chassis_transformMatrixBuffer);
 			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-			F3D.Meshes.items.get(this.model_schassis).Render();
+			F3D.Meshes.items.get(this.model_chassis).Render();
 			glScalef(1, 1, 1);
 			glPopMatrix();
 		}
-	    
-    }
 
+		if (this.model_wheel_FL >= 0)
+		{
 
-	/* (non-Javadoc)
-     * @see AGFX.F3D.Entity.TF3D_Entity#Update()
-     */
-    @Override
-    public void Update()
-    {
-    	// update model transformation
-    	Transform ch_tr = new Transform();
-    	
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_wheel_FL).data.material_id;
+			if (mid >= 0)
+			{
+				F3D.Surfaces.ApplyMaterial(mid);
+			}
+
+			glPushMatrix();
+			glMultMatrix(this.wheel_FL_transformMatrixBuffer);
+			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			F3D.Meshes.items.get(this.model_wheel_FL).Render();
+			glScalef(1, 1, 1);
+			glPopMatrix();
+		}
+
+		if (this.model_wheel_FR >= 0)
+		{
+
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_wheel_FR).data.material_id;
+			if (mid >= 0)
+			{
+				F3D.Surfaces.ApplyMaterial(mid);
+			}
+
+			glPushMatrix();
+			glMultMatrix(this.wheel_FR_transformMatrixBuffer);
+			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			F3D.Meshes.items.get(this.model_wheel_FR).Render();
+			glScalef(1, 1, 1);
+			glPopMatrix();
+		}
+
+		if (this.model_wheel_BL >= 0)
+		{
+
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_wheel_BL).data.material_id;
+			if (mid >= 0)
+			{
+				F3D.Surfaces.ApplyMaterial(mid);
+			}
+
+			glPushMatrix();
+			glMultMatrix(this.wheel_BL_transformMatrixBuffer);
+			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			F3D.Meshes.items.get(this.model_wheel_BL).Render();
+			glScalef(1, 1, 1);
+			glPopMatrix();
+		}
+
+		if (this.model_wheel_BR >= 0)
+		{
+
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_wheel_BR).data.material_id;
+			if (mid >= 0)
+			{
+				F3D.Surfaces.ApplyMaterial(mid);
+			}
+
+			glPushMatrix();
+			glMultMatrix(this.wheel_BR_transformMatrixBuffer);
+			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			F3D.Meshes.items.get(this.model_wheel_BR).Render();
+			glScalef(1, 1, 1);
+			glPopMatrix();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Update()
+	 */
+	@Override
+	public void Update()
+	{
+		
+		
+		int wheelIndex = 2;
+		vehicle.applyEngineForce(gEngineForce,wheelIndex);
+		vehicle.setBrake(gBreakingForce,wheelIndex);
+		wheelIndex = 3;
+		vehicle.applyEngineForce(gEngineForce,wheelIndex);
+		vehicle.setBrake(gBreakingForce,wheelIndex);
+
+		wheelIndex = 0;
+		vehicle.setSteeringValue(gVehicleSteering,wheelIndex);
+		wheelIndex = 1;
+		vehicle.setSteeringValue(gVehicleSteering,wheelIndex);
+		
+		
+		// update model transformation
+		Transform ch_tr = new Transform();
+
 		this.RB_carChassis.getMotionState().getWorldTransform(ch_tr);
 
-		ch_tr.getOpenGLMatrix(this.transformMatrix);
+		
+		// get real position
+		this.SetPosition(ch_tr.origin);
+		
+		ch_tr.getOpenGLMatrix(this.chassis_transformMatrix);
 
-		this.transformMatrixBuffer.put(this.transformMatrix);
-		this.transformMatrixBuffer.rewind();
-	    
-    }
+		this.chassis_transformMatrixBuffer.put(this.chassis_transformMatrix);
+		this.chassis_transformMatrixBuffer.rewind();
+
+		// Wheel FL
+		int i = 0;
+		vehicle.updateWheelTransform(i, true);
+		Transform trans = vehicle.getWheelInfo(i).worldTransform;
+		trans.getOpenGLMatrix(this.wheel_FL_transformMatrix);
+		this.wheel_FL_transformMatrixBuffer.put(this.wheel_FL_transformMatrix);
+		this.wheel_FL_transformMatrixBuffer.rewind();
+
+		// Wheel FR
+		i = 1;
+		vehicle.updateWheelTransform(i, true);
+		trans = vehicle.getWheelInfo(i).worldTransform;
+		trans.getOpenGLMatrix(this.wheel_FR_transformMatrix);
+		this.wheel_FR_transformMatrixBuffer.put(this.wheel_FR_transformMatrix);
+		this.wheel_FR_transformMatrixBuffer.rewind();
+
+		// Wheel BL
+		i = 2;
+		vehicle.updateWheelTransform(i, true);
+		trans = vehicle.getWheelInfo(i).worldTransform;
+		trans.getOpenGLMatrix(this.wheel_BL_transformMatrix);
+		this.wheel_BL_transformMatrixBuffer.put(this.wheel_BL_transformMatrix);
+		this.wheel_BL_transformMatrixBuffer.rewind();
+
+		// Wheel BR
+		i = 3;
+		vehicle.updateWheelTransform(i, true);
+		trans = vehicle.getWheelInfo(i).worldTransform;
+		trans.getOpenGLMatrix(this.wheel_BR_transformMatrix);
+		this.wheel_BR_transformMatrixBuffer.put(this.wheel_BR_transformMatrix);
+		this.wheel_BR_transformMatrixBuffer.rewind();
+	}
+
+	public void Reset()
+	{
+		gVehicleSteering = 0f;
+		Transform tr = new Transform();
+		tr.setIdentity();
+		this.RB_carChassis.setCenterOfMassTransform(tr);
+		this.RB_carChassis.setLinearVelocity(new Vector3f(0, 0, 0));
+		this.RB_carChassis.setAngularVelocity(new Vector3f(0, 0, 0));
+		F3D.Physic.dynamicsWorld.getBroadphase().getOverlappingPairCache().cleanProxyFromPairs(this.RB_carChassis.getBroadphaseHandle(), F3D.Physic.getDynamicsWorld().getDispatcher());
+		if (vehicle != null)
+		{
+			vehicle.resetSuspension();
+			for (int i = 0; i < vehicle.getNumWheels(); i++)
+			{
+				vehicle.updateWheelTransform(i, true);
+			}
+		}
+	}
 }
