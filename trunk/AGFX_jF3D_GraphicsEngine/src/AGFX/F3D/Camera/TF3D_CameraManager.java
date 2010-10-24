@@ -251,6 +251,9 @@ public class TF3D_CameraManager
 		return pos;
 	}
 
+	
+	
+	
 	public void RenderSky()
 	{
 		if (this.Sky!=null)

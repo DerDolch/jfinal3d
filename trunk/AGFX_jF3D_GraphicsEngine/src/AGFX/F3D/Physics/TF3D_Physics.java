@@ -103,7 +103,7 @@ public class TF3D_Physics
 	public void Update()
 	{
 		// this.dynamicsWorld.stepSimulation(1/30.f,10);
-		this.dynamicsWorld.stepSimulation(1.0f / 500f, 10);
+		this.dynamicsWorld.stepSimulation(1.0f / 100f, 2);
 	}
 
 }
