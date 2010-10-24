@@ -130,43 +130,42 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	private void KeyPressed()
 	{
-		
-		
-			Keyboard.enableRepeatEvents(false);
-			while (Keyboard.next())
-			{
-				if (Keyboard.getEventKeyState())
-				{
-					int key = Keyboard.getEventKey();
 
-					switch (key)
+		Keyboard.enableRepeatEvents(false);
+		while (Keyboard.next())
+		{
+			if (Keyboard.getEventKeyState())
+			{
+				int key = Keyboard.getEventKey();
+
+				switch (key)
+				{
+				case Keyboard.KEY_F12:
+				{
+					try
 					{
-					case Keyboard.KEY_F12:
+						F3D.Display.SwitchSceenMode();
+					} catch (LWJGLException e)
 					{
-						try
-                        {
-	                        F3D.Display.SwitchSceenMode();
-                        } catch (LWJGLException e)
-                        {
-	                        
-	                        e.printStackTrace();
-                        }
-						break;
+
+						e.printStackTrace();
 					}
-					case Keyboard.KEY_ESCAPE:
-					{
-						this.AppTerminate = true;
-						break;
-					}
-					case Keyboard.KEY_F10:
-					{
-						F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
-						break;
-					}
-					}
+					break;
+				}
+				case Keyboard.KEY_ESCAPE:
+				{
+					this.AppTerminate = true;
+					break;
+				}
+				case Keyboard.KEY_F10:
+				{
+					F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
+					break;
+				}
 				}
 			}
-			Keyboard.enableRepeatEvents(true);
+		}
+		Keyboard.enableRepeatEvents(true);
 
 	}
 
@@ -191,22 +190,21 @@ public class TF3D_AppWrapper
 		while (!this.AppTerminate && !Display.isCloseRequested())
 		{
 
-			
 			F3D.Timer.Update();
-			
-			if (F3D.Config.use_physics) F3D.Physic.Update();
+
+			if (F3D.Config.use_physics)
+				F3D.Physic.Update();
 
 			if (F3D.Display.isVisible())
 			{
 				this.KeyPressed();
-				
+
 				F3D.Viewport.BeginRender3D();
-				
-				
+
 				F3D.World.Update();
 				F3D.World.Render();
 				this.onUpdate3D();
-					
+
 				if (F3D.Config.use_physics_debug)
 				{
 					F3D.Physic.dynamicsWorld.debugDrawWorld();
@@ -219,8 +217,6 @@ public class TF3D_AppWrapper
 				this.onUpdate2D();
 
 				F3D.Viewport.EndRender2D();
-
-				
 
 			}
 
@@ -291,7 +287,7 @@ public class TF3D_AppWrapper
 
 		} catch (LWJGLException e)
 		{
-			
+
 			e.printStackTrace();
 			F3D.Log.error("TF3D_AppWrapper", "Failed to initialize F3D Engine/Application");
 		}

@@ -43,6 +43,16 @@ public class TF3D_Physics
 		F3D.Log.info("TF3D_Physics", "TF3D_Physics: done");
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Create Global Dynamic World <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
 	public void Initialize()
 	{
 		// Build the broadphase
@@ -68,6 +78,24 @@ public class TF3D_Physics
 		this.Reset();
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Help function to create rigidbody <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param mass
+	 *            = Body mass
+	 * @param startTransform
+	 *            = stratup transformation
+	 * @param shape
+	 *            = collision shape
+	 * @return RigidBody
+	 */
+	// -----------------------------------------------------------------------
 	public RigidBody localCreateRigidBody(float mass, Transform startTransform, CollisionShape shape)
 	{
 
@@ -87,29 +115,55 @@ public class TF3D_Physics
 		return body;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add rigiBody to dynamic world <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param body
+	 */
+	// -----------------------------------------------------------------------
 	public void AddBody(RigidBody body)
 	{
 		dynamicsWorld.addRigidBody(body);
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Reset dynamicworld with all objects <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
 	public void Reset()
 	{
-		//#ifdef SHOW_NUM_DEEP_PENETRATIONS
+		// #ifdef SHOW_NUM_DEEP_PENETRATIONS
 		BulletStats.gNumDeepPenetrationChecks = 0;
 		BulletStats.gNumGjkChecks = 0;
-		//#endif //SHOW_NUM_DEEP_PENETRATIONS
+		// #endif //SHOW_NUM_DEEP_PENETRATIONS
 
 		int numObjects = 0;
-		if (F3D.Physic.dynamicsWorld != null) {
+		if (F3D.Physic.dynamicsWorld != null)
+		{
 			F3D.Physic.dynamicsWorld.stepSimulation(1f / 60f, 0);
 			numObjects = F3D.Physic.dynamicsWorld.getNumCollisionObjects();
 		}
 
-		for (int i = 0; i < numObjects; i++) {
+		for (int i = 0; i < numObjects; i++)
+		{
 			CollisionObject colObj = dynamicsWorld.getCollisionObjectArray().getQuick(i);
 			RigidBody body = RigidBody.upcast(colObj);
-			if (body != null) {
-				if (body.getMotionState() != null) {
+			if (body != null)
+			{
+				if (body.getMotionState() != null)
+				{
 					DefaultMotionState myMotionState = (DefaultMotionState) body.getMotionState();
 					myMotionState.graphicsWorldTrans.set(myMotionState.startWorldTrans);
 					colObj.setWorldTransform(myMotionState.graphicsWorldTrans);
@@ -120,20 +174,43 @@ public class TF3D_Physics
 				dynamicsWorld.getBroadphase().getOverlappingPairCache().cleanProxyFromPairs(colObj.getBroadphaseHandle(), getDynamicsWorld().getDispatcher());
 
 				body = RigidBody.upcast(colObj);
-				if (body != null && !body.isStaticObject()) {
+				if (body != null && !body.isStaticObject())
+				{
 					RigidBody.upcast(colObj).setLinearVelocity(new Vector3f(0f, 0f, 0f));
 					RigidBody.upcast(colObj).setAngularVelocity(new Vector3f(0f, 0f, 0f));
 				}
 			}
-		} 
+		}
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Return current dynamicWorld <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @return = DynamicsWorld
+	 */
+	// -----------------------------------------------------------------------
 	public DynamicsWorld getDynamicsWorld()
 	{
 		return dynamicsWorld;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Physics:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Update Simulation. <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
 	public void Update()
 	{
 		// this.dynamicsWorld.stepSimulation(1/30.f,10);
