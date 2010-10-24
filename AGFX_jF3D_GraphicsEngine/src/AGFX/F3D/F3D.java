@@ -48,6 +48,7 @@ public class F3D
 	public static final int                 CLASS_SPRITE               = 4;
 	public static final int                 CLASS_CAMERA               = 5;
 	public static final int                 CLASS_BODY                 = 6;
+	public static final int                 CLASS_VEHICLE              = 7;
 
 	// '-----------------------------------------------------------------
 	// ' CAMERA: CONST
