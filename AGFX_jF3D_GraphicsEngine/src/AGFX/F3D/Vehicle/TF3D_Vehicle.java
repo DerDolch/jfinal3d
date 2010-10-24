@@ -39,13 +39,13 @@ import AGFX.F3D.Mesh.TF3D_BoundingBox;
 public class TF3D_Vehicle extends TF3D_Entity
 {
 
-	public float                          gEngineForce                   = 0.f;
-	public float                          gBreakingForce                 = 0.f;
-	public float                          maxEngineForce                 = 1000.f;
-	public float                          maxBreakingForce               = 100.f;
-	public float                          gVehicleSteering               = 0.f;
-	public float                          steeringIncrement              = 0.04f;
-	public float                          steeringClamp                  = 0.3f;
+	public float                           gEngineForce                   = 0.f;
+	public float                           gBreakingForce                 = 0.f;
+	public float                           maxEngineForce                 = 1000.f;
+	public float                           maxBreakingForce               = 100.f;
+	public float                           gVehicleSteering               = 0.f;
+	public float                           steeringIncrement              = 0.04f;
+	public float                           steeringClamp                  = 0.3f;
 	private float                          wheelRadius                    = 0.5f;
 	private float                          wheelWidth                     = 0.4f;
 	private float                          wheelFriction                  = 1000;
@@ -107,7 +107,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 		Transform localTrans = new Transform();
 		localTrans.setIdentity();
 
-		localTrans.origin.set(0, 0.5f, 0);
+		localTrans.origin.set(0, 0.5f, 0f);
 
 		compound.addChildShape(localTrans, chassisShape);
 
@@ -167,6 +167,9 @@ public class TF3D_Vehicle extends TF3D_Entity
 				wheel.frictionSlip = wheelFriction;
 				wheel.rollInfluence = rollInfluence;
 			}
+			
+			
+			
 		}
 
 	}
@@ -312,30 +315,27 @@ public class TF3D_Vehicle extends TF3D_Entity
 	@Override
 	public void Update()
 	{
-		
-		
+
 		int wheelIndex = 2;
-		vehicle.applyEngineForce(gEngineForce,wheelIndex);
-		vehicle.setBrake(gBreakingForce,wheelIndex);
+		vehicle.applyEngineForce(gEngineForce, wheelIndex);
+		vehicle.setBrake(gBreakingForce, wheelIndex);
 		wheelIndex = 3;
-		vehicle.applyEngineForce(gEngineForce,wheelIndex);
-		vehicle.setBrake(gBreakingForce,wheelIndex);
+		vehicle.applyEngineForce(gEngineForce, wheelIndex);
+		vehicle.setBrake(gBreakingForce, wheelIndex);
 
 		wheelIndex = 0;
-		vehicle.setSteeringValue(gVehicleSteering,wheelIndex);
+		vehicle.setSteeringValue(gVehicleSteering, wheelIndex);
 		wheelIndex = 1;
-		vehicle.setSteeringValue(gVehicleSteering,wheelIndex);
-		
-		
+		vehicle.setSteeringValue(gVehicleSteering, wheelIndex);
+
 		// update model transformation
 		Transform ch_tr = new Transform();
 
 		this.RB_carChassis.getMotionState().getWorldTransform(ch_tr);
 
-		
 		// get real position
 		this.SetPosition(ch_tr.origin);
-		
+
 		ch_tr.getOpenGLMatrix(this.chassis_transformMatrix);
 
 		this.chassis_transformMatrixBuffer.put(this.chassis_transformMatrix);

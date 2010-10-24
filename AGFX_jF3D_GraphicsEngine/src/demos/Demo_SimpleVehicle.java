@@ -3,6 +3,7 @@
  */
 package demos;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -57,7 +58,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 	public void onInitialize()
 	{
 		this.Camera = new TF3D_Camera("FPSCamera");
-		this.Camera.SetPosition(0.0f, 50.0f, -30.0f);
+		this.Camera.SetPosition(0.0f, 20.0f, -30.0f);
 		this.Camera.SetRotation(0, 180, 0);
 
 		this.Camera.movespeed = 0.2f;
@@ -120,21 +121,21 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 	{
 		F3D.Draw.Axis(2.0f);
 
-		
 		// look at car
 		F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).TargetPoint.set(this.car.GetPosition());
-		
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP))
 		{
 			this.car.gEngineForce = this.car.maxEngineForce;
 			this.car.gBreakingForce = 0.f;
-		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
 		{
-			this.car.gEngineForce = -this.car.maxEngineForce;
-			this.car.gBreakingForce = 0.f;
+			this.car.gBreakingForce = this.car.maxBreakingForce;
+			this.car.gEngineForce = 0.f;
+		} else
+		{
+			this.car.gEngineForce = 0f;
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT))
@@ -144,23 +145,26 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 			{
 				this.car.gVehicleSteering = this.car.steeringClamp;
 			}
-			
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
 		{
 			this.car.gVehicleSteering -= this.car.steeringIncrement;
 			if (this.car.gVehicleSteering < -this.car.steeringClamp)
 			{
 				this.car.gVehicleSteering = -this.car.steeringClamp;
 			}
-			
+
 		}
-		
+		else
+		{
+			this.car.gVehicleSteering =0f;
+		}
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_R))
 		{
 			this.car.Reset();
 		}
-		
+
 	}
 
 	@Override
