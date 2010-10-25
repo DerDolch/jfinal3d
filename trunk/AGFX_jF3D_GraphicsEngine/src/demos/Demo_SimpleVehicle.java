@@ -103,7 +103,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
 
 		this.car = new TF3D_Vehicle("CAR_01");
-		this.car.SetRotation(0, 0, 0);
+		this.car.SetRotation(0, 0, 90);
 		this.car.model_chassis = F3D.Meshes.FindByName("abstract::jeep.a3da");
 		this.car.model_wheel_FL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
 		this.car.model_wheel_FR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
