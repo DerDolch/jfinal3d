@@ -178,33 +178,33 @@ public class TF3D_Body extends TF3D_Entity
 
 		if (this.IsEnabled())
 		{
-			
-			 if (this.IsVisible())
-			 {
-			if (this.surface_id < 0)
-			{
-				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
-			} else
-			{
-				mid = this.surface_id;
-			}
 
-			if (mid >= 0)
+			if (this.IsVisible())
 			{
-				F3D.Surfaces.ApplyMaterial(mid);
-			}
+				if (this.surface_id < 0)
+				{
+					mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
+				} else
+				{
+					mid = this.surface_id;
+				}
 
-			if (this.mesh_id >= 0)
-			{
-				glPushMatrix();
-				glMultMatrix(this.PhysicObject.transformMatrixBuffer);
-				glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-				F3D.Meshes.items.get(this.mesh_id).Render();
-				glScalef(1, 1, 1);
-				glPopMatrix();
-			}
+				if (mid >= 0)
+				{
+					F3D.Surfaces.ApplyMaterial(mid);
+				}
 
-			 }
+				if (this.mesh_id >= 0)
+				{
+					glPushMatrix();
+					glMultMatrix(this.PhysicObject.transformMatrixBuffer);
+					glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+					F3D.Meshes.items.get(this.mesh_id).Render();
+					glScalef(1, 1, 1);
+					glPopMatrix();
+				}
+
+			}
 
 		}
 	}
@@ -239,39 +239,81 @@ public class TF3D_Body extends TF3D_Entity
 		Quat4f qm = new Quat4f();
 		this.PhysicObject.Transform.getRotation(qm);
 		this.SetRotation(Quad2Angles(qm));
-		
+
 		Vector3f aabbMin = new Vector3f();
 		Vector3f aabbMax = new Vector3f();
-		
+
 		this.PhysicObject.RigidBody.getAabb(aabbMin, aabbMax);
-		
+
 		this.BBOX.CalcFromMinMax(aabbMin, aabbMax);
 
 	}
 
-	public Quat4f AnglesToQuat4f(double heading, double attitude, double bank)
+	public Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
 	{
 
 		Quat4f q = new Quat4f();
-		// Assuming the angles are in radians.
-		double c1 = Math.cos(heading / 2.0f);
-		double s1 = Math.sin(heading / 2.0f);
-		double c2 = Math.cos(attitude / 2.0f);
-		double s2 = Math.sin(attitude / 2.0f);
-		double c3 = Math.cos(bank / 2.0f);
-		double s3 = Math.sin(bank / 2.0f);
-		double c1c2 = c1 * c2;
-		double s1s2 = s1 * s2;
-		q.w = (float) (c1c2 * c3 - s1s2 * s3);
-		q.x = (float) (c1c2 * s3 + s1s2 * c3);
-		q.y = (float) (s1 * c2 * c3 + c1 * s2 * s3);
-		q.z = (float) (c1 * s2 * c3 - s1 * c2 * s3);
+		float angle;
+		float sinRoll, sinPitch, sinYaw, cosRoll, cosPitch, cosYaw;
+		angle = pitch * 0.5f * F3D.DEGTORAD;
+		sinPitch = (float) Math.sin(angle);
+		cosPitch = (float) Math.cos(angle);
+		angle = roll * 0.5f * F3D.DEGTORAD;
+		sinRoll = (float) Math.sin(angle);
+		cosRoll = (float) Math.cos(angle);
+		angle = yaw * 0.5f * F3D.DEGTORAD;
+		sinYaw = (float) Math.sin(angle);
+		cosYaw = (float) Math.cos(angle);
+
+		// variables used to reduce multiplication calls.
+		float cosRollXcosPitch = cosRoll * cosPitch;
+		float sinRollXsinPitch = sinRoll * sinPitch;
+		float cosRollXsinPitch = cosRoll * sinPitch;
+		float sinRollXcosPitch = sinRoll * cosPitch;
+
+		q.w = (cosRollXcosPitch * cosYaw - sinRollXsinPitch * sinYaw);
+		q.x = (cosRollXcosPitch * sinYaw + sinRollXsinPitch * cosYaw);
+		q.y = (sinRollXcosPitch * cosYaw + cosRollXsinPitch * sinYaw);
+		q.z = (cosRollXsinPitch * cosYaw - sinRollXcosPitch * sinYaw);
 
 		return q;
 	}
 
 	public Vector3f Quad2Angles(Quat4f q1)
 	{
+		
+		/*
+		 
+		{
+		if (angles == null)
+			angles = new float[3];
+		else if (angles.length != 3)
+			throw new IllegalArgumentException("Angles array must have three elements");
+
+		float sqw = w * w;
+		float sqx = x * x;
+		float sqy = y * y;
+		float sqz = z * z;
+		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
+											// is correction factor
+		float test = x * y + z * w;
+		if (test > 0.499 * unit) { // singularity at north pole
+			angles[1] = 2 * FastMath.atan2(x, w);
+			angles[2] = FastMath.HALF_PI;
+			angles[0] = 0;
+		} else if (test < -0.499 * unit) { // singularity at south pole
+			angles[1] = -2 * FastMath.atan2(x, w);
+			angles[2] = -FastMath.HALF_PI;
+			angles[0] = 0;
+		} else {
+			angles[1] = FastMath.atan2(2 * y * w - 2 * x * z, sqx - sqy - sqz + sqw); // roll or heading 
+			angles[2] = FastMath.asin(2 * test / unit); // pitch or attitude
+			angles[0] = FastMath.atan2(2 * x * w - 2 * y * z, -sqx + sqy - sqz + sqw); // yaw or bank
+		}
+		return angles;
+	}  
+		 */
+		
 		float heading;
 		float attitude;
 		float bank;
