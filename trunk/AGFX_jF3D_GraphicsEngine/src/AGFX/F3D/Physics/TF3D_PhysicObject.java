@@ -13,6 +13,7 @@ import javax.vecmath.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_Mesh;
 
 import com.bulletphysics.collision.dispatch.CollisionObject;
@@ -273,14 +274,8 @@ public class TF3D_PhysicObject
 		this.Transform.setIdentity();
 
 		this.Transform.origin.set(pos);
-		Quat4f qrot = new Quat4f();
-
-		qrot.x = rot.x * F3D.DEGTORAD;
-		qrot.y = rot.y * F3D.DEGTORAD;
-		qrot.z = rot.z * F3D.DEGTORAD;
-		qrot.w = 2.0f;
-
-		this.Transform.setRotation(qrot);
+		
+		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
 		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 

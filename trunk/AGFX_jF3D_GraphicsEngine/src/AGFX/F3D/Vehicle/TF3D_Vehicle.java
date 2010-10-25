@@ -30,6 +30,7 @@ import com.bulletphysics.util.ObjectArrayList;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
 /**
@@ -138,7 +139,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 
 		// Quat4f qrot = new Quat4f();
 
-		tr.setRotation(AnglesToQuat4f(this.GetRotation().z * F3D.DEGTORAD, this.GetRotation().y * F3D.DEGTORAD, this.GetRotation().x * F3D.DEGTORAD));
+		tr.setRotation(TF3D_MathUtils.AnglesToQuat4f(this.GetRotation().x, this.GetRotation().y, this.GetRotation().z));
 
 		RB_carChassis = F3D.Physic.localCreateRigidBody(800, tr, compound);
 		F3D.Physic.AddBody(RB_carChassis);
@@ -191,28 +192,6 @@ public class TF3D_Vehicle extends TF3D_Entity
 				wheel.rollInfluence = rollInfluence;
 			}
 		}
-	}
-
-	// TODO - fix convert Euler angles to Quat4f
-	public Quat4f AnglesToQuat4f(double heading, double attitude, double bank)
-	{
-
-		Quat4f q = new Quat4f();
-		// Assuming the angles are in radians.
-		double c1 = Math.cos(heading / 2.0f);
-		double s1 = Math.sin(heading / 2.0f);
-		double c2 = Math.cos(attitude / 2.0f);
-		double s2 = Math.sin(attitude / 2.0f);
-		double c3 = Math.cos(bank / 2.0f);
-		double s3 = Math.sin(bank / 2.0f);
-		double c1c2 = c1 * c2;
-		double s1s2 = s1 * s2;
-		q.w = (float) (c1c2 * c3 - s1s2 * s3);
-		q.x = (float) (c1c2 * s3 + s1s2 * c3);
-		q.y = (float) (s1 * c2 * c3 + c1 * s2 * s3);
-		q.z = (float) (c1 * s2 * c3 - s1 * c2 * s3);
-
-		return q;
 	}
 
 	// -----------------------------------------------------------------------
