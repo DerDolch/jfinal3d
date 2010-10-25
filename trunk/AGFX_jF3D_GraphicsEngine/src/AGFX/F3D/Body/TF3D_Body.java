@@ -178,9 +178,9 @@ public class TF3D_Body extends TF3D_Entity
 
 		if (this.IsEnabled())
 		{
-			// TODO fix bbox frustum cullung
-			// if (this.IsVisible())
-			// {
+			
+			 if (this.IsVisible())
+			 {
 			if (this.surface_id < 0)
 			{
 				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
@@ -204,7 +204,7 @@ public class TF3D_Body extends TF3D_Entity
 				glPopMatrix();
 			}
 
-			// }
+			 }
 
 		}
 	}
@@ -239,6 +239,13 @@ public class TF3D_Body extends TF3D_Entity
 		Quat4f qm = new Quat4f();
 		this.PhysicObject.Transform.getRotation(qm);
 		this.SetRotation(Quad2Angles(qm));
+		
+		Vector3f aabbMin = new Vector3f();
+		Vector3f aabbMax = new Vector3f();
+		
+		this.PhysicObject.RigidBody.getAabb(aabbMin, aabbMax);
+		
+		this.BBOX.CalcFromMinMax(aabbMin, aabbMax);
 
 	}
 
