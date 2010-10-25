@@ -9,6 +9,7 @@ import com.bulletphysics.util.ObjectArrayList;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Physics.TF3D_PhysicObject;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -238,7 +239,7 @@ public class TF3D_Body extends TF3D_Entity
 
 		Quat4f qm = new Quat4f();
 		this.PhysicObject.Transform.getRotation(qm);
-		this.SetRotation(Quad2Angles(qm));
+		this.SetRotation(TF3D_MathUtils.Quad2Angles(qm));
 
 		Vector3f aabbMin = new Vector3f();
 		Vector3f aabbMax = new Vector3f();
@@ -246,101 +247,13 @@ public class TF3D_Body extends TF3D_Entity
 		this.PhysicObject.RigidBody.getAabb(aabbMin, aabbMax);
 
 		this.BBOX.CalcFromMinMax(aabbMin, aabbMax);
-
-	}
-
-	public Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
-	{
-
-		Quat4f q = new Quat4f();
-		float angle;
-		float sinRoll, sinPitch, sinYaw, cosRoll, cosPitch, cosYaw;
-		angle = pitch * 0.5f * F3D.DEGTORAD;
-		sinPitch = (float) Math.sin(angle);
-		cosPitch = (float) Math.cos(angle);
-		angle = roll * 0.5f * F3D.DEGTORAD;
-		sinRoll = (float) Math.sin(angle);
-		cosRoll = (float) Math.cos(angle);
-		angle = yaw * 0.5f * F3D.DEGTORAD;
-		sinYaw = (float) Math.sin(angle);
-		cosYaw = (float) Math.cos(angle);
-
-		// variables used to reduce multiplication calls.
-		float cosRollXcosPitch = cosRoll * cosPitch;
-		float sinRollXsinPitch = sinRoll * sinPitch;
-		float cosRollXsinPitch = cosRoll * sinPitch;
-		float sinRollXcosPitch = sinRoll * cosPitch;
-
-		q.w = (cosRollXcosPitch * cosYaw - sinRollXsinPitch * sinYaw);
-		q.x = (cosRollXcosPitch * sinYaw + sinRollXsinPitch * cosYaw);
-		q.y = (sinRollXcosPitch * cosYaw + cosRollXsinPitch * sinYaw);
-		q.z = (cosRollXsinPitch * cosYaw - sinRollXcosPitch * sinYaw);
-
-		return q;
-	}
-
-	public Vector3f Quad2Angles(Quat4f q1)
-	{
 		
-		/*
-		 
-		{
-		if (angles == null)
-			angles = new float[3];
-		else if (angles.length != 3)
-			throw new IllegalArgumentException("Angles array must have three elements");
-
-		float sqw = w * w;
-		float sqx = x * x;
-		float sqy = y * y;
-		float sqz = z * z;
-		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
-											// is correction factor
-		float test = x * y + z * w;
-		if (test > 0.499 * unit) { // singularity at north pole
-			angles[1] = 2 * FastMath.atan2(x, w);
-			angles[2] = FastMath.HALF_PI;
-			angles[0] = 0;
-		} else if (test < -0.499 * unit) { // singularity at south pole
-			angles[1] = -2 * FastMath.atan2(x, w);
-			angles[2] = -FastMath.HALF_PI;
-			angles[0] = 0;
-		} else {
-			angles[1] = FastMath.atan2(2 * y * w - 2 * x * z, sqx - sqy - sqz + sqw); // roll or heading 
-			angles[2] = FastMath.asin(2 * test / unit); // pitch or attitude
-			angles[0] = FastMath.atan2(2 * x * w - 2 * y * z, -sqx + sqy - sqz + sqw); // yaw or bank
-		}
-		return angles;
-	}  
-		 */
-		
-		float heading;
-		float attitude;
-		float bank;
-
-		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/index.htm
-
-		double test = q1.x * q1.y + q1.z * q1.w;
-		/*
-		 * if (test > 0.499) { // singularity at north pole heading =
-		 * F3D.RADTODEG * (float)(2 * Math.atan2(q1.x,q1.w)); attitude =
-		 * F3D.RADTODEG * (float) (Math.PI/2); bank = F3D.RADTODEG * (float)0f;
-		 * return new Vector3f(bank,heading,attitude); } if (test < -0.499) { //
-		 * singularity at south pole heading = F3D.RADTODEG * (float) (-2 *
-		 * Math.atan2(q1.x,q1.w)); attitude = F3D.RADTODEG * (float) (-
-		 * Math.PI/2); bank = F3D.RADTODEG * 0; return new
-		 * Vector3f(bank,heading,attitude); }
-		 */
-
-		double sqx = q1.x * q1.x;
-		double sqy = q1.y * q1.y;
-		double sqz = q1.z * q1.z;
-		heading = F3D.RADTODEG * (float) Math.atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, 1 - 2 * sqy - 2 * sqz);
-		attitude = F3D.RADTODEG * (float) Math.asin(2 * test);
-		bank = F3D.RADTODEG * (float) Math.atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, 1 - 2 * sqx - 2 * sqz);
-		return new Vector3f(bank, heading, attitude);
 
 	}
+
+	
+
+	
 
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
