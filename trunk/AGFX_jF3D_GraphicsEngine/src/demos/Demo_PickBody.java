@@ -174,7 +174,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		F3D.Draw.Line3D(pA, pB);
 		F3D.Draw.Axis(2.0f);
 		
-		
+		/*
 		// LINE PICK from POINT A to B
 		
 		body= F3D.Pick.LineAB(pA, pB);
@@ -185,7 +185,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 			
 		}
 	
-		
+	
 		//CAMERA PICK
 		body= F3D.Pick.CameraDirection(1000f);
 		if (body != null) 
@@ -194,10 +194,10 @@ public class Demo_PickBody extends TF3D_AppWrapper
 			F3D.Log.info("CAMERA PICK", pb.name);
 			
 		}
-		
+		*/
 		
 		//MOUSE PICK 
-		body= F3D.Pick.Mouse(Mouse.getX(),Mouse.getY(), 1000f);
+		body = F3D.Pick.Mouse(Mouse.getX(),Mouse.getY());
 		if (body != null) 
 		{
 			TF3D_Body pb = (TF3D_Body) body.getUserPointer();

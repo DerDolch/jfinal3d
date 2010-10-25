@@ -41,7 +41,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
-			F3D.Config.r_display_vsync = true;
+			F3D.Config.r_display_vsync = false;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";
 			F3D.Config.use_physics_debug = false;
 
@@ -82,7 +82,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 	@Override
 	public void onUpdate3D()
 	{
-		F3D.Draw.Axis(2.0f);	
+		
 
 		
 
@@ -122,6 +122,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
+		F3D.Draw.Axis(2.0f);	
 	}
 	
 	

@@ -131,7 +131,9 @@ public class TF3D_Pick
 		float bottom = -1f;
 		float nearPlane = 1f;
 		float tanFov = (top - bottom) * 0.5f / nearPlane;
-		float fov = 2f * (float) Math.atan(tanFov);
+		float fov = (float) Math.atan(tanFov);
+		
+		//F3D.Log.info("",String.valueOf(fov*F3D.RADTODEG));
 		
 		F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).UpdateAxisDirection();
 		
@@ -140,10 +142,11 @@ public class TF3D_Pick
 		
 		
 		float farPlane = 10000f;
-		rayForward.scale(farPlane);
+		rayForward.scale(-farPlane);
 
 		Vector3f rightOffset = new Vector3f();
 		Vector3f vertical = new Vector3f(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).axis._up);
+		
 
 		Vector3f hor = new Vector3f();
 	
@@ -184,7 +187,7 @@ public class TF3D_Pick
 		rayTo.add(tmp2);
 
 		tmp1.scale(x, dHor);
-		tmp2.scale(y, dVert);
+		tmp2.scale((F3D.Config.r_display_height-y), dVert);
 
 		rayTo.add(tmp1);
 		rayTo.sub(tmp2);
@@ -209,7 +212,7 @@ public class TF3D_Pick
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public RigidBody Mouse(int mx, int my, float length)
+	public RigidBody Mouse(int mx, int my)
 	{
 
 		

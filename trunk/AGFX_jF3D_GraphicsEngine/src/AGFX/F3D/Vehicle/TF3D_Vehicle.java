@@ -60,22 +60,27 @@ public class TF3D_Vehicle extends TF3D_Entity
 	public int                             model_wheel_FL                 = -1;
 	public float[]                         wheel_FL_transformMatrix       = new float[16];
 	public FloatBuffer                     wheel_FL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	
+	
 	public int                             model_wheel_FR                 = -1;
 	public float[]                         wheel_FR_transformMatrix       = new float[16];
 	public FloatBuffer                     wheel_FR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	
 	public int                             model_wheel_BL                 = -1;
 	public float[]                         wheel_BL_transformMatrix       = new float[16];
 	public FloatBuffer                     wheel_BL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	
 	public int                             model_wheel_BR                 = -1;
 	public float[]                         wheel_BR_transformMatrix       = new float[16];
 	public FloatBuffer                     wheel_BR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	
 	public int                             model_chassis                  = -1;
 	public float[]                         chassis_transformMatrix        = new float[16];
 	public FloatBuffer                     chassis_transformMatrixBuffer  = BufferUtils.createFloatBuffer(16);
 
 	// Physics vehicle definition
 	public RigidBody                       RB_carChassis;
-	public ObjectArrayList<CollisionShape> collisionShapes                = new ObjectArrayList<CollisionShape>();
+	//public ObjectArrayList<CollisionShape> collisionShapes                = new ObjectArrayList<CollisionShape>();
 	public VehicleTuning                   tuning                         = new VehicleTuning();
 	public VehicleRaycaster                vehicleRayCaster;
 	public RaycastVehicle                  vehicle;
@@ -119,10 +124,9 @@ public class TF3D_Vehicle extends TF3D_Entity
 		chassis_bbox.size.scale(0.5f);
 
 		CollisionShape chassisShape = new BoxShape(chassis_bbox.size);
-		collisionShapes.add(chassisShape);
 
 		CompoundShape compound = new CompoundShape();
-		collisionShapes.add(compound);
+
 		Transform localTrans = new Transform();
 		localTrans.setIdentity();
 
@@ -186,11 +190,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 				wheel.frictionSlip = wheelFriction;
 				wheel.rollInfluence = rollInfluence;
 			}
-			
-			
-			
 		}
-
 	}
 
 	// TODO - fix convert Euler angles to Quat4f

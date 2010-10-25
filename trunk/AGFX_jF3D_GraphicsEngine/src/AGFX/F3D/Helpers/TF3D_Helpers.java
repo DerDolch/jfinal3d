@@ -120,15 +120,17 @@ public class TF3D_Helpers
 
 	public void Axis(float size)
 	{
+		F3D.Textures.DeactivateLayers();
+		//this._light_off();
 		glPushMatrix();
 		// X
-		glColor3f(1, 0, 0);
+		glColor4f(1, 0, 0,1);
 		this.Line3D(0, 0, 0, size, 0, 0);
 		// Y
-		glColor3f(0, 1, 0);
+		glColor4f(0, 1, 0,1);
 		this.Line3D(0, 0, 0, 0, size, 0);
 		// Z
-		glColor3f(0, 0, 1);
+		glColor4f(0, 0, 1,1);
 		this.Line3D(0, 0, 0, 0, 0, size);
 		glPopMatrix();
 

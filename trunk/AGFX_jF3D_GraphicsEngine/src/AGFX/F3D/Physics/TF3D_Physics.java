@@ -214,7 +214,11 @@ public class TF3D_Physics
 	public void Update()
 	{
 		// this.dynamicsWorld.stepSimulation(1/30.f,10);
-		this.dynamicsWorld.stepSimulation(1.0f / 100f, 2);
+		if (F3D.Timer.GetFPS()>0)
+		{
+			this.dynamicsWorld.stepSimulation(1.0f / (float)F3D.Timer.GetFPS(), 2);
+		}
+		//this.dynamicsWorld.stepSimulation(1.0f / 100f, 2);
 	}
 
 }
