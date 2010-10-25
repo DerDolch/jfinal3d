@@ -49,4 +49,14 @@ public class TF3D_BoundingBox
 		this.center.scale(2.0f);
 
 	}
+	
+	public void CalcFromMinMax(Vector3f min,Vector3f max)
+	{
+		this.size.set(0, 0, 0);
+		this.center.set(0, 0, 0);
+		
+		this.size.sub(max, min);
+		//this.center.add(max, min);
+		//this.center.scale(2.0f);
+	}
 }
