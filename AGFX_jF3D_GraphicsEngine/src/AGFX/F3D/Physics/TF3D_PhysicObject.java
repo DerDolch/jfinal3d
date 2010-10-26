@@ -50,16 +50,16 @@ import com.bulletphysics.util.ObjectArrayList;
 public class TF3D_PhysicObject
 {
 
-	public CollisionShape     Shape;
-	public RigidBody          RigidBody;
+	public CollisionShape Shape;
+	public RigidBody RigidBody;
 	public DefaultMotionState MotionState;
-	public Transform          Transform;
+	public Transform Transform;
 
-	public float              mass      = 0.1f;
-	public boolean            isDynamic = true;
+	public float mass = 0.1f;
+	public boolean isDynamic = true;
 
-	public float[]            transformMatrix;
-	public FloatBuffer        transformMatrixBuffer;
+	public float[] transformMatrix;
+	public FloatBuffer transformMatrixBuffer;
 
 	public TF3D_PhysicObject()
 	{
@@ -84,7 +84,8 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot,
+			Vector3f size)
 	{
 		this.mass = mass;
 
@@ -186,7 +187,8 @@ public class TF3D_PhysicObject
 		 * localInertia); this.RigidBody = new RigidBody(rbInfo);
 		 */
 
-		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass,
+				this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
@@ -212,7 +214,8 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size, TF3D_Mesh mesh)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot,
+			Vector3f size, TF3D_Mesh mesh)
 	{
 		this.mass = mass;
 
@@ -230,13 +233,17 @@ public class TF3D_PhysicObject
 
 		if (shapemode == F3D.BULLET_SHAPE_TRIMESH)
 		{
-			if (mesh.data.facecount>(32768/3))
+			if (mesh.data.facecount > (32768 / 3))
 			{
-				F3D.Log.error("TF3D_PhysicObject", "Physics body is out of triangle indices count !!!");
+				F3D.Log.error("TF3D_PhysicObject",
+						"Physics body is out of triangle indices count !!!");
 			}
-			
-			ByteBuffer gIndices = ByteBuffer.allocateDirect(mesh.data.facecount * 3 * 4).order(ByteOrder.nativeOrder());
-			ByteBuffer gVertices = ByteBuffer.allocateDirect(mesh.data.vertices.length * 3 * 4).order(ByteOrder.nativeOrder());
+
+			ByteBuffer gIndices = ByteBuffer.allocateDirect(
+					mesh.data.facecount * 3 * 4).order(ByteOrder.nativeOrder());
+			ByteBuffer gVertices = ByteBuffer.allocateDirect(
+					mesh.data.vertices.length * 3 * 4).order(
+					ByteOrder.nativeOrder());
 
 			for (int i = 0; i < mesh.data.indices.length; i++)
 			{
@@ -249,20 +256,18 @@ public class TF3D_PhysicObject
 				gVertices.putFloat(mesh.data.vertices[i]);
 			}
 			gVertices.flip();
-			
 
-			
 			int count = mesh.data.facecount;
-			
-			/*
-			if (count > 10000)
-			{
-				count = 10922;
-			}
-			*/
-			TriangleIndexVertexArray indexVertexArrays = new TriangleIndexVertexArray(count, gIndices, 3 * 4, mesh.data.vertices.length, gVertices, 3 * 4);
 
-			BvhTriangleMeshShape trimeshShape = new BvhTriangleMeshShape(indexVertexArrays, true);
+			/*
+			 * if (count > 10000) { count = 10922; }
+			 */
+			TriangleIndexVertexArray indexVertexArrays = new TriangleIndexVertexArray(
+					count, gIndices, 3 * 4, mesh.data.vertices.length,
+					gVertices, 3 * 4);
+
+			BvhTriangleMeshShape trimeshShape = new BvhTriangleMeshShape(
+					indexVertexArrays, true);
 
 			this.Shape = trimeshShape;
 
@@ -274,10 +279,12 @@ public class TF3D_PhysicObject
 		this.Transform.setIdentity();
 
 		this.Transform.origin.set(pos);
-		
-		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
-		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
+		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y,
+				rot.z));
+
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass,
+				this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
@@ -341,5 +348,51 @@ public class TF3D_PhysicObject
 
 		this.RigidBody.setDamping(dmin, dmax);
 
+	}
+
+	// -----------------------------------------------------------------------
+	// GetPosition:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get actual position of Rigid body <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @return - position
+	 */
+	// -----------------------------------------------------------------------
+	public Vector3f GetPosition()
+	{
+		Vector3f pos = new Vector3f();
+
+		// get current position
+		pos.set(this.Transform.origin);
+		return pos;
+
+	}
+
+	// -----------------------------------------------------------------------
+	// GetRotation:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get Rigid body angles <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @return - rotation
+	 */
+	// -----------------------------------------------------------------------
+	public Vector3f GetRotation()
+	{
+		Vector3f rot = new Vector3f();
+
+		// get current rotation
+		Quat4f qm = new Quat4f();
+		this.Transform.getRotation(qm);
+		rot.set(TF3D_MathUtils.Quad2Angles(qm));
+
+		return rot;
 	}
 }
