@@ -16,31 +16,35 @@ import AGFX.F3D.F3D;
 public class TF3D_MeshData implements Serializable
 {
 
-	static final long serialVersionUID = 5590845905712907241L;
+	static final long			serialVersionUID	= 5590845905712907241L;
 
-	public int        material_id;
+	public int					material_id;
 
-	public float      vertices[];
-	public float      normals[];
-	public float      colors[];
-	public float      uv0[];
-	public float      uv1[];
-	public float      uv2[];
-	public float      uv3[];
-	public short      indices[];
-	public int      facecount;
-	public int        v_id             = 0;
-	public int        f_id             = 0;
-	public int        n_id             = 0;
-	public int        c_id             = 0;
-	public int        u0_id            = 0;
-	public int        u1_id            = 0;
-	public int        u2_id            = 0;
-	public int        u3_id            = 0;
+	public float				vertices[];
+	public float				normals[];
+	public float				colors[];
+	public float				uv0[];
+	public float				uv1[];
+	public float				uv2[];
+	public float				uv3[];
+	public short				indices[];
+	public String				face_material[];
+	public int					facecount;
+	public int					v_id				= 0;
+	public int					f_id				= 0;
+	public int					n_id				= 0;
+	public int					c_id				= 0;
+	public int					u0_id				= 0;
+	public int					u1_id				= 0;
+	public int					u2_id				= 0;
+	public int					u3_id				= 0;
+
+	
 
 	public TF3D_MeshData()
 	{
 		this.material_id = -1;
+		
 	}
 
 	// -----------------------------------------------------------------------
@@ -67,8 +71,8 @@ public class TF3D_MeshData implements Serializable
 		this.uv2 = new float[this.facecount * 3 * 2];
 		this.uv3 = new float[this.facecount * 3 * 2];
 		this.indices = new short[this.facecount * 3];
-		
-		
+		this.face_material = new String[this.facecount];
+
 		F3D.Log.info("vertices", String.valueOf(this.vertices.length));
 		F3D.Log.info("colors", String.valueOf(this.colors.length));
 		F3D.Log.info("normals", String.valueOf(this.normals.length));
@@ -203,12 +207,16 @@ public class TF3D_MeshData implements Serializable
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
-	public void AddFace()
+	public void AddFace(String mat_name)
 	{
+		short iA = (short) (f_id + 0);
+		short iB = (short) (f_id + 1);
+		short iC = (short) (f_id + 2);
 
-		this.indices[f_id + 0] = (short) (f_id + 0);
-		this.indices[f_id + 1] = (short) (f_id + 1);
-		this.indices[f_id + 2] = (short) (f_id + 2);
+		this.indices[f_id + 0] = iA;
+		this.indices[f_id + 1] = iB;
+		this.indices[f_id + 2] = iC;
+		this.face_material[this.f_id / 3] = mat_name;
 
 		this.f_id += 3;
 
@@ -475,9 +483,9 @@ public class TF3D_MeshData implements Serializable
 	public short[] GetFaceIndices(int id)
 	{
 		short[] res = new short[3];
-		res[0] = (short)(id * 3 + 0);
-		res[1] = (short)(id * 3 + 1);
-		res[2] = (short)(id * 3 + 2);
+		res[0] = (short) (id * 3 + 0);
+		res[1] = (short) (id * 3 + 1);
+		res[2] = (short) (id * 3 + 2);
 
 		return res;
 	}
