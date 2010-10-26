@@ -4,19 +4,41 @@ import java.util.ArrayList;
 
 public class TF3D_IndicesGroup
 {
-	public ArrayList<TF3D_Indices>	items;
+	public ArrayList<TF3D_Indices> items;
 
 	public TF3D_IndicesGroup()
 	{
 		this.items = new ArrayList<TF3D_Indices>();
 	}
 
+	// TODO add check if exist !!!!
+	// -----------------------------------------------------------------------
+	// TF3D_IndicesGroup: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Add Group name to list 
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param mat_name - group name = material name
+	 */
+	// -----------------------------------------------------------------------
 	private void AddGroup(String mat_name)
 	{
 		TF3D_Indices idx = new TF3D_Indices(mat_name);
 		this.items.add(idx);
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_IndicesGroup: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Find ID for Group name
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param gname - group name = material name
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
 	private int FindGroupByName(String gname)
 	{
 		for (int i = 0; i < this.items.size(); i++)
@@ -30,6 +52,25 @@ public class TF3D_IndicesGroup
 		return -1;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_IndicesGroup:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add face index with assigned material name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param gname
+	 *            - group name = material name
+	 * @param iA
+	 *            - index to vertex id A
+	 * @param iB
+	 *            - index to vertex id B
+	 * @param iC
+	 *            - index to vertex id C
+	 */
+	// -----------------------------------------------------------------------
 	public void AddIndexToGroup(String gname, Short iA, Short iB, Short iC)
 	{
 		int g_id = this.FindGroupByName(gname);
@@ -50,26 +91,55 @@ public class TF3D_IndicesGroup
 			this.items.get(g_id).indices_list.add(iC);
 		}
 	}
-	
+
+	// -----------------------------------------------------------------------
+	// TF3D_IndicesGroup:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add face index with assigned material name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param gname
+	 *            - groum name = material name
+	 * @param idx
+	 *            - face id
+	 */
+	// -----------------------------------------------------------------------
 	public void AddIndexToGroup(String gname, int idx)
 	{
 		int g_id = this.FindGroupByName(gname);
-		
-		
+
 		if (g_id == -1)
 		{
 			// when missing - create new indices group
 			this.AddGroup(gname);
 			g_id = this.FindGroupByName(gname);
-			this.items.get(g_id).indices_list.add((short) (idx+0));
-			this.items.get(g_id).indices_list.add((short) (idx+1));
-			this.items.get(g_id).indices_list.add((short) (idx+2));
+			this.items.get(g_id).indices_list.add((short) (idx + 0));
+			this.items.get(g_id).indices_list.add((short) (idx + 1));
+			this.items.get(g_id).indices_list.add((short) (idx + 2));
 		} else
 		{
 			// add new indices to existing group
-			this.items.get(g_id).indices_list.add((short) (idx+0));
-			this.items.get(g_id).indices_list.add((short) (idx+1));
-			this.items.get(g_id).indices_list.add((short) (idx+2));
+			this.items.get(g_id).indices_list.add((short) (idx + 0));
+			this.items.get(g_id).indices_list.add((short) (idx + 1));
+			this.items.get(g_id).indices_list.add((short) (idx + 2));
 		}
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_IndicesGroup:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Generate indices group by materials <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+	public void Generate()
+	{
+
 	}
 }
