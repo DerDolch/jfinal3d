@@ -546,6 +546,7 @@ public class TF3D_VBO
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
+	/*
 	public void DrawVertexBuffer()
 	{
 		if (this.b_build)
@@ -576,7 +577,7 @@ public class TF3D_VBO
 		}
 
 	}
-
+    */
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -589,12 +590,21 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void DrawVertexBuffer(ShortBuffer gindices)
 	{
-		if (F3D.Extensions.VertexBufferObject)
+		if (this.b_build)
 		{
-			glDrawElements(GL_TRIANGLES, gindices);
+			if (F3D.Extensions.VertexBufferObject)
+			{
+				glDrawElements(GL_TRIANGLES, gindices);
+			} else
+			{
+				glDrawArrays(GL_TRIANGLES, 0, this.indices_length);
+			}
 		} else
 		{
-			glDrawArrays(GL_TRIANGLES, 0, this.indices_length);
+			F3D.Log.error(
+					"TF3D_VBO",
+					"DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation");
 		}
+
 	}
 }

@@ -19,6 +19,7 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public int id;
+
 	public Demo_LoadMesh()
 	{		
 	}
@@ -37,7 +38,6 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - LOAD MESH";
-			
 			
 
 		} catch (Exception e)
@@ -58,6 +58,7 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		
 		F3D.Meshes.Add("abstract::Capsule.a3da");
+		
 		id = F3D.Meshes.FindByName("abstract::Capsule.a3da");
 		
 		// Add light to scene

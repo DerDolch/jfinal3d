@@ -74,7 +74,6 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::MultiSurfCube.a3da"));
 		this.model.SetPosition(0, 0, 0);
 		this.model.SetRotation(45, 45, 0);
-		this.model.setMultiSurafce(true);
 		this.model.ChangeSurface("Cube_MAT_095A", "MAT_text_c");
 		
 		this.model.Enable();
