@@ -28,7 +28,7 @@ public class TF3D_MeshData implements Serializable
 	public float				uv2[];
 	public float				uv3[];
 	public short				indices[];
-	public String				face_material[];
+	public String				faces_material[];
 	public int					facecount;
 	public int					v_id				= 0;
 	public int					f_id				= 0;
@@ -71,7 +71,7 @@ public class TF3D_MeshData implements Serializable
 		this.uv2 = new float[this.facecount * 3 * 2];
 		this.uv3 = new float[this.facecount * 3 * 2];
 		this.indices = new short[this.facecount * 3];
-		this.face_material = new String[this.facecount];
+		this.faces_material = new String[this.facecount];
 
 		F3D.Log.info("vertices", String.valueOf(this.vertices.length));
 		F3D.Log.info("colors", String.valueOf(this.colors.length));
@@ -216,7 +216,7 @@ public class TF3D_MeshData implements Serializable
 		this.indices[f_id + 0] = iA;
 		this.indices[f_id + 1] = iB;
 		this.indices[f_id + 2] = iC;
-		this.face_material[this.f_id / 3] = mat_name;
+		this.faces_material[this.f_id / 3] = mat_name;
 
 		this.f_id += 3;
 

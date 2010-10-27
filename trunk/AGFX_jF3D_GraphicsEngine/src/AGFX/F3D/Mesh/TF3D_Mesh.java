@@ -204,7 +204,7 @@ public class TF3D_Mesh
 		this.name = filename.replace(".a3db", ".a3da");
 		this.data = TF3D_Store.readObj(filename);
 		
-		this.IndicesGroup.AddIndexToGroup(this.data.face_material);
+		this.IndicesGroup.AddIndexToGroup(this.data.faces_material);
 	}
 
 	// -----------------------------------------------------------------------

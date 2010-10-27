@@ -18,9 +18,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class TF3D_Model extends TF3D_Entity
 {
 
-	private int mesh_id    = -1;
-	private int surface_id = -1;
-	public Boolean MultiMaterial = false;
+	private int		mesh_id			= -1;
+	private int		surface_id		= -1; // TODO rewrite surface substitution
+	private Boolean	MultiSurface	= false;
 
 	public TF3D_Model(String _name)
 	{
@@ -48,16 +48,15 @@ public class TF3D_Model extends TF3D_Entity
 
 	public void Render()
 	{
-		if (this.MultiMaterial)
+		if (this.MultiSurface)
 		{
-			this.Render_as_MultiMaterial_on();
-		}
-		else
+			this.Render_with_MultiSurface_on();
+		} else
 		{
-			this.Render_as_MultiMaterial_off();
+			this.Render_with_MultiSurface_off();
 		}
 	}
-	
+
 	// -----------------------------------------------------------------------
 	// TA3D_Mesh:
 	// -----------------------------------------------------------------------
@@ -69,7 +68,7 @@ public class TF3D_Model extends TF3D_Entity
 	 */
 	// -----------------------------------------------------------------------
 
-	public void Render_as_MultiMaterial_off()
+	private void Render_with_MultiSurface_off()
 	{
 		int mid;
 
@@ -92,8 +91,10 @@ public class TF3D_Model extends TF3D_Entity
 
 				glPushMatrix();
 
-				glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-				glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
+				glScalef(this.GetScale().x, this.GetScale().y,
+						this.GetScale().z);
+				glTranslatef(this.GetPosition().x, this.GetPosition().y,
+						this.GetPosition().z);
 
 				glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
 				glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
@@ -116,8 +117,7 @@ public class TF3D_Model extends TF3D_Entity
 		}
 	}
 
-	
-	public void Render_as_MultiMaterial_on()
+	private void Render_with_MultiSurface_on()
 	{
 		int mid;
 
@@ -126,38 +126,40 @@ public class TF3D_Model extends TF3D_Entity
 			if (this.IsVisible())
 			{
 				TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
-				
+
 				mesh.vbo.Bind();
-				
-				for(int i=0;i<mesh.IndicesGroup.items.size();i++)
+
+				for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
 				{
 					mid = mesh.IndicesGroup.items.get(i).material_id;
-					
-    				if (mid >= 0)
-    				{
-    					F3D.Surfaces.ApplyMaterial(mid);
-    				}
-    
-    				glPushMatrix();
-    
-    				glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-    				glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
-    
-    				glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
-    				glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-    				glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
-    
-    				mesh.Render(i);
-    
-    				glScalef(1, 1, 1);
-    				glPopMatrix();
+
+					if (mid >= 0)
+					{
+						F3D.Surfaces.ApplyMaterial(mid);
+					}
+
+					glPushMatrix();
+
+					glScalef(this.GetScale().x, this.GetScale().y,
+							this.GetScale().z);
+					glTranslatef(this.GetPosition().x, this.GetPosition().y,
+							this.GetPosition().z);
+
+					glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
+					glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+					glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+
+					mesh.Render(i);
+
+					glScalef(1, 1, 1);
+					glPopMatrix();
 				}
-				
+
 				mesh.vbo.UnBind();
 			}
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -171,6 +173,23 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Destroy()
 	{
+	}
+
+	/**
+	 * @param multiSurafce
+	 *            the multiSurafce to set
+	 */
+	public void setMultiSurafce(Boolean multiSurafce)
+	{
+		this.MultiSurface = multiSurafce;
+	}
+
+	/**
+	 * @return the multiSurafce
+	 */
+	public Boolean getMultiSurafce()
+	{
+		return MultiSurface;
 	}
 
 }

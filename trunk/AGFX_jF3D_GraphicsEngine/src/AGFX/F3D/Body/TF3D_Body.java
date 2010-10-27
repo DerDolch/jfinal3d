@@ -10,6 +10,7 @@ import com.bulletphysics.util.ObjectArrayList;
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Math.TF3D_MathUtils;
+import AGFX.F3D.Mesh.TF3D_Mesh;
 import AGFX.F3D.Physics.TF3D_PhysicObject;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -20,10 +21,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TF3D_Body extends TF3D_Entity
 {
-	private int              mesh_id    = -1;
-	private int              surface_id = -1;
+	private int					mesh_id			= -1;
+	private int					surface_id		= -1;  // TODO rewrite surface substitution
+	private Boolean				MultiSurface	= false;
 
-	public TF3D_PhysicObject PhysicObject;
+	public TF3D_PhysicObject	PhysicObject;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
@@ -67,7 +69,9 @@ public class TF3D_Body extends TF3D_Entity
 
 		if (!F3D.Config.use_physics)
 		{
-			F3D.Log.error("TF3D_Body", "You can't create rigidbody when Bullet physics is disabled in Config.use_physics !\n Note: Use TF3D_Model instead TF3D_Body, when you don't use Bullet physics on Model.");
+			F3D.Log.error(
+					"TF3D_Body",
+					"You can't create rigidbody when Bullet physics is disabled in Config.use_physics !\n Note: Use TF3D_Model instead TF3D_Body, when you don't use Bullet physics on Model.");
 		}
 
 		this.PhysicObject = new TF3D_PhysicObject();
@@ -79,12 +83,16 @@ public class TF3D_Body extends TF3D_Entity
 
 		this.BBOX.size.set(rescaled);
 
-		if ((shapemode == F3D.BULLET_SHAPE_CONVEXHULL) | (shapemode == F3D.BULLET_SHAPE_TRIMESH))
+		if ((shapemode == F3D.BULLET_SHAPE_CONVEXHULL)
+				| (shapemode == F3D.BULLET_SHAPE_TRIMESH))
 		{
-			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.mesh_id));
+			this.PhysicObject.Create(shapemode, mass, this.GetPosition(),
+					this.GetRotation(), rescaled,
+					F3D.Meshes.items.get(this.mesh_id));
 		} else
 		{
-			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled);
+			this.PhysicObject.Create(shapemode, mass, this.GetPosition(),
+					this.GetRotation(), rescaled);
 		}
 
 		this.PhysicObject.RigidBody.setUserPointer((Object) this);
@@ -112,7 +120,8 @@ public class TF3D_Body extends TF3D_Entity
 			this.BBOX.CalcFromMesh(this.mesh_id);
 		} else
 		{
-			F3D.Log.error("TF3D_Body", "AssignMesh() : index of assigned MeshName is -1 (Mesh name doesn't exist.)");
+			F3D.Log.error("TF3D_Body",
+					"AssignMesh() : index of assigned MeshName is -1 (Mesh name doesn't exist.)");
 		}
 	}
 
@@ -139,7 +148,9 @@ public class TF3D_Body extends TF3D_Entity
 			this.BBOX.CalcFromMesh(this.mesh_id);
 		} else
 		{
-			F3D.Log.error("TF3D_Body", "AssignMesh() : index of assigned MeshName is -1 (Mesh '" + meshname + "' doesn't exist.)");
+			F3D.Log.error("TF3D_Body",
+					"AssignMesh() : index of assigned MeshName is -1 (Mesh '"
+							+ meshname + "' doesn't exist.)");
 		}
 	}
 
@@ -162,18 +173,29 @@ public class TF3D_Body extends TF3D_Entity
 
 	}
 
+	public void Render()
+	{
+		if (this.MultiSurface)
+		{
+			this.Render_with_MultiSurface_on();
+		} else
+		{
+			this.Render_with_MultiSurface_off();
+		}
+	}
+
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
 	// -----------------------------------------------------------------------
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Render Physic Body <BR>
+	 * Render Physic Body without MultiSurfaces<BR>
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 
-	public void Render()
+	private void Render_with_MultiSurface_off()
 	{
 		int mid;
 
@@ -199,12 +221,61 @@ public class TF3D_Body extends TF3D_Entity
 				{
 					glPushMatrix();
 					glMultMatrix(this.PhysicObject.transformMatrixBuffer);
-					glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+					glScalef(this.GetScale().x, this.GetScale().y,
+							this.GetScale().z);
 					F3D.Meshes.items.get(this.mesh_id).Render();
 					glScalef(1, 1, 1);
 					glPopMatrix();
 				}
 
+			}
+
+		}
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_Body:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Render Physic Body without MultiSurfaces<BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+
+	private void Render_with_MultiSurface_on()
+	{
+		int mid;
+
+		if (this.IsEnabled())
+		{
+
+			if (this.IsVisible())
+			{
+				TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
+
+				mesh.vbo.Bind();
+
+				for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
+				{
+					mid = mesh.IndicesGroup.items.get(i).material_id;
+
+					if (mid >= 0)
+					{
+						F3D.Surfaces.ApplyMaterial(mid);
+					}
+
+					glPushMatrix();
+					glMultMatrix(this.PhysicObject.transformMatrixBuffer);
+					glScalef(this.GetScale().x, this.GetScale().y,
+							this.GetScale().z);
+					mesh.Render(i);
+					glScalef(1, 1, 1);
+					glPopMatrix();
+				}
+
+				mesh.vbo.UnBind();
 			}
 
 		}
@@ -228,9 +299,12 @@ public class TF3D_Body extends TF3D_Entity
 	public void Update()
 	{
 		// // get current model transformation
-		this.PhysicObject.RigidBody.getMotionState().getWorldTransform(this.PhysicObject.Transform);
-		this.PhysicObject.Transform.getOpenGLMatrix(this.PhysicObject.transformMatrix);
-		this.PhysicObject.transformMatrixBuffer.put(this.PhysicObject.transformMatrix);
+		this.PhysicObject.RigidBody.getMotionState().getWorldTransform(
+				this.PhysicObject.Transform);
+		this.PhysicObject.Transform
+				.getOpenGLMatrix(this.PhysicObject.transformMatrix);
+		this.PhysicObject.transformMatrixBuffer
+				.put(this.PhysicObject.transformMatrix);
 		this.PhysicObject.transformMatrixBuffer.rewind();
 
 		this.SetPosition(this.PhysicObject.GetPosition());
@@ -257,7 +331,12 @@ public class TF3D_Body extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void Reset()
 	{
-		F3D.Physic.dynamicsWorld.getBroadphase().getOverlappingPairCache().cleanProxyFromPairs(this.PhysicObject.RigidBody.getBroadphaseHandle(), F3D.Physic.getDynamicsWorld().getDispatcher());
+		F3D.Physic.dynamicsWorld
+				.getBroadphase()
+				.getOverlappingPairCache()
+				.cleanProxyFromPairs(
+						this.PhysicObject.RigidBody.getBroadphaseHandle(),
+						F3D.Physic.getDynamicsWorld().getDispatcher());
 		this.PhysicObject.Transform.origin.set(this.start_position);
 	}
 
@@ -274,6 +353,23 @@ public class TF3D_Body extends TF3D_Entity
 	public void Destroy()
 	{
 		this.PhysicObject.RigidBody.destroy();
+	}
+
+	/**
+	 * @param multiSurafce
+	 *            the multiSurafce to set
+	 */
+	public void setMultiSurafce(Boolean multiSurafce)
+	{
+		this.MultiSurface = multiSurafce;
+	}
+
+	/**
+	 * @return the multiSurafce
+	 */
+	public Boolean getMultiSurafce()
+	{
+		return MultiSurface;
 	}
 
 }
