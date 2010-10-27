@@ -47,15 +47,16 @@ public class TF3D_Indices
 	public void CreateIndicesBuffer()
 	{
 		this.indices = new short[this.indices_list.size()];
+	
 		for(int i=0;i<this.indices_list.size();i++)
 		{
 			this.indices[i]=this.indices_list.get(i);
 		}
 		
 		
-		this.indexBuffer = BufferUtils.createShortBuffer(indices.length);
+		this.indexBuffer = BufferUtils.createShortBuffer(this.indices.length);
 		this.indexBuffer.clear();
-		this.indexBuffer.put(indices);
+		this.indexBuffer.put(this.indices);
 		this.indexBuffer.position(0);
 	}
 }

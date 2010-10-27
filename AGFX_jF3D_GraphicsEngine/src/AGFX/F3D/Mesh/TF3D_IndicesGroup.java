@@ -121,21 +121,24 @@ public class TF3D_IndicesGroup
 	{
 		int g_id = this.FindGroupByName(gname);
 
-		F3D.Log.info("ADD 2 GRP",gname);
+		
+		
 		if (g_id == -1)
 		{
 			// when missing - create new indices group
 			this.AddGroup(gname);
 			g_id = this.FindGroupByName(gname);
-			this.items.get(g_id).indices_list.add((short) (idx + 0));
-			this.items.get(g_id).indices_list.add((short) (idx + 1));
-			this.items.get(g_id).indices_list.add((short) (idx + 2));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 0));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 1));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 2));
+						
 		} else
 		{
 			// add new indices to existing group
-			this.items.get(g_id).indices_list.add((short) (idx + 0));
-			this.items.get(g_id).indices_list.add((short) (idx + 1));
-			this.items.get(g_id).indices_list.add((short) (idx + 2));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 0));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 1));
+			this.items.get(g_id).indices_list.add((short) (idx*3 + 2));
+						
 		}
 	}
 
