@@ -44,9 +44,17 @@ public class TF3D_Store
 	public static TF3D_MeshData readObj(String filename)
 	{
 		TF3D_MeshData ret = null;
+		FileInputStream in = null;
 		try
 		{
-			FileInputStream in = new FileInputStream(F3D.AbstractFiles.GetFullPath(filename));
+			if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
+			{
+				in = (FileInputStream) ClassLoader.getSystemResource(F3D.AbstractFiles.GetFullPath(filename)).openStream();
+			}
+			else
+			{
+				in = new FileInputStream(F3D.AbstractFiles.GetFullPath(filename));
+			}
 			ObjectInputStream s = new ObjectInputStream(in);
 			ret = (TF3D_MeshData) s.readObject();
 			return ret;

@@ -12,6 +12,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.lwjgl.util.glu.MipMap;
 
+import com.sun.org.apache.bcel.internal.util.ClassLoader;
+
 import AGFX.F3D.F3D;
 
 public class TF3D_Texture
@@ -75,7 +77,18 @@ public class TF3D_Texture
 	private Texture LoadMipmap(String FMT,String filename, Boolean mipmap) throws IOException 
 	{
         
-        Texture texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
+		
+        Texture texture=null;
+        
+        if(F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
+        {
+        	
+        	texture = TextureLoader.getTexture(FMT, ClassLoader.getSystemResourceAsStream(filename));
+        }
+        else
+        {
+        	texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
+        }
         
         texture.bind();
         int width = (int)texture.getImageWidth();

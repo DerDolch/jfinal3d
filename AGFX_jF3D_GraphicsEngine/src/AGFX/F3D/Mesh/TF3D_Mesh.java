@@ -20,10 +20,10 @@ import static org.lwjgl.opengl.GL13.*;
 public class TF3D_Mesh
 {
 
-	public TF3D_MeshData		data;
-	public TF3D_VBO				vbo;
-	public String				name	= "noname";
-	public TF3D_IndicesGroup	IndicesGroup;
+	public TF3D_MeshData     data;
+	public TF3D_VBO          vbo;
+	public String            name = "noname";
+	public TF3D_IndicesGroup IndicesGroup;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Mesh:
@@ -72,8 +72,11 @@ public class TF3D_Mesh
 		} else
 		{
 			this.Load_A3DA(o_fname);
+			
 			if (F3D.Config.io_mesh_asci_to_bin)
+			{
 				this.Save_A3DB(o_fname);
+			}
 		}
 
 		// create VBO buffers
@@ -203,7 +206,7 @@ public class TF3D_Mesh
 	{
 		this.name = filename.replace(".a3db", ".a3da");
 		this.data = TF3D_Store.readObj(filename);
-		
+
 		this.IndicesGroup.AddIndexToGroup(this.data.faces_material);
 	}
 
@@ -218,17 +221,16 @@ public class TF3D_Mesh
 	 */
 	// -----------------------------------------------------------------------
 
-	
 	public void Render()
 	{
 		this.vbo.Bind();
 		this.vbo.DrawVertexBuffer(IndicesGroup.items.get(0).indexBuffer);
 		this.vbo.UnBind();
 	}
-	
+
 	public void Render(int sid)
 	{
-		
+
 		this.vbo.DrawVertexBuffer(IndicesGroup.items.get(sid).indexBuffer);
 
 	}

@@ -21,9 +21,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class TF3D_Model extends TF3D_Entity
 {
 
-	private int									mesh_id			= -1;
-	private ArrayList<TF3D_SurfaceSubstItem>	surfaces;
-	
+	private int                              mesh_id = -1;
+	private ArrayList<TF3D_SurfaceSubstItem> surfaces;
+
 	public TF3D_Model(String _name)
 	{
 		this.classname = F3D.CLASS_MODEL;
@@ -37,8 +37,7 @@ public class TF3D_Model extends TF3D_Entity
 	{
 		this.mesh_id = id;
 		this.BBOX.CalcFromMesh(this.mesh_id);
-		F3D.Log.info("TF3D_Model",
-				"Assigned mesh = '" + F3D.Meshes.Get(this.mesh_id).name + "'");
+		F3D.Log.info("TF3D_Model", "Assigned mesh = '" + F3D.Meshes.Get(this.mesh_id).name + "'");
 		this.ReadAssignedSurfaces();
 	}
 
@@ -83,17 +82,10 @@ public class TF3D_Model extends TF3D_Entity
 	}
 
 	/*
-	public void Render()
-	{
-		if (this.MultiSurface)
-		{
-			this.Render_with_MultiSurface_on();
-		} else
-		{
-			this.Render_with_MultiSurface_off();
-		}
-	}
-	*/
+	 * public void Render() { if (this.MultiSurface) {
+	 * this.Render_with_MultiSurface_on(); } else {
+	 * this.Render_with_MultiSurface_off(); } }
+	 */
 	// -----------------------------------------------------------------------
 	// TA3D_Mesh:
 	// -----------------------------------------------------------------------
@@ -106,50 +98,31 @@ public class TF3D_Model extends TF3D_Entity
 	// -----------------------------------------------------------------------
 
 	/*
-	private void Render_with_MultiSurface_off()
-	{
-		int mid;
-
-		if (this.IsEnabled())
-		{
-			if (this.IsVisible())
-			{
-				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
-
-				if (mid >= 0)
-				{
-					F3D.Surfaces.ApplyMaterial(mid);
-				}
-
-				glPushMatrix();
-
-				glScalef(this.GetScale().x, this.GetScale().y,
-						this.GetScale().z);
-				glTranslatef(this.GetPosition().x, this.GetPosition().y,
-						this.GetPosition().z);
-
-				glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
-				glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-				glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
-
-				if (this.mesh_id >= 0)
-				{
-					F3D.Meshes.items.get(this.mesh_id).Render();
-				}
-
-				// render childs
-				for (int i = 0; i < this.childs.size(); i++)
-				{
-					this.childs.get(i).Render();
-				}
-
-				glScalef(1, 1, 1);
-				glPopMatrix();
-			}
-		}
-	}
-	*/
-	//private void Render_with_MultiSurface_on()
+	 * private void Render_with_MultiSurface_off() { int mid;
+	 * 
+	 * if (this.IsEnabled()) { if (this.IsVisible()) { mid =
+	 * F3D.Meshes.items.get(this.mesh_id).data.material_id;
+	 * 
+	 * if (mid >= 0) { F3D.Surfaces.ApplyMaterial(mid); }
+	 * 
+	 * glPushMatrix();
+	 * 
+	 * glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+	 * glTranslatef(this.GetPosition().x, this.GetPosition().y,
+	 * this.GetPosition().z);
+	 * 
+	 * glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
+	 * glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+	 * glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+	 * 
+	 * if (this.mesh_id >= 0) { F3D.Meshes.items.get(this.mesh_id).Render(); }
+	 * 
+	 * // render childs for (int i = 0; i < this.childs.size(); i++) {
+	 * this.childs.get(i).Render(); }
+	 * 
+	 * glScalef(1, 1, 1); glPopMatrix(); } } }
+	 */
+	// private void Render_with_MultiSurface_on()
 	public void Render()
 	{
 		int mid;
@@ -173,10 +146,8 @@ public class TF3D_Model extends TF3D_Entity
 
 					glPushMatrix();
 
-					glScalef(this.GetScale().x, this.GetScale().y,
-							this.GetScale().z);
-					glTranslatef(this.GetPosition().x, this.GetPosition().y,
-							this.GetPosition().z);
+					glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+					glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
 
 					glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
 					glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
@@ -184,6 +155,11 @@ public class TF3D_Model extends TF3D_Entity
 
 					mesh.Render(i);
 
+					// render childs
+					for (int ci = 0; ci < this.childs.size(); ci++)
+					{
+						this.childs.get(ci).Render();
+					}
 					glScalef(1, 1, 1);
 					glPopMatrix();
 				}
