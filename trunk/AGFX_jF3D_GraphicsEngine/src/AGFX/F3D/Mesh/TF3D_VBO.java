@@ -577,4 +577,42 @@ public class TF3D_VBO
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TA3D_VBO:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * draw assigned Elements <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+	public void DrawVertexBuffer(ShortBuffer gindices)
+	{
+		if (this.b_build)
+		{
+			this.Bind();
+
+			if (F3D.Extensions.VertexBufferObject)
+			{
+
+				glDrawElements(GL_TRIANGLES, gindices);
+					// glDrawElemen(GL_TRIANGLES, indices_length,
+					// GL_UNSIGNED_INT, 0);
+		
+			} else
+			{
+				glDrawArrays(GL_TRIANGLES, 0, this.indices_length);
+			}
+
+			// Disable the client state before leaving
+			this.UnBind();
+		} else
+		{
+			F3D.Log.error(
+					"TF3D_VBO",
+					"DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation");
+		}
+
+	}
 }

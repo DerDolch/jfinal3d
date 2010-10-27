@@ -24,7 +24,7 @@ public class TF3D_Mesh
 	public TF3D_VBO				vbo;
 	public String				name	= "noname";
 	public TF3D_IndicesGroup	IndicesGroup;
-	
+
 	// -----------------------------------------------------------------------
 	// TF3D_Mesh:
 	// -----------------------------------------------------------------------
@@ -96,6 +96,7 @@ public class TF3D_Mesh
 		if (this.data.indices.length > 0)
 			this.vbo.CreateIndicesBuffer(this.data.indices);
 		this.vbo.Build();
+		this.IndicesGroup.Generate();
 	}
 
 	// -----------------------------------------------------------------------
@@ -202,7 +203,7 @@ public class TF3D_Mesh
 	{
 		this.name = filename.replace(".a3db", ".a3da");
 		this.data = TF3D_Store.readObj(filename);
-
+		this.IndicesGroup.AddIndexToGroup(this.data.face_material);
 	}
 
 	// -----------------------------------------------------------------------
@@ -219,6 +220,13 @@ public class TF3D_Mesh
 	public void Render()
 	{
 		this.vbo.DrawVertexBuffer();
+	}
+
+	public void Render(int sid)
+	{
+		
+		this.vbo.DrawVertexBuffer(IndicesGroup.items.get(sid).indexBuffer);
+
 	}
 
 }

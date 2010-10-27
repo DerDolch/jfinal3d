@@ -12,10 +12,10 @@ public class TF3D_Indices
 	public String material_name;	
 	public ArrayList<Short> indices_list;
 	
-	private int material_id=-1;
+	public int material_id=-1;
 	private short indices[];
 	
-	private ShortBuffer	indexBuffer;
+	public ShortBuffer	indexBuffer;
 	
 	// -----------------------------------------------------------------------
 	// TF3D_Indices: 
@@ -46,6 +46,7 @@ public class TF3D_Indices
 	// -----------------------------------------------------------------------
 	public void CreateIndicesBuffer()
 	{
+		this.indices = new short[this.indices_list.size()];
 		for(int i=0;i<this.indices_list.size();i++)
 		{
 			this.indices[i]=this.indices_list.get(i);

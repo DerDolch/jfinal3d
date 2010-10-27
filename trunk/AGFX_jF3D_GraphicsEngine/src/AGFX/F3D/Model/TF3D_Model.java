@@ -55,7 +55,7 @@ public class TF3D_Model extends TF3D_Entity
 	 */
 	// -----------------------------------------------------------------------
 
-	public void Render()
+	public void Render2()
 	{
 		int mid;
 
@@ -102,6 +102,54 @@ public class TF3D_Model extends TF3D_Entity
 		}
 	}
 
+	
+	public void Render()
+	{
+		int mid;
+
+		if (this.IsEnabled())
+		{
+			if (this.IsVisible())
+			{
+				if (this.surface_id < 0)
+				{
+					mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
+				} else
+				{
+					mid = this.surface_id;
+				}
+
+				if (mid >= 0)
+				{
+					F3D.Surfaces.ApplyMaterial(mid);
+				}
+
+				glPushMatrix();
+
+				glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+				glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
+
+				glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
+				glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+				glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+
+				if (this.mesh_id >= 0)
+				{
+					F3D.Meshes.items.get(this.mesh_id).Render();
+				}
+
+				// render childs
+				for (int i = 0; i < this.childs.size(); i++)
+				{
+					this.childs.get(i).Render();
+				}
+
+				glScalef(1, 1, 1);
+				glPopMatrix();
+			}
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
