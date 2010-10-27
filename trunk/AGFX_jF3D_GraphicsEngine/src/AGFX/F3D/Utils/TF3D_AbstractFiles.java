@@ -61,6 +61,7 @@ public class TF3D_AbstractFiles
 				this.Load(ClassLoader.getSystemResource(F3D.Config.io_preload_folder+"/"+F3D.Config.io_preload_source_name).openStream());
 			} catch (IOException e)
 			{
+				
 				e.printStackTrace();
 			}
 		}
@@ -217,6 +218,7 @@ public class TF3D_AbstractFiles
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			F3D.Log.error("TF3D_AbstractFiles", "Missing file in JAR!!");
 		}
 
 	}
