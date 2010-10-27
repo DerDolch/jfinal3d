@@ -85,7 +85,6 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.PPlane = new TF3D_Body("PPlane");
 		this.PPlane.AssignMesh("abstract::Plane.a3da");
 		this.PPlane.Enable();
-		this.PPlane.SetSurface("MATbase");
 		this.PPlane.SetPosition(0f, 0f, 0f);
 		this.PPlane.SetRotation(0f, 0f, 0f);		
 		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
@@ -93,7 +92,6 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.Pbody1 = new TF3D_Body("Body_0");
 		this.Pbody1.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody1.Enable();
-		this.Pbody1.SetSurface("MAT_text_b");
 		this.Pbody1.SetPosition(0, 20f, 0);
 		this.Pbody1.SetRotation(0f, 0f, 45f);		
 		this.Pbody1.CreateRigidBody(F3D.BULLET_SHAPE_BOX,1.0f);
@@ -104,7 +102,6 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.Pbody2.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody2.SetPosition(0.7f, 22f, 0);
 		this.Pbody2.Enable();
-		this.Pbody2.SetSurface("MAT_text_c");
 		this.Pbody2.CreateRigidBody(F3D.BULLET_SHAPE_BOX,0.5f);
 		
 		this.Pbody2.PhysicObject.SetRestitution(0.1f);
@@ -115,7 +112,7 @@ public class Demo_BasicPhysic extends TF3D_AppWrapper
 		this.Pbody3.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
 		this.Pbody3.SetPosition(-0.7f, 22f, 0);
 		this.Pbody3.Enable();
-		this.Pbody3.SetSurface("MAT_text_d");
+		this.Pbody3.ChangeSurface("MATbase","MAT_text_d");
 		this.Pbody3.CreateRigidBody(F3D.BULLET_SHAPE_BOX,0.5f);
 		
 		this.Pbody3.PhysicObject.SetRestitution(0.1f);

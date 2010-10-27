@@ -94,7 +94,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		this.pbody1 = new TF3D_Body("PCube1");
 		this.pbody1.AssignMesh("abstract::Cube.a3da");
 		this.pbody1.Enable();
-		this.pbody1.SetSurface("MATbase");
+		//this.pbody1.changeSurface("MATbase");
 		this.pbody1.SetPosition(4f, 0f, 0);
 		this.pbody1.SetRotation(0f, 0f, 0f);
 		this.pbody1.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 0f);
@@ -102,7 +102,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		this.pbody2 = new TF3D_Body("PCube2");
 		this.pbody2.AssignMesh("abstract::Cube.a3da");
 		this.pbody2.Enable();
-		this.pbody2.SetSurface("MATbase");
+		//this.pbody2.SetSurface("MATbase");
 		this.pbody2.SetPosition(-4f, 0f, 0);
 		this.pbody2.SetRotation(0f, 0f, 0f);
 		this.pbody2.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 0f);

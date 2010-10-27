@@ -73,7 +73,8 @@ public class Demo_RenderModel extends TF3D_AppWrapper
 		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
 		this.model.SetPosition(0, 0, 0);
 		this.model.Enable();
-		this.model.SetSurface("MATbase");
+		this.model.setMultiSurafce(false);
+		this.model.ChangeSurface("MATbase","MAT_text_a");
 		
 	}
 	

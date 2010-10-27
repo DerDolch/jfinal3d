@@ -97,7 +97,6 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.PSphere = new TF3D_Body("PSphere");
 		this.PSphere.AssignMesh("abstract::Sphere.a3da");
 		this.PSphere.Enable();
-		this.PSphere.SetSurface("MATbase");
 		this.PSphere.SetPosition(0.5f, 21f, 0);
 		this.PSphere.SetRotation(0f, 0f, 0f);
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);

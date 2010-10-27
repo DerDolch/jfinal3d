@@ -3,11 +3,14 @@
  */
 package AGFX.F3D.Model;
 
+import java.util.ArrayList;
+
 import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Mesh.TF3D_Mesh;
+import AGFX.F3D.Surface.TF3D_SurfaceSubstItem;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -18,32 +21,66 @@ import static org.lwjgl.opengl.GL11.*;
 public class TF3D_Model extends TF3D_Entity
 {
 
-	private int		mesh_id			= -1;
-	private int		surface_id		= -1; // TODO rewrite surface substitution
-	private Boolean	MultiSurface	= false;
+	private int									mesh_id			= -1;
+	private ArrayList<TF3D_SurfaceSubstItem>	surfaces;
+	private Boolean								MultiSurface	= false;
 
 	public TF3D_Model(String _name)
 	{
 		this.classname = F3D.CLASS_MODEL;
 		this.name = _name;
+		this.surfaces = null;
+
+		F3D.Log.info("TF3D_Model", "Create model '" + name + "'");
 	}
 
 	public void AssignMesh(int id)
 	{
 		this.mesh_id = id;
 		this.BBOX.CalcFromMesh(this.mesh_id);
+		F3D.Log.info("TF3D_Model",
+				"Assigned mesh = '" + F3D.Meshes.Get(this.mesh_id).name + "'");
+		this.ReadAssignedSurfaces();
 	}
 
 	public void AssignMesh(String name)
 	{
 		this.mesh_id = F3D.Meshes.FindByName(name);
 		this.BBOX.CalcFromMesh(this.mesh_id);
+
+		F3D.Log.info("TF3D_Model", "Assigned mesh = '" + name + "'");
+
+		this.ReadAssignedSurfaces();
+
 	}
 
-	public void SetSurface(String name)
+	private void ReadAssignedSurfaces()
 	{
-		this.surface_id = F3D.Surfaces.FindByName(name);
+		this.surfaces = new ArrayList<TF3D_SurfaceSubstItem>();
 
+		TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
+
+		for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
+		{
+			String name = mesh.IndicesGroup.items.get(i).material_name;
+			int id = mesh.IndicesGroup.items.get(i).material_id;
+
+			TF3D_SurfaceSubstItem sitem = new TF3D_SurfaceSubstItem(name, id);
+			this.surfaces.add(sitem);
+
+			F3D.Log.info("TF3D_Model", "Assigned surface = '" + name + "'");
+		}
+	}
+
+	public void ChangeSurface(String old_surface, String new_surface)
+	{
+		for (int i = 0; i < this.surfaces.size(); i++)
+		{
+			if (this.surfaces.get(i).name.equals(old_surface))
+			{
+				this.surfaces.get(i).ChangeTo(new_surface);
+			}
+		}
 	}
 
 	public void Render()
@@ -76,13 +113,7 @@ public class TF3D_Model extends TF3D_Entity
 		{
 			if (this.IsVisible())
 			{
-				if (this.surface_id < 0)
-				{
-					mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
-				} else
-				{
-					mid = this.surface_id;
-				}
+				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
 
 				if (mid >= 0)
 				{
@@ -129,9 +160,9 @@ public class TF3D_Model extends TF3D_Entity
 
 				mesh.vbo.Bind();
 
-				for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
+				for (int i = 0; i < this.surfaces.size(); i++)
 				{
-					mid = mesh.IndicesGroup.items.get(i).material_id;
+					mid = this.surfaces.get(i).id;
 
 					if (mid >= 0)
 					{
@@ -175,10 +206,21 @@ public class TF3D_Model extends TF3D_Entity
 	{
 	}
 
+	// -----------------------------------------------------------------------
+	// setMultiSurafce:
+	// -----------------------------------------------------------------------
 	/**
-	 * @param multiSurafce
-	 *            the multiSurafce to set
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Enable rendering with multiple surfaces on mesh
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param multiSurafce - true/false
+	 * 
+	 * Note: when is false, then is mesh rendered with material on last face
 	 */
+	// -----------------------------------------------------------------------
 	public void setMultiSurafce(Boolean multiSurafce)
 	{
 		this.MultiSurface = multiSurafce;

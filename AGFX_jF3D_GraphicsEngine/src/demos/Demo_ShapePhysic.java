@@ -94,7 +94,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCubePlaneL = new TF3D_Body("PCubePlane");
 		this.PCubePlaneL.AssignMesh("abstract::Cube.a3da");
 		this.PCubePlaneL.Enable();
-		this.PCubePlaneL.SetSurface("MATbase");
 		this.PCubePlaneL.SetPosition(2.5f, 14f, 0f);
 		this.PCubePlaneL.SetScale(5f, 0.15f, 5f);
 		this.PCubePlaneL.SetRotation(0f, 0f, 45f);
@@ -104,7 +103,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCubePlaneR = new TF3D_Body("PCubePlane");
 		this.PCubePlaneR.AssignMesh("abstract::Cube.a3da");
 		this.PCubePlaneR.Enable();
-		this.PCubePlaneR.SetSurface("MATbase");
 		this.PCubePlaneR.SetPosition(-2.5f, 8f, 0f);
 		this.PCubePlaneR.SetScale(5f, 0.15f, 5f);
 		this.PCubePlaneR.SetRotation(0f, 0f, -45f);
@@ -114,7 +112,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PPlane = new TF3D_Body("PPlane");
 		this.PPlane.AssignMesh("abstract::Plane.a3da");
 		this.PPlane.Enable();
-		this.PPlane.SetSurface("MATbase");
 		this.PPlane.SetPosition(0f, 0f, 0f);
 		this.PPlane.SetRotation(0f, 0f, 0f);		
 		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
@@ -123,7 +120,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCube.AssignMesh("abstract::MultiSurfCube.a3da");
 		this.PCube.Enable();
 		this.PCube.setMultiSurafce(false);
-		this.PCube.SetSurface("MATbase");
 		this.PCube.SetPosition(0, 20f, 0);
 		this.PCube.SetRotation(0f, 0f, 0f);
 		this.PCube.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 1.0f);
@@ -133,7 +129,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PSphere = new TF3D_Body("PSphere");
 		this.PSphere.AssignMesh("abstract::Sphere.a3da");
 		this.PSphere.Enable();
-		this.PSphere.SetSurface("MATbase");
 		this.PSphere.SetPosition(0.5f, 21f, 0);
 		this.PSphere.SetRotation(0f, 0f, 0f);
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
@@ -143,7 +138,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCapsule = new TF3D_Body("PCapsule");
 		this.PCapsule.AssignMesh("abstract::Capsule.a3da");
 		this.PCapsule.Enable();
-		this.PCapsule.SetSurface("MATbase");
 		this.PCapsule.SetPosition(-0.5f, 21f, 0);
 		this.PCapsule.SetRotation(0f, 0f, 0f);
 		this.PCapsule.CreateRigidBody(F3D.BULLET_SHAPE_CAPSULE, 1.0f);
@@ -151,7 +145,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCylinder = new TF3D_Body("PCylinder");
 		this.PCylinder.AssignMesh("abstract::Cylinder.a3da");
 		this.PCylinder.Enable();
-		this.PCylinder.SetSurface("MATbase");
 		this.PCylinder.SetPosition(0.5f, 22f, 0);
 		this.PCylinder.SetRotation(0f, 0f, 0f);
 		this.PCylinder.CreateRigidBody(F3D.BULLET_SHAPE_CYLINDER, 1.0f);
@@ -159,7 +152,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCone = new TF3D_Body("PCone");
 		this.PCone.AssignMesh("abstract::Cone.a3da");
 		this.PCone.Enable();
-		this.PCone.SetSurface("MATbase");
 		this.PCone.SetPosition(-0.5f, 22f, 0);
 		this.PCone.SetRotation(0f, 0f, 0f);
 		this.PCone.CreateRigidBody(F3D.BULLET_SHAPE_CONE, 1.0f);
