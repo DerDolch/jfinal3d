@@ -3,6 +3,8 @@
  */
 package AGFX.F3D.Body;
 
+import java.util.ArrayList;
+
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 import com.bulletphysics.util.ObjectArrayList;
@@ -12,6 +14,7 @@ import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_Mesh;
 import AGFX.F3D.Physics.TF3D_PhysicObject;
+import AGFX.F3D.Surface.TF3D_SurfaceSubstItem;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -21,11 +24,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TF3D_Body extends TF3D_Entity
 {
-	private int					mesh_id			= -1;
-	private int					surface_id		= -1;  // TODO rewrite surface substitution
-	private Boolean				MultiSurface	= false;
+	private int									mesh_id			= -1;
+	private ArrayList<TF3D_SurfaceSubstItem>	surfaces;
+	private Boolean								MultiSurface	= false;
 
-	public TF3D_PhysicObject	PhysicObject;
+	public TF3D_PhysicObject					PhysicObject;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
@@ -118,6 +121,11 @@ public class TF3D_Body extends TF3D_Entity
 		{
 			this.mesh_id = id;
 			this.BBOX.CalcFromMesh(this.mesh_id);
+			F3D.Log.info("TF3D_Body",
+					"Assigned mesh = '" + F3D.Meshes.Get(this.mesh_id).name
+							+ "'");
+			this.ReadAssignedSurfaces();
+
 		} else
 		{
 			F3D.Log.error("TF3D_Body",
@@ -146,6 +154,9 @@ public class TF3D_Body extends TF3D_Entity
 		{
 			this.mesh_id = id;
 			this.BBOX.CalcFromMesh(this.mesh_id);
+			F3D.Log.info("TF3D_Body", "Assigned mesh = '" + name + "'");
+
+			this.ReadAssignedSurfaces();
 		} else
 		{
 			F3D.Log.error("TF3D_Body",
@@ -154,25 +165,47 @@ public class TF3D_Body extends TF3D_Entity
 		}
 	}
 
+	private void ReadAssignedSurfaces()
+	{
+		this.surfaces = new ArrayList<TF3D_SurfaceSubstItem>();
+
+		TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
+
+		for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
+		{
+			String name = mesh.IndicesGroup.items.get(i).material_name;
+			int id = mesh.IndicesGroup.items.get(i).material_id;
+
+			TF3D_SurfaceSubstItem sitem = new TF3D_SurfaceSubstItem(name, id);
+			this.surfaces.add(sitem);
+
+			F3D.Log.info("TF3D_Body", "Assigned surface = '" + name + "'");
+		}
+	}
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
 	// -----------------------------------------------------------------------
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Set surface material to user defined (assigned material to mesh is
+	 * Change surface material to user defined (assigned material to mesh is
 	 * ignored) <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
-	 * @param name
+	 * @param old_surface - current surface name
+	 * @param new_surface - new surface name
 	 */
 	// -----------------------------------------------------------------------
-	public void SetSurface(String name)
+		public void ChangeSurface(String old_surface, String new_surface)
 	{
-		this.surface_id = F3D.Surfaces.FindByName(name);
-
+		for (int i = 0; i < this.surfaces.size(); i++)
+		{
+			if (this.surfaces.get(i).name.equals(old_surface))
+			{
+				this.surfaces.get(i).ChangeTo(new_surface);
+			}
+		}
 	}
-
 	public void Render()
 	{
 		if (this.MultiSurface)
@@ -204,14 +237,8 @@ public class TF3D_Body extends TF3D_Entity
 
 			if (this.IsVisible())
 			{
-				if (this.surface_id < 0)
-				{
-					mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
-				} else
-				{
-					mid = this.surface_id;
-				}
-
+				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
+				
 				if (mid >= 0)
 				{
 					F3D.Surfaces.ApplyMaterial(mid);
@@ -257,9 +284,9 @@ public class TF3D_Body extends TF3D_Entity
 
 				mesh.vbo.Bind();
 
-				for (int i = 0; i < mesh.IndicesGroup.items.size(); i++)
+				for (int i = 0; i < this.surfaces.size(); i++)
 				{
-					mid = mesh.IndicesGroup.items.get(i).material_id;
+					mid = this.surfaces.get(i).id;
 
 					if (mid >= 0)
 					{

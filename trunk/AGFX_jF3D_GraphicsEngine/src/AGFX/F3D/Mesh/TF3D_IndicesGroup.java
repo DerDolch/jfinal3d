@@ -7,13 +7,12 @@ import AGFX.F3D.F3D;
 public class TF3D_IndicesGroup
 {
 	public ArrayList<TF3D_Indices> items;
-
+    
 	public TF3D_IndicesGroup()
 	{
 		this.items = new ArrayList<TF3D_Indices>();
 	}
 
-	// TODO add check if exist !!!!
 	// -----------------------------------------------------------------------
 	// TF3D_IndicesGroup: 
 	// -----------------------------------------------------------------------
