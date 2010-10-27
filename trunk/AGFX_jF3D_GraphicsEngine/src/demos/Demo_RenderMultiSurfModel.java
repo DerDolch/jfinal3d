@@ -2,6 +2,9 @@ package demos;
 
 import javax.vecmath.*;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
@@ -51,11 +54,11 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 	public void onInitialize()
 	{
 		this.Camera = new TF3D_Camera("TargetCamera");
-		this.Camera.SetPosition(10.0f, 10.0f, -10.0f);
-		
+		this.Camera.SetPosition(0.0f, 0.0f, -10.0f);
+		this.Camera.SetRotation(0.0f, 180.0f, 0.0f);
 		this.Camera.movespeed = 0.2f;
 		this.Camera.TargetPoint = new Vector3f(0,0,0);
-		this.Camera.ctype = F3D.CAMERA_TYPE_TARGET;
+		this.Camera.ctype = F3D.CAMERA_TYPE_FPS;
 		
 		F3D.Cameras.Add(this.Camera);
 		
@@ -70,6 +73,7 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 		this.model = new TF3D_Model("Cube");
 		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::MultiSurfCube.a3da"));
 		this.model.SetPosition(0, 0, 0);
+		this.model.MultiMaterial = true;
 		this.model.Enable();
 		
 		
@@ -82,7 +86,41 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 		
 		F3D.Draw.Axis(2.0f);
 		
-	
+		if (Mouse.isInsideWindow())
+		{
+    		if (Mouse.isButtonDown(0))
+    		{
+    			float dx = (float)Mouse.getDX()/10.0f;
+    			float dy = (float)Mouse.getDY()/10.0f;
+    			
+    			this.Camera.Turn( -dy, dx, 0.0f);
+    		
+    			if (Mouse.getX()<3) {Mouse.setCursorPosition(F3D.Config.r_display_width-4,Mouse.getY());}
+        		if (Mouse.getX()>F3D.Config.r_display_width-3) {Mouse.setCursorPosition(4,Mouse.getY());}
+        		if (Mouse.getY()<3) {Mouse.setCursorPosition(Mouse.getX(),F3D.Config.r_display_height-4);}
+        		if (Mouse.getY()>F3D.Config.r_display_height-3) {Mouse.setCursorPosition(Mouse.getX(),4);}
+    		}
+		}
+		
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_W))
+		{
+			this.Camera.Move(0.0f, 0.0f, -0.05f);
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
+		{
+			this.Camera.Move(-0.05f, 0.0f, 0.0f);
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_S))
+		{
+			this.Camera.Move(0.0f, 0.0f, 0.05f);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_D))
+		{
+			this.Camera.Move(0.05f, 0.0f, 0.0f);
+		}
 	}
 	
 	
