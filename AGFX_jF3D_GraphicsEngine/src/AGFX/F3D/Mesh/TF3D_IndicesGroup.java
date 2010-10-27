@@ -2,6 +2,8 @@ package AGFX.F3D.Mesh;
 
 import java.util.ArrayList;
 
+import AGFX.F3D.F3D;
+
 public class TF3D_IndicesGroup
 {
 	public ArrayList<TF3D_Indices> items;
@@ -92,6 +94,14 @@ public class TF3D_IndicesGroup
 		}
 	}
 
+	public void AddIndexToGroup(String names[])
+	{
+		for(int i=0;i<names.length;i++)
+		{
+			this.AddIndexToGroup(names[i], i);
+		}
+		
+	}
 	// -----------------------------------------------------------------------
 	// TF3D_IndicesGroup:
 	// -----------------------------------------------------------------------
@@ -111,6 +121,7 @@ public class TF3D_IndicesGroup
 	{
 		int g_id = this.FindGroupByName(gname);
 
+		F3D.Log.info("ADD 2 GRP",gname);
 		if (g_id == -1)
 		{
 			// when missing - create new indices group
@@ -140,6 +151,10 @@ public class TF3D_IndicesGroup
 	// -----------------------------------------------------------------------
 	public void Generate()
 	{
+		for(int i=0;i<this.items.size();i++)
+		{
+			this.items.get(i).CreateIndicesBuffer();
+		}
 
 	}
 }
