@@ -73,7 +73,8 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 		this.model = new TF3D_Model("Cube");
 		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::MultiSurfCube.a3da"));
 		this.model.SetPosition(0, 0, 0);
-		this.model.MultiMaterial = true;
+		this.model.SetRotation(45, 45, 0);
+		this.model.setMultiSurafce(true);
 		this.model.Enable();
 		
 		

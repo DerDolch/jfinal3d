@@ -589,6 +589,12 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void DrawVertexBuffer(ShortBuffer gindices)
 	{
-		glDrawElements(GL_TRIANGLES, gindices);		
+		if (F3D.Extensions.VertexBufferObject)
+		{
+			glDrawElements(GL_TRIANGLES, gindices);
+		} else
+		{
+			glDrawArrays(GL_TRIANGLES, 0, this.indices_length);
+		}
 	}
 }

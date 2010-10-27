@@ -83,7 +83,8 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Cylinder.a3da");
 		F3D.Meshes.Add("abstract::Capsule.a3da");
 		F3D.Meshes.Add("abstract::Plane.a3da");
-
+		F3D.Meshes.Add("abstract::MultiSurfCube.a3da");
+		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
@@ -119,8 +120,9 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PPlane.CreateRigidBody(F3D.BULLET_SHAPE_PLANE, 0.0f);
     	
 		this.PCube = new TF3D_Body("PCube");
-		this.PCube.AssignMesh("abstract::Cube.a3da");
+		this.PCube.AssignMesh("abstract::MultiSurfCube.a3da");
 		this.PCube.Enable();
+		this.PCube.setMultiSurafce(false);
 		this.PCube.SetSurface("MATbase");
 		this.PCube.SetPosition(0, 20f, 0);
 		this.PCube.SetRotation(0f, 0f, 0f);
