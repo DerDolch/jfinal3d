@@ -23,8 +23,7 @@ public class TF3D_Model extends TF3D_Entity
 
 	private int									mesh_id			= -1;
 	private ArrayList<TF3D_SurfaceSubstItem>	surfaces;
-	private Boolean								MultiSurface	= false;
-
+	
 	public TF3D_Model(String _name)
 	{
 		this.classname = F3D.CLASS_MODEL;
@@ -83,6 +82,7 @@ public class TF3D_Model extends TF3D_Entity
 		}
 	}
 
+	/*
 	public void Render()
 	{
 		if (this.MultiSurface)
@@ -93,7 +93,7 @@ public class TF3D_Model extends TF3D_Entity
 			this.Render_with_MultiSurface_off();
 		}
 	}
-
+	*/
 	// -----------------------------------------------------------------------
 	// TA3D_Mesh:
 	// -----------------------------------------------------------------------
@@ -105,6 +105,7 @@ public class TF3D_Model extends TF3D_Entity
 	 */
 	// -----------------------------------------------------------------------
 
+	/*
 	private void Render_with_MultiSurface_off()
 	{
 		int mid;
@@ -147,8 +148,9 @@ public class TF3D_Model extends TF3D_Entity
 			}
 		}
 	}
-
-	private void Render_with_MultiSurface_on()
+	*/
+	//private void Render_with_MultiSurface_on()
+	public void Render()
 	{
 		int mid;
 
@@ -204,34 +206,6 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Destroy()
 	{
-	}
-
-	// -----------------------------------------------------------------------
-	// setMultiSurafce:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Enable rendering with multiple surfaces on mesh
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param multiSurafce - true/false
-	 * 
-	 * Note: when is false, then is mesh rendered with material on last face
-	 */
-	// -----------------------------------------------------------------------
-	public void setMultiSurafce(Boolean multiSurafce)
-	{
-		this.MultiSurface = multiSurafce;
-	}
-
-	/**
-	 * @return the multiSurafce
-	 */
-	public Boolean getMultiSurafce()
-	{
-		return MultiSurface;
 	}
 
 }

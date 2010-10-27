@@ -119,7 +119,6 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCube = new TF3D_Body("PCube");
 		this.PCube.AssignMesh("abstract::MultiSurfCube.a3da");
 		this.PCube.Enable();
-		this.PCube.setMultiSurafce(false);
 		this.PCube.SetPosition(0, 20f, 0);
 		this.PCube.SetRotation(0f, 0f, 0f);
 		this.PCube.CreateRigidBody(F3D.BULLET_SHAPE_BOX, 1.0f);

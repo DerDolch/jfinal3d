@@ -4,7 +4,9 @@
 package demos;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLConnection;
 
 import org.newdawn.slick.opengl.Texture;
@@ -17,7 +19,7 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
  * @author AndyGFX
  *
  */
-public class Demo_AbstractFileSystem extends TF3D_AppWrapper
+public class Demo_JAR_fileloader extends TF3D_AppWrapper
 {
 
 	@Override
@@ -33,6 +35,7 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010";
+
 			
 			
 
@@ -45,11 +48,27 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
-		String filename = "abstract::rotate_billboard.event";
-		String fullfilenamepath = F3D.AbstractFiles.GetFullPath(filename);
-		F3D.Log.info("MAIN", fullfilenamepath);
 		
-	
+		
+		
+		F3D.AbstractFiles.Save("D:/media.folders");
+		
+		
+		
+		  try
+		{
+		
+			// recreate abstract file list from file
+			//F3D.AbstractFiles.Load(  new FileInputStream("D:/media.folder"));
+			
+			// recreate abstract file list from JAR
+			F3D.AbstractFiles.Load( ClassLoader.getSystemResource("media/media.folders").openStream());
+			
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -74,7 +93,7 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 	public static void main(String[] args)
 	{
 		
-		new Demo_AbstractFileSystem().Execute();		
+		new Demo_JAR_fileloader().Execute();		
 		System.exit(0); 
 
 	}

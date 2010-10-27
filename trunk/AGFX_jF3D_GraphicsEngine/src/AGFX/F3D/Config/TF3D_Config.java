@@ -40,7 +40,8 @@ public class TF3D_Config
 	public Boolean io_mesh_asci_to_bin = true;	
 	/**  enable/disable using Bullet physics in application*/
 	public Boolean use_physics = true;
-	
+	public int io_preload_source = F3D.PRELOAD_FROM_FOLDER;
+	public String io_preload_source_name = "media.folders";
 	
 	// -----------------------------------------------------------------------
 	// TF3D_Config: 
@@ -61,6 +62,8 @@ public class TF3D_Config
 		this.r_display_title = "LWJGL Application";
 		this.io_preload_data = true;
 		this.io_preload_folder = "media";
+		this.io_preload_source_name = "media.folders";
+		this.io_preload_source = F3D.PRELOAD_FROM_FILE;
 		this.e_world_autoassign = true;
 		this.r_anisotropy_filtering = 0;
 		

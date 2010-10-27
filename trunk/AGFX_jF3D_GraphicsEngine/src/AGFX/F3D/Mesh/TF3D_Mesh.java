@@ -218,11 +218,14 @@ public class TF3D_Mesh
 	 */
 	// -----------------------------------------------------------------------
 
+	
 	public void Render()
 	{
-		this.vbo.DrawVertexBuffer();
+		this.vbo.Bind();
+		this.vbo.DrawVertexBuffer(IndicesGroup.items.get(0).indexBuffer);
+		this.vbo.UnBind();
 	}
-
+	
 	public void Render(int sid)
 	{
 		

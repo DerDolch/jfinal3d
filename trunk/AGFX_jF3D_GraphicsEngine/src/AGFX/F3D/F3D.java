@@ -3,6 +3,8 @@
  */
 package AGFX.F3D;
 
+import java.io.IOException;
+
 import org.lwjgl.LWJGLException;
 
 import AGFX.F3D.Camera.TF3D_CameraManager;
@@ -35,129 +37,132 @@ public class F3D
 	// '-----------------------------------------------------------------
 	// ' LOG: CONST
 	// '-----------------------------------------------------------------
-	public static final boolean             PARSER_LOG                 = false;
-	public static final boolean             ABSTARCTFILE_LOG           = false;
+	public static final boolean				PARSER_LOG					= false;
+	public static final boolean				ABSTARCTFILE_LOG			= true;
 
+	
+	public static final int					PRELOAD_FROM_FOLDER			= 0;
+	public static final int					PRELOAD_FROM_JAR		    = 1;
+	public static final int					PRELOAD_FROM_FILE			= 2;
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
 	// '-----------------------------------------------------------------
-	public static final int                 CLASS_LIGHT                = 0;
-	public static final int                 CLASS_MESH                 = 1;
-	public static final int                 CLASS_MODEL                = 2;
-	public static final int                 CLASS_PIVOT                = 3;
-	public static final int                 CLASS_SPRITE               = 4;
-	public static final int                 CLASS_CAMERA               = 5;
-	public static final int                 CLASS_BODY                 = 6;
-	public static final int                 CLASS_VEHICLE              = 7;
+	public static final int					CLASS_LIGHT					= 0;
+	public static final int					CLASS_MESH					= 1;
+	public static final int					CLASS_MODEL					= 2;
+	public static final int					CLASS_PIVOT					= 3;
+	public static final int					CLASS_SPRITE				= 4;
+	public static final int					CLASS_CAMERA				= 5;
+	public static final int					CLASS_BODY					= 6;
+	public static final int					CLASS_VEHICLE				= 7;
 
 	// '-----------------------------------------------------------------
 	// ' CAMERA: CONST
 	// '-----------------------------------------------------------------
-	public static final int                 CAMERA_MODE_FREELOOK       = 0;
-	public static final int                 CAMERA_MODE_WALK           = 1;
+	public static final int					CAMERA_MODE_FREELOOK		= 0;
+	public static final int					CAMERA_MODE_WALK			= 1;
 
-	public static final int                 CAMERA_TYPE_FPS            = 0;
-	public static final int                 CAMERA_TYPE_ORBIT          = 1;
-	public static final int                 CAMERA_TYPE_TARGET         = 2;
+	public static final int					CAMERA_TYPE_FPS				= 0;
+	public static final int					CAMERA_TYPE_ORBIT			= 1;
+	public static final int					CAMERA_TYPE_TARGET			= 2;
 
 	// '-----------------------------------------------------------------
 	// ' TEXTURES: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 MAX_TMU                    = 4;
+	public static final int					MAX_TMU						= 4;
 
 	// '-----------------------------------------------------------------
 	// ' FONT: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 MAX_CHARS                  = 255;
+	public static final int					MAX_CHARS					= 255;
 
 	// '-----------------------------------------------------------------
 	// ' BILLBOARD: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 BM_AXIS_X                  = 1;
-	public static final int                 BM_AXIS_Y                  = 2;
-	public static final int                 BM_AXIS_Z                  = 3;
-	public static final int                 BM_DIRECTIONAL             = 4;
-	public static final int                 BM_SPRITE                  = 5;
+	public static final int					BM_AXIS_X					= 1;
+	public static final int					BM_AXIS_Y					= 2;
+	public static final int					BM_AXIS_Z					= 3;
+	public static final int					BM_DIRECTIONAL				= 4;
+	public static final int					BM_SPRITE					= 5;
 
 	// '-----------------------------------------------------------------
 	// ' MATH: CONST
 	// '-----------------------------------------------------------------
 
-	public static final float               DEGTORAD                   = 0.017453292519943295769236907684886f;
-	public static final float               RADTODEG                   = 57.295779513082320876798154814105f;
+	public static final float				DEGTORAD					= 0.017453292519943295769236907684886f;
+	public static final float				RADTODEG					= 57.295779513082320876798154814105f;
 
 	// '-----------------------------------------------------------------
 	// ' BULLET SHAPE: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 BULLET_SHAPE_PLANE         = 1;
-	public static final int                 BULLET_SHAPE_BOX           = 2;
-	public static final int                 BULLET_SHAPE_SPHERE        = 3;
-	public static final int                 BULLET_SHAPE_CYLINDER      = 5;
-	public static final int                 BULLET_SHAPE_CYLINDER_X    = 6;
-	public static final int                 BULLET_SHAPE_CYLINDER_Z    = 7;
-	public static final int                 BULLET_SHAPE_CONE          = 8;
-	public static final int                 BULLET_SHAPE_CONE_X        = 9;
-	public static final int                 BULLET_SHAPE_CONE_Z        = 10;
-	public static final int                 BULLET_SHAPE_CAPSULE_X     = 11;
-	public static final int                 BULLET_SHAPE_CAPSULE_Z     = 12;
-	public static final int                 BULLET_SHAPE_CAPSULE       = 13;
-	public static final int                 BULLET_SHAPE_TRIMESH       = 14;
-	public static final int                 BULLET_SHAPE_CONVEXHULL    = 15;
-	
+	public static final int					BULLET_SHAPE_PLANE			= 1;
+	public static final int					BULLET_SHAPE_BOX			= 2;
+	public static final int					BULLET_SHAPE_SPHERE			= 3;
+	public static final int					BULLET_SHAPE_CYLINDER		= 5;
+	public static final int					BULLET_SHAPE_CYLINDER_X		= 6;
+	public static final int					BULLET_SHAPE_CYLINDER_Z		= 7;
+	public static final int					BULLET_SHAPE_CONE			= 8;
+	public static final int					BULLET_SHAPE_CONE_X			= 9;
+	public static final int					BULLET_SHAPE_CONE_Z			= 10;
+	public static final int					BULLET_SHAPE_CAPSULE_X		= 11;
+	public static final int					BULLET_SHAPE_CAPSULE_Z		= 12;
+	public static final int					BULLET_SHAPE_CAPSULE		= 13;
+	public static final int					BULLET_SHAPE_TRIMESH		= 14;
+	public static final int					BULLET_SHAPE_CONVEXHULL		= 15;
 
 	// '-----------------------------------------------------------------
 	// ' PARTICLE ENGINE: CONST
 	// '-----------------------------------------------------------------
 
-	public final static int                 PARTICLE_TYPE_CONSTANT     = 0;
-	public final static int                 PARTICLE_TYPE_FADE         = 1;
-	public final static int                 PARTICLE_TYPE_FLICKERFADE  = 2;
+	public final static int					PARTICLE_TYPE_CONSTANT		= 0;
+	public final static int					PARTICLE_TYPE_FADE			= 1;
+	public final static int					PARTICLE_TYPE_FLICKERFADE	= 2;
 
-	public final static int                 PARTICLE_COLOR_TYPE_GREEN  = 0;
-	public final static int                 PARTICLE_COLOR_TYPE_RED    = 1;
-	public final static int                 PARTICLE_COLOR_TYPE_WHITE  = 2;
-	public final static int                 PARTICLE_COLOR_TYPE_YELLOW = 3;
+	public final static int					PARTICLE_COLOR_TYPE_GREEN	= 0;
+	public final static int					PARTICLE_COLOR_TYPE_RED		= 1;
+	public final static int					PARTICLE_COLOR_TYPE_WHITE	= 2;
+	public final static int					PARTICLE_COLOR_TYPE_YELLOW	= 3;
 
-	public final static int                 PARTICLE_STATE_DEAD        = 0;
-	public final static int                 PARTICLE_STATE_ALIVE       = 1;
+	public final static int					PARTICLE_STATE_DEAD			= 0;
+	public final static int					PARTICLE_STATE_ALIVE		= 1;
 
 	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 
-	public static TF3D_AbstractFiles        AbstractFiles;
-	public static TF3D_Config               Config;
-	public static TF3D_Extensions           Extensions;
-	public static TF3D_Viewport             Viewport;
-	public static TF3D_Display              Display;
-	public static TF3D_Log                  Log;
-	public static TF3D_CameraManager        Cameras;
-	public static TF3D_Frustum              Frustum;
-	public static TF3D_TextureManager       Textures;
-	public static TF3D_Timer2               Timer;
+	public static TF3D_AbstractFiles		AbstractFiles;
+	public static TF3D_Config				Config;
+	public static TF3D_Extensions			Extensions;
+	public static TF3D_Viewport				Viewport;
+	public static TF3D_Display				Display;
+	public static TF3D_Log					Log;
+	public static TF3D_CameraManager		Cameras;
+	public static TF3D_Frustum				Frustum;
+	public static TF3D_TextureManager		Textures;
+	public static TF3D_Timer2				Timer;
 	/** Material Event container */
-	public static TF3D_MaterialEventManager MaterialEvents;
+	public static TF3D_MaterialEventManager	MaterialEvents;
 	/** Surface container */
-	public static TF3D_SurfaceManager       Surfaces;
+	public static TF3D_SurfaceManager		Surfaces;
 	/** Fonts container */
-	public static TF3D_FontManager          Fonts;
+	public static TF3D_FontManager			Fonts;
 	/**
 	 * Preloading data events/textures/materials when is ptreloading enabled in
 	 * config
 	 */
-	public static TF3D_Preloader            Preloader;
+	public static TF3D_Preloader			Preloader;
 	/** Billboard and sprites container */
-	public static TF3D_MeshManager          Meshes;
-	public static TF3D_Helpers              Draw;
-	public static TF3D_World                World;
-	public static TF3D_Physics              Physic;
-	public static TF3D_Keyboard             Key;
+	public static TF3D_MeshManager			Meshes;
+	public static TF3D_Helpers				Draw;
+	public static TF3D_World				World;
+	public static TF3D_Physics				Physic;
+	public static TF3D_Keyboard				Key;
 	public static TF3D_Pick					Pick;
-	
+
 	public static void Create()
 	{
 
@@ -198,11 +203,13 @@ public class F3D
 		F3D.Display.Create();
 		F3D.Extensions = new TF3D_Extensions();
 		F3D.Viewport.Init3D();
+
 		F3D.Preloader.PreloadData();
 
 		F3D.Fonts.Load("abstract::system.font");
-		
-		if (F3D.Config.use_physics) F3D.Physic.Initialize();
+
+		if (F3D.Config.use_physics)
+			F3D.Physic.Initialize();
 
 	}
 

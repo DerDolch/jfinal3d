@@ -24,9 +24,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TF3D_Body extends TF3D_Entity
 {
-	private int									mesh_id			= -1;
+	private int									mesh_id	= -1;
 	private ArrayList<TF3D_SurfaceSubstItem>	surfaces;
-	private Boolean								MultiSurface	= false;
 
 	public TF3D_PhysicObject					PhysicObject;
 
@@ -182,6 +181,7 @@ public class TF3D_Body extends TF3D_Entity
 			F3D.Log.info("TF3D_Body", "Assigned surface = '" + name + "'");
 		}
 	}
+
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
 	// -----------------------------------------------------------------------
@@ -192,11 +192,13 @@ public class TF3D_Body extends TF3D_Entity
 	 * ignored) <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
-	 * @param old_surface - current surface name
-	 * @param new_surface - new surface name
+	 * @param old_surface
+	 *            - current surface name
+	 * @param new_surface
+	 *            - new surface name
 	 */
 	// -----------------------------------------------------------------------
-		public void ChangeSurface(String old_surface, String new_surface)
+	public void ChangeSurface(String old_surface, String new_surface)
 	{
 		for (int i = 0; i < this.surfaces.size(); i++)
 		{
@@ -206,72 +208,55 @@ public class TF3D_Body extends TF3D_Entity
 			}
 		}
 	}
+
+	/*
+	 * public void Render() { if (this.MultiSurface) {
+	 * this.Render_with_MultiSurface_on(); } else {
+	 * this.Render_with_MultiSurface_off(); } }
+	 */
+	// -----------------------------------------------------------------------
+	// TF3D_Body:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Render Physic Body without MultiSurfaces<BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+	/*
+	 * private void Render_with_MultiSurface_off() { int mid;
+	 * 
+	 * if (this.IsEnabled()) {
+	 * 
+	 * if (this.IsVisible()) { mid =
+	 * F3D.Meshes.items.get(this.mesh_id).data.material_id;
+	 * 
+	 * if (mid >= 0) { F3D.Surfaces.ApplyMaterial(mid); }
+	 * 
+	 * if (this.mesh_id >= 0) { glPushMatrix();
+	 * glMultMatrix(this.PhysicObject.transformMatrixBuffer);
+	 * glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+	 * F3D.Meshes.items.get(this.mesh_id).Render(); glScalef(1, 1, 1);
+	 * glPopMatrix(); }
+	 * 
+	 * }
+	 * 
+	 * } }
+	 */
+	// -----------------------------------------------------------------------
+	// TF3D_Body:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Render Physic Body without MultiSurfaces<BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+
+	// private void Render_with_MultiSurface_on()
 	public void Render()
-	{
-		if (this.MultiSurface)
-		{
-			this.Render_with_MultiSurface_on();
-		} else
-		{
-			this.Render_with_MultiSurface_off();
-		}
-	}
-
-	// -----------------------------------------------------------------------
-	// TF3D_Body:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Render Physic Body without MultiSurfaces<BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
-
-	private void Render_with_MultiSurface_off()
-	{
-		int mid;
-
-		if (this.IsEnabled())
-		{
-
-			if (this.IsVisible())
-			{
-				mid = F3D.Meshes.items.get(this.mesh_id).data.material_id;
-				
-				if (mid >= 0)
-				{
-					F3D.Surfaces.ApplyMaterial(mid);
-				}
-
-				if (this.mesh_id >= 0)
-				{
-					glPushMatrix();
-					glMultMatrix(this.PhysicObject.transformMatrixBuffer);
-					glScalef(this.GetScale().x, this.GetScale().y,
-							this.GetScale().z);
-					F3D.Meshes.items.get(this.mesh_id).Render();
-					glScalef(1, 1, 1);
-					glPopMatrix();
-				}
-
-			}
-
-		}
-	}
-
-	// -----------------------------------------------------------------------
-	// TF3D_Body:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Render Physic Body without MultiSurfaces<BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
-
-	private void Render_with_MultiSurface_on()
 	{
 		int mid;
 
@@ -380,23 +365,6 @@ public class TF3D_Body extends TF3D_Entity
 	public void Destroy()
 	{
 		this.PhysicObject.RigidBody.destroy();
-	}
-
-	/**
-	 * @param multiSurafce
-	 *            the multiSurafce to set
-	 */
-	public void setMultiSurafce(Boolean multiSurafce)
-	{
-		this.MultiSurface = multiSurafce;
-	}
-
-	/**
-	 * @return the multiSurafce
-	 */
-	public Boolean getMultiSurafce()
-	{
-		return MultiSurface;
 	}
 
 }
