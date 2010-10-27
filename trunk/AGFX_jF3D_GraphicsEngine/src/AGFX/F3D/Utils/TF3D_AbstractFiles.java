@@ -21,10 +21,12 @@ public class TF3D_AbstractFiles
 	public ArrayList<String>	Dir;
 	static final int			MAX_DEPTH	= 20;
 
-	public TF3D_AbstractFiles()
+	
+	public TF3D_AbstractFiles()	
 	{
 		this.Dir = new ArrayList<String>();
 
+		// preload ABSTRACT FILED files from FOLDER
 		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_FOLDER)
 		{
 			File root = new File(F3D.Config.io_preload_folder);
@@ -35,8 +37,11 @@ public class TF3D_AbstractFiles
 			{
 				System.out.println("Not a directory: " + root);
 			}
+			
+			this.Save(F3D.Config.io_preload_folder+"/"+F3D.Config.io_preload_source_name);
 		}
 		
+		// preload ABSTRACT FILED files from FILE
 		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_FILE)
 		{
 			try
@@ -48,6 +53,7 @@ public class TF3D_AbstractFiles
 			}
 		}
 		
+		// preload ABSTRACT FILED files from FILE in JAR
 		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
 		{
 			try

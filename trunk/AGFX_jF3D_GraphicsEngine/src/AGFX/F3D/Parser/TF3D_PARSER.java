@@ -80,6 +80,7 @@ public class TF3D_PARSER
 	{
 
 		TA3D_ParserBlock _block = new TA3D_ParserBlock();
+		InputStream is = null;
 		
 		try
 		{
@@ -92,8 +93,17 @@ public class TF3D_PARSER
 			
 			F3D.Log.info("F3D_PARSER", "Parsing file:" + filename);
 			
-			filename = F3D.AbstractFiles.GetFullPath(filename);			
-			InputStream is = new FileInputStream(filename);
+			filename = F3D.AbstractFiles.GetFullPath(filename);
+			
+			
+			if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
+			{
+				is =  ClassLoader.getSystemResource(filename).openStream();
+			}
+			else
+			{
+				is = new FileInputStream(filename);
+			}
 			
 
 			// asset can't be more than 2 gigs.
