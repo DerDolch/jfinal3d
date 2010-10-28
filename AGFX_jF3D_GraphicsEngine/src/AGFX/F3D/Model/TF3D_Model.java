@@ -78,48 +78,17 @@ public class TF3D_Model extends TF3D_Entity
 		}
 	}
 
-	/*
-	 * public void Render() { if (this.MultiSurface) {
-	 * this.Render_with_MultiSurface_on(); } else {
-	 * this.Render_with_MultiSurface_off(); } }
-	 */
-	// -----------------------------------------------------------------------
-	// TA3D_Mesh:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Render Mesh <BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
+	public void SetRenderSurface(String sname, Boolean state)
+	{
+		for (int i = 0; i < this.surfaces.size(); i++)
+		{
+			if (this.surfaces.get(i).name.equals(sname))
+			{
+				this.surfaces.get(i).SetEnable(state);
+			}
+		}
+	}
 
-	/*
-	 * private void Render_with_MultiSurface_off() { int mid;
-	 * 
-	 * if (this.IsEnabled()) { if (this.IsVisible()) { mid =
-	 * F3D.Meshes.items.get(this.mesh_id).data.material_id;
-	 * 
-	 * if (mid >= 0) { F3D.Surfaces.ApplyMaterial(mid); }
-	 * 
-	 * glPushMatrix();
-	 * 
-	 * glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-	 * glTranslatef(this.GetPosition().x, this.GetPosition().y,
-	 * this.GetPosition().z);
-	 * 
-	 * glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
-	 * glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-	 * glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
-	 * 
-	 * if (this.mesh_id >= 0) { F3D.Meshes.items.get(this.mesh_id).Render(); }
-	 * 
-	 * // render childs for (int i = 0; i < this.childs.size(); i++) {
-	 * this.childs.get(i).Render(); }
-	 * 
-	 * glScalef(1, 1, 1); glPopMatrix(); } } }
-	 */
-	// private void Render_with_MultiSurface_on()
 	public void Render()
 	{
 		int mid;
@@ -134,31 +103,34 @@ public class TF3D_Model extends TF3D_Entity
 
 				for (int i = 0; i < this.surfaces.size(); i++)
 				{
-					mid = this.surfaces.get(i).id;
-
-					if (mid >= 0)
+					if (this.surfaces.get(i).isEnabled())
 					{
-						F3D.Surfaces.ApplyMaterial(mid);
+						mid = this.surfaces.get(i).id;
+
+						if (mid >= 0)
+						{
+							F3D.Surfaces.ApplyMaterial(mid);
+						}
+
+						glPushMatrix();
+
+						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
+
+						glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
+						glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+						glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+
+						mesh.Render(i);
+
+						// render childs
+						for (int ci = 0; ci < this.childs.size(); ci++)
+						{
+							this.childs.get(ci).Render();
+						}
+						glScalef(1, 1, 1);
+						glPopMatrix();
 					}
-
-					glPushMatrix();
-
-					glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-					glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
-
-					glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
-					glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-					glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
-
-					mesh.Render(i);
-
-					// render childs
-					for (int ci = 0; ci < this.childs.size(); ci++)
-					{
-						this.childs.get(ci).Render();
-					}
-					glScalef(1, 1, 1);
-					glPopMatrix();
 				}
 
 				mesh.vbo.UnBind();

@@ -98,7 +98,9 @@ public class TF3D_Mesh
 			this.vbo.CreateTextureBuffer(this.data.uv3, GL_TEXTURE3);
 		if (this.data.indices.length > 0)
 			this.vbo.CreateIndicesBuffer(this.data.indices);
+		
 		this.vbo.Build();
+		
 		this.IndicesGroup.Generate();
 	}
 

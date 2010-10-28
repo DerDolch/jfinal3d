@@ -79,7 +79,6 @@ public class TF3D_Vehicle extends TF3D_Entity
 
 	// Physics vehicle definition
 	public RigidBody                       RB_carChassis;
-	//public ObjectArrayList<CollisionShape> collisionShapes                = new ObjectArrayList<CollisionShape>();
 	public VehicleTuning                   tuning                         = new VehicleTuning();
 	public VehicleRaycaster                vehicleRayCaster;
 	public RaycastVehicle                  vehicle;
