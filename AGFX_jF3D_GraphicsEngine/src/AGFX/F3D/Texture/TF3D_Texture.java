@@ -80,15 +80,7 @@ public class TF3D_Texture
 		
         Texture texture=null;
         
-        if(F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
-        {
-        	
-        	texture = TextureLoader.getTexture(FMT, ClassLoader.getSystemResourceAsStream(filename));
-        }
-        else
-        {
-        	texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
-        }
+        texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
         
         texture.bind();
         int width = (int)texture.getImageWidth();

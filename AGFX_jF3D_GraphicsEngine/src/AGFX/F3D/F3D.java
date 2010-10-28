@@ -38,14 +38,13 @@ public class F3D
 	// ' LOG: CONST
 	// '-----------------------------------------------------------------
 	public static final boolean				PARSER_LOG					= false;
-	public static final boolean				ABSTARCTFILE_LOG			= true;
+	public static final boolean				ABSTARCTFILE_LOG			= false;
 
 	// '-----------------------------------------------------------------
 	// ' MEDIA ABSTRACT FILES PRELOADER: CONST
 	// '-----------------------------------------------------------------	
 	public static final int					PRELOAD_FROM_FOLDER			= 0;
-	public static final int					PRELOAD_FROM_JAR		    = 1;
-	public static final int					PRELOAD_FROM_FILE			= 2;
+	public static final int					PRELOAD_FROM_FILE			= 1;
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
 	// '-----------------------------------------------------------------

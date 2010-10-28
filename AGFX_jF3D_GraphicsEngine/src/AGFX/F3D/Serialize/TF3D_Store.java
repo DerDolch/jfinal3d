@@ -23,7 +23,7 @@ public class TF3D_Store
 
 	}
 
-	public static int saveObj(TF3D_MeshData obj,String filename)
+	public static int saveObj(TF3D_MeshData obj, String filename)
 	{
 		filename = F3D.AbstractFiles.GetFullPath(filename);
 		filename = filename.replace("a3da", "a3db");
@@ -44,14 +44,13 @@ public class TF3D_Store
 
 	}
 
-	
 	public static TF3D_MeshData readObj(InputStream in)
 	{
 		TF3D_MeshData ret = null;
-		
+
 		try
 		{
-			
+
 			ObjectInputStream s = new ObjectInputStream(in);
 			ret = (TF3D_MeshData) s.readObject();
 			return ret;
@@ -61,35 +60,19 @@ public class TF3D_Store
 			return ret;
 		}
 	}
-	
+
 	public static TF3D_MeshData readObj(String filename)
 	{
-		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
+		try
 		{
-			try
-            {
-	            return readObj((FileInputStream) ClassLoader.getSystemResource(F3D.AbstractFiles.GetFullPath(filename)).openStream());
-            } catch (IOException e)
-            {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-            }
-		}
-		else
+			return readObj(new FileInputStream(F3D.AbstractFiles.GetFullPath(filename)));
+		} catch (FileNotFoundException e)
 		{
-			
-			try
-            {
-	            return readObj(new FileInputStream(F3D.AbstractFiles.GetFullPath(filename)));
-            } catch (FileNotFoundException e)
-            {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-            }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return null;
 	}
 
-	
 }
