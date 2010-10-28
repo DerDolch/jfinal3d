@@ -7,7 +7,7 @@ package AGFX.F3D.Serialize;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -67,8 +67,7 @@ public class TF3D_Store
 		{
 			return readObj(new FileInputStream(F3D.AbstractFiles.GetFullPath(filename)));
 		} catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
+		{			
 			e.printStackTrace();
 		}
 

@@ -2,7 +2,6 @@ package AGFX.F3D.Mesh;
 
 import java.util.ArrayList;
 
-import AGFX.F3D.F3D;
 
 public class TF3D_IndicesGroup
 {

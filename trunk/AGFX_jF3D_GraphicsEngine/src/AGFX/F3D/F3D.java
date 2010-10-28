@@ -3,10 +3,7 @@
  */
 package AGFX.F3D;
 
-import java.io.IOException;
-
 import org.lwjgl.LWJGLException;
-
 import AGFX.F3D.Camera.TF3D_CameraManager;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Engine.TF3D_Display;

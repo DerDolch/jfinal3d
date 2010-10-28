@@ -3,21 +3,10 @@
  */
 package AGFX.F3D.Pick;
 
-import static org.lwjgl.opengl.GL11.GL_PROJECTION_MATRIX;
-import static org.lwjgl.opengl.GL11.glGetFloat;
-
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
-import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 
 import AGFX.F3D.F3D;
-import AGFX.F3D.Body.TF3D_Body;
 
 import com.bulletphysics.collision.dispatch.CollisionWorld;
 import com.bulletphysics.dynamics.RigidBody;
@@ -133,6 +122,8 @@ public class TF3D_Pick
 		float tanFov = (top - bottom) * 0.5f / nearPlane;
 		float fov = (float) Math.atan(tanFov);
 		
+		// TODO configurable FOV 
+		
 		//F3D.Log.info("",String.valueOf(fov*F3D.RADTODEG));
 		
 		F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).UpdateAxisDirection();
@@ -143,8 +134,7 @@ public class TF3D_Pick
 		
 		float farPlane = 10000f;
 		rayForward.scale(-farPlane);
-
-		Vector3f rightOffset = new Vector3f();
+		
 		Vector3f vertical = new Vector3f(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).axis._up);
 		
 

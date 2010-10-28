@@ -17,7 +17,7 @@ import AGFX.F3D.Entity.TF3D_Entity;
  */
 public class TF3D_World
 {
-	public static ArrayList<TF3D_Entity> entities;
+	public  ArrayList<TF3D_Entity> entities;
 
 	// -----------------------------------------------------------------------
 	// TF3D_World:
@@ -32,7 +32,7 @@ public class TF3D_World
 	public TF3D_World()
 	{
 		F3D.Log.info("TF3D_World", "TF3D_World: constructor");
-		TF3D_World.entities = new ArrayList<TF3D_Entity>();
+		this.entities = new ArrayList<TF3D_Entity>();
 		F3D.Log.info("TF3D_World", "TF3D_World: ... done");
 	}
 
@@ -48,11 +48,11 @@ public class TF3D_World
 	// -----------------------------------------------------------------------
 	public void Update()
 	{
-		for (int i = 0; i < TF3D_World.entities.size(); i++)
+		for (int i = 0; i < this.entities.size(); i++)
 		{
-			if (TF3D_World.entities.get(i).parent == null)
+			if (this.entities.get(i).parent == null)
 			{
-				TF3D_World.entities.get(i).Update();
+				this.entities.get(i).Update();
 
 			}
 		}
@@ -74,13 +74,13 @@ public class TF3D_World
 
 		F3D.Cameras.RenderSky();
 
-		for (int i = 0; i < TF3D_World.entities.size(); i++)
+		for (int i = 0; i < this.entities.size(); i++)
 		{
-			if (TF3D_World.entities.get(i).parent == null)
+			if (this.entities.get(i).parent == null)
 			{
-				if (TF3D_World.entities.get(i).classname != F3D.CLASS_CAMERA)
+				if (this.entities.get(i).classname != F3D.CLASS_CAMERA)
 				{
-					TF3D_World.entities.get(i).Render();
+					this.entities.get(i).Render();
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class TF3D_World
 	// -----------------------------------------------------------------------
 	public void Add(TF3D_Entity e)
 	{
-		TF3D_World.entities.add(e);
+		this.entities.add(e);
 	}
 
 	// -----------------------------------------------------------------------
@@ -124,14 +124,14 @@ public class TF3D_World
 		{
 			e.ClearChild();
 		}
-		TF3D_World.entities.remove(e);
+		this.entities.remove(e);
 	}
 
 	public void Destroy()
 	{
-		for (int i = 0; i < TF3D_World.entities.size(); i++)
+		for (int i = 0; i < this.entities.size(); i++)
 		{
-			TF3D_World.entities.get(i).Destroy();
+			this.entities.get(i).Destroy();
 		}
 	}
 

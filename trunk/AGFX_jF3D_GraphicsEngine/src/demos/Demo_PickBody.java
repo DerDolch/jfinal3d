@@ -4,19 +4,14 @@
 package demos;
 
 import javax.vecmath.Vector3f;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
-import com.bulletphysics.collision.dispatch.CollisionWorld;
 import com.bulletphysics.dynamics.RigidBody;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
-
 import AGFX.F3D.Pivot.TF3D_Pivot;
 import AGFX.F3D.Skybox.TF3D_Skybox;
 
