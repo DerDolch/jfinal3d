@@ -10,7 +10,6 @@ import static org.lwjgl.opengl.GL11.glScalef;
 
 import java.nio.FloatBuffer;
 
-import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import org.lwjgl.BufferUtils;
@@ -26,7 +25,6 @@ import com.bulletphysics.dynamics.vehicle.VehicleRaycaster;
 import com.bulletphysics.dynamics.vehicle.VehicleTuning;
 import com.bulletphysics.dynamics.vehicle.WheelInfo;
 import com.bulletphysics.linearmath.Transform;
-import com.bulletphysics.util.ObjectArrayList;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;

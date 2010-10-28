@@ -3,12 +3,6 @@
  */
 package demos;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URLConnection;
-
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;

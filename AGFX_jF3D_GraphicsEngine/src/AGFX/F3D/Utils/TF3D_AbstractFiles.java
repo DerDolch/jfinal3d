@@ -1,14 +1,10 @@
 package AGFX.F3D.Utils;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
@@ -161,14 +157,13 @@ public class TF3D_AbstractFiles
 				String relative_path = this.Dir.get(i);
 				int id = relative_path.indexOf("media");
 				relative_path = relative_path.substring(id,relative_path.length());
-				//relative_path=relative_path+"\n";
 				dos.println(relative_path);
 			}
 
 			dos.close();
 		} catch (IOException e1)
 		{
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		 
@@ -204,7 +199,6 @@ public class TF3D_AbstractFiles
 			}
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			F3D.Log.error("TF3D_AbstractFiles", "Missing file in JAR!!");
 		}

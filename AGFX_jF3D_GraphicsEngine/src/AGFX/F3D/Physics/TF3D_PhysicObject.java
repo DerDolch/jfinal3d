@@ -16,18 +16,15 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_Mesh;
 
-import com.bulletphysics.collision.dispatch.CollisionObject;
+
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.BvhTriangleMeshShape;
 import com.bulletphysics.collision.shapes.CapsuleShape;
 import com.bulletphysics.collision.shapes.CapsuleShapeX;
 import com.bulletphysics.collision.shapes.CapsuleShapeZ;
 import com.bulletphysics.collision.shapes.CollisionShape;
-import com.bulletphysics.collision.shapes.ConcaveShape;
 import com.bulletphysics.collision.shapes.ConeShape;
 import com.bulletphysics.collision.shapes.ConvexHullShape;
-import com.bulletphysics.collision.shapes.ConvexShape;
-import com.bulletphysics.collision.shapes.PolyhedralConvexShape;
 import com.bulletphysics.collision.shapes.StaticPlaneShape;
 import com.bulletphysics.collision.shapes.ConeShapeX;
 import com.bulletphysics.collision.shapes.ConeShapeZ;
@@ -38,7 +35,6 @@ import com.bulletphysics.collision.shapes.SphereShape;
 import com.bulletphysics.collision.shapes.TriangleIndexVertexArray;
 
 import com.bulletphysics.dynamics.RigidBody;
-import com.bulletphysics.dynamics.RigidBodyConstructionInfo;
 import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;

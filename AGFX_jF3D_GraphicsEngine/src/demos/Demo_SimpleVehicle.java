@@ -3,16 +3,12 @@
  */
 package demos;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
 import AGFX.F3D.Vehicle.TF3D_Vehicle;
 

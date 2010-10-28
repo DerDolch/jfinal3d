@@ -4,9 +4,6 @@
 package AGFX.F3D.Model;
 
 import java.util.ArrayList;
-
-import javax.vecmath.Vector3f;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Mesh.TF3D_Mesh;

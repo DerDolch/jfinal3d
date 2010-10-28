@@ -4,16 +4,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.lwjgl.util.glu.MipMap;
-
-import com.sun.org.apache.bcel.internal.util.ClassLoader;
-
 import AGFX.F3D.F3D;
 
 public class TF3D_Texture
