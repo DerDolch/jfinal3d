@@ -76,7 +76,7 @@ public class TF3D_Viewport
 	    
 	    
 	    // Set our perspective
-	    gluPerspective( 45.0f, (float)F3D.Config.r_display_width / F3D.Config.r_display_height, 0.2f, 1000.0f );
+	    gluPerspective( F3D.Config.r_display_fov, (float)F3D.Config.r_display_width / F3D.Config.r_display_height, 0.2f, 1000.0f );
 
 	    // Make sure we're changing the model view and not the projection
 	    glMatrixMode( GL_MODELVIEW );
