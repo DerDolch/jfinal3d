@@ -72,7 +72,8 @@ public class TF3D_Physics
 
 		// create VISUAL PHYSICS DEBUG RENDERER
 		this.Debug = new TF3D_GLDebugDrawer();
-		this.Debug.setDebugMode(DebugDrawModes.DRAW_WIREFRAME | DebugDrawModes.DRAW_AABB | DebugDrawModes.DRAW_CONTACT_POINTS);
+		
+		this.Debug.setDebugMode(DebugDrawModes.PROFILE_TIMINGS | DebugDrawModes.DRAW_WIREFRAME | DebugDrawModes.DRAW_AABB | DebugDrawModes.DRAW_CONTACT_POINTS);
 		this.dynamicsWorld.setDebugDrawer(this.Debug);
 
 		this.Reset();

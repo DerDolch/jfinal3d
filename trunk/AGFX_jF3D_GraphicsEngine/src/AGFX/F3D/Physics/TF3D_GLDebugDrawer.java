@@ -71,7 +71,7 @@ public class TF3D_GLDebugDrawer extends IDebugDraw
 
 	}
 
-	@Override
+	
 	public void drawLine(Vector3f from, Vector3f to, Vector3f color)
 	{
 
@@ -79,28 +79,34 @@ public class TF3D_GLDebugDrawer extends IDebugDraw
 		{
 			GL11.glDisable(GL11.GL_LIGHTING);
 		}
-		if (debugMode > 0)
+		
+		if (this.debugMode > 0)
 		{
+			GL11.glPushMatrix();
 			GL11.glBegin(GL11.GL_LINES);
-			GL11.glColor3f(color.x, color.y, color.z);
+			GL11.glColor4f(color.x, color.y, color.z,1f);
 			GL11.glVertex3f(from.x, from.y, from.z);
 			GL11.glVertex3f(to.x, to.y, to.z);
 			GL11.glEnd();
+			
+			
+			GL11.glBegin(GL11.GL_POINTS);
+			GL11.glPointSize( 5.0f );
+			GL11.glColor4f(color.x, color.y, color.z,1f);
+			GL11.glVertex3f(from.x, from.y, from.z);
+			GL11.glEnd();
+			
+			GL11.glPopMatrix();  
 		}
-
+		
+		
 		if (F3D.Config.use_gl_light)
 		{
 			GL11.glEnable(GL11.GL_LIGHTING);
 		}
+		
 	}
 
-	@Override
-	public void drawTriangle(Vector3f v0, Vector3f v1, Vector3f v2, Vector3f color, float alpha)
-	{
-		this.drawLine(v0, v1, color);
-		this.drawLine(v1, v2, color);
-		this.drawLine(v2, v0, color);
-	}
 
 	@Override
 	public int getDebugMode()
@@ -111,6 +117,7 @@ public class TF3D_GLDebugDrawer extends IDebugDraw
 	@Override
 	public void reportErrorWarning(String arg0)
 	{
+		F3D.Log.warning("BULLET", arg0);
 	}
 
 	@Override

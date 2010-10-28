@@ -75,6 +75,7 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 		this.model.SetPosition(0, 0, 0);
 		this.model.SetRotation(45, 45, 0);
 		this.model.ChangeSurface("Cube_MAT_095A", "MAT_text_c");
+		this.model.SetRenderSurface("MAT_text_c", false);
 		
 		this.model.Enable();
 		
