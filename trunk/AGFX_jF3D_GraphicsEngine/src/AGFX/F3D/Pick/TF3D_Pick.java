@@ -122,7 +122,7 @@ public class TF3D_Pick
 		float tanFov = (top - bottom) * 0.5f / nearPlane;
 		float fov = (float) Math.atan(tanFov);
 		
-		// TODO configurable FOV 
+		fov = F3D.Config.r_display_fov * F3D.DEGTORAD;
 		
 		//F3D.Log.info("",String.valueOf(fov*F3D.RADTODEG));
 		

@@ -16,6 +16,8 @@ public class TF3D_Config
 	public Boolean r_fullscreen;
 	/**  define screen width*/
 	public int r_display_width;
+	/**  setup display field of view */
+	public float r_display_fov;
 	/**  define screen height*/
 	public int r_display_height;
 	/**  define color depth (Bit Per Pixel)*/
@@ -67,6 +69,7 @@ public class TF3D_Config
 		this.e_world_autoassign = true;
 		this.io_mesh_asci_to_bin = true;
 		this.r_anisotropy_filtering = 0;
+		this.r_display_fov = 65f;
 		
 
 		F3D.Log.info("TF3D_Config","Config class created");
