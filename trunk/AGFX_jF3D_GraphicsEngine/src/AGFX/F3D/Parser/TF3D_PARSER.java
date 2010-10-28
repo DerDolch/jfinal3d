@@ -96,16 +96,8 @@ public class TF3D_PARSER
 			filename = F3D.AbstractFiles.GetFullPath(filename);
 			
 			
-			if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
-			{
-				is =  ClassLoader.getSystemResource(filename).openStream();
-			}
-			else
-			{
-				is = new FileInputStream(filename);
-			}
+			is = new FileInputStream(filename);
 			
-
 			// asset can't be more than 2 gigs.
 			int size = is.available();
 

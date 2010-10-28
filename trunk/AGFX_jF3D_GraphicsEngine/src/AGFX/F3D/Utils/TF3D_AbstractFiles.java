@@ -53,18 +53,6 @@ public class TF3D_AbstractFiles
 			}
 		}
 		
-		// preload ABSTRACT FILED files from FILE in JAR
-		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_JAR)
-		{
-			try
-			{
-				this.Load(ClassLoader.getSystemResource(F3D.Config.io_preload_folder+"/"+F3D.Config.io_preload_source_name).openStream());
-			} catch (IOException e)
-			{
-				
-				e.printStackTrace();
-			}
-		}
 	}
 
 	// ==========================================================

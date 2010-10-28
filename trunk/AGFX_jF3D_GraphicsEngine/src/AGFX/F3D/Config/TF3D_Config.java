@@ -68,11 +68,7 @@ public class TF3D_Config
 		this.io_mesh_asci_to_bin = true;
 		this.r_anisotropy_filtering = 0;
 		
-		
-		if (this.io_preload_source==F3D.PRELOAD_FROM_JAR)
-		{
-			this.io_mesh_asci_to_bin = false;
-		}
+
 		F3D.Log.info("TF3D_Config","Config class created");
 	}
 }
