@@ -85,6 +85,25 @@ public class TF3D_Viewport
 	    glLoadIdentity();
 	}
 	
+	public void Resize(int w,int h)
+	{
+		// Setup our viewport.
+	    glViewport( 0, 0, w, h);
+
+	    // change to the projection matrix and set our viewing volume.
+	    glMatrixMode( GL_PROJECTION );
+	    glLoadIdentity();
+	    
+	    
+	    // Set our perspective
+	    gluPerspective( F3D.Config.r_display_fov, w / h, 0.2f, 1000.0f );
+
+	    // Make sure we're changing the model view and not the projection
+	    glMatrixMode( GL_MODELVIEW );
+
+	    // Reset The View
+	    glLoadIdentity();
+	}
 	
 	public void Clear(float R, float G, float B, float A)
 	{

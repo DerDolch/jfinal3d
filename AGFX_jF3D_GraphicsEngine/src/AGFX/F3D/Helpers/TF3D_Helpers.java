@@ -42,14 +42,24 @@ public class TF3D_Helpers
 	{
 		this._light_off();
 		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(X1, Y1, 0.0f);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(X2, Y1, 0.0f);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(X2, Y2, 0.0f);
+		
+		glColor4f(1,1,1,1);
 		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(X1, Y2, 0.0f);
+		
+		
+		glColor4f(1,1,1,1);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(X2, Y2, 0.0f);
+		
+		glColor4f(1,1,1,1);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(X2, Y1, 0.0f);
+		
+		glColor4f(1,1,1,1);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(X1, Y1, 0.0f);
+		
 		glEnd();
 		this._light_on();
 
