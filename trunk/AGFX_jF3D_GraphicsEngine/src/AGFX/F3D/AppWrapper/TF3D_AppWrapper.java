@@ -15,7 +15,7 @@ import AGFX.F3D.F3D;
  */
 public class TF3D_AppWrapper
 {
-	private Boolean AppTerminate;
+	public Boolean AppTerminate;
 
 	// -----------------------------------------------------------------------
 	// TA3D_AppWrapper:
@@ -130,7 +130,7 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	private void KeyPressed()
 	{
-
+		
 		Keyboard.enableRepeatEvents(false);
 		while (Keyboard.next())
 		{
@@ -166,7 +166,7 @@ public class TF3D_AppWrapper
 			}
 		}
 		Keyboard.enableRepeatEvents(true);
-
+		
 	}
 
 	public void onGUI()
