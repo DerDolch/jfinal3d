@@ -197,7 +197,7 @@ public class TF3D_Font
 		CurX = X;
 
 		F3D.Surfaces.ApplyMaterial(this.material_id);
-
+		
 		for (I = 0; I < Txt.length(); I++)
 		{
 
