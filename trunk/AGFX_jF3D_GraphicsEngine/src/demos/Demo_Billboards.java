@@ -61,6 +61,8 @@ public class Demo_Billboards extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("FPSCamera");
 		this.Camera.SetPosition(0.0f, 0.0f, -10.0f);
 		this.Camera.SetRotation(0, 180, 0);
@@ -119,19 +121,19 @@ public class Demo_Billboards extends TF3D_AppWrapper
 
 		
 		
-		F3D.World.CreateSprite("Sprite_1_y",new Vector3f(-1,0,0),new Vector3f(0,0,0),1,4,"MAT_BEAM_2",F3D.BM_AXIS_Y);
-	    F3D.World.CreateSprite("Sprite_2_y",new Vector3f(1,0,0),new Vector3f(0,0,0),1,4,"MAT_BEAM_2",F3D.BM_AXIS_Y);
+		TF3D_Billboard.CreateSprite("Sprite_1_y",new Vector3f(-1,0,0),new Vector3f(0,0,0),1,4,"MAT_BEAM_2",F3D.BM_AXIS_Y);
+		TF3D_Billboard.CreateSprite("Sprite_2_y",new Vector3f(1,0,0),new Vector3f(0,0,0),1,4,"MAT_BEAM_2",F3D.BM_AXIS_Y);
 
-	    F3D.World.CreateSprite("Sprite_1_dir", new Vector3f(0,1,0),new Vector3f(1,2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_2_dir",new Vector3f(0,1,0),new Vector3f(-1,2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_3_dir",new Vector3f(0,1,0),new Vector3f(1,2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_4_dir",new Vector3f(0,1,0),new Vector3f(-1,2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_1_dir", new Vector3f(0,1,0),new Vector3f(1,2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_2_dir",new Vector3f(0,1,0),new Vector3f(-1,2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_3_dir",new Vector3f(0,1,0),new Vector3f(1,2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_4_dir",new Vector3f(0,1,0),new Vector3f(-1,2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
 
 
-	    F3D.World.CreateSprite("Sprite_5_dir",new Vector3f(0,-1,0),new Vector3f(1,-2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_6_dir",new Vector3f(0,-1,0),new Vector3f(-1,-2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_7_dir",new Vector3f(0,-1,0),new Vector3f(1,-2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
-	    F3D.World.CreateSprite("Sprite_8_dir",new Vector3f(0,-1,0),new Vector3f(-1,-2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_5_dir",new Vector3f(0,-1,0),new Vector3f(1,-2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_6_dir",new Vector3f(0,-1,0),new Vector3f(-1,-2,1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_7_dir",new Vector3f(0,-1,0),new Vector3f(1,-2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
+		TF3D_Billboard.CreateSprite("Sprite_8_dir",new Vector3f(0,-1,0),new Vector3f(-1,-2,-1),1,4,"MAT_BEAM_DIR",F3D.BM_DIRECTIONAL);
 
 	}
 	

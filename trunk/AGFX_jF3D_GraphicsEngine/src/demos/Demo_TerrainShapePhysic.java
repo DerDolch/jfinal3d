@@ -29,8 +29,7 @@ public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 	/**
 	 * 
 	 */
-	public TF3D_Body   PTerrainR;
-	public TF3D_Body   PTerrainL;
+	public TF3D_Body   Terrain;
 	public TF3D_Body   PSphere;
 	public TF3D_Body   PCylinder;
 	public TF3D_Body   PCapsule;
@@ -66,6 +65,8 @@ public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("FPSCamera");
 		this.Camera.SetPosition(0.0f, 10.0f, -30.0f);
 		this.Camera.SetRotation(0, 180, 0);
@@ -83,8 +84,9 @@ public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Cylinder.a3da");
 		F3D.Meshes.Add("abstract::Capsule.a3da");
 		F3D.Meshes.Add("abstract::Plane.a3da");
-		F3D.Meshes.Add("abstract::landscape_L.a3da");
-		F3D.Meshes.Add("abstract::landscape_R.a3da");
+		F3D.Meshes.Add("abstract::landscape.a3da");
+		F3D.Meshes.Add("abstract::collision_landscape.a3da");
+		
 
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
@@ -92,20 +94,15 @@ public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 		light.Enable();
 
 
-		this.PTerrainR = new TF3D_Body("LANDSCAPE");
-		this.PTerrainR.AssignMesh("abstract::landscape_R.a3da");
-		this.PTerrainR.Enable();
-		this.PTerrainR.SetPosition(0f, 0f, 0f);
-		this.PTerrainR.SetRotation(0f, 0f, 0f);		
-		this.PTerrainR.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
+		this.Terrain = new TF3D_Body("LANDSCAPE");
+		this.Terrain.AssignMesh("abstract::landscape.a3da");
+		this.Terrain.AssignCollisionMesh("abstract::collision_landscape.a3da");
+		this.Terrain.Enable();
+		this.Terrain.SetPosition(0f, 0f, 0f);
+		this.Terrain.SetRotation(0f, 0f, 0f);	
+		this.Terrain.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
 		
-		this.PTerrainL = new TF3D_Body("LANDSCAPE");
-		this.PTerrainL.AssignMesh("abstract::landscape_L.a3da");
-		this.PTerrainL.Enable();
-		this.PTerrainL.SetPosition(0f, 0f, 0f);
-		this.PTerrainL.SetRotation(0f, 0f, 0f);		
-		this.PTerrainL.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
 		
 		this.PCube = new TF3D_Body("PCube");
 		this.PCube.AssignMesh("abstract::Cube.a3da");

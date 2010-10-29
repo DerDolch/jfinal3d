@@ -411,4 +411,21 @@ public class TF3D_Billboard extends TF3D_Entity
 	{
 	}
 
+	public static TF3D_Billboard CreateSprite(String _name, Vector3f pos, Vector3f dir, float sx, float sy, String mat, int type)
+	{
+		TF3D_Billboard sprite = new TF3D_Billboard();
+
+		sprite.mode = type;
+		sprite.name = _name;
+		sprite.enable = true;
+		sprite.SetScale(sx, sy, 0.0f);
+		sprite.material_id = F3D.Surfaces.FindByName(mat);
+		sprite.SetPosition(pos);
+		sprite.Dir.set(dir);
+
+		F3D.Log.info("TF3D_World", "Create Sprite: '" + sprite.name + "'");
+
+		return sprite;
+
+	}
 }

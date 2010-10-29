@@ -66,6 +66,8 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("FPSCamera");
 		this.Camera.SetPosition(0.0f, 10.0f, -30.0f);
 		this.Camera.SetRotation(0, 180, 0);

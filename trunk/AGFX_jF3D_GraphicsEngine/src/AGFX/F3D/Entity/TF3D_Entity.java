@@ -80,7 +80,7 @@ public abstract class TF3D_Entity
 
 		if (F3D.Config.e_world_autoassign)
 		{
-			F3D.World.Add(this);
+			F3D.Worlds.Add(this);
 		}
 
 	}

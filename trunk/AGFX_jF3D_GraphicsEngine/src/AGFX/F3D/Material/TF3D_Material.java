@@ -17,7 +17,7 @@ public class TF3D_Material
 {
 
 	public String                   name           = "none";
-	public int                      typ            = 0;
+	public int                      typ            = F3D.MAT_TYPE_TEXTURE;
 	public Vector4f                 color          = new Vector4f(1, 1, 1, 1);
 	public float                    diffuse[]      = new float[] { 1.0f, 0.0f,0.0f, 1.0f};
 

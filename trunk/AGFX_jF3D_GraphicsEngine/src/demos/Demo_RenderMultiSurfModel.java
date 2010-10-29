@@ -53,6 +53,8 @@ public class Demo_RenderMultiSurfModel extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("TargetCamera");
 		this.Camera.SetPosition(0.0f, 0.0f, -10.0f);
 		this.Camera.SetRotation(0.0f, 180.0f, 0.0f);

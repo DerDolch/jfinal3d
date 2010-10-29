@@ -49,23 +49,9 @@ public class Demo_FontLoad extends TF3D_AppWrapper
 	{
 		F3D.Log.info("Demo_FontLoad", "onInitialize()");
 		
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		// Add items needed for font rendering
-	/*	
-		F3D.MaterialEvents.Load("abstract::alpha_mask.event");
-		
-		F3D.Textures.Add("courier_new_8_normal", "abstract::courier_new_8_normal.png",false);		
-		F3D.Textures.Add("courier_new_8_bold", "abstract::courier_new_8_bold.png",false);
-		F3D.Textures.Add("tahoma_8_normal", "abstract::tahoma_8_normal.png",false);
-		F3D.Textures.Add("tahoma_8_bold", "abstract::tahoma_8_bold.png",false);
-		F3D.Textures.Load("abstract::text_d.texture");
-		
-		F3D.Surfaces.Load("abstract::courier_new_8_normal.mat");
-		F3D.Surfaces.Load("abstract::courier_new_8_bold.mat");
-		F3D.Surfaces.Load("abstract::tahoma_8_normal.mat");
-		F3D.Surfaces.Load("abstract::tahoma_8_bold.mat");
-
-	*/
-		
 		
 		Font font = new Font("Verdana", Font.BOLD, 16);
 		

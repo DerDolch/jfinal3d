@@ -201,8 +201,9 @@ public class TF3D_AppWrapper
 
 				F3D.Viewport.BeginRender3D();
 
-				F3D.World.Update();
-				F3D.World.Render();
+				F3D.Worlds.UpdateWorld();
+				F3D.Worlds.RenderWorld();
+				
 				this.onUpdate3D();
 
 				if (F3D.Config.use_physics_debug)
@@ -230,7 +231,7 @@ public class TF3D_AppWrapper
 
 					F3D.Viewport.BeginRender3D();
 
-					F3D.World.Update();
+					F3D.Worlds.UpdateWorld();
 
 					this.onUpdate3D();
 

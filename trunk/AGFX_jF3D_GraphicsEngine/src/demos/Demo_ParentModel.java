@@ -58,6 +58,8 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("TargetCamera");
 		this.Camera.SetPosition(5.0f, 5.0f, -15.0f);		
 		this.Camera.movespeed = 0.2f;

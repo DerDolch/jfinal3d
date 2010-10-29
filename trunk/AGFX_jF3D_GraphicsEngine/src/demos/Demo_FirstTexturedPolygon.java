@@ -46,6 +46,8 @@ public class Demo_FirstTexturedPolygon extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
+		
 		this.Camera = new TF3D_Camera("TargetCamera");
 		this.Camera.SetPosition(10.0f, 10.0f, -10.0f);
 		this.Camera.movespeed = 0.2f;
