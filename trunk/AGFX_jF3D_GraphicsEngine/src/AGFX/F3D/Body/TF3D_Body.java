@@ -21,7 +21,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TF3D_Body extends TF3D_Entity
 {
-	private int                              mesh_id = -1;
+	private int                              mesh_id           = -1;
+	private int                              collision_mesh_id = -1;
 	private ArrayList<TF3D_SurfaceSubstItem> surfaces;
 
 	public TF3D_PhysicObject                 PhysicObject;
@@ -82,7 +83,14 @@ public class TF3D_Body extends TF3D_Entity
 
 		if ((shapemode == F3D.BULLET_SHAPE_CONVEXHULL) | (shapemode == F3D.BULLET_SHAPE_TRIMESH))
 		{
-			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.mesh_id));
+			if (this.collision_mesh_id>0)
+			{
+				this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.collision_mesh_id));
+			}
+			else
+			{
+				this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.mesh_id));
+			}
 		} else
 		{
 			this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled);
@@ -120,6 +128,23 @@ public class TF3D_Body extends TF3D_Entity
 		}
 	}
 
+	public void AssignCollisionMesh(int id)
+	{
+		if (id>0)
+		{
+			this.collision_mesh_id = id;
+		}
+	}
+	
+	
+	public void AssignCollisionMesh(String coll_mesh_name)
+	{
+		int id = F3D.Meshes.FindByName(coll_mesh_name);
+		if (id>0)
+		{
+			this.collision_mesh_id = id;
+		}
+	}
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
 	// -----------------------------------------------------------------------
@@ -205,7 +230,7 @@ public class TF3D_Body extends TF3D_Entity
 			}
 		}
 	}
-	
+
 	/*
 	 * public void Render() { if (this.MultiSurface) {
 	 * this.Render_with_MultiSurface_on(); } else {

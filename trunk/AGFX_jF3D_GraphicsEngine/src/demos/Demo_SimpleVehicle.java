@@ -20,8 +20,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 {
 
 	public TF3D_Camera  Camera;
-	public TF3D_Body    landscapeL;
-	public TF3D_Body    landscapeR;
+	public TF3D_Body    landscape;
 	public TF3D_Vehicle car;
 	public TF3D_Body    PSphere;
 
@@ -54,7 +53,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 	public void onInitialize()
 	{
 		this.Camera = new TF3D_Camera("FPSCamera");
-		this.Camera.SetPosition(0.0f, 20.0f, -30.0f);
+		this.Camera.SetPosition(0.0f, 15.0f, -30.0f);
 		this.Camera.SetRotation(0, 180, 0);
 
 		this.Camera.movespeed = 0.2f;
@@ -67,29 +66,23 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::jeep.a3da");
 		F3D.Meshes.Add("abstract::jeep_wheel_L.a3da");
 		F3D.Meshes.Add("abstract::jeep_wheel_R.a3da");
-		F3D.Meshes.Add("abstract::landscape_L.a3da");
-		F3D.Meshes.Add("abstract::landscape_R.a3da");
 		F3D.Meshes.Add("abstract::Sphere.a3da");
-
+		F3D.Meshes.Add("abstract::collision_landscape.a3da");
+		F3D.Meshes.Add("abstract::landscape.a3da");
+		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
-
-		this.landscapeL = new TF3D_Body("LANDSCAPE_L");
-		this.landscapeL.AssignMesh("abstract::landscape_L.a3da");
-		this.landscapeL.Enable();
-		this.landscapeL.SetPosition(0f, 0f, 0f);
-		this.landscapeL.SetRotation(0f, 0f, 0f);
-		this.landscapeL.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
-
-		this.landscapeR = new TF3D_Body("LANDSCAPE_R");
-		this.landscapeR.AssignMesh("abstract::landscape_R.a3da");
-		this.landscapeR.Enable();
-		this.landscapeR.SetPosition(0f, 0f, 0f);
-		this.landscapeR.SetRotation(0f, 0f, 0f);
-		this.landscapeR.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
-
+		
+		this.landscape = new TF3D_Body("LANDSCAPE");
+		this.landscape.AssignMesh("abstract::landscape.a3da");
+		this.landscape.AssignCollisionMesh("abstract::collision_landscape.a3da");
+		this.landscape.Enable();
+		this.landscape.SetPosition(0f, 0f, 0f);
+		this.landscape.SetRotation(0f, 0f, 0f);
+		this.landscape.CreateRigidBody(F3D.BULLET_SHAPE_TRIMESH, 0.0f);
+		
 		this.PSphere = new TF3D_Body("PSphere");
 		this.PSphere.AssignMesh("abstract::Sphere.a3da");
 		this.PSphere.Enable();
@@ -121,12 +114,12 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP))
 		{
-			this.car.gEngineForce = this.car.maxEngineForce;
+			this.car.gEngineForce = 100f*this.car.maxEngineForce*F3D.Timer.AppSpeed();
 			this.car.gBreakingForce = 0.f;
 
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
 		{
-			this.car.gBreakingForce = this.car.maxBreakingForce;
+			this.car.gBreakingForce = 100f*this.car.maxBreakingForce*F3D.Timer.AppSpeed();
 			this.car.gEngineForce = 0.f;
 		} else
 		{

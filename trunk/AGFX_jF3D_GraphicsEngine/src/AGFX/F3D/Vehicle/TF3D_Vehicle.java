@@ -138,7 +138,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 
 		tr.setRotation(TF3D_MathUtils.AnglesToQuat4f(this.GetRotation().x, this.GetRotation().y, this.GetRotation().z));
 
-		RB_carChassis = F3D.Physic.localCreateRigidBody(800, tr, compound);
+		RB_carChassis = F3D.Physic.localCreateRigidBody(1800, tr, compound);
 		F3D.Physic.AddBody(RB_carChassis);
 
 		// create vehicle
