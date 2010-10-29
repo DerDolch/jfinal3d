@@ -66,7 +66,7 @@ public class Demo_TrueTypeFont extends TF3D_AppWrapper
 		
 		
 		this.ttf.drawString(50,50, "Demo of Tryetype font", 1f, 1f);
-		F3D.Viewport.DrawInfo(0, 0);
+		
 	}
 	
 	@Override

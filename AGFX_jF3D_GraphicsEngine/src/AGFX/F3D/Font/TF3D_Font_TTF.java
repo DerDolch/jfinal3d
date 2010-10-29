@@ -236,7 +236,7 @@ public class TF3D_Font_TTF
 			}
 
 			fontTextureID = loadImage(imgTemp);
-
+			
 			// .getTexture(font.toString(), imgTemp);
 
 		} catch (Exception e)
@@ -430,11 +430,14 @@ public class TF3D_Font_TTF
 		}
 		GL11.glEnd();
 		
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+	
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glBlendFunc(GL11.GL_ONE,GL11.GL_ONE);
-
+		F3D.Textures.DeactivateLayers();
+		F3D.Textures.ActivateLayer(0);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
 	}
 
