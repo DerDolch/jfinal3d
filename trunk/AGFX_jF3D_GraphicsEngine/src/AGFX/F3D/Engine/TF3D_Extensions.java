@@ -7,6 +7,7 @@ import AGFX.F3D.F3D;
 public class TF3D_Extensions
 {
 	public Boolean VertexBufferObject;
+	public Boolean FrameBufferObject;
 	
 	public TF3D_Extensions()
 	{
@@ -15,6 +16,10 @@ public class TF3D_Extensions
 		// GL_ARB_vertex_buffer_object
 		this.VertexBufferObject =   GLContext.getCapabilities().GL_ARB_vertex_buffer_object;
 		F3D.Log.info("TF3D_Extensions","GL_ARB_vertex_buffer_object = "+this.VertexBufferObject.toString());
+		
+		//GL_ARB_framebuffer_object
+		this.FrameBufferObject = GLContext.getCapabilities().GL_ARB_framebuffer_object;
+		F3D.Log.info("TF3D_Extensions","GL_ARB_framebuffer_object = "+this.VertexBufferObject.toString());
 	
 	}
 }
