@@ -17,6 +17,8 @@ import AGFX.F3D.Entity.TF3D_Entity;
  */
 public class TF3D_World
 {
+	public String name;
+	
 	public  ArrayList<TF3D_Entity> entities;
 
 	// -----------------------------------------------------------------------
@@ -29,11 +31,12 @@ public class TF3D_World
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
-	public TF3D_World()
+	public TF3D_World(String world_name)
 	{
 		F3D.Log.info("TF3D_World", "TF3D_World: constructor");
 		this.entities = new ArrayList<TF3D_Entity>();
 		F3D.Log.info("TF3D_World", "TF3D_World: ... done");
+		this.name = world_name;
 	}
 
 	// -----------------------------------------------------------------------
@@ -134,22 +137,5 @@ public class TF3D_World
 			this.entities.get(i).Destroy();
 		}
 	}
-
-	public TF3D_Billboard CreateSprite(String _name, Vector3f pos, Vector3f dir, float sx, float sy, String mat, int type)
-	{
-		TF3D_Billboard sprite = new TF3D_Billboard();
-
-		sprite.mode = type;
-		sprite.name = _name;
-		sprite.enable = true;
-		sprite.SetScale(sx, sy, 0.0f);
-		sprite.material_id = F3D.Surfaces.FindByName(mat);
-		sprite.SetPosition(pos);
-		sprite.Dir.set(dir);
-
-		F3D.Log.info("TF3D_World", "Create Sprite: '" + sprite.name + "'");
-
-		return sprite;
-
-	}
+	
 }
