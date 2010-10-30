@@ -6,6 +6,7 @@ package AGFX.F3D.World;
 import java.util.ArrayList;
 
 import AGFX.F3D.F3D;
+import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Entity.TF3D_Entity;
 
 /**
@@ -16,7 +17,7 @@ public class TF3D_WorldManager
 {
 	private int                  current_world        = 0;
 	private Boolean              render_world_manualy = false;
-
+	private TF3D_Camera          camera               = null;
 	public ArrayList<TF3D_World> items;
 
 	// -----------------------------------------------------------------------
@@ -33,6 +34,7 @@ public class TF3D_WorldManager
 	{
 		this.current_world = -1;
 		this.items = new ArrayList<TF3D_World>();
+		//this.camera = new TF3D_Camera("BASE_CAMERA");
 	}
 
 	// -----------------------------------------------------------------------
@@ -234,6 +236,7 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void RenderWorld(int id)
 	{
+
 		if (id >= 0)
 		{
 			this.items.get(id).Render();
@@ -241,6 +244,16 @@ public class TF3D_WorldManager
 
 	}
 
+	public void SetCamera(TF3D_Camera cam)
+	{
+		this.camera = cam;
+	}
+	
+	public TF3D_Camera GetCamera()
+	{
+		return this.camera;
+	}
+	
 	// -----------------------------------------------------------------------
 	// TF3D_WorldManager:
 	// -----------------------------------------------------------------------
@@ -253,8 +266,12 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void UpdateWorld()
 	{
+		if (this.camera!=null) this.camera.Update();
+		
 		if (!this.render_world_manualy)
 		{
+			//F3D.Cameras.Update();
+
 			if (this.current_world >= 0)
 			{
 				this.items.get(this.current_world).Update();
@@ -274,6 +291,8 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void UpdateWorld(int id)
 	{
+		if (this.camera!=null) this.camera.Update();
+		
 		if (id >= 0)
 		{
 			this.items.get(this.current_world).Update();

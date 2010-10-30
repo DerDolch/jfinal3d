@@ -14,6 +14,7 @@ import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
+import AGFX.F3D.Skybox.TF3D_Skybox;
 
 /**
  * @author AndyGFX
@@ -91,6 +92,7 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
 		this.plane.SetPosition(0f, 0f, 0f);
 		this.plane.SetRotation(0f, 0f, 0f);
 
+		
 		// ********************************************************************
 		// WORLD #2
 
@@ -116,13 +118,14 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
 		this.plane.Enable();
 		this.plane.SetPosition(0f, 0f, 0f);
 		this.plane.SetRotation(0f, 0f, 0f);
-
 		
+		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));
 	}
 
 	@Override
 	public void onUpdate3D()
 	{
+		
 		if (Mouse.isInsideWindow())
 		{
     		if (Mouse.isButtonDown(0))
@@ -130,9 +133,7 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
     			float dx = (float)Mouse.getDX()/10.0f;
     			float dy = (float)Mouse.getDY()/10.0f;
     			
-    			
-    			
-    			F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).Turn( -dy, dx, 0.0f);
+    			F3D.Worlds.GetCamera().Turn( -dy, dx, 0.0f);
     		
     			if (Mouse.getX()<3) {Mouse.setCursorPosition(F3D.Config.r_display_width-4,Mouse.getY());}
         		if (Mouse.getX()>F3D.Config.r_display_width-3) {Mouse.setCursorPosition(4,Mouse.getY());}
@@ -144,32 +145,34 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_W))
 		{
-			F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).Move(0.0f, 0.0f, -0.05f);
+			F3D.Worlds.GetCamera().Move(0.0f, 0.0f, -0.05f);
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_A))
 		{
-			F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).Move(-0.05f, 0.0f, 0.0f);
+			F3D.Worlds.GetCamera().Move(-0.05f, 0.0f, 0.0f);
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_S))
 		{
-			F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).Move(0.0f, 0.0f, 0.05f);
+			F3D.Worlds.GetCamera().Move(0.0f, 0.0f, 0.05f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
 		{
-			F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).Move(0.05f, 0.0f, 0.0f);
+			F3D.Worlds.GetCamera().Move(0.05f, 0.0f, 0.0f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_1))
 		{
 			F3D.Worlds.SetWorld("MAIN_WORLD");
-			F3D.Cameras.CurrentCameraID = F3D.Cameras.FindByName("TargetCamera1");
+			F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera1"));
+			
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_2))
 		{
 			F3D.Worlds.SetWorld("SECOND_WORLD");
-			F3D.Cameras.CurrentCameraID = F3D.Cameras.FindByName("TargetCamera2");
+			F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));
+			
 		}
 	}
 

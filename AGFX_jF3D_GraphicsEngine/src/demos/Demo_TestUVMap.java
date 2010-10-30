@@ -65,7 +65,7 @@ public class Demo_TestUVMap extends TF3D_AppWrapper
 		this.Camera.ctype = F3D.CAMERA_TYPE_FPS;
 		
 		F3D.Cameras.Add(this.Camera);
-		
+		F3D.Worlds.SetCamera(this.Camera);
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);

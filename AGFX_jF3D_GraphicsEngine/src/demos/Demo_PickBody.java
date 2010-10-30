@@ -73,7 +73,7 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		
 		F3D.Cameras.Sky = new TF3D_Skybox();
 		F3D.Cameras.Add(this.Camera);
-		
+		F3D.Worlds.SetCamera(this.Camera);
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
