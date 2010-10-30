@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.vecmath.Vector3f;
 
 import AGFX.F3D.*;
-import AGFX.F3D.Skybox.TF3D_Skybox;
 
 public class TF3D_CameraManager
 {

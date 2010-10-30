@@ -8,16 +8,9 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.EXTFramebufferObject;
-import org.lwjgl.opengl.Pbuffer;
-import org.lwjgl.opengl.PixelFormat;
-import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.util.glu.GLU.*;
 
 import AGFX.F3D.F3D;
 
@@ -32,10 +25,11 @@ public class TF3D_FrameBufferObject
 	private int width;
 	private int height;
 	private int FBO_id;
+	public String name;
 
-	public TF3D_FrameBufferObject(int w, int h)
+	public TF3D_FrameBufferObject(String _name,int w, int h)
 	{
-		
+		this.name = _name;
 		this.width = w;
 		this.height = h;
 		
@@ -64,6 +58,10 @@ public class TF3D_FrameBufferObject
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	public int GetTexture()
+	{
+		return this.texture_id;
+	}
 	public void BeginRender()
 	{
 		

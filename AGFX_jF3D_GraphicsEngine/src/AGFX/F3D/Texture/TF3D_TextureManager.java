@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 
 import AGFX.F3D.F3D;
+import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 import AGFX.F3D.Parser.TF3D_PARSER;
 
 
@@ -66,6 +67,39 @@ public class TF3D_TextureManager
 
 	}
 
+	
+	// -----------------------------------------------------------------------
+	// TA3D_TextureManager: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Add texture from assets folder
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param _name texture name assigned to list
+	 * @param _assetpath path to texture
+	 * @param mipmap generate mipmaps true/false
+	 */
+	// -----------------------------------------------------------------------
+	public void Add(String _name, TF3D_FrameBufferObject _fbo, Boolean mipmap)
+	{
+		
+		
+		if (this.Exist(_name)) 
+		{
+			F3D.Log.warning("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
+		}
+		else
+		{
+		
+    		TF3D_Texture tex = new TF3D_Texture(_name);
+    		tex.CreateFromFBO(_fbo);
+    		this.items.add(tex);
+    	
+    		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
+		}
+
+	}
+	
 	// -----------------------------------------------------------------------
 	// TA3D_TextureManager: GetID
 	// -----------------------------------------------------------------------

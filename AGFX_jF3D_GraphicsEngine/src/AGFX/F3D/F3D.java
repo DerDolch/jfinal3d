@@ -11,6 +11,7 @@ import AGFX.F3D.Engine.TF3D_Extensions;
 import AGFX.F3D.Engine.TF3D_Log;
 import AGFX.F3D.Engine.TF3D_Viewport;
 import AGFX.F3D.Font.TF3D_FontManager;
+import AGFX.F3D.FrameBufferObject.TF3D_FBO_manager;
 import AGFX.F3D.Helpers.TF3D_Helpers;
 import AGFX.F3D.Keyboard.TF3D_Keyboard;
 import AGFX.F3D.Material.TF3D_MaterialEventManager;
@@ -23,7 +24,6 @@ import AGFX.F3D.Surface.TF3D_SurfaceManager;
 import AGFX.F3D.Texture.TF3D_TextureManager;
 import AGFX.F3D.Timer.TF3D_Timer2;
 import AGFX.F3D.Utils.TF3D_AbstractFiles;
-import AGFX.F3D.World.TF3D_World;
 import AGFX.F3D.World.TF3D_WorldManager;
 
 /**
@@ -168,6 +168,7 @@ public class F3D
 	public static TF3D_Physics              Physic;
 	public static TF3D_Keyboard             Key;
 	public static TF3D_Pick                 Pick;
+	public static TF3D_FBO_manager			FrameBuffers;
 
 	public static void Create()
 	{
@@ -193,7 +194,8 @@ public class F3D
 		F3D.Fonts = new TF3D_FontManager();
 		F3D.Draw = new TF3D_Helpers();
 		F3D.Meshes = new TF3D_MeshManager();
-
+		F3D.FrameBuffers = new TF3D_FBO_manager();
+		
 		if (F3D.Config.use_physics)
 		{
 			F3D.Physic = new TF3D_Physics();
