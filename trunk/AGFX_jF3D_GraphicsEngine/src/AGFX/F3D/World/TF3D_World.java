@@ -4,11 +4,7 @@
 package AGFX.F3D.World;
 
 import java.util.ArrayList;
-
-import javax.vecmath.Vector3f;
-
 import AGFX.F3D.F3D;
-import AGFX.F3D.Billboard.TF3D_Billboard;
 import AGFX.F3D.Entity.TF3D_Entity;
 
 /**

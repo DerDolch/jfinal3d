@@ -11,11 +11,13 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.lwjgl.util.glu.MipMap;
 import AGFX.F3D.F3D;
+import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 
 public class TF3D_Texture
 {
 
 	private Texture texture;
+	private TF3D_FrameBufferObject	fbo_texture;
 	public String name = "noname";
 	public int width = 0;
 	public int height = 0;
@@ -25,8 +27,11 @@ public class TF3D_Texture
 	{
 		F3D.Log.info("TF3D_Texture", "Create - constructor");
 		this.name = _name;
+		this.texture = null;
+		this.fbo_texture = null;
 	}
 
+	
 	public void Load(String filename, Boolean mipmap)
 	{
 		
@@ -122,7 +127,15 @@ public class TF3D_Texture
 	// -----------------------------------------------------------------------
 	public void Bind()
 	{
-		this.texture.bind();
+		if (this.texture!=null)
+		{
+			this.texture.bind();
+		}
+
+		if (this.fbo_texture!=null)
+		{
+			this.fbo_texture.Bind();
+		}
 	}
 
 	// -----------------------------------------------------------------------
@@ -142,4 +155,8 @@ public class TF3D_Texture
 		return this.texture;
 	}
 
+	public void CreateFromFBO(TF3D_FrameBufferObject fbo)
+	{
+		this.fbo_texture = fbo;
+	}
 }

@@ -10,12 +10,12 @@ import org.lwjgl.input.Mouse;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
-import AGFX.F3D.Body.TF3D_Body;
+
 import AGFX.F3D.Camera.TF3D_Camera;
-import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
+import AGFX.F3D.Texture.TF3D_Texture;
 
 /**
  * @author AndyGFX
@@ -30,7 +30,8 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 	public TF3D_Model  model2;
 	public TF3D_Model  plane1;
 	public TF3D_Model  plane2;
-	public TF3D_FrameBufferObject pbuff;
+	
+	public TF3D_Texture ptext;
 	
 	public int         id;
 
@@ -142,10 +143,14 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		F3D.Worlds.RenderManualy();
 		
 		
-		this.pbuff = new TF3D_FrameBufferObject(256,256);
+		//this.pbuff = new TF3D_FrameBufferObject("FBO_BUFFER",400,300);
 		
+		F3D.FrameBuffers.Add("FBO_BUFFER",400,300);
+		F3D.Textures.Add("FRAME_BUFFER", F3D.FrameBuffers.Get("FBO_BUFFER"), false);
 		
 	}
+
+
 
 	@Override
 	public void onUpdate3D()
@@ -158,24 +163,19 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		// set camera for WORLD#1
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera1"));
 		
-		this.pbuff.BeginRender();
 		
-		
+		F3D.FrameBuffers.BeginRender("FBO_BUFFER");
+				
 		F3D.Worlds.UpdateWorld(w1);
 		F3D.Worlds.RenderWorld(w1);
-		this.pbuff.EndRender();
+		
+		F3D.FrameBuffers.EndRender("FBO_BUFFER");
 		
 		// set camera for WORLD#2
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));
 		F3D.Worlds.UpdateWorld(w2);
 		F3D.Worlds.RenderWorld(w2);
 		
-		/*
-		this.pbuff.Bind();
-		F3D.Meshes.items.get(1).Render();
-		*/
-		
-	
 		// set camera to next control
 		
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera1"));
@@ -234,8 +234,7 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		
-		this.pbuff.Bind();	
-		//F3D.Surfaces.ApplyMaterial(F3D.Surfaces.FindByName("MATuvmap"));
+		F3D.Textures.Bind("FRAME_BUFFER");
 		F3D.Draw.Rectangle(0, 0, 400, 300,true);
 		
 		

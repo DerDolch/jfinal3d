@@ -4,8 +4,6 @@
 package demos;
 
 
-import org.lwjgl.input.Keyboard;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 
