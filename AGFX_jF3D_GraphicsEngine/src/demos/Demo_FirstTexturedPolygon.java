@@ -70,7 +70,7 @@ public class Demo_FirstTexturedPolygon extends TF3D_AppWrapper
 		F3D.Draw.Axis(2.0f);
 		F3D.Textures.ActivateLayer(0);
 		this.Tex.Bind();
-		F3D.Draw.Rectangle(-1.0f, 1.0f, 1.0f, -1.0f);
+		F3D.Draw.Rectangle(-1.0f, 1.0f, 1.0f, -1.0f,false);
 		
 		
 	}

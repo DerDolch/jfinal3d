@@ -134,6 +134,7 @@ public class TF3D_Camera extends TF3D_Entity
 		if (this.ctype == F3D.CAMERA_TYPE_TARGET)
 		{
 			glLoadIdentity();
+			
 			this.LookAt(this.TargetPoint.x, this.TargetPoint.y, this.TargetPoint.z);
 		}
 

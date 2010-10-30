@@ -29,7 +29,7 @@ public class TF3D_Helpers
 			glDisable(GL_LIGHTING);
 		}
 	}
-	
+
 	private void _light_on()
 	{
 		if (F3D.Config.use_gl_light)
@@ -37,30 +37,54 @@ public class TF3D_Helpers
 			glEnable(GL_LIGHTING);
 		}
 	}
-	
-	public void Rectangle(float X1, float Y1, float X2, float Y2)
+
+	public void Rectangle(float X1, float Y1, float X2, float Y2, Boolean y_flip)
 	{
 		this._light_off();
-		glBegin(GL_QUADS);
-		
-		glColor4f(1,1,1,1);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(X1, Y2, 0.0f);
-		
-		
-		glColor4f(1,1,1,1);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(X2, Y2, 0.0f);
-		
-		glColor4f(1,1,1,1);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(X2, Y1, 0.0f);
-		
-		glColor4f(1,1,1,1);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(X1, Y1, 0.0f);
-		
-		glEnd();
+
+		if (y_flip)
+		{
+			glBegin(GL_QUADS);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(0.0f, 0.0f);
+			glVertex3f(X1, Y2, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex3f(X2, Y2, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex3f(X2, Y1, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex3f(X1, Y1, 0.0f);
+
+			glEnd();
+		} else
+		{
+			glBegin(GL_QUADS);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex3f(X1, Y2, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex3f(X2, Y2, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex3f(X2, Y1, 0.0f);
+
+			glColor4f(1, 1, 1, 1);
+			glTexCoord2f(0.0f, 0.0f);
+			glVertex3f(X1, Y1, 0.0f);
+
+			glEnd();
+		}
 		this._light_on();
 
 	}
@@ -102,7 +126,7 @@ public class TF3D_Helpers
 	public void Line3D(Vector3f A, Vector3f B)
 	{
 		this._light_off();
-		
+
 		F3D.Textures.DeactivateLayers();
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
@@ -113,7 +137,7 @@ public class TF3D_Helpers
 		glVertex3f(B.x, B.y, B.z);
 		glEnd();
 		glPopMatrix();
-		
+
 		this._light_on();
 	}
 
@@ -125,55 +149,53 @@ public class TF3D_Helpers
 		glVertex3f(Bx, By, Bz);
 		glEnd();
 		this._light_on();
-		
+
 	}
 
 	public void Axis(float size)
 	{
 		F3D.Textures.DeactivateLayers();
-		//this._light_off();
+		// this._light_off();
 		glPushMatrix();
 		// X
-		glColor4f(1, 0, 0,1);
+		glColor4f(1, 0, 0, 1);
 		this.Line3D(0, 0, 0, size, 0, 0);
 		// Y
-		glColor4f(0, 1, 0,1);
+		glColor4f(0, 1, 0, 1);
 		this.Line3D(0, 0, 0, 0, size, 0);
 		// Z
-		glColor4f(0, 0, 1,1);
+		glColor4f(0, 0, 1, 1);
 		this.Line3D(0, 0, 0, 0, 0, size);
 		glPopMatrix();
 
 		glColor3f(1, 1, 1);
 	}
 
-	public void Axis(TF3D_Entity ent,float length)
+	public void Axis(TF3D_Entity ent, float length)
 	{
 		Vector3f a = new Vector3f(ent.GetPosition());
-		
-		
-		
+
 		glPushMatrix();
 		// X
 		glColor3f(1, 0, 0);
-		Vector3f X = new Vector3f(ent.axis._right);		
+		Vector3f X = new Vector3f(ent.axis._right);
 		X.scale(length);
 		X.add(a);
-		this.Line3D(a,X);
+		this.Line3D(a, X);
 		// Y
 		glColor3f(0, 1, 0);
-		Vector3f Y = new Vector3f(ent.axis._up);		
+		Vector3f Y = new Vector3f(ent.axis._up);
 		Y.scale(length);
 		Y.add(a);
-		this.Line3D(a,Y);
+		this.Line3D(a, Y);
 		// Z
 		glColor3f(0, 0, 1);
-		Vector3f Z = new Vector3f(ent.axis._forward);		
+		Vector3f Z = new Vector3f(ent.axis._forward);
 		Z.scale(length);
 		Z.add(a);
-		this.Line3D(a,Z);
+		this.Line3D(a, Z);
 		glPopMatrix();
 
 		glColor3f(1, 1, 1);
-	}	
+	}
 }
