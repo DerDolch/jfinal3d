@@ -8,6 +8,7 @@ import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
+import AGFX.F3D.Skybox.TF3D_Skybox;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -17,7 +18,8 @@ public class TF3D_Camera extends TF3D_Entity
 	public Vector3f TargetPoint;
 	public int      cmode;
 	public int      ctype;
-
+	public TF3D_Skybox			Sky;
+	
 	// -----------------------------------------------------------------------
 	// A3D_Camera: constructor
 	// -----------------------------------------------------------------------
@@ -122,6 +124,11 @@ public class TF3D_Camera extends TF3D_Entity
 	@Override
 	public void Update()
 	{
+		if (this.Sky!=null)
+		{
+			this.Sky.Render(this.GetPosition());
+		}
+		
 		this.UpdateAxisDirection();
 
 		if (this.ctype == F3D.CAMERA_TYPE_TARGET)
@@ -145,6 +152,7 @@ public class TF3D_Camera extends TF3D_Entity
 
 		F3D.Frustum.Update();
 
+		
 	}
 
 	@Override

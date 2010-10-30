@@ -266,7 +266,11 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void UpdateWorld()
 	{
-		if (this.camera!=null) this.camera.Update();
+		if (this.camera!=null) 
+			{
+				this.camera.Update();
+				
+			}
 		
 		if (!this.render_world_manualy)
 		{

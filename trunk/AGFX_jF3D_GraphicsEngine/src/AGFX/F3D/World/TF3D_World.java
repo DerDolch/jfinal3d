@@ -79,7 +79,7 @@ public class TF3D_World
 	{
 
 		// TODO REWRITE SKYBOX RENDERING !!!
-		F3D.Cameras.RenderSky();
+		//F3D.Cameras.RenderSky();
 		
 
 		for (int i = 0; i < this.entities.size(); i++)

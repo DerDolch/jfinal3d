@@ -78,7 +78,7 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		F3D.Worlds.SetCamera(this.Camera);
 		
-		F3D.Cameras.Sky = new TF3D_Skybox();
+		this.Camera.Sky = new TF3D_Skybox();
 
 		F3D.Meshes.Add("abstract::Cube.a3da");
 		F3D.Meshes.Add("abstract::Sphere.a3da");

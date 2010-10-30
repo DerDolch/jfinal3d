@@ -75,29 +75,37 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		F3D.Worlds.SetWorld("MAIN_WORLD");
 
 		this.Camera1 = new TF3D_Camera("TargetCamera1");
-		this.Camera1.SetPosition(-5.0f, 15.0f, 5.0f);
+		this.Camera1.SetPosition(10.0f, 15.0f, 15.0f);
+
 		this.Camera1.movespeed = 0.2f;
-		this.Camera1.TargetPoint = new Vector3f(0f, 0, 0);
+		this.Camera1.TargetPoint = new Vector3f(0f, 0f, 0);
 		this.Camera1.ctype = F3D.CAMERA_TYPE_TARGET;
 
 		F3D.Cameras.Add(this.Camera1);
-
+		this.Camera1.Sky = new TF3D_Skybox();
+		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
+		
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 
 		this.model1 = new TF3D_Model("Sphere");
 		this.model1.AssignMesh("abstract::Sphere.a3da");
-		this.model1.SetPosition(2f, 2f, 0);
+		this.model1.SetPosition(0f, 1f, 0);
+		this.model1.SetScale(5, 5, 5);
 		this.model1.Enable();
 
 		this.plane1 = new TF3D_Model("PPlane");
 		this.plane1.AssignMesh("abstract::Plane.a3da");
 		this.plane1.Enable();
+		this.plane1.SetScale(10, 10, 10);
 		this.plane1.SetPosition(0f, 0f, 0f);
 		this.plane1.SetRotation(0f, 0f, 0f);
+		this.plane1.AddChild(model1);
 
+		
+		
 		// ********************************************************************
 		// WORLD #2
 
@@ -107,7 +115,7 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		this.Camera2 = new TF3D_Camera("TargetCamera2");
 		this.Camera2.SetPosition(0.0f, 15.0f, -25.0f);
 		this.Camera2.movespeed = 0.2f;
-		this.Camera2.TargetPoint = new Vector3f(0, 0, 0);
+		this.Camera2.TargetPoint = new Vector3f(-2f, 1f, 0);
 		this.Camera2.ctype = F3D.CAMERA_TYPE_TARGET;
 
 		F3D.Cameras.Add(this.Camera2);
@@ -131,14 +139,13 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		this.pbuff = new TF3D_FrameBufferObject(800,600);
 		
 		
-		
 	}
 
 	@Override
 	public void onUpdate3D()
 	{
 		
-		this.plane1.Turn(1, 0, 0);
+		this.plane1.Turn(0.25f, 0, 0);
 		int w1 = F3D.Worlds.FindByName("MAIN_WORLD");
 		int w2 = F3D.Worlds.FindByName("SECOND_WORLD");
 		

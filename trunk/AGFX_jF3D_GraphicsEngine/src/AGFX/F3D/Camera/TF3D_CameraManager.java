@@ -11,7 +11,7 @@ public class TF3D_CameraManager
 {
 	public ArrayList<TF3D_Camera> items;
 	public int                    CurrentCameraID;	
-	public TF3D_Skybox			Sky;
+	
 	// -----------------------------------------------------------------------
 	// TA3D_CameraManager:
 	// -----------------------------------------------------------------------
@@ -249,15 +249,6 @@ public class TF3D_CameraManager
 		pos.add(dir);
 
 		return pos;
-	}
-
-	
-	public void RenderSky()
-	{
-		if (this.Sky!=null)
-		{
-			this.Sky.Render(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).GetPosition());
-		}
 	}
 	
 	public TF3D_Camera GetCamera(String name)

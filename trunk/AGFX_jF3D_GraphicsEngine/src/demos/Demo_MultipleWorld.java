@@ -74,6 +74,7 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
 		this.Camera.TargetPoint = new Vector3f(2f, 0, 0);
 		this.Camera.ctype = F3D.CAMERA_TYPE_TARGET;
 
+		this.Camera.Sky = new TF3D_Skybox();
 		F3D.Cameras.Add(this.Camera);
 
 		// Add light to scene

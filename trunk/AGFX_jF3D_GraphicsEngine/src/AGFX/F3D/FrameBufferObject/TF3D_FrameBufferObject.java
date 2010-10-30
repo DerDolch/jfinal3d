@@ -69,6 +69,8 @@ public class TF3D_FrameBufferObject
 		
 		//Start drawing to the FBO
 		EXTFramebufferObject.glBindFramebufferEXT( EXTFramebufferObject.GL_FRAMEBUFFER_EXT, this.FBO_id );
+		glReadBuffer(GL_BACK);
+		glEnable(GL_DEPTH_TEST);
 		glPushAttrib(GL_VIEWPORT_BIT);
 		//glViewport(0,0,this.width, this.height);
 	}
