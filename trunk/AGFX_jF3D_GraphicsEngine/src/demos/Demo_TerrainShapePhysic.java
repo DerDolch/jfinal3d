@@ -75,6 +75,7 @@ public class Demo_TerrainShapePhysic extends TF3D_AppWrapper
 		this.Camera.ctype = F3D.CAMERA_TYPE_FPS;
 
 		F3D.Cameras.Add(this.Camera);
+		F3D.Worlds.SetCamera(this.Camera);
 		
 		F3D.Cameras.Sky = new TF3D_Skybox();
 

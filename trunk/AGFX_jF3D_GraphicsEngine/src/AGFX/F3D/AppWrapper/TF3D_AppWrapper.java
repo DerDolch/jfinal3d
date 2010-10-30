@@ -200,7 +200,7 @@ public class TF3D_AppWrapper
 				this.KeyPressed();
 
 				F3D.Viewport.BeginRender3D();
-
+				
 				F3D.Worlds.UpdateWorld();
 				F3D.Worlds.RenderWorld();
 				

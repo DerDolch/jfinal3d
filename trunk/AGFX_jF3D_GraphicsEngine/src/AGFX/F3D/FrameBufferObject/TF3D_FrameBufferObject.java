@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.EXTFramebufferObject;
@@ -52,7 +53,7 @@ public class TF3D_FrameBufferObject
 	    this.texture_id = texture_buffer.get(0);
 	    
 	    glBindTexture(GL_TEXTURE_2D, this.texture_id);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (IntBuffer)null);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(width * height * 4));
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -60,6 +61,7 @@ public class TF3D_FrameBufferObject
 
 	    EXTFramebufferObject.glBindFramebufferEXT(EXTFramebufferObject.GL_FRAMEBUFFER_EXT, this.FBO_id);
 		EXTFramebufferObject.glFramebufferTexture2DEXT(EXTFramebufferObject.GL_FRAMEBUFFER_EXT, EXTFramebufferObject.GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.texture_id, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	public void BeginRender()
@@ -68,7 +70,7 @@ public class TF3D_FrameBufferObject
 		//Start drawing to the FBO
 		EXTFramebufferObject.glBindFramebufferEXT( EXTFramebufferObject.GL_FRAMEBUFFER_EXT, this.FBO_id );
 		glPushAttrib(GL_VIEWPORT_BIT);
-		glViewport(0,0,this.width, this.height);
+		//glViewport(0,0,this.width, this.height);
 	}
 
 	public void EndRender()

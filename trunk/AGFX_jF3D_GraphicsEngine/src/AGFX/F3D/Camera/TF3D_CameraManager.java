@@ -127,7 +127,7 @@ public class TF3D_CameraManager
 	{
 		if (this.CurrentCameraID >= 0)
 		{
-
+			
 			this.items.get(this.CurrentCameraID).Update();
 			
 		}
@@ -252,13 +252,16 @@ public class TF3D_CameraManager
 	}
 
 	
-	
-	
 	public void RenderSky()
 	{
 		if (this.Sky!=null)
 		{
-			this.Sky.Render(this.GetPosition());
+			this.Sky.Render(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).GetPosition());
 		}
+	}
+	
+	public TF3D_Camera GetCamera(String name)
+	{
+		return this.items.get(this.FindByName(name));
 	}
 }

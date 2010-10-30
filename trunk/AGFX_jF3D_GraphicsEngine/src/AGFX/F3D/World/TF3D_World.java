@@ -17,9 +17,9 @@ import AGFX.F3D.Entity.TF3D_Entity;
  */
 public class TF3D_World
 {
-	public String name;
-	
-	public  ArrayList<TF3D_Entity> entities;
+	public String                 name;
+
+	public ArrayList<TF3D_Entity> entities;
 
 	// -----------------------------------------------------------------------
 	// TF3D_World:
@@ -55,7 +55,10 @@ public class TF3D_World
 		{
 			if (this.entities.get(i).parent == null)
 			{
-				this.entities.get(i).Update();
+				if (this.entities.get(i).classname != F3D.CLASS_CAMERA)
+				{
+					this.entities.get(i).Update();
+				}
 
 			}
 		}
@@ -75,7 +78,9 @@ public class TF3D_World
 	public void Render()
 	{
 
+		// TODO REWRITE SKYBOX RENDERING !!!
 		F3D.Cameras.RenderSky();
+		
 
 		for (int i = 0; i < this.entities.size(); i++)
 		{
@@ -85,6 +90,7 @@ public class TF3D_World
 				{
 					this.entities.get(i).Render();
 				}
+
 			}
 		}
 
@@ -137,5 +143,5 @@ public class TF3D_World
 			this.entities.get(i).Destroy();
 		}
 	}
-	
+
 }
