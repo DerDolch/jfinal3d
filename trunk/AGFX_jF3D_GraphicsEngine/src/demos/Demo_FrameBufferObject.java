@@ -237,6 +237,8 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		F3D.Textures.Bind("FRAME_BUFFER");
 		F3D.Draw.Rectangle(0, 0, 400, 300,true);
 		
+		F3D.Viewport.DrawInfo(0,450);
+		
 		
 	}
 

@@ -114,9 +114,9 @@ public class TF3D_SurfaceManager
 	public void ApplyMaterial(int id)
 	{
 		// is material type=0 (MAT_TEXTURE)
-		if (this.materials.get(id).typ == 0)
+		if (this.materials.get(id).typ == F3D.MAT_TYPE_TEXTURE)
 		{
-
+			
 			if (this.materials.get(id).bAlphaTest)
 			{
 				glEnable(GL_ALPHA_TEST);
@@ -162,6 +162,7 @@ public class TF3D_SurfaceManager
 			{
 				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
 			}
+			
 			
 			for (int u = 0; u < F3D.MAX_TMU; u++)
 			{

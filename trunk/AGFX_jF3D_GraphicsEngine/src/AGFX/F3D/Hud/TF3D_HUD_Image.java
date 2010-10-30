@@ -107,7 +107,7 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 			glTranslatef(_x - this.shape_origin.x, _y - this.shape_origin.y, 0.0f);
 			glRotatef(this.shape_angle, 0.0f, 0.0f, 1.0f);
 
-			F3D.Draw.QuadBySize(_x, _y, this.size.x, this.size.y, 0);
+			F3D.Draw.QuadBySize(_x, _y, this.size.x, this.size.y, 0f);
 			
 			
 			glPopMatrix();
