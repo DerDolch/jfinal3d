@@ -51,7 +51,8 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - FrameBufferObject";
-
+			F3D.Config.use_gl_light = true;
+			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -75,11 +76,11 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		F3D.Worlds.SetWorld("MAIN_WORLD");
 
 		this.Camera1 = new TF3D_Camera("TargetCamera1");
-		this.Camera1.SetPosition(10.0f, 15.0f, 15.0f);
-
+		this.Camera1.SetPosition(0.0f, 5.0f, 15.0f);
+		this.Camera1.SetRotation(15, 0, 0);
 		this.Camera1.movespeed = 0.2f;
 		this.Camera1.TargetPoint = new Vector3f(0f, 0f, 0);
-		this.Camera1.ctype = F3D.CAMERA_TYPE_TARGET;
+		this.Camera1.ctype = F3D.CAMERA_TYPE_FPS;
 
 		F3D.Cameras.Add(this.Camera1);
 		this.Camera1.Sky = new TF3D_Skybox();
@@ -92,16 +93,19 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 
 		this.model1 = new TF3D_Model("Sphere");
 		this.model1.AssignMesh("abstract::Sphere.a3da");
-		this.model1.SetPosition(0f, 1f, 0);
-		this.model1.SetScale(5, 5, 5);
+		this.model1.SetPosition(3f, 1f, 0);
+		this.model1.SetScale(1, 1, 1);
 		this.model1.Enable();
+		this.model1.enableFrustumTest = false;
 
 		this.plane1 = new TF3D_Model("PPlane");
 		this.plane1.AssignMesh("abstract::Plane.a3da");
 		this.plane1.Enable();
-		this.plane1.SetScale(10, 10, 10);
+		this.plane1.SetScale(1, 1, 1);
 		this.plane1.SetPosition(0f, 0f, 0f);
 		this.plane1.SetRotation(0f, 0f, 0f);
+		this.plane1.enableFrustumTest = false;
+		
 		this.plane1.AddChild(model1);
 
 		
@@ -125,6 +129,7 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		this.model2.SetPosition(-2f, 1, 0);
 		this.model2.Enable();
 		this.model2.ChangeSurface("MATbase", "MAT_text_a");
+		
 
 		this.plane2 = new TF3D_Model("PPlane");
 		this.plane2.AssignMesh("abstract::Plane.a3da");
@@ -133,10 +138,11 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		this.plane2.SetRotation(0f, 0f, 0f);
 		this.plane2.ChangeSurface("MATbase", "MATuvmap");
 		
+		
 		F3D.Worlds.RenderManualy();
 		
 		
-		this.pbuff = new TF3D_FrameBufferObject(800,600);
+		this.pbuff = new TF3D_FrameBufferObject(256,256);
 		
 		
 	}
@@ -145,18 +151,21 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 	public void onUpdate3D()
 	{
 		
-		this.plane1.Turn(0.25f, 0, 0);
+		//this.plane1.Turn(0.25f, 0, 0);
 		int w1 = F3D.Worlds.FindByName("MAIN_WORLD");
 		int w2 = F3D.Worlds.FindByName("SECOND_WORLD");
 		
+		// set camera for WORLD#1
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera1"));
+		
 		this.pbuff.BeginRender();
+		
 		
 		F3D.Worlds.UpdateWorld(w1);
 		F3D.Worlds.RenderWorld(w1);
 		this.pbuff.EndRender();
 		
-		
+		// set camera for WORLD#2
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));
 		F3D.Worlds.UpdateWorld(w2);
 		F3D.Worlds.RenderWorld(w2);
@@ -167,7 +176,9 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		*/
 		
 	
+		// set camera to next control
 		
+		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera1"));
 		if (Mouse.isInsideWindow())
 		{
     		if (Mouse.isButtonDown(0))
@@ -225,8 +236,8 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		
 		this.pbuff.Bind();	
 		//F3D.Surfaces.ApplyMaterial(F3D.Surfaces.FindByName("MATuvmap"));
-		F3D.Draw.Rectangle(0, 0, 400, 300);
-		//F3D.Draw.QuadBySizeAndUV(100, 100, 256, 256,1,1,0,0,0);
+		F3D.Draw.Rectangle(0, 0, 400, 300,true);
+		
 		
 	}
 

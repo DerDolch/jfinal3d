@@ -47,6 +47,7 @@ public abstract class TF3D_Entity
 	public Boolean                is_child   = false;
 
 	public TF3D_BoundingBox       BBOX;
+	public Boolean                enableFrustumTest=true;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Entity:
@@ -349,9 +350,16 @@ public abstract class TF3D_Entity
 	// -----------------------------------------------------------------------
 	public boolean IsVisible()
 	{
+		if (this.enableFrustumTest)
+		{
 		Vector3f sum = new Vector3f(0, 0, 0);
 		sum.add(this.GetPosition(), this.BBOX.center);
 		this.visibility = F3D.Frustum.BoxInFrustum(sum, this.BBOX.size);
+		}
+		else
+		{
+			this.visibility = true;
+		}
 		return this.visibility;
 
 	}
