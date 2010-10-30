@@ -157,6 +157,8 @@ public class TF3D_Texture
 
 	public void CreateFromFBO(TF3D_FrameBufferObject fbo)
 	{
+		if (this.texture!=null) this.texture.release();
+		this.texture = null;
 		this.fbo_texture = fbo;
 	}
 }

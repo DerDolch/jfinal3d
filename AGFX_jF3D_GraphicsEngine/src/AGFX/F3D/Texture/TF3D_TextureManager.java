@@ -68,6 +68,7 @@ public class TF3D_TextureManager
 	}
 
 	
+	
 	// -----------------------------------------------------------------------
 	// TA3D_TextureManager: 
 	// -----------------------------------------------------------------------
@@ -98,6 +99,39 @@ public class TF3D_TextureManager
     		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
 		}
 
+	}
+	
+	
+	public void Add(String _name, int fbo_id, Boolean mipmap)
+	{
+		
+		
+		if (this.Exist(_name)) 
+		{
+			F3D.Log.warning("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
+		}
+		else
+		{
+		
+    		TF3D_Texture tex = new TF3D_Texture(_name);
+    		tex.CreateFromFBO(F3D.FrameBuffers.Get(fbo_id));
+    		this.items.add(tex);
+    	
+    		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
+		}
+
+	}
+	
+	public void ReplaceWithFBO(String text_name, TF3D_FrameBufferObject fbo)
+	{
+		int text_id = this.FindByName(text_name);
+		this.items.get(text_id).CreateFromFBO(fbo);
+	}
+	
+	public void ReplaceWithFBO(String text_name, int fbo_id)
+	{
+		int text_id = this.FindByName(text_name);
+		this.items.get(text_id).CreateFromFBO(F3D.FrameBuffers.Get(fbo_id));
 	}
 	
 	// -----------------------------------------------------------------------
