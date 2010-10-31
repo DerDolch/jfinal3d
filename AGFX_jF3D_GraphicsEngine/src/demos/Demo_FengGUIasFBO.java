@@ -3,6 +3,11 @@
  */
 package demos;
 
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+
 import java.io.IOException;
 
 import org.fenggui.FengGUI;
@@ -132,8 +137,8 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		this.mouse_cur = new TF3D_HUD_Image();
 		this.mouse_cur.texture_id =  F3D.Textures.FindByName("mouse");
 		// Add image FX
-		this.mouse_cur.size.set(128, 128);
-		this.mouse_cur.property.Autosize = true;
+		this.mouse_cur.size.set(64, 64);
+		this.mouse_cur.property.Autosize = false;
 		this.mouse_cur.property.Texture = true;
 		this.mouse_cur.property.Blend = true;
 		this.mouse_cur.color.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -197,25 +202,29 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		
+		F3D.Viewport.DrawInfo(0,0);
 		
 		// render gui
 		readBufferedKeyboard();
 		readBufferedMouse();
 
 		F3D.FrameBuffers.BeginRender(this.fbo_id);
-		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		// clean
+		/*
 		F3D.Surfaces.ApplyMaterial(F3D.Surfaces.FindByName("MATuvmap"));
 		F3D.Draw.Rectangle(0, 0, 800, 600,true);
+		*/
 		F3D.Textures.DeactivateLayers();
 		F3D.Textures.ActivateLayer(0);
 		
-		//GL11.glEnable(GL11.GL_DEPTH_TEST);
-		this.mouse_cur.DrawAt((float)Mouse.getX(), (float) 600-Mouse.getY());
+		
 		
 		desk.display();
 		screenshotActor.renderToDos(desk.getBinding().getOpenGL(), 800, 600);
 		
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		this.mouse_cur.DrawAt((float)Mouse.getX()/2f, (float) (600-Mouse.getY())/2f);
 		
 		
 		F3D.Textures.DeactivateLayers();
