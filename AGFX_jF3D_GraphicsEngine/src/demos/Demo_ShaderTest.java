@@ -14,6 +14,7 @@ import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Parser.TF3D_PARSER;
 import AGFX.F3D.Shader.TF3D_GLSL_Shader;
+import AGFX.F3D.Shader.TF3D_Shader;
 import AGFX.F3D.Texture.TF3D_Texture;
 
 public class Demo_ShaderTest extends TF3D_AppWrapper
@@ -25,8 +26,7 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 	public TF3D_PARSER  PARSER;
 	public TF3D_Model   model;
 	public int          surface_id;
-	public int          shader_diffuse;
-	public int          shader_phong;
+	public TF3D_Shader  shader_diffuse;
 	public int          selected_shader = 1;
 
 	public Demo_ShaderTest()
@@ -80,8 +80,14 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Sphere.a3da");
 		F3D.Meshes.items.get(0).IndicesGroup.items.get(0).material_id = -1;
 
-		shader_diffuse = TF3D_GLSL_Shader.loadShadersCode("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");
-		shader_phong = TF3D_GLSL_Shader.loadShadersCode("media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
+		
+		// add method #1
+		shader_diffuse = new TF3D_Shader("DIFFUSE");
+		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");		
+		F3D.Shaders.Add(shader_diffuse);
+		
+		// add method #2
+		F3D.Shaders.Add("PHONG","media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
 	}
 
 	@Override
@@ -92,28 +98,31 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 
 		if (selected_shader == 1)
 		{
-			GL20.glUseProgram(shader_diffuse);
+			F3D.Shaders.Bind("DIFFUSE");
 			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind(4);
-			TF3D_GLSL_Shader.sendUniform1i(shader_diffuse, "BaseMap", 0);
-			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse, "light_diffuse", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse, "light_ambient", 0.1f, 0.1f, 0.1f, 1f);
-			TF3D_GLSL_Shader.sendUniform3f(shader_diffuse, "light_position", 3f, 3f, 3f);
+			F3D.Textures.Bind(6);
+			
+			TF3D_GLSL_Shader.sendUniform1i(shader_diffuse.id, "BaseMap", 0);
+			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse.id, "light_diffuse", 0.7f, 0.7f, 0.7f, 1f);
+			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse.id, "light_ambient", 0.1f, 0.1f, 0.1f, 1f);
+			TF3D_GLSL_Shader.sendUniform3f(shader_diffuse.id, "light_position", 3f, 3f, 3f);
+			
 		}
 
 		if (selected_shader == 2)
 		{
-			GL20.glUseProgram(shader_phong);
+			
+			F3D.Shaders.Bind("PHONG");
 			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind(4);
-			TF3D_GLSL_Shader.sendUniform1i(shader_phong, "BaseMap", 0);
-			TF3D_GLSL_Shader.sendUniform4f(shader_phong, "fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(shader_phong, "fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(shader_phong, "fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
-			TF3D_GLSL_Shader.sendUniform1f(shader_phong, "fSpecularPower", 50.0f);
-			TF3D_GLSL_Shader.sendUniform3f(shader_phong, "fvLightPosition", 3f, 3f, 3f);
-			TF3D_GLSL_Shader.sendUniform3f(shader_phong, "fvEyePosition", 2f, 2f, 2f);
-
+			F3D.Textures.Bind(6);
+			TF3D_GLSL_Shader.sendUniform1i(F3D.Shaders.Get("PHONG").id, "BaseMap", 0);
+			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
+			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
+			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
+			TF3D_GLSL_Shader.sendUniform1f(F3D.Shaders.Get("PHONG").id, "fSpecularPower", 50.0f);
+			TF3D_GLSL_Shader.sendUniform3f(F3D.Shaders.Get("PHONG").id, "fvLightPosition", 3f, 3f, 3f);
+			TF3D_GLSL_Shader.sendUniform3f(F3D.Shaders.Get("PHONG").id, "fvEyePosition", 2f, 2f, 2f);
+		
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_1))
