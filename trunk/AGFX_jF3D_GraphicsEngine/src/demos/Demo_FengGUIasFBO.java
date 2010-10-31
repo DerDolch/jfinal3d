@@ -150,6 +150,9 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		this.mouse_cur.shape_origin.set(0, 0);
 		
 		this.mouse_cur.Initialize();
+		
+		// Hide cursor
+		Mouse.setGrabbed(true);
 	}
 
 	@Override
