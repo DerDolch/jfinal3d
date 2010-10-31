@@ -19,21 +19,14 @@ public class TF3D_Keyboard
 
 	public Boolean isKeyDown(int key)
 	{
-		return Keyboard.isKeyDown(key);
+		return true;
 	}
 
 	public Boolean isPressed(String key)
 	{
-		Boolean pressed = false;
-		Keyboard.enableRepeatEvents(false);		
-		Keyboard.poll();
-		while (Keyboard.next())
-		{
-			
-		}
-		Keyboard.enableRepeatEvents(true);
+		
 
-		return pressed;
+		return true;
 	}
 
 	public void Test()

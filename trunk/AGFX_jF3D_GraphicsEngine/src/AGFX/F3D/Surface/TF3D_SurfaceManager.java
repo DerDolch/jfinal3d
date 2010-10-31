@@ -231,9 +231,14 @@ public class TF3D_SurfaceManager
 
 			if (tmp_str.equalsIgnoreCase("MAT_TEXTURE"))
 			{
-				mat.typ = 0;
+				mat.typ = F3D.MAT_TYPE_TEXTURE;
 			}
 
+			if (tmp_str.equalsIgnoreCase("MAT_SHADER"))
+			{
+				mat.typ = F3D.MAT_TYPE_SHADER;
+			}
+			
 			// get name
 			mat.name = PARSER.GetAs_STRING("name");
 

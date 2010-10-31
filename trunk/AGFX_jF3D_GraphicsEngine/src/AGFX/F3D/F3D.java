@@ -132,8 +132,8 @@ public class F3D
 	// '-----------------------------------------------------------------
 	// ' MATERIAL: CONST
 	// '-----------------------------------------------------------------
-	public final static int                 MAT_TYPE_TEXTURE           = 0;
-	public final static int                 MAT_TYPE_PIXELBUFFER       = 1;
+	public final static int                 MAT_TYPE_COLOR             = 0;
+	public final static int                 MAT_TYPE_TEXTURE           = 1;
 	public final static int                 MAT_TYPE_SHADER            = 2;
 
 	// '-----------------------------------------------------------------
@@ -168,7 +168,7 @@ public class F3D
 	public static TF3D_Physics              Physic;
 	public static TF3D_Keyboard             Key;
 	public static TF3D_Pick                 Pick;
-	public static TF3D_FBO_manager			FrameBuffers;
+	public static TF3D_FBO_manager          FrameBuffers;
 
 	public static void Create()
 	{
@@ -180,10 +180,9 @@ public class F3D
 		F3D.Preloader = new TF3D_Preloader();
 		F3D.Display = new TF3D_Display();
 		F3D.Viewport = new TF3D_Viewport();
-		
+
 		F3D.Worlds = new TF3D_WorldManager();
-		
-		
+
 		F3D.Cameras = new TF3D_CameraManager();
 		F3D.AbstractFiles = new TF3D_AbstractFiles();
 		F3D.Frustum = new TF3D_Frustum();
@@ -195,7 +194,7 @@ public class F3D
 		F3D.Draw = new TF3D_Helpers();
 		F3D.Meshes = new TF3D_MeshManager();
 		F3D.FrameBuffers = new TF3D_FBO_manager();
-		
+
 		if (F3D.Config.use_physics)
 		{
 			F3D.Physic = new TF3D_Physics();
