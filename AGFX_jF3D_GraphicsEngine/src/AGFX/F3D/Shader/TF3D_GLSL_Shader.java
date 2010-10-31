@@ -14,46 +14,33 @@ import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
 import org.lwjgl.BufferUtils;
+
+import AGFX.F3D.F3D;
+
 import java.nio.FloatBuffer;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 public class TF3D_GLSL_Shader
 {
-	static ByteBuffer        buffer      = BufferUtils.createByteBuffer(1024); ;
-	private static boolean   VPSupported = false;
-	private static boolean   FPSupported = false;
-	private static boolean   VSSupported = false;
-	private static boolean   FSSupported = false;
-	private static IntBuffer logBuffer   = BufferUtils.createIntBuffer(1);
-	
-	static
-	{
-		VPSupported = checkExtensionSupport("GL_ARB_vertex_program");
-		FPSupported = checkExtensionSupport("GL_ARB_fragment_program");
-		VSSupported = checkExtensionSupport("GL_ARB_vertex_shader");
-		FSSupported = checkExtensionSupport("GL_ARB_fragment_shader");
-	}
+	static ByteBuffer        buffer    = BufferUtils.createByteBuffer(1024); ;
+	static IntBuffer logBuffer = BufferUtils.createIntBuffer(1);
 
-	private static boolean checkExtensionSupport(String extension)
-	{
-		String supportedExtensions = GL11.glGetString(GL11.GL_EXTENSIONS);
-		return supportedExtensions.indexOf(extension) != -1;
-	}
 
 	public static int loadProgramCode(String filename, boolean isFragment)
 	{
-		if (isFragment && !FPSupported)
+		if (isFragment && !F3D.Extensions.GLSL_FragmentProgram)
 		{
 			System.out.println("GL_ARB_fragment_program is not supported, skipping.");
 			return 0;
-		} else if (!VPSupported)
+		} else if (!F3D.Extensions.GLSL_VertexProgram)
 		{
 			System.out.println("GL_ARB_vertex_program is not supported, skipping.");
 			return 0;
 		}
 		ByteBuffer shaderPro = getProgramCode(filename);
 		IntBuffer id = BufferUtils.createIntBuffer(1);
+		
 		if (isFragment)
 		{
 			ARBFragmentProgram.glGenProgramsARB(id);
@@ -72,11 +59,11 @@ public class TF3D_GLSL_Shader
 
 	public static int loadShadersCode(String vertexShaderFile, String fragmentShaderFile)
 	{
-		if (!FSSupported || !VSSupported)
+		if (!F3D.Extensions.GLSL_FragmenShader || !F3D.Extensions.GLSL_VertexShader)
 		{
-			System.out.println("GL_ARB_fragment_shader or GL_ARB_vertex_shader is not supported, skipping.");
-			return 0;
+			F3D.Log.error("TF3D_GLSL_Shader", "GL_ARB_fragment_shader or GL_ARB_vertex_shader is not supported, skipping.");
 		}
+		
 		ByteBuffer vertexShader = getProgramCode(vertexShaderFile), fragmentShader = getProgramCode(fragmentShaderFile);
 		int vertexShaderID = 0, fragmentShaderID = 0, linkedShadersID = 0;
 		vertexShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBVertexShader.GL_VERTEX_SHADER_ARB);
@@ -86,8 +73,8 @@ public class TF3D_GLSL_Shader
 		ARBShaderObjects.glGetObjectParameterARB(vertexShaderID, ARBShaderObjects.GL_OBJECT_COMPILE_STATUS_ARB, logBuffer);
 		if (logBuffer.get(0) == GL11.GL_FALSE)
 		{
-			System.out.println("Error in vertex shader");
-			return 0;
+			
+			F3D.Log.error("TF3D_GLSL_Shader", "Error in vertex shader");
 		}
 		fragmentShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
 		ARBShaderObjects.glShaderSourceARB(fragmentShaderID, fragmentShader);
@@ -95,9 +82,8 @@ public class TF3D_GLSL_Shader
 		printShaderObjectInfoLog(fragmentShaderFile, fragmentShaderID);
 		ARBShaderObjects.glGetObjectParameterARB(fragmentShaderID, ARBShaderObjects.GL_OBJECT_COMPILE_STATUS_ARB, logBuffer);
 		if (logBuffer.get(0) == GL11.GL_FALSE)
-		{
-			System.out.println("Error in fragment shader");
-			return 0;
+		{			
+			F3D.Log.error("TF3D_GLSL_Shader", "Error in fragment shader");
 		}
 		linkedShadersID = ARBShaderObjects.glCreateProgramObjectARB();
 		ARBShaderObjects.glAttachObjectARB(linkedShadersID, vertexShaderID);
@@ -108,9 +94,11 @@ public class TF3D_GLSL_Shader
 		if (logBuffer.get(0) == GL11.GL_FALSE)
 		{
 			System.out.println("Error in linking shaders");
-			return 0;
+			F3D.Log.error("TF3D_GLSL_Shader", "Error in linking shaders");
 		}
-		System.out.println("Vertex and Fragment shaders linked OK.");
+		F3D.Log.info("TF3D_GLSL_Shader", "Loading and Link: ");
+		F3D.Log.info("TF3D_GLSL_Shader", "	Vertex shaders   : '"+vertexShaderFile+"' linked OK.");
+		F3D.Log.info("TF3D_GLSL_Shader", "	Fragment shaders : '"+fragmentShaderFile+"' linked OK.");
 		return linkedShadersID;
 	}
 
@@ -313,21 +301,4 @@ public class TF3D_GLSL_Shader
 		return 1;
 	}
 
-	public static String getLogMessagePrograms()
-	{
-		if ((VPSupported && FPSupported))
-			return "Success";
-		if (VPSupported && !FPSupported)
-			return "Error: Fragment Program is not supported";
-		return "Error: Fragment & Vertex Programs are not supported";
-	}
-
-	public static String getLogMessageShaders()
-	{
-		if ((VSSupported && FSSupported))
-			return "Success";
-		if (VSSupported && !FSSupported)
-			return "Error: Fragment Shader is not supported";
-		return "Error: Fragment & Vertex Shaders are not supported";
-	}
 }

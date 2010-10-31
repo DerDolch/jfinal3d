@@ -53,10 +53,10 @@ public class Demo_RenderModel extends TF3D_AppWrapper
 		F3D.Worlds.CreateWorld("MAIN_WORLD");
 		
 		this.Camera = new TF3D_Camera("TargetCamera");
-		this.Camera.SetPosition(10.0f, 10.0f, -10.0f);
+		this.Camera.SetPosition(2.0f, 2.0f, -5.0f);
 		
 		this.Camera.movespeed = 0.2f;
-		this.Camera.TargetPoint = new Vector3f(0,0,0);
+		this.Camera.TargetPoint = new Vector3f(0,2,0);
 		this.Camera.ctype = F3D.CAMERA_TYPE_TARGET;
 		
 		F3D.Cameras.Add(this.Camera);
@@ -69,13 +69,13 @@ public class Demo_RenderModel extends TF3D_AppWrapper
 				
 		this.surface_id = F3D.Surfaces.FindByName("MAT_text_a"); 
 
-		F3D.Meshes.Add("abstract::Sphere.a3da");
+		F3D.Meshes.Add("abstract::Cube.a3da");
 		
 		this.model = new TF3D_Model("Cube");
-		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
-		this.model.SetPosition(0, 0, 0);
+		this.model.AssignMesh(F3D.Meshes.FindByName("abstract::Cube.a3da"));
+		this.model.SetPosition(0, 2, 0);
 		this.model.Enable();
-		this.model.ChangeSurface("MATbase","MAT_text_a");
+		this.model.ChangeSurface("Cube_MAT_095A","MAT_test_alpha_blend");
 		
 	}
 	

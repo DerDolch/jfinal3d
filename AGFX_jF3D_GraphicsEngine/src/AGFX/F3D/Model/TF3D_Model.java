@@ -69,13 +69,18 @@ public class TF3D_Model extends TF3D_Entity
 
 	public void ChangeSurface(String old_surface, String new_surface)
 	{
+		Boolean done = false;
 		for (int i = 0; i < this.surfaces.size(); i++)
 		{
 			if (this.surfaces.get(i).name.equals(old_surface))
 			{
 				this.surfaces.get(i).ChangeTo(new_surface);
+				done = true;
 			}
+			
 		}
+		
+		if (!done) F3D.Log.warning("TF3D_Model", ".ChangeSurface(...)" + "Surafce '"+old_surface+"' doesn't exist");
 	}
 
 	public void SetRenderSurface(String sname, Boolean state)
