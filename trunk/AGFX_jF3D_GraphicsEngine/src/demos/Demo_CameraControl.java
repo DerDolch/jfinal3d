@@ -73,10 +73,10 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		light.Enable();
 		
 		
-		F3D.Meshes.Add("abstract::Cylinder.a3da");
+		F3D.Meshes.Add("abstract::table.a3da");
 		
-		this.model = new TF3D_Model("model");
-		this.model.AssignMesh("abstract::Cylinder.a3da");
+		this.model = new TF3D_Model("table");
+		this.model.AssignMesh("abstract::table.a3da");
 		
 	}
 	
