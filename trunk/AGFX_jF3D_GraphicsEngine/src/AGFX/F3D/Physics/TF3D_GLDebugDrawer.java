@@ -82,21 +82,21 @@ public class TF3D_GLDebugDrawer extends IDebugDraw
 		
 		if (this.debugMode > 0)
 		{
-			GL11.glPushMatrix();
+			//GL11.glPushMatrix();
 			GL11.glBegin(GL11.GL_LINES);
 			GL11.glColor4f(color.x, color.y, color.z,1f);
 			GL11.glVertex3f(from.x, from.y, from.z);
 			GL11.glVertex3f(to.x, to.y, to.z);
 			GL11.glEnd();
 			
-			
+			/*
 			GL11.glBegin(GL11.GL_POINTS);
 			GL11.glPointSize( 5.0f );
 			GL11.glColor4f(color.x, color.y, color.z,1f);
 			GL11.glVertex3f(from.x, from.y, from.z);
 			GL11.glEnd();
-			
-			GL11.glPopMatrix();  
+			*/
+			//GL11.glPopMatrix();  
 		}
 		
 		
