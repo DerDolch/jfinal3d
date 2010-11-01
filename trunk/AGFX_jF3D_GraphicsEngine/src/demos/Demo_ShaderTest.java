@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL21;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+import AGFX.F3D.Callback.TF3D_ShaderCallback;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
@@ -80,14 +81,50 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Sphere.a3da");
 		F3D.Meshes.items.get(0).IndicesGroup.items.get(0).material_id = -1;
 
-		
 		// add method #1
+
 		shader_diffuse = new TF3D_Shader("DIFFUSE");
-		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");		
-		F3D.Shaders.Add(shader_diffuse);
+		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");
+
+		// create callback for fill UNIFORMs values to shader
+
+		class SetDiffuseUniforms implements TF3D_ShaderCallback
+		{
+			@Override
+			public void Call(TF3D_Shader shd)
+			{
+				TF3D_GLSL_Shader.sendUniform1i(shd.id, "BaseMap", 0);
+				TF3D_GLSL_Shader.sendUniform4f(shd.id, "light_diffuse", 0.7f, 0.7f, 0.7f, 1f);
+				TF3D_GLSL_Shader.sendUniform4f(shd.id, "light_ambient", 0.1f, 0.1f, 0.1f, 1f);
+				TF3D_GLSL_Shader.sendUniform3f(shd.id, "light_position", 3f, 3f, 3f);
+
+			}
+		}
+
+		shader_diffuse.SetUniforms = new SetDiffuseUniforms();
 		
+		F3D.Shaders.Add(shader_diffuse);
+
 		// add method #2
-		F3D.Shaders.Add("PHONG","media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
+		
+		// create callback for fill UNIFORMs values to shader
+		class SetPhongUniforms implements TF3D_ShaderCallback
+		{
+			@Override
+			public void Call(TF3D_Shader shd)
+			{
+				TF3D_GLSL_Shader.sendUniform1i(shd.id, "BaseMap", 0);
+				TF3D_GLSL_Shader.sendUniform4f(shd.id, "fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
+				TF3D_GLSL_Shader.sendUniform4f(shd.id, "fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
+				TF3D_GLSL_Shader.sendUniform4f(shd.id, "fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
+				TF3D_GLSL_Shader.sendUniform1f(shd.id, "fSpecularPower", 50.0f);
+				TF3D_GLSL_Shader.sendUniform3f(shd.id, "fvLightPosition", 3f, 3f, 3f);
+				TF3D_GLSL_Shader.sendUniform3f(shd.id, "fvEyePosition", 2f, 2f, 2f);
+
+			}
+		}
+		
+		F3D.Shaders.Add("PHONG", "media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag",new SetPhongUniforms());
 	}
 
 	@Override
@@ -98,31 +135,19 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 
 		if (selected_shader == 1)
 		{
-			F3D.Shaders.Bind("DIFFUSE");
+			F3D.Shaders.UseProgram("DIFFUSE");
 			F3D.Textures.ActivateLayer(0);
 			F3D.Textures.Bind(6);
-			
-			TF3D_GLSL_Shader.sendUniform1i(shader_diffuse.id, "BaseMap", 0);
-			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse.id, "light_diffuse", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(shader_diffuse.id, "light_ambient", 0.1f, 0.1f, 0.1f, 1f);
-			TF3D_GLSL_Shader.sendUniform3f(shader_diffuse.id, "light_position", 3f, 3f, 3f);
-			
+
 		}
 
 		if (selected_shader == 2)
 		{
-			
-			F3D.Shaders.Bind("PHONG");
+
+			F3D.Shaders.UseProgram("PHONG");
 			F3D.Textures.ActivateLayer(0);
 			F3D.Textures.Bind(6);
-			TF3D_GLSL_Shader.sendUniform1i(F3D.Shaders.Get("PHONG").id, "BaseMap", 0);
-			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
-			TF3D_GLSL_Shader.sendUniform4f(F3D.Shaders.Get("PHONG").id, "fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
-			TF3D_GLSL_Shader.sendUniform1f(F3D.Shaders.Get("PHONG").id, "fSpecularPower", 50.0f);
-			TF3D_GLSL_Shader.sendUniform3f(F3D.Shaders.Get("PHONG").id, "fvLightPosition", 3f, 3f, 3f);
-			TF3D_GLSL_Shader.sendUniform3f(F3D.Shaders.Get("PHONG").id, "fvEyePosition", 2f, 2f, 2f);
-		
+
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_1))
@@ -138,7 +163,8 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 
 		F3D.Meshes.items.get(0).Render();
 
-		GL20.glUseProgram(0);
+		
+		F3D.Shaders.StopProgram();
 	}
 
 	@Override

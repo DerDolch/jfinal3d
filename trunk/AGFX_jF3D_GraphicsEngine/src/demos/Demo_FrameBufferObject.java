@@ -7,6 +7,7 @@ import javax.vecmath.*;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
@@ -234,7 +235,9 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		
+		
 		F3D.Textures.Bind("FRAME_BUFFER");
+		
 		F3D.Draw.Rectangle(0, 0, 400, 300,true);
 		
 		F3D.Viewport.DrawInfo(0,450);
