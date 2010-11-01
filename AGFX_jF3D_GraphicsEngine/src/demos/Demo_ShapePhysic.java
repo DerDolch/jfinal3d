@@ -37,6 +37,8 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 	public TF3D_Body   PPlane;
 	public TF3D_Body   PCubePlaneL;
 	public TF3D_Body   PCubePlaneR;
+	
+	public TF3D_Body   zeton;
 
 	public Demo_ShapePhysic()
 	{
@@ -87,6 +89,7 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Capsule.a3da");
 		F3D.Meshes.Add("abstract::Plane.a3da");
 		F3D.Meshes.Add("abstract::MultiSurfCube.a3da");
+		F3D.Meshes.Add("abstract::zeton.a3da");
 		
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
@@ -157,6 +160,16 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.PCone.SetPosition(-0.5f, 22f, 0);
 		this.PCone.SetRotation(0f, 0f, 0f);
 		this.PCone.CreateRigidBody(F3D.BULLET_SHAPE_CONE, 1.0f);
+		
+		
+		this.zeton = new TF3D_Body("zeton");
+		this.zeton.AssignMesh("abstract::zeton.a3da");
+		this.zeton.Enable();
+		//this.zeton.SetScale(0.25f, 0.25f, 0.25f);
+		this.zeton.SetPosition(0.5f, 22f, -2);
+		this.zeton.SetRotation(0f, 0f, 0f);
+		this.zeton.CreateRigidBody(F3D.BULLET_SHAPE_CYLINDER_Z, 1.0f);
+		
 	}
 
 	@Override

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL20;
 
 import AGFX.F3D.F3D;
-
+import AGFX.F3D.Callback.TF3D_ShaderCallback;
 
 /**
  * @author AndyGFX
- *
+ * 
  */
 public class TF3D_ShaderManager
 {
@@ -56,17 +56,21 @@ public class TF3D_ShaderManager
 		}
 	}
 
-	
 	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager: 
+	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Load and add shader to list
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param _name - shader name
-	 * @param vertexShaderFile - vertex Shader File 
-	 * @param fragmentShaderFile - fragment Shader File 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Load and add shader to list <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            - shader name
+	 * @param vertexShaderFile
+	 *            - vertex Shader File
+	 * @param fragmentShaderFile
+	 *            - fragment Shader File
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
@@ -82,13 +86,52 @@ public class TF3D_ShaderManager
 			int res = this.items.size();
 			TF3D_Shader shd = new TF3D_Shader(_name);
 			shd.Load(vertexShaderFile, fragmentShaderFile);
+			shd.SetUniforms = null;
 			this.items.add(shd);
 			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + shd.name + "'");
 			return res;
 		}
 	}
 
-	
+	// -----------------------------------------------------------------------
+	// TF3D_ShaderManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Load and add shader to list <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            - shader name
+	 * @param vertexShaderFile
+	 *            - vertex Shader File
+	 * @param fragmentShaderFile
+	 *            - fragment Shader File
+	 * @param cb
+	 *            - Uniform setup callback interface
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+
+	public int Add(String _name, String vertexShaderFile, String fragmentShaderFile, TF3D_ShaderCallback cb)
+	{
+		if (this.Exist(_name))
+		{
+			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + _name + "' wasn't added - exist !");
+			return this.FindByName(_name);
+
+		} else
+		{
+			int res = this.items.size();
+			TF3D_Shader shd = new TF3D_Shader(_name);
+			shd.Load(vertexShaderFile, fragmentShaderFile);
+			shd.SetUniforms = cb;
+			this.items.add(shd);
+			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + shd.name + "'");
+			return res;
+		}
+	}
 
 	// -----------------------------------------------------------------------
 	// TF3D_ShaderManager:
@@ -150,13 +193,16 @@ public class TF3D_ShaderManager
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager: 
+	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Get Shader from list by name
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param name - name of shader
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get Shader from list by name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param name
+	 *            - name of shader
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
@@ -164,15 +210,18 @@ public class TF3D_ShaderManager
 	{
 		return this.items.get(this.FindByName(name));
 	}
-	
+
 	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager: 
+	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Get Shader from list by id
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id - ID from list
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Get Shader from list by id <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            - ID from list
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
@@ -180,7 +229,7 @@ public class TF3D_ShaderManager
 	{
 		return this.items.get(id);
 	}
-	
+
 	// -----------------------------------------------------------------------
 	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
@@ -198,38 +247,53 @@ public class TF3D_ShaderManager
 			this.items.remove(m);
 		}
 	}
-	
+
 	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager: 
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Execute shader by name
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param name - shader name
-	 */
-	// -----------------------------------------------------------------------
-	public void Bind(String name)
-	{
-		this.items.get(this.FindByName(name)).Bind();
-	}
-	
-	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager: 
+	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Execute shader by ID
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param id - ID from shader list
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Execute shader by name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param name
+	 *            - shader name
 	 */
 	// -----------------------------------------------------------------------
-	public void Bind(int id)
+	public void UseProgram(String name)
 	{
-		this.items.get(id).Bind();
+		this.items.get(this.FindByName(name)).UseProgram();
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_ShaderManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Execute shader by ID <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            - ID from shader list
+	 */
+	// -----------------------------------------------------------------------
+	public void UseProgram(int id)
+	{
+		this.items.get(id).UseProgram();
+	}
+
+	public void StopProgram(String name)
+	{
+		this.items.get(this.FindByName(name)).StopProgram();
+	}
+	public void StopProgram(int id)
+	{
+		this.items.get(id).StopProgram();
 	}
 	
-	public void UnBind()
+	public void StopProgram()
 	{
 		GL20.glUseProgram(0);
 	}

@@ -9,6 +9,7 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.EXTFramebufferObject;
+import org.lwjgl.opengl.GL31;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -48,6 +49,7 @@ public class TF3D_FrameBufferObject
 	    
 	    glBindTexture(GL_TEXTURE_2D, this.texture_id);
 	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(width * height * 4));
+
 	    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	    
