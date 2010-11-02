@@ -29,9 +29,9 @@ public class TF3D_Light extends TF3D_Entity
 	public float            Specular[]         = new float[] { 1f, 1f, 1f, 1.0f };
 	
 	// spot
-	public int              spot_cut_off       = 90;
+	public int              spot_cut_off       = 180;
 	public float            spot_target[]      = new float[] { 0f, 0f, 0f };
-	public float            spot_direction[]   = new float[] { 0f, -1f, 0f };
+	public float            spot_direction[]   = new float[] { 0f, -1f, 0f ,-1f};
 	public float            spot_exponent      = 25.0f;
 
 	public float            spot_constant_att  = 1.0f;
@@ -99,12 +99,14 @@ public class TF3D_Light extends TF3D_Entity
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.Attenuation);
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_CUTOFF, this.spot_cut_off);
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_EXPONENT, this.spot_exponent);
-
+				glLightf(GL_LIGHT0 + this.ID, GL_SHININESS, 500f);
+				
 				glLight(GL_LIGHT0 + this.ID, GL_SPOT_DIRECTION, F3D.GetBuffer.Float(this.spot_direction));
 
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.spot_constant_att);
 				glLightf(GL_LIGHT0 + this.ID, GL_LINEAR_ATTENUATION, this.spot_linear_att);
 				glLightf(GL_LIGHT0 + this.ID, GL_QUADRATIC_ATTENUATION, this.spot_quadratic_att);
+				
 
 			}
 
