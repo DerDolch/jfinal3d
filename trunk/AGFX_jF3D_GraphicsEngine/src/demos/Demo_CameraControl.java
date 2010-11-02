@@ -56,6 +56,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		
 		F3D.Worlds.CreateWorld("MAIN_WORLD");
 		
 		this.Camera = new TF3D_Camera("FPSCamera");
@@ -66,12 +67,12 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		
 		F3D.Cameras.Add(this.Camera);
 		F3D.Worlds.SetCamera(this.Camera);
-		
+		/*
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
-		
+		*/
 		
 		F3D.Meshes.Add("abstract::table.a3da");
 		
@@ -125,6 +126,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		}
 		
 		F3D.Draw.Axis(2.0f);	
+	
 	}
 	
 	

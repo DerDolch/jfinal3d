@@ -25,6 +25,7 @@ import AGFX.F3D.Surface.TF3D_SurfaceManager;
 import AGFX.F3D.Texture.TF3D_TextureManager;
 import AGFX.F3D.Timer.TF3D_Timer2;
 import AGFX.F3D.Utils.TF3D_AbstractFiles;
+import AGFX.F3D.Utils.TF3D_Buffer;
 import AGFX.F3D.World.TF3D_WorldManager;
 
 /**
@@ -171,6 +172,7 @@ public class F3D
 	public static TF3D_Pick                 Pick;
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager		Shaders;
+	public static TF3D_Buffer				GetBuffer;
 
 	public static void Create()
 	{
@@ -197,6 +199,7 @@ public class F3D
 		F3D.Meshes = new TF3D_MeshManager();
 		F3D.FrameBuffers = new TF3D_FBO_manager();
 		F3D.Shaders = new TF3D_ShaderManager();
+		F3D.GetBuffer	= new TF3D_Buffer();
 		
 		if (F3D.Config.use_physics)
 		{
@@ -206,7 +209,7 @@ public class F3D
 		{
 			F3D.Physic = null;
 		}
-		F3D.Key = new TF3D_Keyboard();
+		
 
 	}
 
@@ -216,6 +219,7 @@ public class F3D
 		// Additional initialization
 		F3D.Display.Create();
 		F3D.Extensions = new TF3D_Extensions();
+		F3D.Key = new TF3D_Keyboard();
 		F3D.Viewport.Init3D();
 
 		F3D.Preloader.PreloadData();

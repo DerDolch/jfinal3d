@@ -4,7 +4,10 @@
 
 package AGFX.F3D.Light;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+
+import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
@@ -13,6 +16,9 @@ import org.lwjgl.BufferUtils;
 
 public class TF3D_Light extends TF3D_Entity
 {
+	
+
+	
 	public static final int LT_SPOT            = 0;
 	public static final int LT_POINT           = 1;
 	public static final int LT_DIRECTIONAL     = 2;
@@ -25,6 +31,7 @@ public class TF3D_Light extends TF3D_Entity
 	public float            Ambient[]          = new float[] { 0.2f, 0.3f, 0.6f, 1.0f };
 	public float            Diffuse[]          = new float[] { 1f, 1f, 1f, 1.0f };
 	public float            Specular[]         = new float[] { 1f, 1f, 1f, 1.0f };
+	
 	// spot
 	public int              spot_cut_off       = 90;
 	public float            spot_target[]      = new float[] { 0f, 0f, 0f };
@@ -71,72 +78,33 @@ public class TF3D_Light extends TF3D_Entity
 			{
 				pos[3] = 0.0f;
 
-				FloatBuffer pos_buff = BufferUtils.createFloatBuffer(pos.length);
-				pos_buff.put(pos);
-				pos_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_POSITION, pos_buff);
-
-				FloatBuffer diff_buff = BufferUtils.createFloatBuffer(this.Diffuse.length);
-				diff_buff.put(pos);
-				diff_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, diff_buff);
+				glLight(GL_LIGHT0 + this.ID, GL_POSITION, F3D.GetBuffer.Float(pos));
+				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
 			}
 
 			if (this._type == LT_POINT)
 			{
 				pos[3] = 1.0f;
 
-				FloatBuffer pos_buff = BufferUtils.createFloatBuffer(pos.length);
-				pos_buff.put(pos);
-				pos_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_POSITION, pos_buff);
-
-				FloatBuffer amb_buff = BufferUtils.createFloatBuffer(this.Ambient.length);
-				amb_buff.put(this.Ambient);
-				amb_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_AMBIENT, amb_buff);
-
-				FloatBuffer diff_buff = BufferUtils.createFloatBuffer(this.Diffuse.length);
-				diff_buff.put(this.Diffuse);
-				diff_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, diff_buff);
+				glLight(GL_LIGHT0 + this.ID, GL_POSITION, F3D.GetBuffer.Float(pos));
+				glLight(GL_LIGHT0 + this.ID, GL_AMBIENT, F3D.GetBuffer.Float(this.Ambient));
+				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
+				
 			}
 
 			if (this._type == LT_SPOT)
 			{
 				pos[3] = 1.0f;
-
-				FloatBuffer pos_buff = BufferUtils.createFloatBuffer(pos.length);
-				pos_buff.put(pos);
-				pos_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_POSITION, pos_buff);
-
-				FloatBuffer amb_buff = BufferUtils.createFloatBuffer(this.Ambient.length);
-				amb_buff.put(this.Ambient);
-				amb_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_AMBIENT, amb_buff);
-
-				FloatBuffer diff_buff = BufferUtils.createFloatBuffer(this.Diffuse.length);
-				diff_buff.put(this.Diffuse);
-				diff_buff.position(0);
-				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, diff_buff);
-
-				FloatBuffer spec_buff = BufferUtils.createFloatBuffer(this.Specular.length);
-				spec_buff.put(this.Specular);
-				spec_buff.position(0);
-
-				glLight(GL_LIGHT0 + this.ID, GL_SPECULAR, spec_buff);
+				glLight(GL_LIGHT0 + this.ID, GL_POSITION, F3D.GetBuffer.Float(pos));
+				glLight(GL_LIGHT0 + this.ID, GL_AMBIENT, F3D.GetBuffer.Float(this.Ambient));
+				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
+				glLight(GL_LIGHT0 + this.ID, GL_SPECULAR, F3D.GetBuffer.Float(this.Specular));
 
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.Attenuation);
-
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_CUTOFF, this.spot_cut_off);
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_EXPONENT, this.spot_exponent);
 
-				FloatBuffer spot_buff = BufferUtils.createFloatBuffer(this.spot_direction.length);
-				spot_buff.put(this.spot_direction);
-				spot_buff.position(0);
-
-				glLight(GL_LIGHT0 + this.ID, GL_SPOT_DIRECTION, spot_buff);
+				glLight(GL_LIGHT0 + this.ID, GL_SPOT_DIRECTION, F3D.GetBuffer.Float(this.spot_direction));
 
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.spot_constant_att);
 				glLightf(GL_LIGHT0 + this.ID, GL_LINEAR_ATTENUATION, this.spot_linear_att);

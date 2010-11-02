@@ -38,7 +38,7 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - LOAD MESH";
-			
+			F3D.Config.use_gl_light = true;
 
 		} catch (Exception e)
 		{
@@ -49,6 +49,7 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
+		
 		F3D.Worlds.CreateWorld("MAIN_WORLD");
 		
 		this.Camera = new TF3D_Camera("TargetCamera");
@@ -82,6 +83,7 @@ public class Demo_LoadMesh extends TF3D_AppWrapper
 	@Override
 	public void onUpdate2D()
 	{
+		F3D.Viewport.DrawInfo(0, 0);
 	}
 	
 	@Override
