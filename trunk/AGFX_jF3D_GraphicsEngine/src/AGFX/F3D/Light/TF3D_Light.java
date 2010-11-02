@@ -24,7 +24,7 @@ public class TF3D_Light extends TF3D_Entity
 	// Position.
 	// - from extends
 	// Colors (I'll disregard emission for now).
-	public float            Ambient[]          = new float[] { 0.2f, 0.3f, 0.6f, 1.0f };
+	public float            Ambient[]          = new float[] { 0.1f, 0.1f, 0.1f, 1.0f };
 	public float            Diffuse[]          = new float[] { 1f, 1f, 1f, 1.0f };
 	public float            Specular[]         = new float[] { 1f, 1f, 1f, 1.0f };
 	

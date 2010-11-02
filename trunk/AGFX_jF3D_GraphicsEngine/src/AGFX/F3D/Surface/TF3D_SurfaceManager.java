@@ -18,7 +18,7 @@ public class TF3D_SurfaceManager
 {
 
 	public ArrayList<TF3D_Material> materials;
-	float                           matDiffuse[] = new float[] { 1.0f, 0.0f,0.0f, 1.0f};
+	float                           matDiffuse[] = new float[] { 1.0f, 1.0f,1.0f, 1.0f};
 	public float                 WorldAmbient[] = new float[] { 0.3f, 0.3f,0.3f, 1.0f};
 
 	// -----------------------------------------------------------------------
