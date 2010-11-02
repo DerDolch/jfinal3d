@@ -3,8 +3,6 @@ package AGFX.F3D.Texture;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -89,15 +87,10 @@ public class TF3D_Texture
         
         byte[] texbytes = texture.getTextureData();
         int components = texbytes.length / (width*height);
-       
-        ByteBuffer texdata = BufferUtils.createByteBuffer(texbytes.length);
-        texdata.put(texbytes);
-        texdata.rewind();
-        
-        
+     
         if (mipmap)
         {
-        	MipMap.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, components, width, height, components==3 ? GL11.GL_RGB : GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,texdata);
+        	MipMap.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, components, width, height, components==3 ? GL11.GL_RGB : GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,F3D.GetBuffer.Byte(texbytes));
         	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
         }
         else

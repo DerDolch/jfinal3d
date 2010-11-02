@@ -4,15 +4,11 @@
 
 package AGFX.F3D.Light;
 
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-
-import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.BufferUtils;
+
 
 public class TF3D_Light extends TF3D_Entity
 {
