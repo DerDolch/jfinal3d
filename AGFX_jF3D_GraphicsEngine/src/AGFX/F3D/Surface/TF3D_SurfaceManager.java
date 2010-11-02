@@ -3,11 +3,8 @@
  */
 package AGFX.F3D.Surface;
 
-import java.nio.FloatBuffer;
+
 import java.util.ArrayList;
-
-import org.lwjgl.BufferUtils;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;
@@ -143,21 +140,13 @@ public class TF3D_SurfaceManager
 
 			if (F3D.Config.use_gl_light)
 			{
-				FloatBuffer amb_buff = BufferUtils.createFloatBuffer(this.WorldAmbient.length);
-				amb_buff.put(this.WorldAmbient).rewind();
-				
-				
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, amb_buff);
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.WorldAmbient));
 				this.materials.get(id).diffuse[0] = this.materials.get(id).color.x;
 				this.materials.get(id).diffuse[1] = this.materials.get(id).color.y;
 				this.materials.get(id).diffuse[2] = this.materials.get(id).color.z;
 				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
 				
-				FloatBuffer diff_buff = BufferUtils.createFloatBuffer(this.materials.get(id).diffuse.length);
-				diff_buff.put(this.materials.get(id).diffuse).rewind();
-				
-				
-				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, diff_buff);
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
 			} else
 			{
 				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
