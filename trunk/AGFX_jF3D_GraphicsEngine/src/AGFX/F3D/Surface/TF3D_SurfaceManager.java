@@ -18,7 +18,9 @@ public class TF3D_SurfaceManager
 {
 
 	public ArrayList<TF3D_Material> materials;
+	float                           matAmbient[] = new float[] { 0f, 0f,0f, 1.0f};
 	float                           matDiffuse[] = new float[] { 1.0f, 1.0f,1.0f, 1.0f};
+	float                           matSpecular[] = new float[] { 1.0f, 1.0f,1.0f, 1.0f};
 	public float                 WorldAmbient[] = new float[] { 0.3f, 0.3f,0.3f, 1.0f};
 
 	// -----------------------------------------------------------------------
@@ -147,6 +149,9 @@ public class TF3D_SurfaceManager
 				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
 				
 				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
+				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));				
+				
 			} else
 			{
 				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
