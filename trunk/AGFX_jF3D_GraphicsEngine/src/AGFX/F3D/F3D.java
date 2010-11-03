@@ -227,7 +227,7 @@ public class F3D
 		F3D.Extensions = new TF3D_Extensions();
 		F3D.Key = new TF3D_Keyboard();
 		F3D.Viewport.Init3D();
-
+		F3D.Shaders.InitPresets();
 		F3D.Preloader.PreloadData();
 
 		F3D.Fonts.Load("abstract::system.font");

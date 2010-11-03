@@ -17,7 +17,7 @@ public class TF3D_WorldManager
 {
 	private int                  current_world        = 0;
 	private Boolean              render_world_manualy = false;
-	private TF3D_Camera          camera               = null;
+	public TF3D_Camera          camera               = null;
 	public ArrayList<TF3D_World> items;
 
 	// -----------------------------------------------------------------------

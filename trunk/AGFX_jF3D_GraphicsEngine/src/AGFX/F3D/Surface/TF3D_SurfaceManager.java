@@ -181,8 +181,7 @@ public class TF3D_SurfaceManager
 			}
 			
 		}
-		
-	}
+}
 
 	// -----------------------------------------------------------------------
 	// TA3D_SurfaceManager:

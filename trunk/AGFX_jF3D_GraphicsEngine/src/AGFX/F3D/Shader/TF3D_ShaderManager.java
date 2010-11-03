@@ -17,6 +17,9 @@ import AGFX.F3D.Callback.TF3D_ShaderCallback;
 public class TF3D_ShaderManager
 {
 	public ArrayList<TF3D_Shader> items;
+	public TF3D_Shader            shader_diffuse;
+	public TF3D_Shader            shader_phong;
+	public TF3D_Shader            shader_envmap;
 
 	public TF3D_ShaderManager()
 	{
@@ -92,7 +95,6 @@ public class TF3D_ShaderManager
 		}
 	}
 
-		
 	// -----------------------------------------------------------------------
 	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------
@@ -248,13 +250,50 @@ public class TF3D_ShaderManager
 	{
 		this.items.get(this.FindByName(name)).StopProgram();
 	}
+
 	public void StopProgram(int id)
 	{
 		this.items.get(id).StopProgram();
 	}
-	
+
 	public void StopProgram()
 	{
 		GL20.glUseProgram(0);
+	}
+	
+	public void InitPresets()
+	{
+		// Shader: DIFFUSE
+
+		shader_diffuse = new TF3D_Shader("DIFFUSE");
+		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");
+		shader_diffuse.AddUniform1i("BaseMap", 0);
+		this.Add(shader_diffuse);
+
+		// Shader: PHONG
+
+		shader_phong = new TF3D_Shader("PHONG");
+		shader_phong.Load("media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
+		shader_phong.AddUniform1i("BaseMap", 0);
+		shader_phong.AddUniform4f("fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
+		shader_phong.AddUniform4f("fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
+		shader_phong.AddUniform4f("fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
+		shader_phong.AddUniform1f("fSpecularPower", 100f);
+		shader_phong.AddUniform3f("fvLightPosition", -3f, 3f, 3f);
+		shader_phong.AddUniform3f("fvEyePosition", 2f, 2f, 2f);
+
+		this.Add(shader_phong);
+
+		// Shader: PHONG
+
+		shader_envmap = new TF3D_Shader("ENVMAP");
+		shader_envmap.Load("media/shaders/f3d_envmap.vert", "media/shaders/f3d_envmap.frag");
+		shader_envmap.AddUniform1i("BaseMap", 0);
+		shader_envmap.AddUniform1i("EnvMap", 1);
+		shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
+		shader_envmap.AddUniform1f("MixRatio", 0.5f);
+		shader_envmap.AddUniform3f("LightPos", 3f, 3f, 3f);
+
+		this.Add(shader_envmap);
 	}
 }
