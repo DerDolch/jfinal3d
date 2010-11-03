@@ -16,7 +16,7 @@ import AGFX.F3D.Shader.TF3D_GLSL_Shader;
 import AGFX.F3D.Shader.TF3D_Shader;
 import AGFX.F3D.Texture.TF3D_Texture;
 
-public class Demo_ShaderTest extends TF3D_AppWrapper
+public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 {
 
 	public TF3D_Camera	Camera;
@@ -25,12 +25,12 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 	public TF3D_PARSER	PARSER;
 	public TF3D_Model	model;
 	public int			surface_id;
-	public int			selected_shader	= 1;
 	public TF3D_Shader	shader_diffuse;
 	public TF3D_Shader	shader_phong;
 	public TF3D_Shader	shader_envmap;
+	public int			selected_shader	= 1;
 
-	public Demo_ShaderTest()
+	public Demo_AutomaticShaderTest()
 
 	{
 
@@ -76,42 +76,13 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 
-		this.surface_id = F3D.Surfaces.FindByName("MAT_text_a");
+		// LOAD MESHES
 
 		F3D.Meshes.Add("abstract::Sphere.a3da");
-		F3D.Meshes.items.get(0).IndicesGroup.items.get(0).material_id = -1;
+		F3D.Meshes.Add("abstract::Cube.a3da");
+		F3D.Meshes.Add("abstract::Cone.a3da");
+		F3D.Meshes.Add("abstract::Cylinder.a3da");
 
-		// Shader: DIFFUSE
-
-		shader_diffuse = new TF3D_Shader("DIFFUSE");
-		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");
-		shader_diffuse.AddUniform1i("BaseMap", 0);
-		F3D.Shaders.Add(shader_diffuse);
-
-		// Shader: PHONG
-
-		shader_phong = new TF3D_Shader("PHONG");
-		shader_phong.Load("media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
-		shader_phong.AddUniform1i("BaseMap", 0);
-		shader_phong.AddUniform4f("fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
-		shader_phong.AddUniform4f("fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
-		shader_phong.AddUniform4f("fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
-		shader_phong.AddUniform1f("fSpecularPower", 100f);
-		shader_phong.AddUniform3f("fvLightPosition", -3f, 3f, 3f);
-		shader_phong.AddUniform3f("fvEyePosition", 2f, 2f, 2f);
-
-		F3D.Shaders.Add(shader_phong);
-
-		// Shader: PHONG
-
-		shader_envmap = new TF3D_Shader("ENVMAP");
-		shader_envmap.Load("media/shaders/f3d_envmap.vert", "media/shaders/f3d_envmap.frag");
-		shader_envmap.AddUniform1i("EnvMap", 0);
-		shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
-		shader_envmap.AddUniform1f("MixRatio", 0.5f);
-		shader_envmap.AddUniform3f("LightPos", 3f, 3f, 3f);
-
-		F3D.Shaders.Add(shader_envmap);
 
 	}
 
@@ -167,51 +138,7 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 		{
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
-		if (selected_shader == 1)
-		{
-			F3D.Shaders.UseProgram("DIFFUSE");
-			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind(6);
-
-		}
-
-		if (selected_shader == 2)
-		{
-
-			F3D.Shaders.UseProgram("PHONG");
-			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind(6);
-
-		}
-
-		if (selected_shader == 3)
-		{
-
-			F3D.Shaders.UseProgram("ENVMAP");
-			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind(6);
-
-		}
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_1))
-		{
-			selected_shader = 1;
-			F3D.Log.info("MAIN", "shader_diffuse");
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_2))
-		{
-			selected_shader = 2;
-			F3D.Log.info("MAIN", "shader_phong");
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_3))
-		{
-			selected_shader = 3;
-			F3D.Log.info("MAIN", "ENVMAP");
-		}
-
-		F3D.Meshes.items.get(0).Render();
-
-		F3D.Shaders.StopProgram();
+	
 	}
 
 	@Override
@@ -228,7 +155,7 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 
 	public static void main(String[] args)
 	{
-		new Demo_ShaderTest().Execute();
+		new Demo_AutomaticShaderTest().Execute();
 		System.exit(0);
 	}
 
