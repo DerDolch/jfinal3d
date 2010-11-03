@@ -135,7 +135,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		this.model2b.AssignMesh(F3D.Meshes.FindByName("abstract::Cylinder.a3da"));
 		this.model2b.SetPosition(0, 0, -2);
 		this.model2b.Enable();
-		//this.model2b.ChangeSurface("MATbase", "MAT_shader_envmap");
+		this.model2b.ChangeSurface("MATbase", "MAT_shader_envmap");
 		
 		this.model3 = new TF3D_Model("Sphere3");
 		this.model3.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));

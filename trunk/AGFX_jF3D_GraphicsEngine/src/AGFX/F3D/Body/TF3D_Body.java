@@ -306,6 +306,9 @@ public class TF3D_Body extends TF3D_Entity
 						glMultMatrix(this.PhysicObject.transformMatrixBuffer);
 						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 						mesh.Render(i);
+						
+						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
+						
 						glScalef(1, 1, 1);
 						glPopMatrix();
 					}
