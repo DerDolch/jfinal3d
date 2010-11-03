@@ -5,7 +5,7 @@
      scale = 1 , 1
     scroll = 0 , 0 
      angle = 0
-    rotate = 2
+    rotate = 0
  depthmask = true
  alphamask = false
 alphablend = true
