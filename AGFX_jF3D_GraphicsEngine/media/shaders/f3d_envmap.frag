@@ -14,6 +14,7 @@ const vec3 Yunitvec = vec3 (0.0, 1.0, 0.0);
 
 uniform vec3 	 	BaseColor;
 uniform float 		MixRatio;
+uniform sampler2D	BaseMap;
 uniform sampler2D	EnvMap;
 
 varying vec3  Normal;
@@ -50,11 +51,15 @@ void main (void)
     // Do a lookup into the environment map.
 
     vec3 envColor = vec3 (texture2D(EnvMap, index));
+    vec4 tex_color = texture2D(BaseMap,gl_TexCoord[0].st);
+
+    
 
     // Add lighting to base color and mix
 
-    vec3 base = LightIntensity * BaseColor;
+    vec3 base =  LightIntensity *BaseColor;
     envColor = mix(envColor, base, MixRatio);
-
-    gl_FragColor = vec4 (envColor, 1.0);
+	
+    gl_FragColor = vec4 (envColor, 1.0)*(tex_color+0.5);
+;
 }

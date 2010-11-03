@@ -21,14 +21,17 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 
 	public TF3D_Camera	Camera;
 	public TF3D_Texture	Tex;
-	public float		angle			= 0;
-	public TF3D_PARSER	PARSER;
-	public TF3D_Model	model;
-	public int			surface_id;
-	public TF3D_Shader	shader_diffuse;
-	public TF3D_Shader	shader_phong;
-	public TF3D_Shader	shader_envmap;
-	public int			selected_shader	= 1;
+	public TF3D_Model	model1;
+	public TF3D_Model	model1a;
+	public TF3D_Model	model1b;
+	public TF3D_Model	model2;
+	public TF3D_Model	model2a;
+	public TF3D_Model	model2b;
+	public TF3D_Model	model3;
+	public TF3D_Model	model3a;
+	public TF3D_Model	model3b;
+	
+	
 
 	public Demo_AutomaticShaderTest()
 
@@ -48,7 +51,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - RENDER MODEL";
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - RENDER SHADER MODEL";
 
 		} catch (Exception e)
 		{
@@ -84,6 +87,61 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		F3D.Meshes.Add("abstract::Cylinder.a3da");
 
 
+		this.model1 = new TF3D_Model("Sphere1");
+		this.model1.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
+		this.model1.SetPosition(-2, 0, 0);
+		this.model1.Enable();
+		this.model1.ChangeSurface("MATbase", "MAT_shader_diffuse");
+		
+		
+		this.model1a = new TF3D_Model("Cone1");
+		this.model1a.AssignMesh(F3D.Meshes.FindByName("abstract::Cone.a3da"));
+		this.model1a.SetPosition(-2, 0, 2);
+		this.model1a.Enable();
+		this.model1a.ChangeSurface("MATbase", "MAT_shader_diffuse");
+		
+		this.model1b = new TF3D_Model("Cylinder1");
+		this.model1b.AssignMesh(F3D.Meshes.FindByName("abstract::Cylinder.a3da"));
+		this.model1b.SetPosition(-2, 0, -2);
+		this.model1b.Enable();
+		this.model1b.ChangeSurface("MATbase", "MAT_shader_diffuse");
+		
+		
+		this.model2 = new TF3D_Model("Sphere2");
+		this.model2.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
+		this.model2.SetPosition(0, 0, 0);
+		this.model2.Enable();
+		this.model2.ChangeSurface("MATbase", "MAT_shader_envmap");
+		
+		this.model2a = new TF3D_Model("Cone2");
+		this.model2a.AssignMesh(F3D.Meshes.FindByName("abstract::Cone.a3da"));
+		this.model2a.SetPosition(0, 0, 2);
+		this.model2a.Enable();
+		this.model2a.ChangeSurface("MATbase", "MAT_shader_envmap");
+		
+		this.model2b = new TF3D_Model("Cylinder2");
+		this.model2b.AssignMesh(F3D.Meshes.FindByName("abstract::Cylinder.a3da"));
+		this.model2b.SetPosition(0, 0, -2);
+		this.model2b.Enable();
+		this.model2b.ChangeSurface("MATbase", "MAT_shader_envmap");
+		
+		this.model3 = new TF3D_Model("Sphere3");
+		this.model3.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
+		this.model3.SetPosition(2, 0, 0);
+		this.model3.Enable();
+		this.model3.ChangeSurface("MATbase", "MAT_shader_phong");
+		
+		this.model3a = new TF3D_Model("Cone3");
+		this.model3a.AssignMesh(F3D.Meshes.FindByName("abstract::Cone.a3da"));
+		this.model3a.SetPosition(2, 0, 2);
+		this.model3a.Enable();
+		this.model3a.ChangeSurface("MATbase", "MAT_shader_phong");
+		
+		this.model3b = new TF3D_Model("Cylinder3");
+		this.model3b.AssignMesh(F3D.Meshes.FindByName("abstract::Cylinder.a3da"));
+		this.model3b.SetPosition(2, 0, -2);
+		this.model3b.Enable();
+		this.model3b.ChangeSurface("MATbase", "MAT_shader_phong");
 	}
 
 	@Override

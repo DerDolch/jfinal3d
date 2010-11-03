@@ -17,9 +17,11 @@ uniform vec3  LightPos;
 
 void main(void) 
 {
+	gl_TexCoord[0]=gl_TextureMatrix[0]* gl_MultiTexCoord0;
+
     gl_Position    = ftransform();
     Normal         = normalize(gl_NormalMatrix * gl_Normal);
     vec4 pos       = gl_ModelViewMatrix * gl_Vertex;
     EyeDir         = pos.xyz;
-    LightIntensity = max(dot(normalize(LightPos - EyeDir), Normal), 0.0);
+    LightIntensity = max(dot(normalize(LightPos - EyeDir), Normal), -2.0);
 }

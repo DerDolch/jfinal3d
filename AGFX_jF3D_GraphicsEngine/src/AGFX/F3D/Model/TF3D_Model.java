@@ -114,6 +114,7 @@ public class TF3D_Model extends TF3D_Entity
 
 						if (mid >= 0)
 						{
+							if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.UseProgram(F3D.Surfaces.materials.get(mid).shader_id); 
 							F3D.Surfaces.ApplyMaterial(mid);
 						}
 
@@ -127,7 +128,9 @@ public class TF3D_Model extends TF3D_Entity
 						glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
 
 						mesh.Render(i);
-
+						
+						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
+						
 						// render childs
 						for (int ci = 0; ci < this.childs.size(); ci++)
 						{

@@ -7,12 +7,10 @@ import org.lwjgl.input.Mouse;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
-import AGFX.F3D.Callback.TF3D_ShaderCallback;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Parser.TF3D_PARSER;
-import AGFX.F3D.Shader.TF3D_GLSL_Shader;
 import AGFX.F3D.Shader.TF3D_Shader;
 import AGFX.F3D.Texture.TF3D_Texture;
 
@@ -106,7 +104,8 @@ public class Demo_ShaderTest extends TF3D_AppWrapper
 
 		shader_envmap = new TF3D_Shader("ENVMAP");
 		shader_envmap.Load("media/shaders/f3d_envmap.vert", "media/shaders/f3d_envmap.frag");
-		shader_envmap.AddUniform1i("EnvMap", 0);
+		shader_envmap.AddUniform1i("BaseMap", 0);
+		shader_envmap.AddUniform1i("EnvMap", 1);
 		shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
 		shader_envmap.AddUniform1f("MixRatio", 0.5f);
 		shader_envmap.AddUniform3f("LightPos", 3f, 3f, 3f);
