@@ -21,6 +21,10 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 
 	public TF3D_Camera	Camera;
 	public TF3D_Texture	Tex;
+	public TF3D_Model	model0;
+	public TF3D_Model	model0a;
+	public TF3D_Model	model0b;
+	
 	public TF3D_Model	model1;
 	public TF3D_Model	model1a;
 	public TF3D_Model	model1b;
@@ -82,11 +86,19 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		// LOAD MESHES
 
 		F3D.Meshes.Add("abstract::Sphere.a3da");
-		F3D.Meshes.Add("abstract::Cube.a3da");
+		F3D.Meshes.Add("abstract::BaseCube.a3da");
 		F3D.Meshes.Add("abstract::Cone.a3da");
 		F3D.Meshes.Add("abstract::Cylinder.a3da");
 
 
+		
+		this.model0 = new TF3D_Model("Sphere1");
+		this.model0.AssignMesh(F3D.Meshes.FindByName("abstract::BaseCube.a3da"));
+		this.model0.SetPosition(-4, 0, 0);
+		this.model0.Enable();
+		this.model0.ChangeSurface("MATbase", "MAT_shader_glow");
+		
+		
 		this.model1 = new TF3D_Model("Sphere1");
 		this.model1.AssignMesh(F3D.Meshes.FindByName("abstract::Sphere.a3da"));
 		this.model1.SetPosition(-2, 0, 0);
