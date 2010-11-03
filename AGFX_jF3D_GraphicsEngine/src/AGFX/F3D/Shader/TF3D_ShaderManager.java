@@ -20,6 +20,7 @@ public class TF3D_ShaderManager
 	public TF3D_Shader            shader_diffuse;
 	public TF3D_Shader            shader_phong;
 	public TF3D_Shader            shader_envmap;
+	public TF3D_Shader            shader_glow;
 
 	public TF3D_ShaderManager()
 	{
@@ -295,5 +296,16 @@ public class TF3D_ShaderManager
 		shader_envmap.AddUniform3f("LightPos", 3f, 3f, 3f);
 
 		this.Add(shader_envmap);
+		
+		
+		// Shader: GLOW
+
+		shader_glow = new TF3D_Shader("GLOW");
+		shader_glow.Load("media/shaders/f3d_glow.vert", "media/shaders/f3d_glow.frag");
+		shader_glow.AddUniform1i("BaseMap", 0);
+		shader_glow.AddUniform1i("GlowMap", 1);
+		
+
+		this.Add(shader_glow);
 	}
 }
