@@ -87,7 +87,7 @@ public class TF3D_Light extends TF3D_Entity
 				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
 				
 			}
-/*
+
 			if (this._type == LT_SPOT)
 			{
 				pos[3] = 1.0f;
@@ -109,7 +109,7 @@ public class TF3D_Light extends TF3D_Entity
 				
 
 			}
-*/
+
 			// render childs
 			for (int i = 0; i < this.childs.size(); i++)
 			{
