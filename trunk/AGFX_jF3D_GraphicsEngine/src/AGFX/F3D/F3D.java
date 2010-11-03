@@ -139,6 +139,12 @@ public class F3D
 	public final static int                 MAT_TYPE_SHADER            = 2;
 
 	// '-----------------------------------------------------------------
+	// ' SHADER UNIFORMS TYPE: CONST
+	// '-----------------------------------------------------------------
+	public final static int                 SHADER_UNIFORM_INT         = 0;
+	public final static int                 SHADER_UNIFORM_FLOAT       = 1;
+	
+	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 

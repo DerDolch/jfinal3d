@@ -86,53 +86,13 @@ public class TF3D_ShaderManager
 			int res = this.items.size();
 			TF3D_Shader shd = new TF3D_Shader(_name);
 			shd.Load(vertexShaderFile, fragmentShaderFile);
-			shd.SetUniforms = null;
 			this.items.add(shd);
 			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + shd.name + "'");
 			return res;
 		}
 	}
 
-	// -----------------------------------------------------------------------
-	// TF3D_ShaderManager:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Load and add shader to list <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param _name
-	 *            - shader name
-	 * @param vertexShaderFile
-	 *            - vertex Shader File
-	 * @param fragmentShaderFile
-	 *            - fragment Shader File
-	 * @param cb
-	 *            - Uniform setup callback interface
-	 * @return
-	 */
-	// -----------------------------------------------------------------------
-
-	public int Add(String _name, String vertexShaderFile, String fragmentShaderFile, TF3D_ShaderCallback cb)
-	{
-		if (this.Exist(_name))
-		{
-			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + _name + "' wasn't added - exist !");
-			return this.FindByName(_name);
-
-		} else
-		{
-			int res = this.items.size();
-			TF3D_Shader shd = new TF3D_Shader(_name);
-			shd.Load(vertexShaderFile, fragmentShaderFile);
-			shd.SetUniforms = cb;
-			this.items.add(shd);
-			F3D.Log.info("TF3D_ShaderManager", "TF3D_ShaderManager: Add() '" + shd.name + "'");
-			return res;
-		}
-	}
-
+		
 	// -----------------------------------------------------------------------
 	// TF3D_ShaderManager:
 	// -----------------------------------------------------------------------

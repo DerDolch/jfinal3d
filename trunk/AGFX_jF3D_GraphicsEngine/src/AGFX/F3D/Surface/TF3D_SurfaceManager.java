@@ -260,6 +260,11 @@ public class TF3D_SurfaceManager
 			// get faceculling
 			mat.bFaceCulling = PARSER.GetAs_BOOLEAN("faceculling");
 			
+			// get Shader name
+			mat.shader_name = PARSER.GetAs_STRING("shader");
+			mat.shader_id = F3D.Shaders.FindByName(mat.shader_name);
+			if (mat.shader_id>=0) mat.use_shader=true;
+			
 			F3D.Log.warning("Culling", mat.name + " "+mat.bFaceCulling.toString());
 
 			// prepare textures

@@ -25,11 +25,11 @@ public class TF3D_Material
 	public Boolean                  bAlphaTest     = false;
 	public Boolean                  bDepthTest     = false;
 	public Boolean                  bFaceCulling   = false;
-/*
+
 	public String                   shader_name    = "none";
 	public int                      shader_id      = -1;
 	public Boolean                  use_shader     = false;
-*/
+
 	// -----------------------------------------------------------------------
 	// TA3D_Material:
 	// -----------------------------------------------------------------------
