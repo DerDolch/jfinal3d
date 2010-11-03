@@ -14,31 +14,33 @@ import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 public class TF3D_Texture
 {
 
-	private Texture texture;
+	private Texture					texture;
 	private TF3D_FrameBufferObject	fbo_texture;
-	public String name = "noname";
-	public int width = 0;
-	public int height = 0;
-	
-	
+	public String					name		= "noname";
+	public String					filename	= "";
+	public Boolean					bmipmap		= false;
+	public int						width		= 0;
+	public int						height		= 0;
+
 	public TF3D_Texture(String _name)
 	{
 		F3D.Log.info("TF3D_Texture", "Create - constructor");
 		this.name = _name;
+
 		this.texture = null;
 		this.fbo_texture = null;
 	}
 
-	
 	public void Load(String filename, Boolean mipmap)
 	{
-		
-		F3D.Log.info("TF3D_Texture", "Loading ... "+filename);
+		this.filename = filename;
+		this.bmipmap = mipmap;
+		F3D.Log.info("TF3D_Texture", "Loading ... " + filename);
 		filename = F3D.AbstractFiles.GetFullPath(filename);
 		String FMT = "PNG";
-		
+
 		try
-		{			
+		{
 			if (filename.contains(".png"))
 			{
 				FMT = "PNG";
@@ -47,7 +49,7 @@ public class TF3D_Texture
 			{
 				FMT = "JPG";
 			}
-			
+
 			if (filename.contains(".gif"))
 			{
 				FMT = "TGA";
@@ -57,12 +59,11 @@ public class TF3D_Texture
 				FMT = "TGA";
 			}
 
-			this.texture = this.LoadMipmap(FMT,filename,mipmap);
-					
+			this.texture = this.LoadMipmap(FMT, filename, mipmap);
+
 			this.width = this.texture.getImageWidth();
 			this.height = this.texture.getImageHeight();
-			
-			
+
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
@@ -73,41 +74,48 @@ public class TF3D_Texture
 		}
 	}
 
-	private Texture LoadMipmap(String FMT,String filename, Boolean mipmap) throws IOException 
+	public void Reload()
 	{
-        
+		this.texture.release();
+		this.Load(this.filename, this.bmipmap);
 		
-        Texture texture=null;
-        
-        texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
-        
-        texture.bind();
-        int width = (int)texture.getImageWidth();
-        int height = (int)texture.getImageHeight();
-        
-        byte[] texbytes = texture.getTextureData();
-        int components = texbytes.length / (width*height);
-     
-        if (mipmap)
-        {
-        	MipMap.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, components, width, height, components==3 ? GL11.GL_RGB : GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,F3D.GetBuffer.Byte(texbytes));
-        	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-        }
-        else
-        {
-        	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        }
-        
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-        
-        if (F3D.Config.r_anisotropy_filtering>0)
-        {
-        	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, F3D.Config.r_anisotropy_filtering);
-        }
-       
-        
-        return texture;
-}
+	}
+	
+	private Texture LoadMipmap(String FMT, String filename, Boolean mipmap)
+			throws IOException
+	{
+
+		Texture texture = null;
+
+		texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
+
+		texture.bind();
+		int width = (int) texture.getImageWidth();
+		int height = (int) texture.getImageHeight();
+
+		byte[] texbytes = texture.getTextureData();
+		int components = texbytes.length / (width * height);
+
+		if (mipmap)
+		{
+			MipMap.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, components, width, height, components == 3 ? GL11.GL_RGB
+					: GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, F3D.GetBuffer.Byte(texbytes));
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+		} else
+		{
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		}
+
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+
+		if (F3D.Config.r_anisotropy_filtering > 0)
+		{
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, F3D.Config.r_anisotropy_filtering);
+		}
+
+		return texture;
+	}
+
 	// -----------------------------------------------------------------------
 	// TA3D_Texture:
 	// -----------------------------------------------------------------------
@@ -120,12 +128,12 @@ public class TF3D_Texture
 	// -----------------------------------------------------------------------
 	public void Bind()
 	{
-		if (this.texture!=null)
+		if (this.texture != null)
 		{
 			this.texture.bind();
 		}
 
-		if (this.fbo_texture!=null)
+		if (this.fbo_texture != null)
 		{
 			this.fbo_texture.Bind();
 		}
@@ -150,7 +158,8 @@ public class TF3D_Texture
 
 	public void CreateFromFBO(TF3D_FrameBufferObject fbo)
 	{
-		if (this.texture!=null) this.texture.release();
+		if (this.texture != null)
+			this.texture.release();
 		this.texture = null;
 		this.fbo_texture = fbo;
 	}
