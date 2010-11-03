@@ -31,7 +31,7 @@ public class TF3D_Light extends TF3D_Entity
 	// spot
 	public int              spot_cut_off       = 180;
 	public float            spot_target[]      = new float[] { 0f, 0f, 0f };
-	public float            spot_direction[]   = new float[] { 0f, -1f, 0f ,-1f};
+	public float            spot_direction[]   = new float[] { 0f, -1f, 0f };
 	public float            spot_exponent      = 25.0f;
 
 	public float            spot_constant_att  = 1.0f;
@@ -87,7 +87,7 @@ public class TF3D_Light extends TF3D_Entity
 				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
 				
 			}
-
+/*
 			if (this._type == LT_SPOT)
 			{
 				pos[3] = 1.0f;
@@ -109,7 +109,7 @@ public class TF3D_Light extends TF3D_Entity
 				
 
 			}
-
+*/
 			// render childs
 			for (int i = 0; i < this.childs.size(); i++)
 			{

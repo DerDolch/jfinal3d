@@ -285,7 +285,7 @@ public class TF3D_ShaderManager
 
 		this.Add(shader_phong);
 
-		// Shader: PHONG
+		// Shader: ENVMAP
 
 		shader_envmap = new TF3D_Shader("ENVMAP");
 		shader_envmap.Load("media/shaders/f3d_envmap.vert", "media/shaders/f3d_envmap.frag");

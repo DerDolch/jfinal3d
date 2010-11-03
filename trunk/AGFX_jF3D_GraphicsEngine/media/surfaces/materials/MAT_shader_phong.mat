@@ -1,6 +1,6 @@
 [MATERIALS]
 {
-         type = MAT_TEXTURE
+         type = MAT_SHADER
          name = MAT_shader_phong
         color = 1,1,1,1
     texture_0 = F3D_DUMMY

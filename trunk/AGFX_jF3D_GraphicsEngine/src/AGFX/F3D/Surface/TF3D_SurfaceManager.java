@@ -3,7 +3,6 @@
  */
 package AGFX.F3D.Surface;
 
-
 import java.util.ArrayList;
 import AGFX.F3D.F3D;
 import AGFX.F3D.Material.TF3D_Material;
@@ -18,10 +17,10 @@ public class TF3D_SurfaceManager
 {
 
 	public ArrayList<TF3D_Material> materials;
-	float                           matAmbient[] = new float[] { 0f, 0f,0f, 1.0f};
-	float                           matDiffuse[] = new float[] { 1.0f, 1.0f,1.0f, 1.0f};
-	float                           matSpecular[] = new float[] { 1.0f, 1.0f,1.0f, 1.0f};
-	public float                 WorldAmbient[] = new float[] { 0.3f, 0.3f,0.3f, 1.0f};
+	float                           matAmbient[]   = new float[] { 0f, 0f, 0f, 1.0f };
+	float                           matDiffuse[]   = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
+	float                           matSpecular[]  = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
+	public float                    WorldAmbient[] = new float[] { 0.3f, 0.3f, 0.3f, 1.0f };
 
 	// -----------------------------------------------------------------------
 	// TA3D_SurfaceManager:
@@ -58,8 +57,8 @@ public class TF3D_SurfaceManager
 		if (this.Exist(mat.name))
 		{
 			F3D.Log.info("TF3D_SurfaceManager", "TA3D_SurfaceManager: Add() '" + mat.name + "' wasn't added - exist !");
-			return this.FindByName(mat.name);	
-			
+			return this.FindByName(mat.name);
+
 		} else
 		{
 			int res = this.materials.size();
@@ -115,7 +114,7 @@ public class TF3D_SurfaceManager
 		// is material type=0 (MAT_TEXTURE)
 		if (this.materials.get(id).typ == F3D.MAT_TYPE_TEXTURE)
 		{
-			
+
 			if (this.materials.get(id).bAlphaTest)
 			{
 				glEnable(GL_ALPHA_TEST);
@@ -147,17 +146,16 @@ public class TF3D_SurfaceManager
 				this.materials.get(id).diffuse[1] = this.materials.get(id).color.y;
 				this.materials.get(id).diffuse[2] = this.materials.get(id).color.z;
 				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
-				
+
 				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
-				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));				
-				
+				//glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
+				//glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));
+
 			} else
 			{
 				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
 			}
-			
-			
+
 			for (int u = 0; u < F3D.MAX_TMU; u++)
 			{
 				if (this.materials.get(id).texture_unit[u].bEvent)
@@ -179,9 +177,82 @@ public class TF3D_SurfaceManager
 				}
 
 			}
-			
+
 		}
-}
+
+		// SHADER
+		if (this.materials.get(id).typ == F3D.MAT_TYPE_SHADER)
+		{
+
+			if (this.materials.get(id).bAlphaTest)
+			{
+				glEnable(GL_ALPHA_TEST);
+			} else
+			{
+				glDisable(GL_ALPHA_TEST);
+			}
+
+			if (this.materials.get(id).bDepthTest)
+			{
+				glEnable(GL_DEPTH_TEST);
+			} else
+			{
+				glDisable(GL_DEPTH_TEST);
+			}
+
+			if (this.materials.get(id).bFaceCulling)
+			{
+				glEnable(GL_CULL_FACE);
+			} else
+			{
+				glDisable(GL_CULL_FACE);
+			}
+
+			if (F3D.Config.use_gl_light)
+			{
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.WorldAmbient));
+				this.materials.get(id).diffuse[0] = this.materials.get(id).color.x;
+				this.materials.get(id).diffuse[1] = this.materials.get(id).color.y;
+				this.materials.get(id).diffuse[2] = this.materials.get(id).color.z;
+				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
+
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
+				//glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
+				//glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));
+
+			} else
+			{
+				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
+			}
+
+			if (this.materials.get(id).use_shader)
+			{
+				F3D.Shaders.UseProgram(F3D.Surfaces.materials.get(id).shader_id);
+			}
+			for (int u = 0; u < F3D.MAX_TMU; u++)
+			{
+				if (this.materials.get(id).texture_unit[u].bEvent)
+				{
+					F3D.MaterialEvents.Apply(u, this.materials.get(id).texture_unit[u].event_id);
+				} else
+				{
+					F3D.MaterialEvents.ResetEvent(u);
+				}
+
+				if (this.materials.get(id).texture_unit[u].bTexture)
+				{
+					F3D.Textures.ActivateLayer(u);
+					F3D.Textures.Bind(this.materials.get(id).texture_unit[u].texture_id);
+
+				} else
+				{
+					F3D.Textures.DeactivateLayer(u);
+				}
+
+			}
+
+		}
+	}
 
 	// -----------------------------------------------------------------------
 	// TA3D_SurfaceManager:
@@ -203,16 +274,15 @@ public class TF3D_SurfaceManager
 		int BLOCK_ID;
 		String tmp_str;
 
-		F3D.Log.info("TF3D_SurfaceManager", "Loading ... "+filename);
+		F3D.Log.info("TF3D_SurfaceManager", "Loading ... " + filename);
 		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);
-		
+
 		if (!Exist)
 		{
 			F3D.Log.error("TF3D_SurfaceManager", "Can't load file:" + filename);
 		}
-		
-		PARSER.ParseFile(F3D.AbstractFiles.GetFullPath(filename));
 
+		PARSER.ParseFile(F3D.AbstractFiles.GetFullPath(filename));
 
 		for (BLOCK_ID = 0; BLOCK_ID < PARSER.GetBlocksCount(); BLOCK_ID++)
 		{
@@ -230,8 +300,15 @@ public class TF3D_SurfaceManager
 			if (tmp_str.equalsIgnoreCase("MAT_SHADER"))
 			{
 				mat.typ = F3D.MAT_TYPE_SHADER;
+				// get Shader name
+				mat.shader_name = PARSER.GetAs_STRING("shader");
+				mat.shader_id = F3D.Shaders.FindByName(mat.shader_name);
+				if (mat.shader_id >= 0)
+				{
+					mat.use_shader = true;
+				}
 			}
-			
+
 			// get name
 			mat.name = PARSER.GetAs_STRING("name");
 
@@ -258,13 +335,7 @@ public class TF3D_SurfaceManager
 
 			// get faceculling
 			mat.bFaceCulling = PARSER.GetAs_BOOLEAN("faceculling");
-			
-			// get Shader name
-			mat.shader_name = PARSER.GetAs_STRING("shader");
-			mat.shader_id = F3D.Shaders.FindByName(mat.shader_name);
-			if (mat.shader_id>=0) mat.use_shader=true;
-			
-			F3D.Log.warning("Culling", mat.name + " "+mat.bFaceCulling.toString());
+			F3D.Log.warning("Culling", mat.name + " " + mat.bFaceCulling.toString());
 
 			// prepare textures
 			for (int t = 0; t < F3D.MAX_TMU; t++)
@@ -340,10 +411,10 @@ public class TF3D_SurfaceManager
 
 		return res;
 	}
-	
+
 	public void Destroy()
 	{
-		for(int m=0;m<this.materials.size();m++)
+		for (int m = 0; m < this.materials.size(); m++)
 		{
 			this.materials.remove(m);
 		}

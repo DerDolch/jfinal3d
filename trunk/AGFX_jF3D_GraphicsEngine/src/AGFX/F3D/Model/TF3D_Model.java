@@ -113,8 +113,7 @@ public class TF3D_Model extends TF3D_Entity
 						mid = this.surfaces.get(i).id;
 
 						if (mid >= 0)
-						{
-							if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.UseProgram(F3D.Surfaces.materials.get(mid).shader_id); 
+						{							 
 							F3D.Surfaces.ApplyMaterial(mid);
 						}
 
