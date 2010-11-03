@@ -67,18 +67,19 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		
 		F3D.Cameras.Add(this.Camera);
 		F3D.Worlds.SetCamera(this.Camera);
-		/*
+	
 		// Add light to scene
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
-		*/
+		
 		
 		F3D.Meshes.Add("abstract::table.a3da");
 		
 		this.model = new TF3D_Model("table");
 		this.model.AssignMesh("abstract::table.a3da");
 		
+		F3D.Textures.items.get(0).Reload();
 	}
 	
 	
