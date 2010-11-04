@@ -345,7 +345,7 @@ public class TF3D_Body extends TF3D_Entity
 
 		this.SetPosition(this.PhysicObject.GetPosition());
 
-		this.SetRotation(this.PhysicObject.GetRotation());
+		//this.SetRotation(this.PhysicObject.GetRotation());
 
 		// get current AABB and calc it for next Frustum culling
 		Vector3f aabbMin = new Vector3f();

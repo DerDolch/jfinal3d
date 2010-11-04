@@ -8,11 +8,14 @@ import javax.vecmath.Vector3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import com.bulletphysics.collision.dispatch.CollisionObject;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Light.TF3D_Light;
+import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
 
 /**
@@ -39,6 +42,7 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 	public TF3D_Body   PCubePlaneR;
 	
 	public TF3D_Body   zeton;
+	public TF3D_Model  mzeton;
 
 	public Demo_ShapePhysic()
 	{
@@ -170,11 +174,25 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		this.zeton.SetRotation(0f, 0f, 0f);
 		this.zeton.CreateRigidBody(F3D.BULLET_SHAPE_CYLINDER_Z, 1.0f);
 		
+		
+		
+		this.mzeton = new TF3D_Model("zeton");
+		this.mzeton.AssignMesh("abstract::zeton.a3da");
+		this.mzeton.Enable();
 	}
 
 	@Override
 	public void onUpdate3D()
 	{
+		
+		Vector3f pos = this.zeton.GetPosition();
+		pos.x = pos.x+ 5f;
+		this.mzeton.SetPosition(pos);
+		
+		Vector3f rot = this.zeton.PhysicObject.GetRotation();
+		this.mzeton.SetRotation(rot);
+		F3D.Log.info("MAIN", rot.toString());
+		
 		F3D.Draw.Axis(2.0f);
 
 		if (Mouse.isInsideWindow())
@@ -224,20 +242,22 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		{
 			this.Camera.Move(0.1f, 0.0f, 0.0f);
 		}
-		
+		/*
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))		
 		{
 			Vector3f dir = new Vector3f(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).axis._forward);
 			dir.scale(-0.25f);
 			this.PCube.PhysicObject.RigidBody.applyCentralImpulse(dir);			
 		}
-		
+		*/
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q))		
 		{			
 			this.PCube.Reset();
 			this.PCube.Reset();
 		}
+		
+		
 
 	}
 
