@@ -261,51 +261,52 @@ public class TF3D_ShaderManager
 	{
 		GL20.glUseProgram(0);
 	}
-	
+
 	public void InitPresets()
 	{
-		// Shader: DIFFUSE
+		if (F3D.Config.use_shaders)
+		{
+			// Shader: DIFFUSE
 
-		shader_diffuse = new TF3D_Shader("DIFFUSE");
-		shader_diffuse.Load("media/shaders/f3d_diffuse.vert", "media/shaders/f3d_diffuse.frag");
-		shader_diffuse.AddUniform1i("BaseMap", 0);
-		this.Add(shader_diffuse);
+			shader_diffuse = new TF3D_Shader("DIFFUSE");
+			shader_diffuse.Load("abstract::f3d_diffuse.vert", "abstract::f3d_diffuse.frag");
+			shader_diffuse.AddUniform1i("BaseMap", 0);
+			this.Add(shader_diffuse);
 
-		// Shader: PHONG
+			// Shader: PHONG
 
-		shader_phong = new TF3D_Shader("PHONG");
-		shader_phong.Load("media/shaders/f3d_phong.vert", "media/shaders/f3d_phong.frag");
-		shader_phong.AddUniform1i("BaseMap", 0);
-		shader_phong.AddUniform4f("fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
-		shader_phong.AddUniform4f("fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
-		shader_phong.AddUniform4f("fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
-		shader_phong.AddUniform1f("fSpecularPower", 100f);
-		shader_phong.AddUniform3f("fvLightPosition", -3f, 3f, 3f);
-		shader_phong.AddUniform3f("fvEyePosition", 2f, 2f, 2f);
+			shader_phong = new TF3D_Shader("PHONG");
+			shader_phong.Load("abstract::f3d_phong.vert", "abstract::f3d_phong.frag");
+			shader_phong.AddUniform1i("BaseMap", 0);
+			shader_phong.AddUniform4f("fvSpecular", 0.7f, 0.7f, 0.7f, 1f);
+			shader_phong.AddUniform4f("fvDiffuse", 0.7f, 0.7f, 0.7f, 1f);
+			shader_phong.AddUniform4f("fvAmbient", 0.1f, 0.1f, 0.1f, 1f);
+			shader_phong.AddUniform1f("fSpecularPower", 100f);
+			shader_phong.AddUniform3f("fvLightPosition", -3f, 3f, 3f);
+			shader_phong.AddUniform3f("fvEyePosition", 2f, 2f, 2f);
 
-		this.Add(shader_phong);
+			this.Add(shader_phong);
 
-		// Shader: ENVMAP
+			// Shader: ENVMAP
 
-		shader_envmap = new TF3D_Shader("ENVMAP");
-		shader_envmap.Load("media/shaders/f3d_envmap.vert", "media/shaders/f3d_envmap.frag");
-		shader_envmap.AddUniform1i("BaseMap", 0);
-		shader_envmap.AddUniform1i("EnvMap", 1);
-		shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
-		shader_envmap.AddUniform1f("MixRatio", 0.8f);
-		shader_envmap.AddUniform3f("LightPos", 13f, 13f, 13f);
+			shader_envmap = new TF3D_Shader("ENVMAP");
+			shader_envmap.Load("abstract::f3d_envmap.vert", "abstract::f3d_envmap.frag");
+			shader_envmap.AddUniform1i("BaseMap", 0);
+			shader_envmap.AddUniform1i("EnvMap", 1);
+			shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
+			shader_envmap.AddUniform1f("MixRatio", 0.8f);
+			shader_envmap.AddUniform3f("LightPos", 13f, 13f, 13f);
 
-		this.Add(shader_envmap);
-		
-		
-		// Shader: GLOW
+			this.Add(shader_envmap);
 
-		shader_glow = new TF3D_Shader("GLOW");
-		shader_glow.Load("media/shaders/f3d_glow.vert", "media/shaders/f3d_glow.frag");
-		shader_glow.AddUniform1i("BaseMap", 0);
-		shader_glow.AddUniform1i("GlowMap", 1);
-		
+			// Shader: GLOW
 
-		this.Add(shader_glow);
+			shader_glow = new TF3D_Shader("GLOW");
+			shader_glow.Load("abstract::f3d_glow.vert", "abstract::f3d_glow.frag");
+			shader_glow.AddUniform1i("BaseMap", 0);
+			shader_glow.AddUniform1i("GlowMap", 1);
+
+			this.Add(shader_glow);
+		}
 	}
 }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL20;
 
+import AGFX.F3D.F3D;
+
 
 /**
  * @author AndyGFX
@@ -138,7 +140,7 @@ public class TF3D_Shader
 	public void Load(String vertexShaderFile, String fragmentShaderFile)
 	{
 
-		this.id = TF3D_GLSL_Shader.loadShadersCode(vertexShaderFile, fragmentShaderFile);
+		this.id = TF3D_GLSL_Shader.loadShadersCode(F3D.AbstractFiles.GetFullPath(vertexShaderFile), F3D.AbstractFiles.GetFullPath(fragmentShaderFile));
 	}
 
 	// -----------------------------------------------------------------------
