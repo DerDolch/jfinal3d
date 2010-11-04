@@ -17,6 +17,7 @@ public class TF3D_MathUtils
 	{
 		float angles[] = new float[3];
 
+		
 		float sqw = q.w * q.w;
 		float sqx = q.x * q.x;
 		float sqy = q.y * q.y;
@@ -42,7 +43,14 @@ public class TF3D_MathUtils
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 			
 		}
-		return new Vector3f(angles[0],angles[1],angles[2]);
+		
+		
+		/*
+		QuaternionUtil.setRotation(q, new Vector3f(1,0,0), angles[0]);
+		QuaternionUtil.setRotation(q, new Vector3f(0,1,0), angles[1]);
+		QuaternionUtil.setRotation(q, new Vector3f(0,0,1), angles[2]);
+		*/
+		return new Vector3f(angles[0]*F3D.RADTODEG,angles[1]*F3D.RADTODEG,angles[2]*F3D.RADTODEG);
 	
 
 	}

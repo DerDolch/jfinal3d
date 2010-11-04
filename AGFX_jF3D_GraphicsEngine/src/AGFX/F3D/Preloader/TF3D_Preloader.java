@@ -17,31 +17,56 @@ public class TF3D_Preloader
 	public Boolean b_preload_materials = true;
 	public Boolean b_preload_surfaces  = true;
 	public Boolean b_preload_fonts     = true;
+	public Boolean b_preload_shaders   = true;
 
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Cnstructor
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public TF3D_Preloader()
 	{
 		F3D.Log.info("TF3D_Preloader", "Create - constructor");
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Preloading enabled media files
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public void PreloadData()
 	{
 
 		if (F3D.Config.io_preload_data)
 		{
-			// .event 		<----------------------------
+			// .frag /. vert <-----------------------
+			if (this.b_preload_shaders)
+			{
+				F3D.Shaders.InitPresets();
+			}
+
+			// .event <-----------------------------
 			if (this.b_preload_events)
 			{
 				this.Preload_Events();
 			}
-			
-			// .texture 	<----------------------------
+
+			// .texture <----------------------------
 			if (this.b_preload_bitmaps)
 			{
 				this.Preload_Textures();
 			}
-			
-			// .mat 		<----------------------------
+
+			// .mat <--------------------------------
 			if (this.b_preload_materials)
 			{
 				this.Preload_Materials();
@@ -51,6 +76,15 @@ public class TF3D_Preloader
 		this.List();
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Preload TEXTURES from .texture files in media folder
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	private void Preload_Textures()
 	{
 
@@ -65,7 +99,16 @@ public class TF3D_Preloader
 		}
 
 	}
-	
+
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Preload EVENTS from .event files in media folder
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	private void Preload_Events()
 	{
 
@@ -81,6 +124,15 @@ public class TF3D_Preloader
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Preload MATERIALS from .mat files in media folder
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	private void Preload_Materials()
 	{
 
@@ -95,34 +147,52 @@ public class TF3D_Preloader
 		}
 
 	}
-	
+
+	// -----------------------------------------------------------------------
+	// TF3D_Preloader: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Dump list of preloaded files
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public void List()
 	{
 		F3D.Log.info("Preloader", "-------------- LIST ---------------");
+		
+		for (int i = 0; i < F3D.Shaders.items.size(); i++)
+		{
+			String name = F3D.Shaders.items.get(i).name;
+
+			F3D.Log.info("Shader", name);
+
+		}
+		
 		for (int i = 0; i < F3D.MaterialEvents.items.size(); i++)
 		{
 			String name = F3D.MaterialEvents.items.get(i).name;
-			
+
 			F3D.Log.info("Events", name);
 
 		}
-		
+
 		for (int i = 0; i < F3D.Textures.items.size(); i++)
 		{
 			String name = F3D.Textures.items.get(i).name;
-			
+
 			F3D.Log.info("Texture", name);
 
 		}
-		
+
 		for (int i = 0; i < F3D.Surfaces.materials.size(); i++)
 		{
 			String name = F3D.Surfaces.materials.get(i).name;
-			
+
 			F3D.Log.info("Material", name);
 
 		}
-		
+
 		F3D.Log.info("Preloader", "--------------  END ---------------");
 	}
 }

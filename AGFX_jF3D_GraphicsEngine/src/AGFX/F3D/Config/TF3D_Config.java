@@ -43,7 +43,7 @@ public class TF3D_Config
 	/**  enable/disable using Bullet physics in application*/
 	public Boolean use_physics = true;
 	/**  enable/disable using GLSL shaders*/
-	public Boolean use_shaders = false;
+	public Boolean use_shaders = true;
 	public int io_preload_source = F3D.PRELOAD_FROM_FOLDER;
 	public String io_preload_source_name = "media.folders";
 	
