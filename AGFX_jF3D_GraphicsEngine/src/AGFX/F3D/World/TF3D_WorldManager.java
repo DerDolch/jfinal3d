@@ -15,10 +15,10 @@ import AGFX.F3D.Entity.TF3D_Entity;
  */
 public class TF3D_WorldManager
 {
-	private int                  current_world        = 0;
-	private Boolean              render_world_manualy = false;
-	public TF3D_Camera          camera               = null;
-	public ArrayList<TF3D_World> items;
+	private int						current_world			= 0;
+	private Boolean					render_world_manualy	= false;
+	public TF3D_Camera				camera					= null;
+	public ArrayList<TF3D_World>	items;
 
 	// -----------------------------------------------------------------------
 	// TF3D_WorldManager:
@@ -34,7 +34,7 @@ public class TF3D_WorldManager
 	{
 		this.current_world = -1;
 		this.items = new ArrayList<TF3D_World>();
-		//this.camera = new TF3D_Camera("BASE_CAMERA");
+		// this.camera = new TF3D_Camera("BASE_CAMERA");
 	}
 
 	// -----------------------------------------------------------------------
@@ -126,6 +126,32 @@ public class TF3D_WorldManager
 		{
 			this.items.get(this.current_world).Add(e);
 		}
+	}
+
+	// -----------------------------------------------------------------------
+	// GetEntity:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Return entity from actual world <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param name
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public TF3D_Entity GetEntity(String name)
+	{
+		for (int i = 0; i < this.items.get(this.current_world).entities.size(); i++)
+		{
+			if (this.items.get(this.current_world).entities.get(i).name.equals(name))
+			{
+				return this.items.get(this.current_world).entities.get(i);
+			}
+		}
+
+		return null;
 	}
 
 	// -----------------------------------------------------------------------
@@ -248,12 +274,12 @@ public class TF3D_WorldManager
 	{
 		this.camera = cam;
 	}
-	
+
 	public TF3D_Camera GetCamera()
 	{
 		return this.camera;
 	}
-	
+
 	// -----------------------------------------------------------------------
 	// TF3D_WorldManager:
 	// -----------------------------------------------------------------------
@@ -266,15 +292,15 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void UpdateWorld()
 	{
-		if (this.camera!=null) 
-			{
-				this.camera.Update();
-				
-			}
-		
+		if (this.camera != null)
+		{
+			this.camera.Update();
+
+		}
+
 		if (!this.render_world_manualy)
 		{
-			//F3D.Cameras.Update();
+			// F3D.Cameras.Update();
 
 			if (this.current_world >= 0)
 			{
@@ -295,8 +321,9 @@ public class TF3D_WorldManager
 	// -----------------------------------------------------------------------
 	public void UpdateWorld(int id)
 	{
-		if (this.camera!=null) this.camera.Update();
-		
+		if (this.camera != null)
+			this.camera.Update();
+
 		if (id >= 0)
 		{
 			this.items.get(this.current_world).Update();
