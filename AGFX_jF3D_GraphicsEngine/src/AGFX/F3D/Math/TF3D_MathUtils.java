@@ -50,7 +50,7 @@ public class TF3D_MathUtils
 		QuaternionUtil.setRotation(q, new Vector3f(0,1,0), angles[1]);
 		QuaternionUtil.setRotation(q, new Vector3f(0,0,1), angles[2]);
 		*/
-		return new Vector3f(angles[0]*F3D.RADTODEG,angles[1]*F3D.RADTODEG,angles[2]*F3D.RADTODEG);
+		return new Vector3f(360f-angles[0]*F3D.RADTODEG,360f-angles[1]*F3D.RADTODEG,360f-angles[2]*F3D.RADTODEG);
 	
 
 	}
