@@ -44,6 +44,8 @@ public class TF3D_MathUtils
 	
 
 	}
+	
+	// TODO check convert from angles to Quat4f !!!!
 	public static Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
 	{
 
