@@ -292,8 +292,8 @@ public class TF3D_ShaderManager
 		shader_envmap.AddUniform1i("BaseMap", 0);
 		shader_envmap.AddUniform1i("EnvMap", 1);
 		shader_envmap.AddUniform3f("BaseColor", 0.7f, 0.7f, 0.7f);
-		shader_envmap.AddUniform1f("MixRatio", 0.5f);
-		shader_envmap.AddUniform3f("LightPos", 3f, 3f, 3f);
+		shader_envmap.AddUniform1f("MixRatio", 0.8f);
+		shader_envmap.AddUniform3f("LightPos", 13f, 13f, 13f);
 
 		this.Add(shader_envmap);
 		

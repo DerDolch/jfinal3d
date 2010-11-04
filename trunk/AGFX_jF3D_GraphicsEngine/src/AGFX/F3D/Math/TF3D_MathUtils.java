@@ -2,6 +2,7 @@ package AGFX.F3D.Math;
 
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
+import com.bulletphysics.linearmath.QuaternionUtil;
 
 import AGFX.F3D.F3D;
 
@@ -33,23 +34,25 @@ public class TF3D_MathUtils
 			angles[0] = 0;
 		} else 
 		{
+			// X
+			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw or bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll or heading 
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
-			// X
-			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw or bank
+			
 		}
 		return new Vector3f(angles[0],angles[1],angles[2]);
 	
 
 	}
 	
-	// TODO check convert from angles to Quat4f !!!!
+
 	public static Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
 	{
 
 		Quat4f q = new Quat4f();
+		/*
 		float angle;
 		float sinRoll, sinPitch, sinYaw, cosRoll, cosPitch, cosYaw;
 		angle = pitch * 0.5f * F3D.DEGTORAD;
@@ -72,7 +75,8 @@ public class TF3D_MathUtils
 		q.x = (cosRollXcosPitch * sinYaw + sinRollXsinPitch * cosYaw);
 		q.y = (sinRollXcosPitch * cosYaw + cosRollXsinPitch * sinYaw);
 		q.z = (cosRollXsinPitch * cosYaw - sinRollXcosPitch * sinYaw);
-
+	*/
+		QuaternionUtil.setEuler(q, roll* F3D.DEGTORAD,yaw* F3D.DEGTORAD, pitch* F3D.DEGTORAD);		
 		return q;
 	}
 }
