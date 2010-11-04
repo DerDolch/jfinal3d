@@ -38,6 +38,8 @@ public class TF3D_GLSL_Shader
 			System.out.println("GL_ARB_vertex_program is not supported, skipping.");
 			return 0;
 		}
+		
+		
 		ByteBuffer shaderPro = getProgramCode(filename);
 		IntBuffer id = BufferUtils.createIntBuffer(1);
 		
