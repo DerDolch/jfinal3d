@@ -60,6 +60,6 @@ void main (void)
     vec3 base =  LightIntensity *BaseColor;
     envColor = mix(envColor, base, MixRatio);
 	
-    gl_FragColor = vec4 (envColor, 1.0)*(tex_color+0.5);
+    gl_FragColor = vec4 (envColor, 1.0)*(tex_color+0.15);
 ;
 }

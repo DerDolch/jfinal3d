@@ -16,7 +16,6 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_Mesh;
 
-
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.BvhTriangleMeshShape;
 import com.bulletphysics.collision.shapes.CapsuleShape;
@@ -46,16 +45,16 @@ import com.bulletphysics.util.ObjectArrayList;
 public class TF3D_PhysicObject
 {
 
-	public CollisionShape Shape;
-	public RigidBody RigidBody;
+	public CollisionShape     Shape;
+	public RigidBody          RigidBody;
 	public DefaultMotionState MotionState;
-	public Transform Transform;
+	public Transform          Transform;
 
-	public float mass = 0.1f;
-	public boolean isDynamic = true;
+	public float              mass      = 0.1f;
+	public boolean            isDynamic = true;
 
-	public float[] transformMatrix;
-	public FloatBuffer transformMatrixBuffer;
+	public float[]            transformMatrix;
+	public FloatBuffer        transformMatrixBuffer;
 
 	public TF3D_PhysicObject()
 	{
@@ -80,8 +79,7 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot,
-			Vector3f size)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size)
 	{
 		this.mass = mass;
 
@@ -168,7 +166,7 @@ public class TF3D_PhysicObject
 		qrot.z = rot.z * F3D.DEGTORAD;
 		qrot.w = 2.0f;
 
-		this.Transform.setRotation(qrot);
+		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
 		/*
 		 * 
@@ -183,8 +181,7 @@ public class TF3D_PhysicObject
 		 * localInertia); this.RigidBody = new RigidBody(rbInfo);
 		 */
 
-		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass,
-				this.Transform, this.Shape);
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
@@ -210,8 +207,7 @@ public class TF3D_PhysicObject
 	 * @param size
 	 */
 	// -----------------------------------------------------------------------
-	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot,
-			Vector3f size, TF3D_Mesh mesh)
+	public void Create(int shapemode, float mass, Vector3f pos, Vector3f rot, Vector3f size, TF3D_Mesh mesh)
 	{
 		this.mass = mass;
 
@@ -231,15 +227,11 @@ public class TF3D_PhysicObject
 		{
 			if (mesh.data.facecount > (32768 / 3))
 			{
-				F3D.Log.error("TF3D_PhysicObject",
-						"Physics body is out of triangle indices count !!!");
+				F3D.Log.error("TF3D_PhysicObject", "Physics body is out of triangle indices count !!!");
 			}
 
-			ByteBuffer gIndices = ByteBuffer.allocateDirect(
-					mesh.data.facecount * 3 * 4).order(ByteOrder.nativeOrder());
-			ByteBuffer gVertices = ByteBuffer.allocateDirect(
-					mesh.data.vertices.length * 3 * 4).order(
-					ByteOrder.nativeOrder());
+			ByteBuffer gIndices = ByteBuffer.allocateDirect(mesh.data.facecount * 3 * 4).order(ByteOrder.nativeOrder());
+			ByteBuffer gVertices = ByteBuffer.allocateDirect(mesh.data.vertices.length * 3 * 4).order(ByteOrder.nativeOrder());
 
 			for (int i = 0; i < mesh.data.indices.length; i++)
 			{
@@ -258,12 +250,9 @@ public class TF3D_PhysicObject
 			/*
 			 * if (count > 10000) { count = 10922; }
 			 */
-			TriangleIndexVertexArray indexVertexArrays = new TriangleIndexVertexArray(
-					count, gIndices, 3 * 4, mesh.data.vertices.length,
-					gVertices, 3 * 4);
+			TriangleIndexVertexArray indexVertexArrays = new TriangleIndexVertexArray(count, gIndices, 3 * 4, mesh.data.vertices.length, gVertices, 3 * 4);
 
-			BvhTriangleMeshShape trimeshShape = new BvhTriangleMeshShape(
-					indexVertexArrays, true);
+			BvhTriangleMeshShape trimeshShape = new BvhTriangleMeshShape(indexVertexArrays, true);
 
 			this.Shape = trimeshShape;
 
@@ -276,11 +265,9 @@ public class TF3D_PhysicObject
 
 		this.Transform.origin.set(pos);
 
-		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y,
-				rot.z));
+		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
-		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass,
-				this.Transform, this.Shape);
+		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 
 		this.RigidBody.setRestitution(0.1f);
 		this.RigidBody.setFriction(0.5f);
