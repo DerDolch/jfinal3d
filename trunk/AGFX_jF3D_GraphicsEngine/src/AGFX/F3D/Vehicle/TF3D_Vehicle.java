@@ -146,6 +146,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 			this.vehicleRayCaster = new DefaultVehicleRaycaster(F3D.Physic.dynamicsWorld);
 			this.vehicle = new RaycastVehicle(tuning, RB_carChassis, vehicleRayCaster);
 
+			
 			// never deactivate the vehicle
 			RB_carChassis.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
 
@@ -188,6 +189,8 @@ public class TF3D_Vehicle extends TF3D_Entity
 				wheel.frictionSlip = wheelFriction;
 				wheel.rollInfluence = rollInfluence;
 			}
+			
+			
 		}
 	}
 

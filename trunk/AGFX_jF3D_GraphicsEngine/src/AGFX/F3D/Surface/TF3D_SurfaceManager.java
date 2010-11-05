@@ -177,7 +177,7 @@ public class TF3D_SurfaceManager
 				}
 
 			}
-
+			
 		}
 
 		// SHADER
