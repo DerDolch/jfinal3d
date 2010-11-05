@@ -264,7 +264,8 @@ public class TF3D_ShaderManager
 
 	public void InitPresets()
 	{
-		if (F3D.Config.use_shaders)
+		
+		if ((F3D.Config.use_shaders) & (F3D.Extensions.GLSL_VertexShader) & (F3D.Extensions.GLSL_FragmenShader))
 		{
 			// Shader: DIFFUSE
 
