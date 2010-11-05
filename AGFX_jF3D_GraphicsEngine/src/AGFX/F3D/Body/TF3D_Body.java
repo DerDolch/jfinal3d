@@ -83,11 +83,10 @@ public class TF3D_Body extends TF3D_Entity
 
 		if ((shapemode == F3D.BULLET_SHAPE_CONVEXHULL) | (shapemode == F3D.BULLET_SHAPE_TRIMESH))
 		{
-			if (this.collision_mesh_id>0)
+			if (this.collision_mesh_id > 0)
 			{
 				this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.collision_mesh_id));
-			}
-			else
+			} else
 			{
 				this.PhysicObject.Create(shapemode, mass, this.GetPosition(), this.GetRotation(), rescaled, F3D.Meshes.items.get(this.mesh_id));
 			}
@@ -130,21 +129,21 @@ public class TF3D_Body extends TF3D_Entity
 
 	public void AssignCollisionMesh(int id)
 	{
-		if (id>0)
+		if (id > 0)
 		{
 			this.collision_mesh_id = id;
 		}
 	}
-	
-	
+
 	public void AssignCollisionMesh(String coll_mesh_name)
 	{
 		int id = F3D.Meshes.FindByName(coll_mesh_name);
-		if (id>0)
+		if (id > 0)
 		{
 			this.collision_mesh_id = id;
 		}
 	}
+
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
 	// -----------------------------------------------------------------------
@@ -281,42 +280,45 @@ public class TF3D_Body extends TF3D_Entity
 	public void Render()
 	{
 		int mid;
-
-		if (this.IsEnabled())
+		if (this.mesh_id >= 0)
 		{
-
-			if (this.IsVisible())
+			if (this.IsEnabled())
 			{
-				TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
 
-				mesh.vbo.Bind();
-
-				for (int i = 0; i < this.surfaces.size(); i++)
+				if (this.IsVisible())
 				{
-					if (this.surfaces.get(i).isEnabled())
+					TF3D_Mesh mesh = F3D.Meshes.items.get(this.mesh_id);
+
+					mesh.vbo.Bind();
+
+					for (int i = 0; i < this.surfaces.size(); i++)
 					{
-						mid = this.surfaces.get(i).id;
-
-						if (mid >= 0)
+						if (this.surfaces.get(i).isEnabled())
 						{
-							F3D.Surfaces.ApplyMaterial(mid);
+							mid = this.surfaces.get(i).id;
+
+							if (mid >= 0)
+							{
+								F3D.Surfaces.ApplyMaterial(mid);
+							}
+
+							glPushMatrix();
+							glMultMatrix(this.PhysicObject.transformMatrixBuffer);
+							glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+
+							mesh.Render(i);
+
+							if (F3D.Surfaces.materials.get(mid).use_shader)
+								F3D.Shaders.StopProgram();
+
+							glScalef(1, 1, 1);
+							glPopMatrix();
 						}
-
-						glPushMatrix();
-						glMultMatrix(this.PhysicObject.transformMatrixBuffer);
-						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-						mesh.Render(i);
-						
-						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
-						
-						glScalef(1, 1, 1);
-						glPopMatrix();
 					}
+
+					mesh.vbo.UnBind();
 				}
-
-				mesh.vbo.UnBind();
 			}
-
 		}
 	}
 
@@ -345,7 +347,7 @@ public class TF3D_Body extends TF3D_Entity
 
 		this.SetPosition(this.PhysicObject.GetPosition());
 
-		//this.SetRotation(this.PhysicObject.GetRotation());
+		// this.SetRotation(this.PhysicObject.GetRotation());
 
 		// get current AABB and calc it for next Frustum culling
 		Vector3f aabbMin = new Vector3f();

@@ -21,6 +21,8 @@ public class TF3D_ShaderManager
 	public TF3D_Shader            shader_phong;
 	public TF3D_Shader            shader_envmap;
 	public TF3D_Shader            shader_glow;
+	public TF3D_Shader            shader_posterize;
+	public TF3D_Shader            shader_dream;
 
 	public TF3D_ShaderManager()
 	{
@@ -308,6 +310,24 @@ public class TF3D_ShaderManager
 			shader_glow.AddUniform1i("GlowMap", 1);
 
 			this.Add(shader_glow);
+			
+			
+			// Shader: POSTERIZE
+			
+			shader_posterize = new TF3D_Shader("POSTERIZE");
+			shader_posterize.Load("abstract::f3d_posterize.vert", "abstract::f3d_posterize.frag");
+			shader_posterize.AddUniform1i("sceneTex", 0);
+			shader_posterize.AddUniform1f("gamma", 0.6f);
+			shader_posterize.AddUniform1f("numColors", 16.0f);
+			this.Add(shader_posterize);
+			
+			// Shader: DREAM
+			
+			shader_dream = new TF3D_Shader("DREAM");
+			shader_dream.Load("abstract::f3d_dream.vert", "abstract::f3d_dream.frag");
+			shader_dream.AddUniform1i("sceneTex", 0);
+			this.Add(shader_dream);
+			
 		}
 	}
 }

@@ -14,5 +14,5 @@
       event_3 = none
     depthtest = true
     alphatest = false
-  faceculling = true
+  faceculling = true  
 }

@@ -9,7 +9,7 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.EXTFramebufferObject;
-import org.lwjgl.opengl.GL31;
+
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -38,9 +38,7 @@ public class TF3D_FrameBufferObject
 		buffer = ByteBuffer.allocateDirect(1 * 4).order(ByteOrder.nativeOrder()).asIntBuffer(); 
 		EXTFramebufferObject.glGenFramebuffersEXT(buffer); // generate
 		this.FBO_id = buffer.get();
-
 		
-	    
 	    glEnable(GL_TEXTURE_2D);
 	    // Create shared texture
 	    IntBuffer texture_buffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder()).asIntBuffer();
@@ -67,14 +65,20 @@ public class TF3D_FrameBufferObject
 	{
 		return this.texture_id;
 	}
+	
 	public void BeginRender()
 	{
 		
 		//Start drawing to the FBO
+		
 		EXTFramebufferObject.glBindFramebufferEXT( EXTFramebufferObject.GL_FRAMEBUFFER_EXT, this.FBO_id );
-
+		
+		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		  
 		glPushAttrib(GL_VIEWPORT_BIT);
 		glViewport(0,0,this.width, this.height);
+		
 	}
 
 	public void EndRender()

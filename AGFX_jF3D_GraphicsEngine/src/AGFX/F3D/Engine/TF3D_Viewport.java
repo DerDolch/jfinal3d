@@ -114,9 +114,7 @@ public class TF3D_Viewport
 	{
 		
 		glLoadIdentity();
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		
-	    
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	    
 	    if (F3D.Config.use_gl_light) { glEnable(GL_LIGHTING); }
 
 	}
