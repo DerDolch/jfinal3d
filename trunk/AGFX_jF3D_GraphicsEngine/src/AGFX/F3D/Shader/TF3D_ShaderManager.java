@@ -23,6 +23,7 @@ public class TF3D_ShaderManager
 	public TF3D_Shader            shader_glow;
 	public TF3D_Shader            shader_posterize;
 	public TF3D_Shader            shader_dream;
+	public TF3D_Shader            shader_warp;
 
 	public TF3D_ShaderManager()
 	{
@@ -327,6 +328,17 @@ public class TF3D_ShaderManager
 			shader_dream.Load("abstract::f3d_dream.vert", "abstract::f3d_dream.frag");
 			shader_dream.AddUniform1i("sceneTex", 0);
 			this.Add(shader_dream);
+			
+			
+			// Shader: DREAM
+			
+			shader_warp = new TF3D_Shader("WARP");
+			shader_warp.Load("abstract::f3d_warp.vert", "abstract::f3d_warp.frag");
+			shader_warp.AddUniform1i("SceneMap", 0);
+			shader_warp.AddUniform1i("NoiseMap", 1);
+			shader_warp.AddUniform1f("Speed", 0.05f);
+			shader_warp.AddUniformEvent("TIMER", F3D.SHADER_EVENT_TIMER);
+			this.Add(shader_warp);
 			
 		}
 	}

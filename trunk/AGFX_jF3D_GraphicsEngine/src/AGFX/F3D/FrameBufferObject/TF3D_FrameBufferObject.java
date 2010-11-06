@@ -61,8 +61,9 @@ public class TF3D_FrameBufferObject
 	    this.texture_id = texture_buffer.get(0);
 	    
 	    glBindTexture(GL_TEXTURE_2D, this.texture_id);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(width * height * 4));
-
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (IntBuffer)null);
+	    //glTexImage2D(GL_TEXTURE_2D, 0, GL_INTENSITY, width, height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(width * height * 4));
+	    
 	    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	    
@@ -106,10 +107,11 @@ public class TF3D_FrameBufferObject
 		
 	}
 
-	public void EndRender()
+	public void EndRender(Boolean frame_off, Boolean render_off)
 	{
 		glPopAttrib();
-		glBindFramebuffer( GL_FRAMEBUFFER, 0);
+		if (frame_off) glBindFramebuffer( GL_FRAMEBUFFER, 0);
+		if (render_off) glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 
 	public void Bind()
@@ -120,5 +122,6 @@ public class TF3D_FrameBufferObject
         
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D,this.texture_id);
+		
 	}
 }

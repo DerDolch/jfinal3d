@@ -166,15 +166,15 @@ public class TF3D_FBO_manager
 	}
 	
 	
-	public void EndRender(String name)
+	public void EndRender(String name,Boolean frame_off, Boolean render_off)
 	{
 		int id = this.FindByName(name);
-		this.items.get(id).EndRender();
+		this.items.get(id).EndRender(frame_off, render_off);
 	}
 	
-	public void EndRender(int id)
+	public void EndRender(int id,Boolean frame_off, Boolean render_off)
 	{		
-		this.items.get(id).EndRender();
+		this.items.get(id).EndRender(frame_off, render_off);
 	}
 	
 	public TF3D_FrameBufferObject Get(int id)

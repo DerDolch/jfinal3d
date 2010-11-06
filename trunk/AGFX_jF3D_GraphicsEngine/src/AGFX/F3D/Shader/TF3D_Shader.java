@@ -40,6 +40,13 @@ public class TF3D_Shader
 		this.Uniforms = new ArrayList<TF3D_ShaderUniformData>();
 	}
 
+	public void AddUniformEvent(String var_name, int _event)
+	{
+		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
+		un.SetAsEvent(_event);
+		this.Uniforms.add(un);
+	}
+	
 	public void AddUniform1i(String var_name, int _i1)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
