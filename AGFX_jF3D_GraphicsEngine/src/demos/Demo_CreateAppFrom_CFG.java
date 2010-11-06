@@ -28,7 +28,7 @@ public class Demo_CreateAppFrom_CFG extends TF3D_AppWrapper
 		{
 			// Creaet and load config file
 			F3D.Config = new TF3D_Config();
-			F3D.Config.Load("abstract::default.cfg");
+			F3D.Config.Load("config/default.cfg");
 			F3D.Config.r_display_title = F3D.Config.r_display_title + "   [ "+this.getClass().getName()+"]"; 
 			super.onConfigure();
 			

@@ -6,6 +6,7 @@ package AGFX.F3D.Config;
 import AGFX.F3D.F3D;
 import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;
+import AGFX.F3D.Utils.TF3D_AbstractFiles;
 
 /**
  * @author AndyGFX
@@ -122,6 +123,14 @@ public class TF3D_Config
 			// this.io_preload_source = PRELOAD_FROM_FOLDER
 			this.io_preload_source_name = PARSER.GetAs_STRING("io_preload_source_name");
 
+		}
+		
+		F3D.AbstractFiles = new TF3D_AbstractFiles();
+		
+		if (F3D.ABSTARCTFILE_LOG)
+		{
+
+			F3D.AbstractFiles.Dump();
 		}
 	}
 }
