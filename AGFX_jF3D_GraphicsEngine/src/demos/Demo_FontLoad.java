@@ -4,6 +4,7 @@ import java.awt.Font;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Font.TF3D_Font;
 import AGFX.F3D.Font.TF3D_Font_TTF;
 
@@ -27,15 +28,15 @@ public class Demo_FontLoad extends TF3D_AppWrapper
 		try
 		{
 			
-			// Redefine Config
+			F3D.Config = new TF3D_Config();
 			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - LOAD FONT DEMO";
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
 
-			
+			super.onConfigure();
 			
 
 		} catch (Exception e)

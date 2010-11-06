@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse;
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 
@@ -37,6 +38,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		{
 			
 			// Redefine Config
+			F3D.Config = new TF3D_Config();
 			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
@@ -45,7 +47,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";
 			F3D.Config.use_physics_debug = false;
 
-			
+			super.onConfigure();
 
 		} catch (Exception e)
 		{

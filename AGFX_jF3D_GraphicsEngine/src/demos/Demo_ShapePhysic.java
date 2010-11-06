@@ -14,6 +14,7 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
@@ -55,13 +56,15 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		try
 		{
 
-			// Redefine Config
-
+			F3D.Config = new TF3D_Config();
+			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
-			F3D.Config.r_display_vsync = false;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - PHYSICS TEST";
+			F3D.Config.r_display_vsync = true;
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
+
+			super.onConfigure();
 
 		} catch (Exception e)
 		{
@@ -167,13 +170,13 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		
 		
 		this.zeton = new TF3D_Body("zeton");
-		this.zeton.AssignMesh("abstract::zeton.a3da");
+		this.zeton.AssignMesh("abstract::zeton.a3da");		
 		this.zeton.Enable();
 		//this.zeton.SetScale(0.25f, 0.25f, 0.25f);
 		this.zeton.SetPosition(0.5f, 22f, -2);
 		this.zeton.SetRotation(0f, 0f, 0f);
 		this.zeton.CreateRigidBody(F3D.BULLET_SHAPE_CYLINDER_Z, 1.0f);
-		
+		//this.zeton.RemoveAssignedMesh();
 		
 		
 		this.mzeton = new TF3D_Model("zeton");

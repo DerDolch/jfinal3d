@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+import AGFX.F3D.Config.TF3D_Config;
 
 /**
  * @author AndyGFX
@@ -28,13 +29,15 @@ public class Demo_Application extends TF3D_AppWrapper
 			
 			// Redefine Config
 			
+			F3D.Config = new TF3D_Config();
+			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - app";
-
 			
+			super.onConfigure();
 			
 
 		} catch (Exception e)

@@ -11,6 +11,7 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Pivot.TF3D_Pivot;
 import AGFX.F3D.Skybox.TF3D_Skybox;
@@ -42,15 +43,15 @@ public class Demo_PickBody extends TF3D_AppWrapper
 		try
 		{
 			
-			// Redefine Config
+			F3D.Config = new TF3D_Config();
 			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
-			F3D.Config.r_display_vsync = false;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - PICK BODY";
-			F3D.Config.use_physics = true;
-			F3D.Config.use_physics_debug = false;
+			F3D.Config.r_display_vsync = true;
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
+
+			super.onConfigure();
 
 			
 
