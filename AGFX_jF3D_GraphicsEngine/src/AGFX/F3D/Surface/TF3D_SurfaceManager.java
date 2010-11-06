@@ -275,12 +275,12 @@ public class TF3D_SurfaceManager
 		int BLOCK_ID;
 		String tmp_str;
 
-		F3D.Log.info("TF3D_SurfaceManager", "Loading ... " + filename);
+		System.out.print("Loading config... " + filename);
 		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);
 
 		if (!Exist)
 		{
-			F3D.Log.error("TF3D_SurfaceManager", "Can't load file:" + filename);
+			System.out.print("Can't load file:" + filename);			
 		}
 
 		PARSER.ParseFile(F3D.AbstractFiles.GetFullPath(filename));

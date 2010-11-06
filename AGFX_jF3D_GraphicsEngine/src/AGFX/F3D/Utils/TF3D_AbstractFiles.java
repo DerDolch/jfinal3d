@@ -14,41 +14,26 @@ import AGFX.F3D.F3D;
 
 public class TF3D_AbstractFiles
 {
-	public ArrayList<String>	Dir;
-	static final int			MAX_DEPTH	= 20;
+	public ArrayList<String> Dir;
+	static final int         MAX_DEPTH = 20;
 
-	
-	public TF3D_AbstractFiles()	
+	public TF3D_AbstractFiles()
 	{
 		this.Dir = new ArrayList<String>();
 
 		// preload ABSTRACT FILED files from FOLDER
-		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_FOLDER)
+
+		File root = new File("media");
+		if (root != null && root.isDirectory())
 		{
-			File root = new File(F3D.Config.io_preload_folder);
-			if (root != null && root.isDirectory())
-			{
-				listRecursively(root, 0);
-			} else
-			{
-				System.out.println("Not a directory: " + root);
-			}
-			
-			this.Save(F3D.Config.io_preload_folder+"/"+F3D.Config.io_preload_source_name);
-		}
-		
-		// preload ABSTRACT FILED files from FILE
-		if (F3D.Config.io_preload_source==F3D.PRELOAD_FROM_FILE)
+			listRecursively(root, 0);
+		} else
 		{
-			try
-			{
-				this.Load(new FileInputStream(F3D.Config.io_preload_folder+"/"+F3D.Config.io_preload_source_name));
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			System.out.println("Not a directory: " + root);
 		}
-		
+
+		//this.Save(F3D.Config.io_preload_folder + "/" + F3D.Config.io_preload_source_name);
+
 	}
 
 	// ==========================================================
@@ -56,8 +41,7 @@ public class TF3D_AbstractFiles
 	public void listRecursively(File fdir, int depth)
 	{
 
-		String replaced = TF3D_AbstractFiles.backlashReplace(fdir
-				.getAbsolutePath());
+		String replaced = TF3D_AbstractFiles.backlashReplace(fdir.getAbsolutePath());
 		// String replaced = fdir.getAbsolutePath();
 
 		if (replaced.contains(".svn"))
@@ -85,8 +69,7 @@ public class TF3D_AbstractFiles
 	public static String backlashReplace(String myStr)
 	{
 		final StringBuilder result = new StringBuilder();
-		final StringCharacterIterator iterator = new StringCharacterIterator(
-				myStr);
+		final StringCharacterIterator iterator = new StringCharacterIterator(myStr);
 		char character = iterator.current();
 		while (character != CharacterIterator.DONE)
 		{
@@ -156,20 +139,16 @@ public class TF3D_AbstractFiles
 			{
 				String relative_path = this.Dir.get(i);
 				int id = relative_path.indexOf("media");
-				relative_path = relative_path.substring(id,relative_path.length());
+				relative_path = relative_path.substring(id, relative_path.length());
 				dos.println(relative_path);
 			}
 
 			dos.close();
 		} catch (IOException e1)
 		{
-			
+
 			e1.printStackTrace();
 		}
-		 
-		
-
-	
 
 	}
 
@@ -192,8 +171,8 @@ public class TF3D_AbstractFiles
 
 			for (int i = 0; i < text.length; i++)
 			{
-				text[i]=text[i].replaceAll("\n", "");
-				text[i]=text[i].replaceAll("\r", "");
+				text[i] = text[i].replaceAll("\n", "");
+				text[i] = text[i].replaceAll("\r", "");
 				this.Dir.add(text[i]);
 				F3D.Log.info("Abstarct", text[i]);
 			}

@@ -57,13 +57,8 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 		{
 
 			F3D.Config = new TF3D_Config();
-			
-			F3D.Config.r_display_width = 800;
-			F3D.Config.r_display_height = 600;
-			F3D.Config.r_fullscreen = false;
-			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
-
+			F3D.Config.Load("abstract::default.cfg");
+			F3D.Config.r_display_title = F3D.Config.r_display_title + "   [ "+this.getClass().getName()+"]"; 
 			super.onConfigure();
 
 		} catch (Exception e)
