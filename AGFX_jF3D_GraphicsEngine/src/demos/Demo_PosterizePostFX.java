@@ -3,10 +3,13 @@
  */
 package demos;
 
+
+
 import javax.vecmath.Vector3f;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
@@ -44,6 +47,7 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 
 	public int         world_id;
 	public int		   frame_id;
+	
 
 	public Demo_PosterizePostFX()
 	{
@@ -185,9 +189,10 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		world_id = F3D.Worlds.FindByName("MAIN_WORLD");
 		
 		
-		frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height);
-		//frame_id = F3D.FrameBuffers.Add("POSTFX", 400, 300);
+		frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height);		
 		F3D.Textures.Add("POSTFX_TETXURE", F3D.FrameBuffers.Get("POSTFX"), true);
+		
+		
 	}
 
 	@Override
@@ -201,10 +206,10 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		F3D.Worlds.SetCamera(this.Camera);
 		F3D.Worlds.UpdateWorld(world_id);
 		
-		F3D.FrameBuffers.BeginRender(frame_id);
+		
+		F3D.FrameBuffers.Get("POSTFX").BeginRender();
 		F3D.Worlds.RenderWorld(world_id);
-		F3D.FrameBuffers.EndRender(frame_id);
-		F3D.Worlds.RenderWorld(world_id);
+		F3D.FrameBuffers.Get("POSTFX").EndRender();
 		
 		
 		if (Mouse.isInsideWindow())
@@ -274,10 +279,12 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		F3D.Textures.Bind("POSTFX_TETXURE");		
-		//F3D.Shaders.UseProgram("DREAM");
-		//F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height,true);
-		F3D.Draw.Rectangle(0, 0, 400,300,true);
-		//F3D.Shaders.StopProgram();
+		F3D.Shaders.UseProgram("DREAM");
+		//F3D.Shaders.UseProgram("POSTERIZE");
+
+		F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height,true);
+
+		F3D.Shaders.StopProgram();
 		F3D.Viewport.DrawInfo(0, 0);
 
 	}
