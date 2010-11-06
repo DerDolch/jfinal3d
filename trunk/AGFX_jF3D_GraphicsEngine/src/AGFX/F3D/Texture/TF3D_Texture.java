@@ -10,6 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.lwjgl.util.glu.MipMap;
 import AGFX.F3D.F3D;
 import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
+import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 
 public class TF3D_Texture
 {

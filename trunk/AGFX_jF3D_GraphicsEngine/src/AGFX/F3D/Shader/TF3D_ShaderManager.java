@@ -318,7 +318,7 @@ public class TF3D_ShaderManager
 			shader_posterize.Load("abstract::f3d_posterize.vert", "abstract::f3d_posterize.frag");
 			shader_posterize.AddUniform1i("sceneTex", 0);
 			shader_posterize.AddUniform1f("gamma", 0.6f);
-			shader_posterize.AddUniform1f("numColors", 16.0f);
+			shader_posterize.AddUniform1f("numColors", 8.0f);
 			this.Add(shader_posterize);
 			
 			// Shader: DREAM
