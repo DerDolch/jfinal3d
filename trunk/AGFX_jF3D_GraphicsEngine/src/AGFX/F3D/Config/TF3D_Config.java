@@ -74,6 +74,6 @@ public class TF3D_Config
 		this.r_display_fov = 65f;
 		
 
-		F3D.Log.info("TF3D_Config","Config class created");
+		//F3D.Log.info("TF3D_Config","Config class created");
 	}
 }

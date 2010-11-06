@@ -8,6 +8,7 @@ import javax.vecmath.*;
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Helpers.TF3D_Helpers;
 import AGFX.F3D.Parser.TF3D_PARSER;
 
@@ -32,13 +33,13 @@ public class Demo_AddTextures extends TF3D_AppWrapper
 		{
 			
 			// Redefine Config
-			
+			F3D.Config = new TF3D_Config();
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - RENDER VBO CUBE";
-
+			super.onConfigure();
 
 
 		} catch (Exception e)

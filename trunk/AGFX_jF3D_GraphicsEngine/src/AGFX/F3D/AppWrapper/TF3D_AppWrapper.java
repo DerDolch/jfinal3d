@@ -29,9 +29,7 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	public TF3D_AppWrapper()
 	{
-		F3D.Create();
-		F3D.Log.info("TF3D_AppWrapper", "Application wrapper created");
-		this.AppTerminate = false;
+		
 	}
 
 	// -----------------------------------------------------------------------
@@ -49,7 +47,9 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	public void onConfigure()
 	{
-
+		F3D.Create();
+		F3D.Log.info("TF3D_AppWrapper", "Application wrapper created");
+		this.AppTerminate = false;
 	}
 
 	// -----------------------------------------------------------------------

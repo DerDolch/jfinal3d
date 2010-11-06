@@ -174,6 +174,12 @@ public class TF3D_Body extends TF3D_Entity
 		}
 	}
 
+	
+	public void RemoveAssignedMesh()
+	{
+		this.mesh_id = -1;
+	}
+	
 	private void ReadAssignedSurfaces()
 	{
 		this.surfaces = new ArrayList<TF3D_SurfaceSubstItem>();

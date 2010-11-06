@@ -184,31 +184,46 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
-
+	
 	public static void Create()
 	{
 
 		F3D.Log = new TF3D_Log();
+
 		F3D.Log.info("F3D", "---- START ----");
 
-		F3D.Config = new TF3D_Config();
+		//F3D.Config = new TF3D_Config();
+
 		F3D.Preloader = new TF3D_Preloader();
+
 		F3D.Display = new TF3D_Display();
+
 		F3D.Viewport = new TF3D_Viewport();
 
 		F3D.Worlds = new TF3D_WorldManager();
 
 		F3D.Cameras = new TF3D_CameraManager();
+
 		F3D.AbstractFiles = new TF3D_AbstractFiles();
+
 		F3D.Frustum = new TF3D_Frustum();
+
 		F3D.Textures = new TF3D_TextureManager();
+
 		F3D.Timer = new TF3D_Timer2();
+
 		F3D.MaterialEvents = new TF3D_MaterialEventManager();
+
 		F3D.Surfaces = new TF3D_SurfaceManager();
+
 		F3D.Fonts = new TF3D_FontManager();
+
 		F3D.Draw = new TF3D_Helpers();
+
 		F3D.Meshes = new TF3D_MeshManager();
+
 		F3D.FrameBuffers = new TF3D_FBO_manager();
+
 		F3D.Shaders = new TF3D_ShaderManager();
 		F3D.GetBuffer = new TF3D_Buffer();
 

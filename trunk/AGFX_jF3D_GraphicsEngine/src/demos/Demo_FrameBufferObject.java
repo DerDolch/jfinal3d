@@ -13,6 +13,7 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
 import AGFX.F3D.Skybox.TF3D_Skybox;
@@ -46,14 +47,15 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		try
 		{
 
-			// Redefine Config
-
+			F3D.Config = new TF3D_Config();
+			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - FrameBufferObject";
-			F3D.Config.use_gl_light = true;
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
+
+			super.onConfigure();
 			
 		} catch (Exception e)
 		{

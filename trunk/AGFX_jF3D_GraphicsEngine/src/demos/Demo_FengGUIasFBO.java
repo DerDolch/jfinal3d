@@ -27,6 +27,7 @@ import org.lwjgl.opengl.GL11;
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
+import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Hud.TF3D_HUD_Image;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Material.TF3D_Material;
@@ -59,14 +60,17 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		try
 		{
 
-			// Redefine Config
-
+			F3D.Config = new TF3D_Config();
+			
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
-			F3D.Config.r_display_vsync = false;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - FENG GUI as 3D via FBO";
+			F3D.Config.r_display_vsync = true;
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
 			F3D.Config.use_gl_light = false;
+			
+			super.onConfigure();
+			
 			
 		} catch (Exception e)
 		{
