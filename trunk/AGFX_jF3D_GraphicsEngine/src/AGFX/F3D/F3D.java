@@ -193,7 +193,9 @@ public class F3D
 		F3D.Log.info("F3D", "---- START ----");
 
 		//F3D.Config = new TF3D_Config();
-
+		
+		F3D.AbstractFiles = new TF3D_AbstractFiles();
+		
 		F3D.Preloader = new TF3D_Preloader();
 
 		F3D.Display = new TF3D_Display();
