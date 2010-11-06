@@ -170,7 +170,7 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		F3D.Worlds.UpdateWorld(w1);
 		F3D.Worlds.RenderWorld(w1);
 		
-		F3D.FrameBuffers.EndRender("FBO_BUFFER");
+		F3D.FrameBuffers.EndRender("FBO_BUFFER",true,true);
 		
 		// set camera for WORLD#2
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));

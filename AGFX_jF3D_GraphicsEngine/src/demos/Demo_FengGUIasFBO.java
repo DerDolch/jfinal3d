@@ -236,7 +236,7 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		
 		
 		
-		F3D.FrameBuffers.EndRender(this.fbo_id);
+		F3D.FrameBuffers.EndRender(this.fbo_id,true,true);
 		
 		
 		/*

@@ -143,7 +143,12 @@ public class F3D
 	// '-----------------------------------------------------------------
 	public final static int                 SHADER_UNIFORM_INT         = 0;
 	public final static int                 SHADER_UNIFORM_FLOAT       = 1;
-	
+	public final static int                 SHADER_UNIFORM_EVENT       = 2;
+
+	public final static int                 SHADER_EVENT_TIMER         = 0;
+	public final static int                 SHADER_EVENT_EYEPOS        = 1;
+	public final static int                 SHADER_EVENT_CAMERA        = 2;
+
 	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
@@ -177,8 +182,8 @@ public class F3D
 	public static TF3D_Keyboard             Key;
 	public static TF3D_Pick                 Pick;
 	public static TF3D_FBO_manager          FrameBuffers;
-	public static TF3D_ShaderManager		Shaders;
-	public static TF3D_Buffer				GetBuffer;
+	public static TF3D_ShaderManager        Shaders;
+	public static TF3D_Buffer               GetBuffer;
 
 	public static void Create()
 	{
@@ -205,8 +210,8 @@ public class F3D
 		F3D.Meshes = new TF3D_MeshManager();
 		F3D.FrameBuffers = new TF3D_FBO_manager();
 		F3D.Shaders = new TF3D_ShaderManager();
-		F3D.GetBuffer	= new TF3D_Buffer();
-		
+		F3D.GetBuffer = new TF3D_Buffer();
+
 		if (F3D.Config.use_physics)
 		{
 			F3D.Physic = new TF3D_Physics();
@@ -215,7 +220,6 @@ public class F3D
 		{
 			F3D.Physic = null;
 		}
-		
 
 	}
 
@@ -227,7 +231,7 @@ public class F3D
 		F3D.Extensions = new TF3D_Extensions();
 		F3D.Key = new TF3D_Keyboard();
 		F3D.Viewport.Init3D();
-		
+
 		F3D.Preloader.PreloadData();
 
 		F3D.Fonts.Load("abstract::system.font");
