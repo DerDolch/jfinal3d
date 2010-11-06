@@ -20,10 +20,19 @@ public class TF3D_AbstractFiles
 	public TF3D_AbstractFiles()
 	{
 		this.Dir = new ArrayList<String>();
-
+		String media_folder;
+		
 		// preload ABSTRACT FILED files from FOLDER
 
-		File root = new File("media");
+		if (F3D.Config!=null)
+		{
+			media_folder = F3D.Config.io_preload_folder;
+		}
+		else
+		{
+			media_folder = "config";
+		}
+		File root = new File(media_folder);
 		if (root != null && root.isDirectory())
 		{
 			listRecursively(root, 0);
@@ -33,9 +42,18 @@ public class TF3D_AbstractFiles
 		}
 
 		//this.Save(F3D.Config.io_preload_folder + "/" + F3D.Config.io_preload_source_name);
-
+		
 	}
 
+	public void Dump()
+	{
+		for (int i = 0; i < this.Dir.size(); i++)
+		{
+			String relative_path = this.Dir.get(i);
+			System.out.println(relative_path);
+			
+		}
+	}
 	// ==========================================================
 	// listRecursively
 	public void listRecursively(File fdir, int depth)
@@ -50,11 +68,7 @@ public class TF3D_AbstractFiles
 		} else
 		{
 			this.Dir.add(replaced);
-			if (F3D.ABSTARCTFILE_LOG)
-			{
-
-				F3D.Log.info("TF3D_AbstractFiles", fdir.getAbsolutePath());
-			}
+			
 		}
 
 		if (fdir.isDirectory() && depth < MAX_DEPTH)
