@@ -58,7 +58,7 @@ public class TF3D_PARSER
 	// -----------------------------------------------------------------------
 	public TF3D_PARSER()
 	{
-		F3D.Log.info("TF3D_PARSER", "Create File Parser class");
+		System.out.print("TF3D_PARSER   Create File Parser class");
 		this.Blocks = new ArrayList<TA3D_ParserBlock>();
 		
 	}

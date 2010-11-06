@@ -153,12 +153,12 @@ public class F3D
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 
-	public static TF3D_AbstractFiles        AbstractFiles;
+	public static TF3D_AbstractFiles        AbstractFiles = new TF3D_AbstractFiles();
 	public static TF3D_Config               Config;
 	public static TF3D_Extensions           Extensions;
 	public static TF3D_Viewport             Viewport;
 	public static TF3D_Display              Display;
-	public static TF3D_Log                  Log;
+	public static TF3D_Log                  Log = new TF3D_Log();
 	public static TF3D_CameraManager        Cameras;
 	public static TF3D_Frustum              Frustum;
 	public static TF3D_TextureManager       Textures;
@@ -188,7 +188,7 @@ public class F3D
 	public static void Create()
 	{
 
-		F3D.Log = new TF3D_Log();
+		
 
 		F3D.Log.info("F3D", "---- START ----");
 
@@ -204,7 +204,7 @@ public class F3D
 
 		F3D.Cameras = new TF3D_CameraManager();
 
-		F3D.AbstractFiles = new TF3D_AbstractFiles();
+		
 
 		F3D.Frustum = new TF3D_Frustum();
 
