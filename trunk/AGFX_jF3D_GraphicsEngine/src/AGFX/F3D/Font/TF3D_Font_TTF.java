@@ -1,5 +1,10 @@
 package AGFX.F3D.Font;
 
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.glDisable;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -309,6 +314,9 @@ public class TF3D_Font_TTF
 
 	public void drawString(float x, float y, String whatchars, float scaleX, float scaleY)
 	{
+		glDisable(GL_ALPHA_TEST);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
 		drawString(x, y, whatchars, 0, whatchars.length() - 1, scaleX, scaleY, ALIGN_LEFT);
 	}
 
