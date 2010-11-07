@@ -2,7 +2,11 @@
 {
          type = MAT_TEXTURE
          name = MAT_courier_new_8_bold
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
     texture_0 = courier_new_8_bold
     texture_1 = none
     texture_2 = none

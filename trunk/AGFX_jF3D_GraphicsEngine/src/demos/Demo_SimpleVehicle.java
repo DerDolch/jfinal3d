@@ -81,6 +81,8 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
+
+		
 		this.landscape = new TF3D_Body("LANDSCAPE");
 		this.landscape.AssignMesh("abstract::landscape.a3da");
 		this.landscape.AssignCollisionMesh("abstract::collision_landscape.a3da");
