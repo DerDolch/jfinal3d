@@ -17,22 +17,45 @@ public class TF3D_AbstractFiles
 	public ArrayList<String> Dir;
 	static final int         MAX_DEPTH = 20;
 
+	
+	// -----------------------------------------------------------------------
+	// TF3D_AbstractFiles: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Constructor
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public TF3D_AbstractFiles()
 	{
 		this.Dir = new ArrayList<String>();
-		String media_folder;
-		
-		// preload ABSTRACT FILED files from FOLDER
 
-		if (F3D.Config!=null)
+		if (F3D.Config == null)
 		{
-			media_folder = F3D.Config.io_preload_folder;
-		}
-		else
+			this.GererateFilesList("config");
+			
+		} else
 		{
-			media_folder = "config";
+			this.GererateFilesList(F3D.Config.io_preload_folder);
 		}
-		File root = new File(media_folder);
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_AbstractFiles: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Generate files list
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param media_folder - root folder name
+	 */
+	// -----------------------------------------------------------------------
+	private void GererateFilesList(String media_folder)
+	{
+		File root;
+		
+		root = new File(media_folder);
 		if (root != null && root.isDirectory())
 		{
 			listRecursively(root, 0);
@@ -40,20 +63,28 @@ public class TF3D_AbstractFiles
 		{
 			System.out.println("Not a directory: " + root);
 		}
-
-		//this.Save(F3D.Config.io_preload_folder + "/" + F3D.Config.io_preload_source_name);
-		
 	}
-
+	
+	
+	// -----------------------------------------------------------------------
+	// TF3D_AbstractFiles: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  List of all files from defined folder
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public void Dump()
 	{
 		for (int i = 0; i < this.Dir.size(); i++)
 		{
 			String relative_path = this.Dir.get(i);
 			System.out.println(relative_path);
-			
+
 		}
 	}
+
 	// ==========================================================
 	// listRecursively
 	public void listRecursively(File fdir, int depth)
@@ -68,7 +99,7 @@ public class TF3D_AbstractFiles
 		} else
 		{
 			this.Dir.add(replaced);
-			
+
 		}
 
 		if (fdir.isDirectory() && depth < MAX_DEPTH)
@@ -152,7 +183,7 @@ public class TF3D_AbstractFiles
 			for (int i = 0; i < this.Dir.size(); i++)
 			{
 				String relative_path = this.Dir.get(i);
-				int id = relative_path.indexOf("media");
+				int id = relative_path.indexOf(F3D.Config.io_preload_folder);
 				relative_path = relative_path.substring(id, relative_path.length());
 				dos.println(relative_path);
 			}
@@ -166,6 +197,16 @@ public class TF3D_AbstractFiles
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_AbstractFiles: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Load File list from file
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param is
+	 */
+	// -----------------------------------------------------------------------
 	public void Load(InputStream is)
 	{
 		// asset can't be more than 2 gigs.
@@ -188,7 +229,7 @@ public class TF3D_AbstractFiles
 				text[i] = text[i].replaceAll("\n", "");
 				text[i] = text[i].replaceAll("\r", "");
 				this.Dir.add(text[i]);
-				F3D.Log.info("Abstarct", text[i]);
+				F3D.Log.info("Abstract", text[i]);
 			}
 		} catch (IOException e)
 		{
