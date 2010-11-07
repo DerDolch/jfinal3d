@@ -4,6 +4,9 @@
 package AGFX.F3D.Surface;
 
 import java.util.ArrayList;
+
+import javax.vecmath.Vector4f;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;
@@ -141,19 +144,15 @@ public class TF3D_SurfaceManager
 
 			if (F3D.Config.use_gl_light)
 			{
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.WorldAmbient));
-				this.materials.get(id).diffuse[0] = this.materials.get(id).color.x;
-				this.materials.get(id).diffuse[1] = this.materials.get(id).color.y;
-				this.materials.get(id).diffuse[2] = this.materials.get(id).color.z;
-				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
-
-				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
-				//glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
-				//glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.materials.get(id).colors.ambient));
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
+				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
+				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
+				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this.materials.get(id).colors.shinisess);
 
 			} else
 			{
-				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
+				glColor4f(this.materials.get(id).colors.diffuse[0], this.materials.get(id).colors.diffuse[1], this.materials.get(id).colors.diffuse[2], this.materials.get(id).colors.diffuse[3]);
 			}
 
 			for (int u = 0; u < F3D.MAX_TMU; u++)
@@ -208,22 +207,14 @@ public class TF3D_SurfaceManager
 				glDisable(GL_CULL_FACE);
 			}
 
-			if (F3D.Config.use_gl_light)
-			{
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.WorldAmbient));
-				this.materials.get(id).diffuse[0] = this.materials.get(id).color.x;
-				this.materials.get(id).diffuse[1] = this.materials.get(id).color.y;
-				this.materials.get(id).diffuse[2] = this.materials.get(id).color.z;
-				this.materials.get(id).diffuse[3] = this.materials.get(id).color.w;
+			
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.materials.get(id).colors.ambient));
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
+				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
+				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
+				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this.materials.get(id).colors.shinisess);
 
-				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).diffuse));
-				//glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.matAmbient));
-				//glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.matSpecular));
-
-			} else
-			{
-				glColor4f(this.materials.get(id).color.x, this.materials.get(id).color.y, this.materials.get(id).color.z, this.materials.get(id).color.w);
-			}
+			
 
 			if (this.materials.get(id).use_shader)
 			{
@@ -313,9 +304,14 @@ public class TF3D_SurfaceManager
 			// get name
 			mat.name = PARSER.GetAs_STRING("name");
 
-			// get color
-			mat.color = PARSER.GetAs_VECTOR4F("color");
+			// get material colors deinition			 
 
+			mat.colors.SetDiffuse(PARSER.GetAs_VECTOR4F("diffuse"));
+			mat.colors.SetAmbient(PARSER.GetAs_VECTOR4F("ambient"));
+			mat.colors.SetSpecular(PARSER.GetAs_VECTOR4F("specular"));
+			mat.colors.SetEmissive(PARSER.GetAs_VECTOR4F("emissive"));
+			mat.colors.shinisess = PARSER.GetAs_FLOAT("shinisess");
+			
 			// get texture 0 .. 3
 			mat.texture_unit[0].texture_name = PARSER.GetAs_STRING("texture_0");
 			mat.texture_unit[1].texture_name = PARSER.GetAs_STRING("texture_1");

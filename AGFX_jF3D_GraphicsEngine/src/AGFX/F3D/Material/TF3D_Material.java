@@ -16,12 +16,15 @@ public class TF3D_Material
 
 	public String                   name           = "none";
 	public int                      typ            = F3D.MAT_TYPE_TEXTURE;
-	public Vector4f                 color          = new Vector4f(1, 1, 1, 1);
-	public float                    diffuse[]      = new float[] { 1.0f, 0.0f, 0.0f, 1.0f };
+	// public Vector4f color = new Vector4f(1, 1, 1, 1);
+
+	public TF3D_MaterialColor       colors         = new TF3D_MaterialColor();
+
+	// front material color definition
+	// public float diffuse[] = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	public TF3D_MaterialTextureUnit texture_unit[] = new TF3D_MaterialTextureUnit[4];
 
-	public Boolean                  HW_lighting    = false;
 	public Boolean                  bAlphaTest     = false;
 	public Boolean                  bDepthTest     = false;
 	public Boolean                  bFaceCulling   = false;

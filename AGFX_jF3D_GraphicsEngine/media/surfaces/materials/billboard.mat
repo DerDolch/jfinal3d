@@ -2,7 +2,11 @@
 {
          type = MT_TEXTURE
          name = MAT_BEAM_1
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
  vertex_color = false
     texture_0 = Beam_1
     texture_1 = none
@@ -19,7 +23,11 @@
 {
          type = MT_TEXTURE
          name = MAT_BEAM_2
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
  vertex_color = false
     texture_0 = plasma
     texture_1 = none
@@ -36,7 +44,11 @@
 {
          type = MT_TEXTURE
          name = MAT_BEAM_3
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
  vertex_color = false
     texture_0 = plasmalight
     texture_1 = none
@@ -53,7 +65,11 @@
 {
          type = MT_TEXTURE
          name = MAT_BEAM_4
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
  vertex_color = false
     texture_0 = spark_white
     texture_1 = none
@@ -70,7 +86,11 @@
 {
          type = MT_TEXTURE
          name = MAT_BEAM_DIR
-        color = 1,1,1,1
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
  vertex_color = false 
     texture_0 = Beam_1
     texture_1 = none
