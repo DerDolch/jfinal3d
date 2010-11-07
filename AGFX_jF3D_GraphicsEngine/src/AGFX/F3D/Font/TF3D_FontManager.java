@@ -160,7 +160,7 @@ public class TF3D_FontManager
 		int id = this.FindByName(fontname);
 		if (id < 0)
 		{
-			F3D.Log.error("TF3D_FontManager", "Font name: '" + fontname + "' doesn't exist !");
+			F3D.Log.warning("TF3D_FontManager", "Font name: '" + fontname + "' doesn't exist !");
 		} else
 		{
 			this.items.get(id).DrawText(X, Y, Txt, Lev);
