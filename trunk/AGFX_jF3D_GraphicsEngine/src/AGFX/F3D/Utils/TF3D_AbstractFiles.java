@@ -2,6 +2,7 @@ package AGFX.F3D.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -207,8 +208,29 @@ public class TF3D_AbstractFiles
 	 * @param is
 	 */
 	// -----------------------------------------------------------------------
-	public void Load(InputStream is)
+	public void Load(String filename)
 	{
+		
+		InputStream is = null;
+		
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		{
+			is = getClass().getClassLoader().getResourceAsStream("config/media.folders");
+		}
+		
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		{
+			try
+            {
+	            is = new FileInputStream(filename);
+            } catch (FileNotFoundException e)
+            {
+
+	            
+	            F3D.Log.error("TF3D_AbstractFiles", "Missing file '"+filename+"'!");
+            }
+		}
+		
 		// asset can't be more than 2 gigs.
 		int size;
 		try
@@ -229,12 +251,12 @@ public class TF3D_AbstractFiles
 				text[i] = text[i].replaceAll("\n", "");
 				text[i] = text[i].replaceAll("\r", "");
 				this.Dir.add(text[i]);
-				F3D.Log.info("Abstract", text[i]);
+				F3D.Log.info("Manulay load Abstract list", text[i]);
 			}
 		} catch (IOException e)
 		{
 			e.printStackTrace();
-			F3D.Log.error("TF3D_AbstractFiles", "Missing file in JAR!!");
+			F3D.Log.error("TF3D_AbstractFiles", "Missing file ");
 		}
 
 	}

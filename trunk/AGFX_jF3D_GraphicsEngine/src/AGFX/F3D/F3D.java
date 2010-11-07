@@ -246,7 +246,10 @@ public class F3D
 
 		F3D.Preloader.PreloadData();
 
-		F3D.Fonts.Load("abstract::system.font");
+		if (F3D.Config.io_preload_data)
+		{
+			F3D.Fonts.Load("abstract::system.font");
+		}
 
 		if (F3D.Config.use_physics)
 			F3D.Physic.Initialize();
