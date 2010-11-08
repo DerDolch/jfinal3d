@@ -64,19 +64,33 @@ public class TF3D_Mesh
 	{
 		String o_fname = filename;
 
-		filename = filename.replace(".a3da", ".a3db");
-
-		if (F3D.AbstractFiles.ExistFile(filename))
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
 		{
-			this.Load_A3DB(filename);
-		} else
-		{
-			this.Load_A3DA(o_fname);
+			
+			filename = filename.replace(".a3da", ".a3db");
 
-			if (F3D.Config.io_mesh_asci_to_bin)
+			if (F3D.AbstractFiles.ExistFile(filename))
 			{
-				this.Save_A3DB(o_fname);
-			}
+				this.Load_A3DB(filename);
+			} else
+			{
+				this.Load_A3DA(o_fname);
+
+				if (F3D.Config.io_mesh_asci_to_bin)
+				{
+					this.Save_A3DB(o_fname);
+				}
+			}	
+		}
+		
+		
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		{
+			
+			if (F3D.AbstractFiles.ExistFile(filename))
+			{
+				this.Load_A3DA(filename);
+			} 	
 		}
 
 		// create VBO buffers

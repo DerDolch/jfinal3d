@@ -123,7 +123,16 @@ public class TF3D_Font
 			
 			fontinifile = F3D.AbstractFiles.GetFullPath(fontinifile);
 			
-			is = new FileInputStream(fontinifile);
+			//is = new FileInputStream(fontinifile);
+			
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+			{
+				is = ClassLoader.getSystemResourceAsStream(fontinifile);
+			}
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+			{
+				is = new FileInputStream(fontinifile);
+			}
 			
 			// asset can't be more than 2 gigs.
 			int size = is.available();

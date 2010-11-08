@@ -3,6 +3,9 @@ package AGFX.F3D.Texture;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -87,9 +90,22 @@ public class TF3D_Texture
 	{
 
 		Texture texture = null;
+		InputStream is = null;
 
-		texture = TextureLoader.getTexture(FMT, new FileInputStream(filename));
-
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		{
+			
+			is = ClassLoader.getSystemResourceAsStream(filename);
+			
+		}
+		
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		{
+			is = new FileInputStream(filename);
+		}
+		
+		texture = TextureLoader.getTexture(FMT, is);
+		
 		texture.bind();
 		int width = (int) texture.getImageWidth();
 		int height = (int) texture.getImageHeight();

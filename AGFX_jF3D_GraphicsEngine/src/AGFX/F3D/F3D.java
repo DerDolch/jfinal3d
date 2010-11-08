@@ -38,7 +38,7 @@ public class F3D
 	// ' LOG: CONST
 	// '-----------------------------------------------------------------
 	public static final boolean             PARSER_LOG                 = false;
-	public static final boolean             ABSTARCTFILE_LOG           = true;
+	public static final boolean             ABSTARCTFILE_LOG           = false;
 	
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
@@ -189,7 +189,10 @@ public class F3D
 
 		//F3D.Config = new TF3D_Config();
 		
-		F3D.AbstractFiles = new TF3D_AbstractFiles();
+		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		{
+			F3D.AbstractFiles = new TF3D_AbstractFiles();
+		}
 		
 		F3D.Preloader = new TF3D_Preloader();
 
@@ -244,12 +247,17 @@ public class F3D
 		F3D.Key = new TF3D_Keyboard();
 		F3D.Viewport.Init3D();
 
-		F3D.Preloader.PreloadData();
+		if (F3D.Config.io_preload_data)
+		{
+			F3D.Preloader.PreloadData();
+		}
 
 		if (F3D.Config.io_preload_data)
 		{
+			// TODO switch load system font back later
 			F3D.Fonts.Load("abstract::system.font");
 		}
+		
 
 		if (F3D.Config.use_physics)
 			F3D.Physic.Initialize();
