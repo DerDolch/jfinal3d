@@ -220,24 +220,9 @@ public class TF3D_AbstractFiles
 	{
 
 		InputStream is = null;
-
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
-		{
-			is = getClass().getClassLoader().getResourceAsStream("config/media.folders");
-		}
-
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
-		{
-			try
-			{
-				is = new FileInputStream(filename);
-			} catch (FileNotFoundException e)
-			{
-
-				F3D.Log.error("TF3D_AbstractFiles", "Missing file '" + filename + "'!");
-			}
-		}
-
+		
+		is = F3D.Resource.GetInputStream(filename);
+		
 		// asset can't be more than 2 gigs.
 		int size;
 		try

@@ -96,7 +96,6 @@ public class TF3D_Config
 		this.r_anisotropy_filtering = 0;
 		this.r_display_fov = 65f;
 
-		// F3D.Log.info("TF3D_Config","Config class created");
 	}
 
 	public void Load(String filename)

@@ -20,6 +20,7 @@ import AGFX.F3D.Mesh.TF3D_MeshManager;
 import AGFX.F3D.Physics.TF3D_Physics;
 import AGFX.F3D.Pick.TF3D_Pick;
 import AGFX.F3D.Preloader.TF3D_Preloader;
+import AGFX.F3D.ResourceLoader.TF3D_ResourceLoader;
 import AGFX.F3D.Shader.TF3D_ShaderManager;
 import AGFX.F3D.Surface.TF3D_SurfaceManager;
 import AGFX.F3D.Texture.TF3D_TextureManager;
@@ -148,6 +149,7 @@ public class F3D
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 
+	public static TF3D_ResourceLoader		Resource = new TF3D_ResourceLoader();
 	public static TF3D_AbstractFiles        AbstractFiles = new TF3D_AbstractFiles();
 	public static TF3D_Config               Config;
 	public static TF3D_Extensions           Extensions;
@@ -179,6 +181,7 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
+	
 	
 	public static void Create()
 	{
@@ -250,14 +253,8 @@ public class F3D
 		if (F3D.Config.io_preload_data)
 		{
 			F3D.Preloader.PreloadData();
-		}
-
-		if (F3D.Config.io_preload_data)
-		{
-			// TODO switch load system font back later
 			F3D.Fonts.Load("abstract::system.font");
 		}
-		
 
 		if (F3D.Config.use_physics)
 			F3D.Physic.Initialize();
