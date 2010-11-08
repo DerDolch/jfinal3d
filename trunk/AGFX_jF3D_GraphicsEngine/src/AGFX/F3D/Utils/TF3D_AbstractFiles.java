@@ -15,47 +15,52 @@ import AGFX.F3D.F3D;
 
 public class TF3D_AbstractFiles
 {
-	public ArrayList<String> Dir;
-	static final int         MAX_DEPTH = 20;
+	public ArrayList<String>	Dir;
+	static final int			MAX_DEPTH	= 20;
 
-	
 	// -----------------------------------------------------------------------
-	// TF3D_AbstractFiles: 
+	// TF3D_AbstractFiles:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Constructor
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Constructor <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 	public TF3D_AbstractFiles()
 	{
+		
 		this.Dir = new ArrayList<String>();
-
+		
 		if (F3D.Config == null)
 		{
 			this.GererateFilesList("config");
-			
+
 		} else
 		{
 			this.GererateFilesList(F3D.Config.io_preload_folder);
 		}
+
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_AbstractFiles: 
+	// TF3D_AbstractFiles:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Generate files list
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param media_folder - root folder name
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Generate files list <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param media_folder
+	 *            - root folder name
 	 */
 	// -----------------------------------------------------------------------
 	private void GererateFilesList(String media_folder)
 	{
 		File root;
-		
+
 		root = new File(media_folder);
 		if (root != null && root.isDirectory())
 		{
@@ -65,15 +70,15 @@ public class TF3D_AbstractFiles
 			System.out.println("Not a directory: " + root);
 		}
 	}
-	
-	
+
 	// -----------------------------------------------------------------------
-	// TF3D_AbstractFiles: 
+	// TF3D_AbstractFiles:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  List of all files from defined folder
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * List of all files from defined folder <BR>
+	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
 	public void Dump()
@@ -115,7 +120,8 @@ public class TF3D_AbstractFiles
 	public static String backlashReplace(String myStr)
 	{
 		final StringBuilder result = new StringBuilder();
-		final StringCharacterIterator iterator = new StringCharacterIterator(myStr);
+		final StringCharacterIterator iterator = new StringCharacterIterator(
+				myStr);
 		char character = iterator.current();
 		while (character != CharacterIterator.DONE)
 		{
@@ -199,38 +205,39 @@ public class TF3D_AbstractFiles
 	}
 
 	// -----------------------------------------------------------------------
-	// TF3D_AbstractFiles: 
+	// TF3D_AbstractFiles:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Load File list from file
-	 * <BR>-------------------------------------------------------------------<BR> 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Load File list from file <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @param is
 	 */
 	// -----------------------------------------------------------------------
 	public void Load(String filename)
 	{
-		
+
 		InputStream is = null;
-		
+
 		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
 		{
 			is = getClass().getClassLoader().getResourceAsStream("config/media.folders");
 		}
-		
+
 		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
 		{
 			try
-            {
-	            is = new FileInputStream(filename);
-            } catch (FileNotFoundException e)
-            {
+			{
+				is = new FileInputStream(filename);
+			} catch (FileNotFoundException e)
+			{
 
-	            
-	            F3D.Log.error("TF3D_AbstractFiles", "Missing file '"+filename+"'!");
-            }
+				F3D.Log.error("TF3D_AbstractFiles", "Missing file '" + filename + "'!");
+			}
 		}
-		
+
 		// asset can't be more than 2 gigs.
 		int size;
 		try
@@ -239,7 +246,7 @@ public class TF3D_AbstractFiles
 			// Read the entire asset into a local byte buffer.
 			byte[] buffer = new byte[size];
 			is.read(buffer);
-			is.close();
+			
 
 			// Convert the buffer into a string.
 			String[] text = new String(buffer).split("\n");
@@ -253,6 +260,8 @@ public class TF3D_AbstractFiles
 				this.Dir.add(text[i]);
 				F3D.Log.info("Manulay load Abstract list", text[i]);
 			}
+			
+			is.close();
 		} catch (IOException e)
 		{
 			e.printStackTrace();

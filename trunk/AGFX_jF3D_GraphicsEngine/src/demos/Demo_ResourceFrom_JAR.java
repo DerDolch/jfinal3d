@@ -4,12 +4,19 @@
 package demos;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.vecmath.Vector3f;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
+import AGFX.F3D.Light.TF3D_Light;
 
 /**
  * @author AndyGFX
@@ -17,7 +24,9 @@ import AGFX.F3D.Config.TF3D_Config;
  */
 public class Demo_ResourceFrom_JAR extends TF3D_AppWrapper
 {
-
+	public TF3D_Camera Camera;
+	public int         id;
+	
 	public Demo_ResourceFrom_JAR()
 	{
 	}
@@ -36,12 +45,10 @@ public class Demo_ResourceFrom_JAR extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = false;
-			F3D.Config.io_preload_source = "PRELOAD_FROM_JAR";  // <---- VERY IMPORTANT !!!
-			F3D.Config.io_preload_data = false;					// <---- VERY IMPORTANT !!!
-			
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - Reasurce from JAR";
-			F3D.AbstractFiles.Load("config/media.folders");
-
+			
+			// [1] set resource destination 
+			F3D.Config.io_preload_source = "PRELOAD_FROM_JAR";
 			
 			super.onConfigure();
 
@@ -55,22 +62,38 @@ public class Demo_ResourceFrom_JAR extends TF3D_AppWrapper
 	public void onInitialize()
 	{
 
-		// Step[01]: CREATE AbstarctFiles from file
+		F3D.Worlds.CreateWorld("MAIN_WORLD");
 
-		
+		this.Camera = new TF3D_Camera("TargetCamera");
+		this.Camera.SetPosition(5.0f, 5.0f, -5.0f);
+		this.Camera.movespeed = 0.2f;
+		this.Camera.TargetPoint = new Vector3f(0, 0, 0);
+		this.Camera.ctype = F3D.CAMERA_TYPE_TARGET;
+
+		F3D.Cameras.Add(this.Camera);
+		F3D.Worlds.SetCamera(this.Camera);
+
+		F3D.Meshes.Add("abstract::Capsule.a3da");
+
+		id = F3D.Meshes.FindByName("abstract::Capsule.a3da");
+
+		// Add light to scene
+		TF3D_Light light = new TF3D_Light("light_0", 0);
+		light.SetPosition(3, 3, 3);
+		light.Enable();
 
 	}
 
 	@Override
 	public void onUpdate3D()
 	{
-
+		F3D.Meshes.items.get(id).Render();
 	}
 
 	@Override
 	public void onUpdate2D()
 	{
-		//F3D.Viewport.DrawInfo(0, 0);
+		F3D.Viewport.DrawInfo(0, 0);
 	}
 
 	@Override

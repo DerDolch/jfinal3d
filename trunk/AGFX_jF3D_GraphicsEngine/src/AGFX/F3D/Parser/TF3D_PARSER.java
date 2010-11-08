@@ -3,14 +3,19 @@
  */
 package AGFX.F3D.Parser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
+
+import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
 
@@ -23,7 +28,7 @@ public class TF3D_PARSER
 
 	public class TA3D_ParserBlock
 	{
-		public ArrayList<String> lines;
+		public ArrayList<String>	lines;
 
 		public TA3D_ParserBlock()
 		{
@@ -36,15 +41,15 @@ public class TF3D_PARSER
 		}
 	}
 
-	public ArrayList<TA3D_ParserBlock> Blocks;
-	public String                      filename        = "";
-	public String                      NL              = "\n";
-	public String                      VAR_SEPARATOR   = "=";
-	public String                      VALUE_SEPARATOR = ",";
-	public String                      BEGIN_SEPARATOR = "{";
-	public String                      END_SEPARATOR   = "}";
+	public ArrayList<TA3D_ParserBlock>	Blocks;
+	public String						filename		= "";
+	public String						NL				= "\n";
+	public String						VAR_SEPARATOR	= "=";
+	public String						VALUE_SEPARATOR	= ",";
+	public String						BEGIN_SEPARATOR	= "{";
+	public String						END_SEPARATOR	= "}";
 
-	public TA3D_ParserBlock            CurrentBlock;
+	public TA3D_ParserBlock				CurrentBlock;
 
 	// -----------------------------------------------------------------------
 	// TA3D_PARSER:
@@ -60,7 +65,7 @@ public class TF3D_PARSER
 	{
 		System.out.print("TF3D_PARSER   Create File Parser class");
 		this.Blocks = new ArrayList<TA3D_ParserBlock>();
-		
+
 	}
 
 	// -----------------------------------------------------------------------
@@ -81,30 +86,49 @@ public class TF3D_PARSER
 
 		TA3D_ParserBlock _block = new TA3D_ParserBlock();
 		InputStream is = null;
-		
+
 		try
 		{
 			Boolean Exist = F3D.AbstractFiles.ExistFile(filename);
-			
+
 			if (!Exist)
 			{
 				F3D.Log.error("F3D_PARSER", "Can't load file:" + filename);
 			}
-			
-			F3D.Log.info("F3D_PARSER", "Parsing file:" + filename);
-			
-			filename = F3D.AbstractFiles.GetFullPath(filename);
-			
-			
-			is = new FileInputStream(filename);
-			
-			// asset can't be more than 2 gigs.
-			int size = is.available();
 
+			F3D.Log.info("F3D_PARSER", "Parsing file:" + filename);
+
+			filename = F3D.AbstractFiles.GetFullPath(filename);
+
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+			{
+				is = ClassLoader.getSystemResourceAsStream(filename);
+			}
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+			{
+				is = new FileInputStream(filename);
+			}
+
+			// get size.
+			int size = is.available();
+			int rsize = 0;
 			// Read the entire asset into a local byte buffer.
 			byte[] buffer = new byte[size];
-			is.read(buffer);
-			is.close();
+
+			DataInputStream in = new DataInputStream(is);
+			ByteBuffer bb = BufferUtils.createByteBuffer(size);
+
+			while (in.available() != 0)
+			{
+				bb.put(in.readByte());
+				rsize++;
+			}
+
+			bb.rewind();
+			bb.get(buffer);
+
+			F3D.Log.info("F3D_PARSER", "   file size:" + String.valueOf(size));
+			F3D.Log.info("F3D_PARSER", "   read size:" + String.valueOf(rsize));
 
 			// Convert the buffer into a string.
 			String[] text = new String(buffer).split("\n");
@@ -147,10 +171,12 @@ public class TF3D_PARSER
 				}
 
 			}
+			is.close();
 			this.Dump();
 		} catch (IOException e)
 		{
-			F3D.Log.error("TF3D_PARSER", "TA3D_PARSER.ParseFile('" + filename + "') " + e.toString());
+			F3D.Log.error("TF3D_PARSER", "TA3D_PARSER.ParseFile('" + filename
+					+ "') " + e.toString());
 		}
 	}
 
@@ -225,12 +251,14 @@ public class TF3D_PARSER
 		{
 			for (int i = 0; i < this.Blocks.size(); i++)
 			{
-				F3D.Log.info("TF3D_PARSER", "PARSER: ------------ BLOCK -------------");
+				F3D.Log.info("TF3D_PARSER", "PARSER: ------------ BLOCK ["
+						+ String.valueOf(i) + "]-------------");
 				this.SetBlock(i);
 
 				for (int l = 0; l < this.CurrentBlock.lines.size(); l++)
 				{
-					F3D.Log.info("TF3D_PARSER", "PARSER: " + this.CurrentBlock.lines.get(l));
+					F3D.Log.info("TF3D_PARSER", "PARSER: "
+							+ this.CurrentBlock.lines.get(l));
 				}
 				F3D.Log.info("TF3D_PARSER", "PARSER: --------------------------------");
 			}
