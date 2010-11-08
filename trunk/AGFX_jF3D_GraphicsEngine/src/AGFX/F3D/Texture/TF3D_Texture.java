@@ -92,6 +92,7 @@ public class TF3D_Texture
 		Texture texture = null;
 		InputStream is = null;
 
+		/*
 		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
 		{
 			
@@ -103,6 +104,9 @@ public class TF3D_Texture
 		{
 			is = new FileInputStream(filename);
 		}
+		*/
+		
+		is = F3D.Resource.GetInputStream(filename);
 		
 		texture = TextureLoader.getTexture(FMT, is);
 		

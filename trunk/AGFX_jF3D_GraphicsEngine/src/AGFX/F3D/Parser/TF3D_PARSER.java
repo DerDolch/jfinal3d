@@ -99,16 +99,9 @@ public class TF3D_PARSER
 			F3D.Log.info("F3D_PARSER", "Parsing file:" + filename);
 
 			filename = F3D.AbstractFiles.GetFullPath(filename);
-
-			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
-			{
-				is = ClassLoader.getSystemResourceAsStream(filename);
-			}
-			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
-			{
-				is = new FileInputStream(filename);
-			}
-
+			
+			is = F3D.Resource.GetInputStream(filename);
+			
 			// get size.
 			int size = is.available();
 			int rsize = 0;
