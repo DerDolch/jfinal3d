@@ -85,11 +85,11 @@ public class Demo_TrueTypeFont extends TF3D_AppWrapper
 			
 		} catch (FontFormatException e)
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

@@ -120,7 +120,11 @@ Type TAGFX_MaterialList
 			WriteLine _out, "{"
 			WriteLine _out, "         type = MAT_TEXTURE"
 			WriteLine _out, "         name = " + Self.Materials[m_id].Name
-			WriteLine _out, "        color = 1,1,1,1"
+			WriteLine _out, "      diffuse = 1, 1, 1, 1"
+			WriteLine _out, "      ambient = 0.1,0.1,0.1,1.0"
+			WriteLine _out, "     emissive = 0,0,0,1"
+			WriteLine _out, "     specular = 0,0,0,1"
+			WriteLine _out, "    shinisess = 0"			
 			WriteLine _out, " vertex_color = false"
 			WriteLine _out, "    texture_0 = " + StripDir(Self.Materials[m_id].map_Kd)
 			WriteLine _out, "    texture_1 = " + StripDir(Self.Materials[m_id].map_Kb)

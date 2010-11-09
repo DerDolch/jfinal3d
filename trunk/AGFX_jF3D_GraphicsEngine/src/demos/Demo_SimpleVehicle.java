@@ -106,6 +106,8 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.car.model_wheel_BL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
 		this.car.model_wheel_BR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
 
+
+		
 		this.car.SetPosition(0, 10, 0);
 
 		this.car.Create();
