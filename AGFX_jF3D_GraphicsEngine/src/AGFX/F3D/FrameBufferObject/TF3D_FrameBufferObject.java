@@ -26,6 +26,7 @@ import AGFX.F3D.F3D;
  */
 public class TF3D_FrameBufferObject
 {
+	private Boolean depth;
 	private int texture_id;
 	private int depth_id;	
 	private int width;
@@ -38,6 +39,7 @@ public class TF3D_FrameBufferObject
 	
 	public TF3D_FrameBufferObject(String _name,int w, int h, Boolean depth)
 	{
+		this.depth = depth;
 		this.name = _name;
 		this.width = w;
 		this.height = h;
@@ -49,7 +51,7 @@ public class TF3D_FrameBufferObject
 		
 		// RENDER BUFFER
 		
-		if (depth)
+		if (this.depth)
 		{
     		buffer = BufferUtils.createIntBuffer(1); 
     		glGenRenderbuffers(buffer);
@@ -80,7 +82,7 @@ public class TF3D_FrameBufferObject
 	    
 	    
 	    // attach renderbufferto framebufferdepth buffer
-	    if (depth)
+	    if (this.depth)
 	    {
     	    glBindRenderbuffer(GL_RENDERBUFFER, this.RBO_id);
     	    glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH_COMPONENT24, this.width, this.height);
@@ -116,7 +118,10 @@ public class TF3D_FrameBufferObject
 	{
 		glPopAttrib();
 		if (frame_off) glBindFramebuffer( GL_FRAMEBUFFER, 0);
-		if (render_off) glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		if (this.depth)
+		{
+			if (render_off) glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		}
 	}
 
 	public void Bind()
