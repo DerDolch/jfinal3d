@@ -381,6 +381,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 		trans.getOpenGLMatrix(this.wheel_BR_transformMatrix);
 		this.wheel_BR_transformMatrixBuffer.put(this.wheel_BR_transformMatrix);
 		this.wheel_BR_transformMatrixBuffer.rewind();
+		
 	}
 
 	@Override

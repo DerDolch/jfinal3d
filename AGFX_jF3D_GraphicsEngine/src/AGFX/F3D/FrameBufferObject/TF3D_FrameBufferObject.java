@@ -36,7 +36,7 @@ public class TF3D_FrameBufferObject
 	private IntBuffer buffer;
 	
 	
-	public TF3D_FrameBufferObject(String _name,int w, int h)
+	public TF3D_FrameBufferObject(String _name,int w, int h, Boolean depth)
 	{
 		this.name = _name;
 		this.width = w;
@@ -49,9 +49,12 @@ public class TF3D_FrameBufferObject
 		
 		// RENDER BUFFER
 		
-		buffer = BufferUtils.createIntBuffer(1); 
-		glGenRenderbuffers(buffer);
-		this.RBO_id = buffer.get();
+		if (depth)
+		{
+    		buffer = BufferUtils.createIntBuffer(1); 
+    		glGenRenderbuffers(buffer);
+    		this.RBO_id = buffer.get();
+		}
 		
 	    glEnable(GL_TEXTURE_2D);
 	    
@@ -77,10 +80,12 @@ public class TF3D_FrameBufferObject
 	    
 	    
 	    // attach renderbufferto framebufferdepth buffer
-	    glBindRenderbuffer(GL_RENDERBUFFER, this.RBO_id);
-	    glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH_COMPONENT24, this.width, this.height);
-	    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this.RBO_id);
-	    
+	    if (depth)
+	    {
+    	    glBindRenderbuffer(GL_RENDERBUFFER, this.RBO_id);
+    	    glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH_COMPONENT24, this.width, this.height);
+    	    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this.RBO_id);
+	    }
 	    
 	    // CLOSE TETXURE and BUFFER
 	    glBindFramebuffer(GL_FRAMEBUFFER, 0);	    

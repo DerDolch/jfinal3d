@@ -37,9 +37,9 @@ media/fonts/courier_new_8_normal.font
 media/fonts/system.font
 media/fonts/tahoma_8_bold.font
 media/fonts/tahoma_8_normal.font
-media/media.folders
 media/models
 media/models/BaseCube.a3da
+media/models/BaseCube.a3db
 media/models/Capsule.a3da
 media/models/Capsule.a3db
 media/models/Cone.a3da
@@ -66,13 +66,10 @@ media/models/landscape/landscape.texture
 media/models/landscape/landscape_detail.texture
 media/models/landscape/land_color.png
 media/models/MultiSurfCube.a3da
-media/models/MultiSurfCube.a3db
 media/models/Plane.a3da
-media/models/Plane.a3db
 media/models/SKY_Dome
 media/models/SKY_Dome/sky_gradient.png
 media/models/SKY_Dome/Sky_sphere.a3da
-media/models/SKY_Dome/Sky_sphere.a3db
 media/models/SKY_Dome/Sky_sphere.mat
 media/models/SKY_Dome/Sky_sphere.texture
 media/models/Sphere.a3da
@@ -93,7 +90,6 @@ media/models/zeton
 media/models/zeton/MATzetony.mat
 media/models/zeton/MATzetony.texture
 media/models/zeton/zeton.a3da
-media/models/zeton/zeton.a3db
 media/models/zeton/zetony.png
 media/shaders
 media/shaders/f3d_diffuse.frag

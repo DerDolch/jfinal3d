@@ -148,7 +148,7 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		
 		//this.pbuff = new TF3D_FrameBufferObject("FBO_BUFFER",400,300);
 		
-		F3D.FrameBuffers.Add("FBO_BUFFER",400,300);
+		F3D.FrameBuffers.Add("FBO_BUFFER",400,300,false);
 		F3D.Textures.Add("FRAME_BUFFER", F3D.FrameBuffers.Get("FBO_BUFFER"), false);
 		
 	}

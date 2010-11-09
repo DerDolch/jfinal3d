@@ -181,7 +181,9 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		// F3D.Worlds.RenderManualy();
 		world_id = F3D.Worlds.FindByName("MAIN_WORLD");
 
-		frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height);
+		// use this line when your GOU has RenderBufffer support
+		//frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,true);
+		frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,false);
 		F3D.Textures.Add("POSTFX_TETXURE", F3D.FrameBuffers.Get("POSTFX"), true);
 
 	}

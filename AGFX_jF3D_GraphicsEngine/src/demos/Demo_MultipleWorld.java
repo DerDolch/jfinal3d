@@ -123,6 +123,9 @@ public class Demo_MultipleWorld extends TF3D_AppWrapper
 		this.plane.SetRotation(0f, 0f, 0f);
 		
 		F3D.Worlds.SetCamera(F3D.Cameras.GetCamera("TargetCamera2"));
+		
+		
+		
 	}
 
 	@Override
