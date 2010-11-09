@@ -383,6 +383,17 @@ public class TF3D_Vehicle extends TF3D_Entity
 		this.wheel_BR_transformMatrixBuffer.rewind();
 	}
 
+	@Override
+	public void UpdateAxisDirection()
+	{
+		// update axis by GL Matrix
+		
+		this.axis._right.set(this.chassis_transformMatrix[0],this.chassis_transformMatrix[1],this.chassis_transformMatrix[2]);		                                                                    
+		this.axis._up.set(this.chassis_transformMatrix[4],this.chassis_transformMatrix[5],this.chassis_transformMatrix[6]);
+		this.axis._forward.set(this.chassis_transformMatrix[8],this.chassis_transformMatrix[9],this.chassis_transformMatrix[10]);
+		
+	}
+	
 	// -----------------------------------------------------------------------
 	// TF3D_Vehicle: 
 	// -----------------------------------------------------------------------

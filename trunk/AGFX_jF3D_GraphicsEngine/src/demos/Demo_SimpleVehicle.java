@@ -3,6 +3,8 @@
  */
 package demos;
 
+import javax.vecmath.Vector3f;
+
 import org.lwjgl.input.Keyboard;
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
@@ -99,7 +101,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
 
 		this.car = new TF3D_Vehicle("CAR_01");
-		this.car.SetRotation(0, 45, 0);
+		this.car.SetRotation(0, 0, 0);
 		this.car.model_chassis = F3D.Meshes.FindByName("abstract::jeep.a3da");
 		this.car.model_wheel_FL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
 		this.car.model_wheel_FR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
@@ -120,7 +122,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		F3D.Draw.Axis(2.0f);
 
 		// look at car
-		F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).TargetPoint.set(this.car.GetPosition());
+		//F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).TargetPoint.set(this.car.GetPosition());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP))
 		{
@@ -162,6 +164,39 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		{
 			this.car.Reset();
 		}
+		
+		
+		// Calc camera target to car
+		
+		// update AXIS orintation 
+		this.car.UpdateAxisDirection();
+		
+		// get carr position
+		Vector3f car_pos = new Vector3f(this.car.GetPosition());
+		
+		// get car foreard direction
+		Vector3f car_dir = new Vector3f(this.car.axis._forward);
+		
+		// reset dir height
+		car_dir.y =0;
+		
+		// normalize
+		car_dir.normalize();
+		
+		// add bacjward camera offset
+		car_dir.scale(-8f);
+		
+		// add offset to last position 
+		car_pos.add(car_dir);
+		
+		// set cam height
+		car_pos.y+=8f;
+		
+		// set camera position
+		this.Camera.SetPosition(car_pos);
+		
+		// set camera target point
+		this.Camera.TargetPoint.set(this.car.GetPosition());
 
 	}
 

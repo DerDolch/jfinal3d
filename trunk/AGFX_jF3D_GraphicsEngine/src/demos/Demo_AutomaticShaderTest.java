@@ -57,7 +57,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.use_shaders = false;
+			F3D.Config.use_shaders = true;
 			F3D.Config.use_gl_light = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - RENDER SHADER MODEL";
 			
