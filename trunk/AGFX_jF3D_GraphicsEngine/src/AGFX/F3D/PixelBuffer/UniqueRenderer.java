@@ -35,19 +35,24 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.Pbuffer;
 import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.opengl.RenderTexture;
 
 import static org.lwjgl.opengl.GL11.*;
 
-final class UniqueRenderer extends TextureRenderer {
+public final class UniqueRenderer extends TextureRenderer
+{
 
-	UniqueRenderer(final int width, final int height, final int texID) {
+	public UniqueRenderer(final int width, final int height, final int texID)
+	{
 		super(width, height, texID);
 	}
-
-	protected Pbuffer init(final int width, final int height, final int texID) {
+	/*
+	protected Pbuffer init(final int width, final int height, final int texID)
+	{
 		Pbuffer pbuffer = null;
 
-		try {
+		try
+		{
 			pbuffer = new Pbuffer(width, height, new PixelFormat(16, 0, 0, 0, 0), null, null);
 
 			// Initialise state of the pbuffer context.
@@ -57,7 +62,8 @@ final class UniqueRenderer extends TextureRenderer {
 			glBindTexture(GL_TEXTURE_2D, texID);
 
 			Display.makeCurrent();
-		} catch (LWJGLException e) {
+		} catch (LWJGLException e)
+		{
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -65,9 +71,54 @@ final class UniqueRenderer extends TextureRenderer {
 		return pbuffer;
 	}
 
-	public void updateTexture() {
+	public void updateTexture()
+	{
 		// Copy the pbuffer contents to the texture.
 		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 0, 0, width, height, 0);
+	}
+*/
+	// Initialize texture renderer
+	protected Pbuffer init(final int width, final int height, final int texID)
+	{
+		Pbuffer pbuffer = null;
+
+		try
+		{
+			final RenderTexture rt = new RenderTexture(true, false, false, false, RenderTexture.RENDER_TEXTURE_2D, 0);
+			pbuffer = new Pbuffer(width, height, new PixelFormat(16, 0, 0, 0, 0), rt, null);
+
+			// Initialise state of the pbuffer context.
+			pbuffer.makeCurrent();
+
+			PbufferTest.initGLState(width, height, 0.5f);
+			glBindTexture(GL_TEXTURE_2D, texID);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		    
+			Display.makeCurrent();
+		} catch (LWJGLException e)
+		{
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		return pbuffer;
+	}
+
+	public void enable()
+	{
+		super.enable();
+
+		// Put the renderer contents to the texture
+		pbuffer.releaseTexImage(Pbuffer.FRONT_LEFT_BUFFER);
+	}
+
+	public void updateTexture()
+	{
+		// Bind the texture after rendering.
+		pbuffer.bindTexImage(Pbuffer.FRONT_LEFT_BUFFER);
 	}
 
 }

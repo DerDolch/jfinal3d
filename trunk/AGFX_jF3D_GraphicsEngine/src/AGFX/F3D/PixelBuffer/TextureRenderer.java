@@ -35,24 +35,29 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Pbuffer;
 
 /**
- * Implementations of this class should create a pbuffer and implement "render-to-texture" accordingly.
+ * Implementations of this class should create a pbuffer and implement
+ * "render-to-texture" accordingly.
  */
-abstract class TextureRenderer {
+public abstract class TextureRenderer
+{
 
 	protected final int width;
 	protected final int height;
-	private final int texID;
+	private final int   texID;
 
-	protected Pbuffer pbuffer;
+	protected Pbuffer   pbuffer;
 
-	protected TextureRenderer(final int width, final int height, final int texID) {
+	protected TextureRenderer(final int width, final int height, final int texID)
+	{
 		this.width = width;
 		this.height = height;
 		this.texID = texID;
 
-		try {
+		try
+		{
 			pbuffer = init(width, height, texID);
-		} catch (LWJGLException e) {
+		} catch (LWJGLException e)
+		{
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -60,7 +65,7 @@ abstract class TextureRenderer {
 
 	/**
 	 * Create and initialize the pbuffer.
-	 *
+	 * 
 	 * @param width
 	 * @param height
 	 * @param texID
@@ -70,18 +75,23 @@ abstract class TextureRenderer {
 	protected abstract Pbuffer init(int width, int height, int texID) throws LWJGLException;
 
 	/**
-	 * This will be called before rendering to the renderer. Implementations should setup the pbuffer context as necessary.
+	 * This will be called before rendering to the renderer. Implementations
+	 * should setup the pbuffer context as necessary.
 	 */
-	void enable() {
-		try {
-			if ( pbuffer.isBufferLost() ) {
+	public void enable()
+	{
+		try
+		{
+			if (pbuffer.isBufferLost())
+			{
 				System.out.println("Buffer contents lost - recreating the pbuffer");
 				pbuffer.destroy();
 				pbuffer = init(width, height, texID);
 			}
 
 			pbuffer.makeCurrent();
-		} catch (LWJGLException e) {
+		} catch (LWJGLException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
@@ -89,12 +99,13 @@ abstract class TextureRenderer {
 	/**
 	 * Implementations should update the texture contents here.
 	 */
-	abstract void updateTexture();
+	public abstract void updateTexture();
 
 	/**
 	 * Clean-up resources held by the renderer
 	 */
-	final void destroy() {
+	final void destroy()
+	{
 		pbuffer.destroy();
 	}
 

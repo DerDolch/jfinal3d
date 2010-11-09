@@ -39,17 +39,21 @@ import org.lwjgl.opengl.RenderTexture;
 
 import static org.lwjgl.opengl.GL11.*;
 
-final class UniqueRendererRTT extends TextureRenderer {
+final class UniqueRendererRTT extends TextureRenderer
+{
 
-	UniqueRendererRTT(final int width, final int height, final int texID) {
+	UniqueRendererRTT(final int width, final int height, final int texID)
+	{
 		super(width, height, texID);
 	}
 
 	// Initialize texture renderer
-	protected Pbuffer init(final int width, final int height, final int texID) {
+	protected Pbuffer init(final int width, final int height, final int texID)
+	{
 		Pbuffer pbuffer = null;
 
-		try {
+		try
+		{
 			final RenderTexture rt = new RenderTexture(true, false, false, false, RenderTexture.RENDER_TEXTURE_2D, 0);
 			pbuffer = new Pbuffer(width, height, new PixelFormat(16, 0, 0, 0, 0), rt, null);
 
@@ -60,7 +64,8 @@ final class UniqueRendererRTT extends TextureRenderer {
 			glBindTexture(GL_TEXTURE_2D, texID);
 
 			Display.makeCurrent();
-		} catch (LWJGLException e) {
+		} catch (LWJGLException e)
+		{
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -68,14 +73,16 @@ final class UniqueRendererRTT extends TextureRenderer {
 		return pbuffer;
 	}
 
-	void enable() {
+	public void enable()
+	{
 		super.enable();
 
 		// Put the renderer contents to the texture
 		pbuffer.releaseTexImage(Pbuffer.FRONT_LEFT_BUFFER);
 	}
 
-	void updateTexture() {
+	public void updateTexture()
+	{
 		// Bind the texture after rendering.
 		pbuffer.bindTexImage(Pbuffer.FRONT_LEFT_BUFFER);
 	}
