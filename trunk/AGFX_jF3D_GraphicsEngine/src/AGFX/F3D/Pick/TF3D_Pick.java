@@ -86,7 +86,7 @@ public class TF3D_Pick
 		Vector3f fromA = new Vector3f(F3D.Cameras.GetPosition());
 		F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).UpdateAxisDirection();
 		Vector3f toB = new Vector3f(F3D.Cameras.items.get(F3D.Cameras.CurrentCameraID).axis._forward);
-
+		
 		toB.scale(-length);
 		toB.add(fromA);
 

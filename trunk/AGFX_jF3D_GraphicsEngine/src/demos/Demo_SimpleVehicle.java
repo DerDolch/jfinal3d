@@ -168,13 +168,13 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		
 		// Calc camera target to car
 		
-		// update AXIS orintation 
+		// update AXIS orientation 
 		this.car.UpdateAxisDirection();
 		
-		// get carr position
+		// get car position
 		Vector3f car_pos = new Vector3f(this.car.GetPosition());
 		
-		// get car foreard direction
+		// get car forward direction
 		Vector3f car_dir = new Vector3f(this.car.axis._forward);
 		
 		// reset dir height
@@ -183,7 +183,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		// normalize
 		car_dir.normalize();
 		
-		// add bacjward camera offset
+		// add backward camera offset
 		car_dir.scale(-8f);
 		
 		// add offset to last position 
