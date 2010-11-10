@@ -75,8 +75,7 @@ public class TF3D_World
 	{
 
 		// TODO REWRITE SKYBOX RENDERING !!!
-		//F3D.Cameras.RenderSky();
-		
+		// F3D.Cameras.RenderSky();
 
 		for (int i = 0; i < this.entities.size(); i++)
 		{
@@ -116,14 +115,14 @@ public class TF3D_World
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Remove entity from world <BR>
+	 * Remove entity from world by object<BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
 	 * @param e
 	 *            = entity
 	 */
 	// -----------------------------------------------------------------------
-	public void Remove(TF3D_Entity e)
+	public void RemoveEntity(TF3D_Entity e)
 	{
 		if (e.childs.size() > 0)
 		{
@@ -132,39 +131,98 @@ public class TF3D_World
 		this.entities.remove(e);
 	}
 
-	public void Destroy()
+	// -----------------------------------------------------------------------
+	// TF3D_World:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Remove entity from world by name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param name
+	 *            - entity name
+	 */
+	// -----------------------------------------------------------------------
+	public void RemoveEntiy(String name)
 	{
-		// todo remove by list not ID in LOOP
-		for (int i = 0; i < this.entities.size(); i++)
-		{
-			this.entities.get(i).Destroy();
-		}
-		
-		this.entities.clear();
-	}
-	
-	public void RemoveByName(String name)
-	{
-		int id = this.FindByName(name);
-		if (id>=0)
+		int id = this.FindEntityByName(name);
+		if (id >= 0)
 		{
 			this.entities.remove(id);
-			F3D.Log.info("TF3D_World", "entity '"+name+"' removed");
+			F3D.Log.info("TF3D_World", "entity '" + name + "' removed");
 		}
 	}
-	
-	public int FindByName(String entity_name)
+
+	// -----------------------------------------------------------------------
+	// TF3D_World:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Remove entity from world by ID <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param id
+	 *            - entity ID
+	 */
+	// -----------------------------------------------------------------------
+	public void RemoveEntiy(int id)
 	{
-		for(int i=0;i<this.entities.size();i++)
+
+		if (id >= 0)
+		{
+			this.entities.remove(id);
+			F3D.Log.info("TF3D_World", "entity '" + name + "' removed");
+		}
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_World:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * FInd entity ID by name <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param entity_name
+	 *            - entity name
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public int FindEntityByName(String entity_name)
+	{
+		for (int i = 0; i < this.entities.size(); i++)
 		{
 			if (this.entities.get(i).name.equals(entity_name))
 			{
 				return i;
 			}
-			
+
 		}
-		
+
 		return -1;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_World:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Destroy entities list and clear list <BR>
+	 * -------------------------------------------------------------------<BR>
+	 */
+	// -----------------------------------------------------------------------
+	public void Destroy()
+	{
+		// TODO change remove to foreach fnc!!!
+		for (int i = 0; i < this.entities.size(); i++)
+		{
+			this.entities.get(i).Destroy();
+		}
+
+		this.entities.clear();
+	}
 }

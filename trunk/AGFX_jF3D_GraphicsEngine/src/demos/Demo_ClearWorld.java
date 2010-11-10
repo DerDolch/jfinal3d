@@ -13,6 +13,7 @@ import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
+import AGFX.F3D.World.TF3D_World;
 
 /**
  * @author AndyGFX
@@ -104,10 +105,7 @@ public class Demo_ClearWorld extends TF3D_AppWrapper
 		
 		for (int i=0;i<10;i++)
 		{
-			int id = F3D.Worlds.items.get(w).FindByName("table_"+i);
-			F3D.Log.info("MAIN", String.valueOf(id) );
-			TF3D_Entity e = F3D.Worlds.items.get(w).entities.get(id);
-			F3D.Worlds.items.get(w).Remove(e);
+			F3D.Worlds.RemoveEntity("MAIN_WORLD", "table_"+i);
 		}
 		
 		F3D.Log.info("MAIN", "AFTER REMOVE -------------------------------");
