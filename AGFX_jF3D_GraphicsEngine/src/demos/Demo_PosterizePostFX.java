@@ -274,6 +274,11 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		{
 			this.FX = 2;
 		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_4))
+		{
+			this.FX = 3;
+		}
 
 	}
 
@@ -302,6 +307,12 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 			F3D.Textures.Bind("perlin_noise");
 		}
 		
+		if (FX==3)
+		{
+			F3D.Shaders.UseProgram("BLUR_H");
+			F3D.Textures.Bind("POSTFX_TETXURE");
+			F3D.Shaders.UseProgram("BLUR_V");
+		}
 		
 		F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height, true);
 		// F3D.Draw.Rectangle(0, 0, 400,300,true);

@@ -15,10 +15,10 @@ import AGFX.F3D.Entity.TF3D_Entity;
  */
 public class TF3D_WorldManager
 {
-	private int						current_world			= 0;
-	private Boolean					render_world_manualy	= false;
-	public TF3D_Camera				camera					= null;
-	public ArrayList<TF3D_World>	items;
+	private int                  current_world        = 0;
+	private Boolean              render_world_manualy = false;
+	public TF3D_Camera           camera               = null;
+	public ArrayList<TF3D_World> items;
 
 	// -----------------------------------------------------------------------
 	// TF3D_WorldManager:
@@ -152,24 +152,6 @@ public class TF3D_WorldManager
 		}
 
 		return null;
-	}
-
-	// -----------------------------------------------------------------------
-	// TF3D_WorldManager:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Remove entity from current world <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param e
-	 *            - entity
-	 */
-	// -----------------------------------------------------------------------
-	public void Remove(TF3D_Entity e)
-	{
-		this.items.get(this.current_world).Remove(e);
 	}
 
 	// -----------------------------------------------------------------------
@@ -358,5 +340,99 @@ public class TF3D_WorldManager
 	public void RenderAutomatic()
 	{
 		this.render_world_manualy = false;
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_WorldManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Remove entity from current world <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param worldname
+	 *            - world name
+	 * @param e
+	 *            - entity object
+	 */
+	// -----------------------------------------------------------------------
+	public void RemoveEntity(String worldname, TF3D_Entity e)
+	{
+		int id = this.FindByName(worldname);
+		this.items.get(id).RemoveEntity(e);
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_WorldManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Remove entity from current world <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param worldname
+	 *            - world name
+	 * @param entityname
+	 *            - entity name
+	 */
+	// -----------------------------------------------------------------------
+	public void RemoveEntity(String worldname, String entityname)
+	{
+		int id = this.FindByName(worldname);
+		this.items.get(id).RemoveEntiy(entityname);
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_WorldManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Remove entity from current world <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param worldname
+	 *            - world name
+	 * @param eid
+	 *            - entity ID
+	 */
+	// -----------------------------------------------------------------------
+	public void RemoveEntity(String worldname, int eid)
+	{
+		int id = this.FindByName(worldname);
+		this.items.get(id).RemoveEntiy(eid);
+	}
+	
+	
+	// -----------------------------------------------------------------------
+	// TF3D_WorldManager: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  get current ID of selected world
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @return - world ID 
+	 */
+	// -----------------------------------------------------------------------
+	public int GetCurrentID()
+	{
+		return this.current_world;
+	}
+	
+	// -----------------------------------------------------------------------
+	// TF3D_WorldManager: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  get current NAME of selected world
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @return - world name 
+	 */
+	// -----------------------------------------------------------------------
+	public String GetCurrentName()
+	{
+		return this.items.get(this.current_world).name;
 	}
 }
