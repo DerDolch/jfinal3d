@@ -61,6 +61,8 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 			F3D.Config.use_gl_light = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - RENDER SHADER MODEL";
 			
+			// [1] set resource destination 
+			//F3D.Config.io_preload_source = "PRELOAD_FROM_JAR";
 			super.onConfigure();
 			
 
@@ -221,6 +223,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 	@Override
 	public void onUpdate2D()
 	{
+
 
 	}
 

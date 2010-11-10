@@ -158,6 +158,7 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Destroy()
 	{
+
 	}
 
 }

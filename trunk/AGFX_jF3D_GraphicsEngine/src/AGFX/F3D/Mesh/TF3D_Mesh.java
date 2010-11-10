@@ -92,7 +92,7 @@ public class TF3D_Mesh
 				this.Load_A3DA(filename);
 			}
 		}
-
+	
 		// create VBO buffers
 		this.vbo = new TF3D_VBO();
 
