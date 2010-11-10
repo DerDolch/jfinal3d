@@ -24,6 +24,8 @@ public class TF3D_ShaderManager
 	public TF3D_Shader            shader_posterize;
 	public TF3D_Shader            shader_dream;
 	public TF3D_Shader            shader_warp;
+	public TF3D_Shader            shader_blur_h;
+	public TF3D_Shader            shader_blur_v;
 
 	public TF3D_ShaderManager()
 	{
@@ -340,6 +342,27 @@ public class TF3D_ShaderManager
 			shader_warp.AddUniformEvent("TIMER", F3D.SHADER_EVENT_TIMER);
 			this.Add(shader_warp);
 			
+			
+			// Shader: BLUR_H
+			
+			shader_blur_h = new TF3D_Shader("BLUR_H");
+			shader_blur_h.Load("abstract::f3d_blur_h.vert", "abstract::f3d_blur_h.frag");
+			shader_blur_h.AddUniform1i("sceneTex", 0);
+			shader_blur_h.AddUniform1f("rt_w", 256);
+
+
+			
+			this.Add(shader_blur_h);
+
+			// Shader: BLUR_V
+			
+			shader_blur_v = new TF3D_Shader("BLUR_V");
+			shader_blur_v.Load("abstract::f3d_blur_v.vert", "abstract::f3d_blur_v.frag");
+			shader_blur_v.AddUniform1i("sceneTex", 0);
+			shader_blur_v.AddUniform1f("rt_h", 256);
+
+			
+			this.Add(shader_blur_v);
 		}
 	}
 }

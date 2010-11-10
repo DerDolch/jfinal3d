@@ -134,10 +134,35 @@ public class TF3D_World
 
 	public void Destroy()
 	{
+		// todo remove by list not ID in LOOP
 		for (int i = 0; i < this.entities.size(); i++)
 		{
 			this.entities.get(i).Destroy();
 		}
+	}
+	
+	public void RemoveByName(String name)
+	{
+		int id = this.FindByName(name);
+		if (id>=0)
+		{
+			this.entities.remove(id);
+			F3D.Log.info("TF3D_World", "entity '"+name+"' removed");
+		}
+	}
+	
+	public int FindByName(String name)
+	{
+		for(int i=0;i<this.entities.size();i++)
+		{
+			if (this.entities.get(i).name.equals(name))
+			{
+				return i;
+			}
+			
+		}
+		
+		return -1;
 	}
 
 }

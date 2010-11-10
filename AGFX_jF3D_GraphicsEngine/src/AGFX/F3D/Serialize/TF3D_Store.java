@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.crypto.SealedObject;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.Mesh.TF3D_MeshData;
 
@@ -52,6 +54,7 @@ public class TF3D_Store
 		{
 
 			ObjectInputStream s = new ObjectInputStream(in);
+		
 			ret = (TF3D_MeshData) s.readObject();
 			return ret;
 		} catch (Exception e)
@@ -63,9 +66,19 @@ public class TF3D_Store
 
 	public static TF3D_MeshData readObj(String filename)
 	{
+		InputStream is = null;
 		try
 		{
-			return readObj(new FileInputStream(F3D.AbstractFiles.GetFullPath(filename)));
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+			{
+				
+				is = (FileInputStream)ClassLoader.getSystemResourceAsStream(filename);
+			}
+			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+			{
+				is = new FileInputStream(F3D.AbstractFiles.GetFullPath(filename));
+			}
+			return readObj(is);
 		} catch (FileNotFoundException e)
 		{			
 			e.printStackTrace();

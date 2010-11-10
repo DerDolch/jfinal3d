@@ -228,6 +228,7 @@ public class F3D
 		F3D.FrameBuffers = new TF3D_FBO_manager();
 
 		F3D.Shaders = new TF3D_ShaderManager();
+		
 		F3D.GetBuffer = new TF3D_Buffer();
 
 		if (F3D.Config.use_physics)

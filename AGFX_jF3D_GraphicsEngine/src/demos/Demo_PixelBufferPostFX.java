@@ -3,16 +3,7 @@
  */
 package demos;
 
-import static org.lwjgl.opengl.GL11.GL_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_REPEAT;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glGenTextures;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
+
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -29,16 +20,12 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
+import AGFX.F3D.Engine.TF3D_RenderToTexture;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
-import AGFX.F3D.PixelBuffer.TextureRenderer;
-import AGFX.F3D.PixelBuffer.UniqueRenderer;
 import AGFX.F3D.Skybox.TF3D_Skybox;
 
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.Pbuffer;
-import org.lwjgl.opengl.PixelFormat;
+
 
 /**
  * @author AndyGFX
@@ -47,13 +34,9 @@ import org.lwjgl.opengl.PixelFormat;
 public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 {
 
-	/**
-	 * 
-	 */
+
 	public TF3D_Camera Camera;
-	/**
-	 * 
-	 */
+
 	public TF3D_Body   PCube;
 	public TF3D_Body   PSphere;
 	public TF3D_Body   PCylinder;
@@ -70,21 +53,7 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 	public int         frame_id;
 	public int         FX = 0;
 
-	/**
-	 * Texture and pbuffer size
-	 */
-	private static final int TEXTURE_SIZE = 512;
-
-	/**
-	 * Size of the animated quad
-	 */
-	private static final int QUAD_SIZE = 64;
-
-	/**
-	 * The renderer to use when rendering to texture.
-	 */
-	public TextureRenderer texRenderer;
-	public static int texID;
+	public TF3D_RenderToTexture RTT;
 	
 	public Demo_PixelBufferPostFX()
 	{
@@ -220,11 +189,7 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 		// F3D.Worlds.RenderManualy();
 		world_id = F3D.Worlds.FindByName("MAIN_WORLD");
 
-		IntBuffer texture_buffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder()).asIntBuffer();
-	    glGenTextures(texture_buffer);
-	    this.texID = texture_buffer.get(0);
-	    
-		texRenderer = new UniqueRenderer(TEXTURE_SIZE, TEXTURE_SIZE, texID);
+		this.RTT = new TF3D_RenderToTexture(256);
 
 	}
 
@@ -236,28 +201,12 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 		
 		F3D.Worlds.SetCamera(this.Camera);
 		
+		
 		F3D.Worlds.UpdateWorld(world_id);
-
-		texRenderer.enable();
+		
+		this.RTT.BeginRender();
 		F3D.Worlds.RenderWorld(world_id);
-		F3D.Textures.DeactivateLayers();
-		F3D.Textures.ActivateLayer(0);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texID);
-		glBindTexture(GL_TEXTURE_2D, texID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		texRenderer.updateTexture();
-		try
-        {
-	        Display.makeCurrent();
-        } catch (LWJGLException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
+		this.RTT.EndRender();
 		
 		if (Mouse.isInsideWindow())
 		{
@@ -329,21 +278,26 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 			this.FX = 2;
 		}
 
+		if (Keyboard.isKeyDown(Keyboard.KEY_4))
+		{
+			this.FX = 3;
+		}
 	}
 
 	@Override
 	public void onUpdate2D()
 	{
-/*
+
 		if (FX==0)
 		{
 			F3D.Shaders.UseProgram("DREAM");
-			F3D.Textures.Bind("POSTFX_TETXURE");
+			this.RTT.Bind();
 		}
+		
 		if (FX==1)
 		{
 			F3D.Shaders.UseProgram("POSTERIZE");
-			F3D.Textures.Bind("POSTFX_TETXURE");
+			this.RTT.Bind();
 		}
 		
 		if (FX==2)
@@ -351,20 +305,22 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 			
 			F3D.Shaders.UseProgram("WARP");
 			F3D.Textures.ActivateLayer(0);
-			F3D.Textures.Bind("POSTFX_TETXURE");
+			this.RTT.Bind();
 			F3D.Textures.ActivateLayer(1);
 			F3D.Textures.Bind("perlin_noise");
 		}
 		
-	*/	
+		if (FX==3)
+		{
+			F3D.Shaders.UseProgram("BLUR_H");
+			this.RTT.Bind();
+			F3D.Shaders.UseProgram("BLUR_V");
+		}
 		
-		//F3D.Textures.DeactivateLayers();
-		//F3D.Textures.ActivateLayer(0);
-		//GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texID);
-		F3D.Draw.Rectangle(0, 0, TEXTURE_SIZE, TEXTURE_SIZE, false);
-		// F3D.Draw.Rectangle(0, 0, 400,300,true);
+		F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height,true);
+		//F3D.Draw.Rectangle(0, 0, 400,300,true);
 	
+		F3D.Shaders.StopProgram();
 		F3D.Viewport.DrawInfo(0, 0);
 
 	}
