@@ -139,6 +139,8 @@ public class TF3D_World
 		{
 			this.entities.get(i).Destroy();
 		}
+		
+		this.entities.clear();
 	}
 	
 	public void RemoveByName(String name)
@@ -151,11 +153,11 @@ public class TF3D_World
 		}
 	}
 	
-	public int FindByName(String name)
+	public int FindByName(String entity_name)
 	{
 		for(int i=0;i<this.entities.size();i++)
 		{
-			if (this.entities.get(i).name.equals(name))
+			if (this.entities.get(i).name.equals(entity_name))
 			{
 				return i;
 			}
