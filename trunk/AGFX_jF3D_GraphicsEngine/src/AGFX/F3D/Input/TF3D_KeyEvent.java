@@ -21,14 +21,17 @@ public class TF3D_KeyEvent
 	public Boolean             down;
 	public Boolean             up;
 	public long                time;
+	public long                delay;
 
-	public TF3D_KeyEvent(int keyCode, char keyChar, Boolean pressed, Boolean down,Boolean up)
+	public TF3D_KeyEvent(int keyCode, char keyChar, Boolean pressed, Boolean down,Boolean up, long delay)
 	{
 		this.keyCode = keyCode;
 		this.keyChar = keyChar;
 		this.pressed = pressed;
 		this.down = down;
 		this.up = up;
+		this.time = F3D.Timer.GetTickCount();
+		this.delay = delay;
 	}
 	
 	public void PrintInfo()

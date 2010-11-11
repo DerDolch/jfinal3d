@@ -60,14 +60,12 @@ public class Demo_KeyControll extends TF3D_AppWrapper
 		F3D.Input.Update();
 		
 		
-		F3D.Input.EnableRepeatKey();
 		
 		if (F3D.Input.IsKeyDown(Keyboard.KEY_SPACE))
 		{
 			F3D.Log.info("", "presss");
 		}
 		
-		F3D.Input.DisableRepeatKey();
 		
 		if (F3D.Input.IsKeyUp(Keyboard.KEY_R))
 		{
