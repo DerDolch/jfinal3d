@@ -40,8 +40,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			// Redefine Config
 			F3D.Config = new TF3D_Config();
 			
-			F3D.Config.r_display_width = 800;
-			F3D.Config.r_display_height = 600;
+			F3D.Config.r_display_width = 1280;
+			F3D.Config.r_display_height = 960;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = false;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";

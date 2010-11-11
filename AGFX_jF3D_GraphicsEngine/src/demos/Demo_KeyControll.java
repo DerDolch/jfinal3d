@@ -4,23 +4,32 @@
 package demos;
 
 
+
+import org.lwjgl.input.Keyboard;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Config.TF3D_Config;
 
 /**
  * @author AndyGFX
- *
+ * 
  */
-public class Demo_AbstractFileSystem extends TF3D_AppWrapper
+public class Demo_KeyControll extends TF3D_AppWrapper
 {
 
+	public Demo_KeyControll()
+	{		
+	}
+	
+	
 	@Override
 	public void onConfigure()
 	{
 		try
 		{
 			
+			// Redefine Config
 			
 			F3D.Config = new TF3D_Config();
 			
@@ -28,7 +37,7 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - APP";
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - KEYBOARD CONTROL";
 			
 			super.onConfigure();
 			
@@ -42,25 +51,35 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
-		String filename = "abstract::rotate_billboard.event";
-		String fullfilenamepath = F3D.AbstractFiles.GetFullPath(filename);
-		F3D.Log.info("MAIN", fullfilenamepath);
-		
-	
 		
 	}
 	
 	@Override
 	public void onUpdate3D()
 	{
+		F3D.Input.Update();
 		
 		
+		F3D.Input.EnableRepeatKey();
+		
+		if (F3D.Input.IsKeyDown(Keyboard.KEY_SPACE))
+		{
+			F3D.Log.info("", "presss");
+		}
+		
+		F3D.Input.DisableRepeatKey();
+		
+		if (F3D.Input.IsKeyDown(Keyboard.KEY_R))
+		{
+			F3D.Log.info("", "hold");
+		}
 	}
 	
 	
 	@Override
 	public void onUpdate2D()
 	{
+		F3D.Viewport.DrawInfo(0, 0);
 	}
 	
 	@Override
@@ -73,10 +92,9 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 	public static void main(String[] args)
 	{
 		
-		new Demo_AbstractFileSystem().Execute();		
+		new Demo_KeyControll().Execute();		
 		System.exit(0); 
 
 	}
-
 
 }
