@@ -14,15 +14,13 @@ import org.lwjgl.opengl.Display;
  */
 public class TF3D_Keyboard
 {
-	private Boolean                        repeat = true;
-	private HashMap<String, TF3D_KeyEvent> Keys   = new HashMap<String, TF3D_KeyEvent>();
+	private HashMap<String, TF3D_KeyEvent> Keys = new HashMap<String, TF3D_KeyEvent>();
 
 	public TF3D_Keyboard()
 	{
 
 	}
 
-	
 	public void Update()
 	{
 
@@ -30,8 +28,6 @@ public class TF3D_Keyboard
 
 		while (Keyboard.next())
 		{
-			//Keyboard.enableRepeatEvents(!this.repeat);
-
 			int keyCode = Keyboard.getEventKey();
 			char keyChar = Keyboard.getEventCharacter();
 			boolean pressed = Keyboard.getEventKeyState();
@@ -40,13 +36,13 @@ public class TF3D_Keyboard
 			{
 				boolean down = true;
 				boolean up = false;
-				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down,up);
+				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down, up, 0);
 				this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
 			} else
 			{
 				boolean down = false;
 				boolean up = true;
-				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down,up);
+				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down, up, 0);
 				this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
 			}
 		}
@@ -86,7 +82,6 @@ public class TF3D_Keyboard
 		{
 			if (key.pressed)
 			{
-				//key.PrintInfo();
 				return true;
 			}
 		}
@@ -102,8 +97,7 @@ public class TF3D_Keyboard
 		{
 			if (key.up)
 			{
-				//key.PrintInfo();
-				this.Keys.get(Keyboard.getKeyName(key_code)).up = false;				
+				this.Keys.get(Keyboard.getKeyName(key_code)).up = false;
 				return true;
 			}
 		}
@@ -111,13 +105,4 @@ public class TF3D_Keyboard
 		return false;
 	}
 
-	public void EnableRepeatKey()
-	{
-		this.repeat = true;
-	}
-
-	public void DisableRepeatKey()
-	{
-		this.repeat = false;
-	}
 }

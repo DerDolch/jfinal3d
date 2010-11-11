@@ -30,7 +30,7 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	public TF3D_AppWrapper()
 	{
-		
+
 	}
 
 	// -----------------------------------------------------------------------
@@ -50,18 +50,19 @@ public class TF3D_AppWrapper
 	{
 		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
 		{
-			// [2] disable auto preloading data like (.event, .texture, .a3da , .mat )
-			F3D.Config.io_preload_data = false;	
-			
+			// [2] disable auto preloading data like (.event, .texture, .a3da ,
+			// .mat )
+			F3D.Config.io_preload_data = false;
+
 			// [3] load list of files stored in media folder
-			F3D.AbstractFiles.Load("config/"+F3D.Config.io_preload_source_name);
+			F3D.AbstractFiles.Load("config/" + F3D.Config.io_preload_source_name);
 		}
 		F3D.Create();
 		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
 		{
-			F3D.Config.io_preload_data = true;	
+			F3D.Config.io_preload_data = true;
 		}
-		
+
 		F3D.Log.info("TF3D_AppWrapper", "Application wrapper created");
 		this.AppTerminate = false;
 	}
@@ -144,20 +145,21 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	private void KeyPressed()
 	{
-		
+
 		F3D.Input.Update();
-		
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_ESCAPE)) this.AppTerminate = true;
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_F10)) F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
+
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_ESCAPE))
+			this.AppTerminate = true;
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_F10))
+			F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
 		if (F3D.Input.IsKeyUp(Keyboard.KEY_F12))
-	        try
-            {
-	            F3D.Display.SwitchSceenMode();
-            } catch (LWJGLException e)
-            {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-            }
+			try
+			{
+				F3D.Display.SwitchSceenMode();
+			} catch (LWJGLException e)
+			{
+				F3D.Log.error("TF3D_AppWrapper", "Error during swich display");
+			}
 	}
 
 	public void onGUI()
@@ -191,10 +193,10 @@ public class TF3D_AppWrapper
 				this.KeyPressed();
 
 				F3D.Viewport.BeginRender3D();
-				
+
 				F3D.Worlds.UpdateWorld();
 				F3D.Worlds.RenderWorld();
-				
+
 				this.onUpdate3D();
 
 				if (F3D.Config.use_physics_debug)
