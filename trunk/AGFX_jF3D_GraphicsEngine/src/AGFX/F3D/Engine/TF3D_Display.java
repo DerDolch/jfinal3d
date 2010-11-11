@@ -45,7 +45,7 @@ public class TF3D_Display
 		DisplayMode[] modes = Display.getAvailableDisplayModes();
 		for (DisplayMode mode : modes)
 		{
-			if (mode.getWidth() == width && mode.getHeight() == height && mode.getBitsPerPixel() >= bpp && mode.getFrequency() <= 60)
+			if (mode.getWidth() == width && mode.getHeight() == height && mode.getBitsPerPixel() >= bpp && mode.getFrequency() <= 75)
 			{
 				return mode;
 			}

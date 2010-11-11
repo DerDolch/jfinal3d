@@ -144,7 +144,7 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	private void KeyPressed()
 	{
-		
+		/*
 		Keyboard.enableRepeatEvents(false);
 		while (Keyboard.next())
 		{
@@ -180,7 +180,11 @@ public class TF3D_AppWrapper
 			}
 		}
 		Keyboard.enableRepeatEvents(true);
+		*/
 		
+		F3D.Input.Update();
+		
+		if (F3D.Input.IsKeyDown(Keyboard.KEY_ESCAPE)) this.AppTerminate = true;
 	}
 
 	public void onGUI()
