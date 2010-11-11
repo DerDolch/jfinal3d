@@ -19,14 +19,16 @@ public class TF3D_KeyEvent
 	public char                keyChar;
 	public Boolean             pressed;
 	public Boolean             down;
+	public Boolean             up;
 	public long                time;
 
-	public TF3D_KeyEvent(int keyCode, char keyChar, Boolean pressed, Boolean down)
+	public TF3D_KeyEvent(int keyCode, char keyChar, Boolean pressed, Boolean down,Boolean up)
 	{
 		this.keyCode = keyCode;
 		this.keyChar = keyChar;
 		this.pressed = pressed;
 		this.down = down;
+		this.up = up;
 	}
 	
 	public void PrintInfo()
@@ -35,6 +37,7 @@ public class TF3D_KeyEvent
 		F3D.Log.info("TF3D_KeyEvent", "key code   : 0x"+Integer.toHexString(this.keyCode));		
 		F3D.Log.info("TF3D_KeyEvent", "key pressed: "+this.pressed.toString());
 		F3D.Log.info("TF3D_KeyEvent", "key down   : "+this.down.toString());
+		F3D.Log.info("TF3D_KeyEvent", "key up     : "+this.up.toString());
 		F3D.Log.info("", "--------------------------------------");
 	}
 }

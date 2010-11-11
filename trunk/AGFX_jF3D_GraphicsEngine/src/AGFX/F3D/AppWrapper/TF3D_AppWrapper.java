@@ -144,47 +144,20 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	private void KeyPressed()
 	{
-		/*
-		Keyboard.enableRepeatEvents(false);
-		while (Keyboard.next())
-		{
-			if (Keyboard.getEventKeyState())
-			{
-				int key = Keyboard.getEventKey();
-
-				switch (key)
-				{
-				case Keyboard.KEY_F12:
-				{
-					try
-					{
-						F3D.Display.SwitchSceenMode();
-					} catch (LWJGLException e)
-					{
-
-						e.printStackTrace();
-					}
-					break;
-				}
-				case Keyboard.KEY_ESCAPE:
-				{
-					this.AppTerminate = true;
-					break;
-				}
-				case Keyboard.KEY_F10:
-				{
-					F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
-					break;
-				}
-				}
-			}
-		}
-		Keyboard.enableRepeatEvents(true);
-		*/
 		
 		F3D.Input.Update();
 		
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_ESCAPE)) this.AppTerminate = true;
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_ESCAPE)) this.AppTerminate = true;
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_F10)) F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_F12))
+	        try
+            {
+	            F3D.Display.SwitchSceenMode();
+            } catch (LWJGLException e)
+            {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+            }
 	}
 
 	public void onGUI()
