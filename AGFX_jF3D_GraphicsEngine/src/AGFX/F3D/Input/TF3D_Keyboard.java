@@ -22,22 +22,33 @@ public class TF3D_Keyboard
 
 	}
 
+	
 	public void Update()
 	{
-		
-		//Keyboard.poll();
-		
+
+		// Keyboard.poll();
+
 		while (Keyboard.next())
 		{
-			Keyboard.enableRepeatEvents(!this.repeat);
-			
+			//Keyboard.enableRepeatEvents(!this.repeat);
+
 			int keyCode = Keyboard.getEventKey();
 			char keyChar = Keyboard.getEventCharacter();
 			boolean pressed = Keyboard.getEventKeyState();
-			boolean down = Keyboard.isRepeatEvent();
-			long time = Keyboard.getEventNanoseconds();
-			TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down);
-			this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
+
+			if (pressed)
+			{
+				boolean down = true;
+				boolean up = false;
+				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down,up);
+				this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
+			} else
+			{
+				boolean down = false;
+				boolean up = true;
+				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down,up);
+				this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
+			}
 		}
 	}
 
@@ -66,29 +77,45 @@ public class TF3D_Keyboard
 			}
 		}
 	}
-	
+
 	public Boolean IsKeyDown(int key_code)
 	{
 		TF3D_KeyEvent key = (TF3D_KeyEvent) this.Keys.get(Keyboard.getKeyName(key_code));
-		
-		if (key!=null)
+
+		if (key != null)
 		{
-			if (key.pressed) 
+			if (key.pressed)
 			{
-				key.PrintInfo();
+				//key.PrintInfo();
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	
+
+	public Boolean IsKeyUp(int key_code)
+	{
+		TF3D_KeyEvent key = (TF3D_KeyEvent) this.Keys.get(Keyboard.getKeyName(key_code));
+
+		if (key != null)
+		{
+			if (key.up)
+			{
+				//key.PrintInfo();
+				this.Keys.get(Keyboard.getKeyName(key_code)).up = false;				
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void EnableRepeatKey()
 	{
 		this.repeat = true;
 	}
-	
+
 	public void DisableRepeatKey()
 	{
 		this.repeat = false;

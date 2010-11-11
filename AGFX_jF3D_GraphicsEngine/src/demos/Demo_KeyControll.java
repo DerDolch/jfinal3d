@@ -69,7 +69,7 @@ public class Demo_KeyControll extends TF3D_AppWrapper
 		
 		F3D.Input.DisableRepeatKey();
 		
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_R))
+		if (F3D.Input.IsKeyUp(Keyboard.KEY_R))
 		{
 			F3D.Log.info("", "hold");
 		}
