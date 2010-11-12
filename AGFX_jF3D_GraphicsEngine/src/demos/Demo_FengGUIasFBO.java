@@ -114,7 +114,7 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		this.model.SetScale(3f, 2.5f, 1f);
 		this.model.SetRotation(180, 0, 0);
 		
-		fbo_id = F3D.FrameBuffers.Add("3DGUI_FBO", 800,600,false);
+		fbo_id = F3D.FrameBuffers.Add("3DGUI_FBO", 800,600,false,1);
 		F3D.Textures.Add("3DGUI_TEXTURE", fbo_id, false);		
 		
 		

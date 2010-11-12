@@ -10,7 +10,6 @@ import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 import AGFX.F3D.FrameBufferObject.TF3D_FrameBufferObject;
 import AGFX.F3D.Parser.TF3D_PARSER;
 
-
 public class TF3D_TextureManager
 {
 	public ArrayList<TF3D_Texture> items;
@@ -33,108 +32,106 @@ public class TF3D_TextureManager
 		F3D.Log.info("TF3D_TextureManager", "Created");
 	}
 
-	
-	
-
 	// -----------------------------------------------------------------------
-	// TA3D_TextureManager: 
+	// TA3D_TextureManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add texture from assets folder
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param _name texture name assigned to list
-	 * @param _assetpath path to texture
-	 * @param mipmap generate mipmaps true/false
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add texture from assets folder <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            texture name assigned to list
+	 * @param _assetpath
+	 *            path to texture
+	 * @param mipmap
+	 *            generate mipmaps true/false
 	 */
 	// -----------------------------------------------------------------------
 	public void Add(String _name, String _assetpath, Boolean mipmap)
 	{
-		
-		
-		if (this.Exist(_name)) 
+
+		if (this.Exist(_name))
 		{
-			F3D.Log.warning("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
-		}
-		else
+			F3D.Log.warning("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
+		} else
 		{
-		
-    		TF3D_Texture tex = new TF3D_Texture(_name);
-    		tex.Load(_assetpath,mipmap);
-    		this.items.add(tex);
-    	
-    		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
+
+			TF3D_Texture tex = new TF3D_Texture(_name);
+			tex.Load(_assetpath, mipmap);
+			this.items.add(tex);
+
+			F3D.Log.info("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
 		}
 
 	}
 
-	
-	
 	// -----------------------------------------------------------------------
-	// TA3D_TextureManager: 
+	// TA3D_TextureManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Add texture from assets folder
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param _name texture name assigned to list
-	 * @param _assetpath path to texture
-	 * @param mipmap generate mipmaps true/false
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Add texture from assets folder <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            texture name assigned to list
+	 * @param _assetpath
+	 *            path to texture
+	 * @param mipmap
+	 *            generate mipmaps true/false
 	 */
 	// -----------------------------------------------------------------------
 	public void Add(String _name, TF3D_FrameBufferObject _fbo, Boolean mipmap)
 	{
-		
-		
-		if (this.Exist(_name)) 
+
+		if (this.Exist(_name))
 		{
-			F3D.Log.warning("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
-		}
-		else
+			F3D.Log.warning("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
+		} else
 		{
-		
-    		TF3D_Texture tex = new TF3D_Texture(_name);
-    		tex.CreateFromFBO(_fbo);
-    		this.items.add(tex);
-    	
-    		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
+
+			TF3D_Texture tex = new TF3D_Texture(_name);
+			tex.CreateFromFBO(_fbo);
+			this.items.add(tex);
+
+			F3D.Log.info("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
 		}
 
 	}
-	
-	
+
 	public void Add(String _name, int fbo_id, Boolean mipmap)
 	{
-		
-		
-		if (this.Exist(_name)) 
+
+		if (this.Exist(_name))
 		{
-			F3D.Log.warning("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
-		}
-		else
+			F3D.Log.warning("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + " EXIST !'");
+		} else
 		{
-		
-    		TF3D_Texture tex = new TF3D_Texture(_name);
-    		tex.CreateFromFBO(F3D.FrameBuffers.Get(fbo_id));
-    		this.items.add(tex);
-    	
-    		F3D.Log.info("TA3D_TextureManager",": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
+
+			TF3D_Texture tex = new TF3D_Texture(_name);
+			tex.CreateFromFBO(F3D.FrameBuffers.Get(fbo_id));
+			this.items.add(tex);
+
+			F3D.Log.info("TA3D_TextureManager", ": TA3D_TextureManager.Add() '" + this.items.get(this.items.size() - 1).name + "'");
 		}
 
 	}
-	
+
 	public void ReplaceWithFBO(String text_name, TF3D_FrameBufferObject fbo)
 	{
 		int text_id = this.FindByName(text_name);
 		this.items.get(text_id).CreateFromFBO(fbo);
 	}
-	
+
 	public void ReplaceWithFBO(String text_name, int fbo_id)
 	{
 		int text_id = this.FindByName(text_name);
 		this.items.get(text_id).CreateFromFBO(F3D.FrameBuffers.Get(fbo_id));
 	}
-	
+
 	// -----------------------------------------------------------------------
 	// TA3D_TextureManager: GetID
 	// -----------------------------------------------------------------------
@@ -183,7 +180,7 @@ public class TF3D_TextureManager
 		int id = this.FindByName(_name);
 		if (id != -1)
 		{
-			this.items.get(id).Bind();
+			this.Bind(id);
 		} else
 		{
 			F3D.Log.error("TF3D_TextureManager", "missing texture " + _name);
@@ -208,6 +205,54 @@ public class TF3D_TextureManager
 	public void Bind(int id)
 	{
 		this.items.get(id).Bind();
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_TextureManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Bind FBO texture from assigned FBO attachment id <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            - texture name
+	 * @param attachment_id
+	 *            - attachment id
+	 */
+	// -----------------------------------------------------------------------
+	public void Bind(String _name, int fbo_attachment_id)
+	{
+		int id = this.FindByName(_name);
+		if (id != -1)
+		{
+			this.Bind(id, fbo_attachment_id);
+		} else
+		{
+			F3D.Log.error("TF3D_TextureManager", "missing texture " + _name);
+		}
+
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_TextureManager:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Bind FBO texture from assigned FBO attachment id <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            - texture id
+	 * @param attachment_id
+	 *            - attachment id
+	 */
+	// -----------------------------------------------------------------------
+	public void Bind(int id, int fbo_attachment_id)
+	{
+		this.items.get(id).Bind(fbo_attachment_id);
 	}
 
 	// -----------------------------------------------------------------------
@@ -258,6 +303,7 @@ public class TF3D_TextureManager
 		this.DeactivateLayer(2);
 		this.DeactivateLayer(3);
 	}
+
 	// -----------------------------------------------------------------------
 	// TA3D_TextureManager: BeginTranslate
 	// -----------------------------------------------------------------------
@@ -393,22 +439,23 @@ public class TF3D_TextureManager
 	}
 
 	// -----------------------------------------------------------------------
-	// TA3D_TextureManager: 
+	// TA3D_TextureManager:
 	// -----------------------------------------------------------------------
 	/**
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 *  Load/Add texture from definition file *.texture 
-	 * <BR>-------------------------------------------------------------------<BR> 
-	 * @param assetname texture filename *.texture 
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Load/Add texture from definition file *.texture <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param assetname
+	 *            texture filename *.texture
 	 */
 	// -----------------------------------------------------------------------
 	public void Load(String assetname)
 	{
 		TF3D_PARSER PARSER = new TF3D_PARSER();
 
-		
 		PARSER.ParseFile(assetname);
-
 
 		for (int i = 0; i < PARSER.GetBlocksCount(); i++)
 		{
@@ -417,17 +464,16 @@ public class TF3D_TextureManager
 			String _name = PARSER.GetAs_STRING("name");
 			String _file = PARSER.GetAs_STRING("file");
 			Boolean _mipmap = PARSER.GetAs_BOOLEAN("mipmap");
-			
-			this.Add(_name,_file,_mipmap);
+
+			this.Add(_name, _file, _mipmap);
 
 		}
 	}
-	
-	
+
 	public void Destroy()
 	{
-		for(int m=0;m<this.items.size();m++)
-		{			
+		for (int m = 0; m < this.items.size(); m++)
+		{
 			this.items.remove(m);
 		}
 	}
