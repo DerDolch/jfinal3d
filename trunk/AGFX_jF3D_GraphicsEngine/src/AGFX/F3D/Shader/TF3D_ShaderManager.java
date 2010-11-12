@@ -26,6 +26,8 @@ public class TF3D_ShaderManager
 	public TF3D_Shader            shader_warp;
 	public TF3D_Shader            shader_blur_h;
 	public TF3D_Shader            shader_blur_v;
+	public TF3D_Shader            shader_gaussian_v;
+	public TF3D_Shader            shader_gaussian_h;
 
 	public TF3D_ShaderManager()
 	{
@@ -363,6 +365,27 @@ public class TF3D_ShaderManager
 
 			
 			this.Add(shader_blur_v);
+			
+			
+			// Shader: GAUSSIAN_V
+			
+			shader_gaussian_v = new TF3D_Shader("GAUSSIAN_V");
+			shader_gaussian_v.Load("abstract::f3d_gaussian.vert", "abstract::f3d_gaussian_v.frag");
+			shader_gaussian_v.AddUniform1i("sceneTex", 0);
+			shader_gaussian_v.AddUniform1f("offset", 0.0075f);
+			
+			
+			this.Add(shader_gaussian_v);
+			
+			// Shader: GAUSSIAN_H
+			
+			shader_gaussian_h = new TF3D_Shader("GAUSSIAN_H");
+			shader_gaussian_h.Load("abstract::f3d_gaussian.vert", "abstract::f3d_gaussian_h.frag");
+			shader_gaussian_h.AddUniform1i("sceneTex", 0);
+			shader_gaussian_h.AddUniform1f("offset", 0.0075f);
+			
+			this.Add(shader_gaussian_h);
+			
 		}
 	}
 }

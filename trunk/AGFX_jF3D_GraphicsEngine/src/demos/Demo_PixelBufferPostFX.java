@@ -282,6 +282,11 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 		{
 			this.FX = 3;
 		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_5))
+		{
+			this.FX = 4;
+		}
 	}
 
 	@Override
@@ -315,6 +320,13 @@ public class Demo_PixelBufferPostFX extends TF3D_AppWrapper
 			F3D.Shaders.UseProgram("BLUR_H");
 			this.RTT.Bind();
 			F3D.Shaders.UseProgram("BLUR_V");
+		}
+		
+		if (FX==4)
+		{
+			F3D.Shaders.UseProgram("GAUSSIAN_H");
+			this.RTT.Bind();
+			F3D.Shaders.UseProgram("GAUSSIAN_V");
 		}
 		
 		F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height,true);
