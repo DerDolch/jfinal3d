@@ -190,12 +190,9 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		world_id = F3D.Worlds.FindByName("MAIN_WORLD");
 
 		// use this line when your GPU has RenderBufffer supported
-		frame_0 = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,true);
-		frame_1 = F3D.FrameBuffers.Add("POSTFX0", F3D.Config.r_display_width, F3D.Config.r_display_height,false);
-		
-		// use this line when your GPU haven't RenderBufffer supported
-		//frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,false);
-		
+		frame_0 = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,true,1);
+		frame_1 = F3D.FrameBuffers.Add("POSTFX0", F3D.Config.r_display_width, F3D.Config.r_display_height,false,1);
+				
 		F3D.Textures.Add("POSTFX_TETXURE", F3D.FrameBuffers.Get("POSTFX"), false);
 		F3D.Textures.Add("POSTFX_TETXURE0", F3D.FrameBuffers.Get("POSTFX0"), false);
 		

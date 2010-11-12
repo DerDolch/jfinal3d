@@ -78,33 +78,45 @@ public class TF3D_Texture
 		}
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Texture: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Reload texture from file
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 */
+	// -----------------------------------------------------------------------
 	public void Reload()
 	{
-		this.texture.release();
-		this.Load(this.filename, this.bmipmap);
+		if(this.texture!=null)
+		{
+			this.texture.release();
+			this.Load(this.filename, this.bmipmap);
+		}
 		
 	}
 	
+	// -----------------------------------------------------------------------
+	// TF3D_Texture: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Generate MIPMAP
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param FMT
+	 * @param filename
+	 * @param mipmap
+	 * @return
+	 * @throws IOException
+	 */
+	// -----------------------------------------------------------------------
 	private Texture LoadMipmap(String FMT, String filename, Boolean mipmap)
 			throws IOException
 	{
 
 		Texture texture = null;
 		InputStream is = null;
-
-		/*
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
-		{
-			
-			is = ClassLoader.getSystemResourceAsStream(filename);
-			
-		}
-		
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
-		{
-			is = new FileInputStream(filename);
-		}
-		*/
 		
 		is = F3D.Resource.GetInputStream(filename);
 		
@@ -143,7 +155,7 @@ public class TF3D_Texture
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Bind Texture <BR>
+	 * Standart OpenGL texture bind<BR>
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
@@ -160,13 +172,31 @@ public class TF3D_Texture
 		}
 	}
 
+	
+	// -----------------------------------------------------------------------
+	// TF3D_Texture: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  bind fbo texure from attachment id 
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param fbo_attachment_id - FBO attachment id
+	 */
+	// -----------------------------------------------------------------------
+	public void Bind(int fbo_attachment_id)
+	{
+		if (this.fbo_texture != null)
+		{
+			this.fbo_texture.BindTexture(fbo_attachment_id);
+		}
+	}	
 	// -----------------------------------------------------------------------
 	// TA3D_Texture:
 	// -----------------------------------------------------------------------
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Get OpenGL ES tetxure <BR>
+	 * Get OpenGL tetxure <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
 	 * @return OGL texture ID
@@ -177,6 +207,16 @@ public class TF3D_Texture
 		return this.texture;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Texture: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Create texture from FBO with attachments
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param fbo
+	 */
+	// -----------------------------------------------------------------------
 	public void CreateFromFBO(TF3D_FrameBufferObject fbo)
 	{
 		if (this.texture != null)

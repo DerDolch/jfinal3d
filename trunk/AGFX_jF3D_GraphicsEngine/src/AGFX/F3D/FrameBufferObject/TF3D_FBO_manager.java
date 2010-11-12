@@ -73,7 +73,7 @@ public class TF3D_FBO_manager
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public int Add(String _name, int width, int height, Boolean depth)
+	public int Add(String _name, int width, int height, Boolean depth, int count)
 	{
 		if (this.Exist(_name))
 		{
@@ -83,7 +83,7 @@ public class TF3D_FBO_manager
 		} else
 		{
 			int res = this.items.size();
-			TF3D_FrameBufferObject fbo = new TF3D_FrameBufferObject(_name, width, height,depth);
+			TF3D_FrameBufferObject fbo = new TF3D_FrameBufferObject(_name, width, height,depth,count);
 			this.items.add(fbo);
 			F3D.Log.info("TF3D_FBO_manager", "TF3D_FBO_manager: Add() '" + fbo.name + "'");
 			return res;
