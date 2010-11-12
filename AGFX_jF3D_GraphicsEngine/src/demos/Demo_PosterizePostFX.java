@@ -3,6 +3,13 @@
  */
 package demos;
 
+import static org.lwjgl.opengl.GL11.GL_RGBA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+
+import java.nio.IntBuffer;
+
 import javax.vecmath.Vector3f;
 
 import org.lwjgl.input.Keyboard;
@@ -44,7 +51,8 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 	public TF3D_Model  mzeton;
 
 	public int         world_id;
-	public int         frame_id;
+	public int         frame_0;
+	public int         frame_1;
 	public int         FX = 0;
 
 	public Demo_PosterizePostFX()
@@ -182,12 +190,14 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		world_id = F3D.Worlds.FindByName("MAIN_WORLD");
 
 		// use this line when your GPU has RenderBufffer supported
-		frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,true);
+		frame_0 = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,true);
+		frame_1 = F3D.FrameBuffers.Add("POSTFX0", F3D.Config.r_display_width, F3D.Config.r_display_height,false);
 		
 		// use this line when your GPU haven't RenderBufffer supported
 		//frame_id = F3D.FrameBuffers.Add("POSTFX", F3D.Config.r_display_width, F3D.Config.r_display_height,false);
 		
-		F3D.Textures.Add("POSTFX_TETXURE", F3D.FrameBuffers.Get("POSTFX"), true);
+		F3D.Textures.Add("POSTFX_TETXURE", F3D.FrameBuffers.Get("POSTFX"), false);
+		F3D.Textures.Add("POSTFX_TETXURE0", F3D.FrameBuffers.Get("POSTFX0"), false);
 		
 		
 
@@ -279,6 +289,11 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		{
 			this.FX = 3;
 		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_5))
+		{
+			this.FX = 4;
+		}
 
 	}
 
@@ -290,6 +305,7 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		{
 			F3D.Shaders.UseProgram("DREAM");
 			F3D.Textures.Bind("POSTFX_TETXURE");
+			
 		}
 		if (FX==1)
 		{
@@ -311,11 +327,33 @@ public class Demo_PosterizePostFX extends TF3D_AppWrapper
 		{
 			F3D.Shaders.UseProgram("BLUR_H");
 			F3D.Textures.Bind("POSTFX_TETXURE");
+			F3D.FrameBuffers.BeginRender(this.frame_1);
+			F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height, true);
+			F3D.FrameBuffers.EndRender(this.frame_1,true,true);
 			F3D.Shaders.UseProgram("BLUR_V");
+			F3D.Textures.Bind("POSTFX_TETXURE0");
 		}
 		
+		if (FX==4)
+		{
+			
+										
+						
+			F3D.Shaders.UseProgram("GAUSSIAN_V");
+			F3D.Textures.Bind("POSTFX_TETXURE");
+			F3D.FrameBuffers.BeginRender(this.frame_1);
+			F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height, true);
+			F3D.FrameBuffers.EndRender(this.frame_1,true,true);
+			F3D.Shaders.UseProgram("GAUSSIAN_H");
+			F3D.Textures.Bind("POSTFX_TETXURE0");
+			
+			
+			
+		}
+		
+		
 		F3D.Draw.Rectangle(0, 0, F3D.Config.r_display_width, F3D.Config.r_display_height, true);
-		// F3D.Draw.Rectangle(0, 0, 400,300,true);
+		//F3D.Draw.Rectangle(0, 0, 400,300,true);
 		F3D.Shaders.StopProgram();
 		F3D.Viewport.DrawInfo(0, 0);
 

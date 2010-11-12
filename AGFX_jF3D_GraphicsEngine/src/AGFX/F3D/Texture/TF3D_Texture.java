@@ -156,7 +156,7 @@ public class TF3D_Texture
 
 		if (this.fbo_texture != null)
 		{
-			this.fbo_texture.Bind();
+			this.fbo_texture.BindTexture();
 		}
 	}
 

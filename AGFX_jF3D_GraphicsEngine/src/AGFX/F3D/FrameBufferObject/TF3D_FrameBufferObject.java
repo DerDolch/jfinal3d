@@ -124,7 +124,7 @@ public class TF3D_FrameBufferObject
 		}
 	}
 
-	public void Bind()
+	public void BindTexture()
 	{
 		
 		F3D.Textures.DeactivateLayers();
@@ -132,6 +132,17 @@ public class TF3D_FrameBufferObject
         
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D,this.texture_id);
+		
+	}
+	
+	public void BindDepth()
+	{
+		
+		F3D.Textures.DeactivateLayers();
+		F3D.Textures.ActivateLayer(0);
+        
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D,this.depth_id);
 		
 	}
 }
