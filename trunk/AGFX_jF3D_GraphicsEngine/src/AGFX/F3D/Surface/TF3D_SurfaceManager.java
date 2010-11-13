@@ -118,6 +118,8 @@ public class TF3D_SurfaceManager
 		if (this.materials.get(id).typ == F3D.MAT_TYPE_TEXTURE)
 		{
 
+			this.ResetMaterial();
+			
 			if (this.materials.get(id).bAlphaTest)
 			{
 				glEnable(GL_ALPHA_TEST);
@@ -220,6 +222,7 @@ public class TF3D_SurfaceManager
 			{
 				F3D.Shaders.UseProgram(F3D.Surfaces.materials.get(id).shader_id);
 			}
+			
 			for (int u = 0; u < F3D.MAX_TMU; u++)
 			{
 				if (this.materials.get(id).texture_unit[u].bEvent)
@@ -246,6 +249,12 @@ public class TF3D_SurfaceManager
 		
 	}
 
+	public void ResetMaterial()
+	{
+		F3D.Textures.DeactivateLayers();
+		F3D.Shaders.StopProgram();
+	}
+	
 	// -----------------------------------------------------------------------
 	// TA3D_SurfaceManager:
 	// -----------------------------------------------------------------------
