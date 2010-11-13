@@ -61,5 +61,6 @@ void main (void)
     envColor = mix(envColor, base, MixRatio);
 	
     gl_FragColor = vec4 (envColor, 1.0)*(tex_color+0.15);
+	gl_FragColor.a = tex_color.a
 ;
 }
