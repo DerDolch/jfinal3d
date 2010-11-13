@@ -76,13 +76,13 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		light.Enable();
 		
 		
-		F3D.Meshes.Add("abstract::Cube.a3da");
+		F3D.Meshes.Add("abstract::karoseria.a3da");
 		
-		this.model = new TF3D_Model("Cube");
-		this.model.AssignMesh("abstract::Cube.a3da");
-		this.model.ChangeSurface("Cube_MAT_095A","MAT_test_alpha_blend");
+		this.model = new TF3D_Model("AUTO");
+		this.model.AssignMesh("abstract::karoseria.a3da");
+		//this.model.ChangeSurface("Cube_MAT_095A","MAT_test_alpha_blend");
 		
-		F3D.Textures.items.get(0).Reload();
+		
 	}
 	
 	
@@ -129,7 +129,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
-		this.model.Turn(0, 1, 0);
+		//this.model.Turn(0, 1, 0);
 		F3D.Draw.Axis(2.0f);	
 	
 	}
