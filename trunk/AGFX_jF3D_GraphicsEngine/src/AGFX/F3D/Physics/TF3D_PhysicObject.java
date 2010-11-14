@@ -370,12 +370,13 @@ public class TF3D_PhysicObject
 	public Vector3f GetRotation()
 	{
 		Vector3f rot = new Vector3f();
-
+		
 		// get current rotation
 		Quat4f qm = new Quat4f();
 		this.Transform.getRotation(qm);
 		rot.set(TF3D_MathUtils.Quad2Angles(qm));
-
+		
+		
 		return rot;
 	}
 }

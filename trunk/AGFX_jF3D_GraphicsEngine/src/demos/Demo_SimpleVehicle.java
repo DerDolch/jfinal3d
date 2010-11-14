@@ -13,7 +13,6 @@ import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Skybox.TF3D_Skybox;
-import AGFX.F3D.Vehicle.TF3D_MurkoVehicle;
 import AGFX.F3D.Vehicle.TF3D_Vehicle;
 
 /**
@@ -25,7 +24,7 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 
 	public TF3D_Camera       Camera;
 	public TF3D_Body         landscape;
-	public TF3D_MurkoVehicle car;
+	public TF3D_Vehicle car;
 	public TF3D_Body         PSphere;
 
 	public Demo_SimpleVehicle()
@@ -41,8 +40,8 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 
 			F3D.Config = new TF3D_Config();
 
-			F3D.Config.r_display_width = 800;
-			F3D.Config.r_display_height = 600;
+			F3D.Config.r_display_width = 1280;
+			F3D.Config.r_display_height = 960;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - " + this.getClass().getName();
@@ -100,9 +99,10 @@ public class Demo_SimpleVehicle extends TF3D_AppWrapper
 		this.PSphere.SetRotation(0f, 0f, 0f);
 		this.PSphere.CreateRigidBody(F3D.BULLET_SHAPE_SPHERE, 1.0f);
 
-		this.car = new TF3D_MurkoVehicle("CAR_01");
+		this.car = new TF3D_Vehicle("CAR_01");
+
 		this.car.SetRotation(0, 0, 0);
-		this.car.model_chassis = F3D.Meshes.FindByName("abstract::karoseria.a3da");
+		this.car.model_chassis = F3D.Meshes.FindByName("abstract::jeep.a3da");
 		this.car.model_wheel_FL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
 		this.car.model_wheel_FR = F3D.Meshes.FindByName("abstract::jeep_wheel_R.a3da");
 		this.car.model_wheel_BL = F3D.Meshes.FindByName("abstract::jeep_wheel_L.a3da");
