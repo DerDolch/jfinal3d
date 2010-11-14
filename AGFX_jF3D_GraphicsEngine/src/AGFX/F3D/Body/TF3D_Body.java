@@ -330,6 +330,7 @@ public class TF3D_Body extends TF3D_Entity
 		
 
 	}
+	
 
 	@Override
 	public void UpdateAxisDirection()
@@ -340,6 +341,7 @@ public class TF3D_Body extends TF3D_Entity
 		this.axis._up.set(this.PhysicObject.transformMatrix[4],this.PhysicObject.transformMatrix[5],this.PhysicObject.transformMatrix[6]);
 		this.axis._forward.set(-this.PhysicObject.transformMatrix[8],-this.PhysicObject.transformMatrix[9],-this.PhysicObject.transformMatrix[10]);
 		
+
 	}
 	// -----------------------------------------------------------------------
 	// TF3D_Body:
