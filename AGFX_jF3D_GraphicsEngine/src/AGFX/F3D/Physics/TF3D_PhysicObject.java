@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
@@ -375,6 +376,10 @@ public class TF3D_PhysicObject
 		Quat4f qm = new Quat4f();
 		this.Transform.getRotation(qm);
 		rot.set(TF3D_MathUtils.Quad2Angles(qm));
+		
+		Matrix4f mat = new Matrix4f();
+		this.Transform.getMatrix(mat);
+		rot.set(TF3D_MathUtils.Matrix2Angles(mat));
 		
 		
 		return rot;

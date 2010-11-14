@@ -1,5 +1,7 @@
 package AGFX.F3D.Math;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 import com.bulletphysics.linearmath.QuaternionUtil;
@@ -13,6 +15,41 @@ public class TF3D_MathUtils
 
 	}
 
+	public static Vector3f Matrix2Angles(Matrix4f m)
+	{
+		
+
+		/**
+		 * this conversion uses conventions as described on page:
+		 * http://www.euclideanspace
+		 * .com/maths/geometry/rotations/euler/index.htm Coordinate System: right
+		 * hand Positive angle: right hand Order of euler angles: heading first,
+		 * then attitude, then bank matrix row column ordering: [m00 m01 m02]
+		 * [m10 m11 m12] [m20 m21 m22]
+		 */
+		
+		// Assuming the angles are in radians.
+		if (m.m10 > 0.998)
+		{ // singularity at north pole
+			float heading = (float) Math.atan2(m.m02, m.m22);
+			float attitude = (float) (Math.PI / 2f);
+			float bank = 0f;
+			return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+		}
+		if (m.m10 < -0.998)
+		{ // singularity at south pole
+			float heading = (float) Math.atan2(m.m02, m.m22);
+			float attitude = (float) (-Math.PI / 2f);
+			float bank = 0;
+			return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+		}
+		float heading = (float) Math.atan2(-m.m20, m.m00);
+		float bank = (float) Math.atan2(m.m12, m.m11);
+		float attitude = (float) Math.asin(m.m10);
+
+		
+		return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+	}
 
 	public static Vector3f Quad2Angles(Quat4f q)
 	{
@@ -44,12 +81,12 @@ public class TF3D_MathUtils
 		{
 			// X
 			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw
-																								   // or
-																								   // bank
+			                                                                                       // or
+			                                                                                       // bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll
-																								  // or
-																								  // heading
+			                                                                                      // or
+			                                                                                      // heading
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 
