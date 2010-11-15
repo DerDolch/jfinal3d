@@ -115,10 +115,15 @@ public class Demo_TrueTypeFont extends TF3D_AppWrapper
 		
 		// create shadow
 		GL11.glColor4f(0,0,0,0.5f);
-		this.ttf_bumbazoo.drawString(52, 152, "Demo of User Tryetype font", 1f, 1f);
+		this.ttf_bumbazoo.drawString(50, 152, "Demo of User Tryetype font", 1f, 1f);
 		// draw font
 		GL11.glColor4f(1,1,0,1);
+		
+		
+		int size = this.ttf_bumbazoo.getWidth("Demo of User Tryetype font");
 		this.ttf_bumbazoo.drawString(50, 150, "Demo of User Tryetype font", 1f, 1f);
+		
+		F3D.Log.info("SIZE", String.valueOf(size));
 	}
 
 	@Override

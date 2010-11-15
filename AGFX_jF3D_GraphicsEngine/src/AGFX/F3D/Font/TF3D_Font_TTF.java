@@ -322,12 +322,20 @@ public class TF3D_Font_TTF
 
 	public void drawString(float x, float y, String whatchars, float scaleX, float scaleY, int format)
 	{
+		glDisable(GL_ALPHA_TEST);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
+		
 		drawString(x, y, whatchars, 0, whatchars.length() - 1, scaleX, scaleY, format);
 	}
 
 	public void drawString(float x, float y, String whatchars, int startIndex, int endIndex, float scaleX, float scaleY, int format)
 	{
 
+		glDisable(GL_ALPHA_TEST);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
+		
 		IntObject intObject = null;
 		int charCurrent;
 

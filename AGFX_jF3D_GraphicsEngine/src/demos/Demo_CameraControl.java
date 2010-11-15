@@ -3,6 +3,8 @@
  */
 package demos;
 
+import javax.vecmath.Vector3f;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -11,6 +13,7 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Model.TF3D_Model;
 
 /**
@@ -22,6 +25,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public TF3D_Model model;
+	public Vector3f pos2D;
 
 	int odx = 0;
 	int ody = 0;
@@ -40,8 +44,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			// Redefine Config
 			F3D.Config = new TF3D_Config();
 			
-			F3D.Config.r_display_width = 1280;
-			F3D.Config.r_display_height = 960;
+			F3D.Config.r_display_width = 800;
+			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = false;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";
@@ -128,6 +132,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
+		pos2D = TF3D_MathUtils.World3DtoScreen2D(this.model.GetPosition());
+		F3D.Log.info("MAIN 2d pos", pos2D.toString());
 		//this.model.Turn(0, 1, 0);
 		//F3D.Draw.Axis(2.0f);	
 	
@@ -137,7 +143,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 	@Override
 	public void onUpdate2D()
 	{
-		F3D.Viewport.DrawInfo(0,0);
+		
+		F3D.Viewport.DrawInfo((int)pos2D.x,(int)pos2D.y);
 		
 	}
 	
