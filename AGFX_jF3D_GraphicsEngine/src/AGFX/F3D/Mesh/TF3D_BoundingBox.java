@@ -58,7 +58,8 @@ public class TF3D_BoundingBox
 	{
 		this.size.set(0, 0, 0);
 		this.center.set(0, 0, 0);
-		
+		this.max.set(max);
+		this.min.set(min);
 		this.size.sub(max, min);
 		//this.center.add(max, min);
 		//this.center.scale(2.0f);
