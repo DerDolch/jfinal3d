@@ -15,6 +15,8 @@ public class TF3D_BoundingBox
 {
 	public Vector3f size = new Vector3f();
 	public Vector3f center = new Vector3f();
+	public Vector3f min = new Vector3f();
+	public Vector3f max = new Vector3f();
 
 	public TF3D_BoundingBox()
 	{
@@ -44,6 +46,8 @@ public class TF3D_BoundingBox
 
 		}
 
+		this.max.set(max);
+		this.min.set(min);
 		this.size.sub(max, min);
 		this.center.add(max, min);
 		this.center.scale(2.0f);
