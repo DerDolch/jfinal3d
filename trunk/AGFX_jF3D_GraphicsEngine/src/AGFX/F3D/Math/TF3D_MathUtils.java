@@ -1,10 +1,18 @@
 package AGFX.F3D.Math;
 
-import javax.vecmath.Matrix3f;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
 import javax.vecmath.Matrix4f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 import com.bulletphysics.linearmath.QuaternionUtil;
+
+import org.lwjgl.BufferUtils;
+
+import org.lwjgl.util.glu.GLU;
+
+import static org.lwjgl.opengl.GL11.*;
 
 import AGFX.F3D.F3D;
 
@@ -17,38 +25,36 @@ public class TF3D_MathUtils
 
 	public static Vector3f Matrix2Angles(Matrix4f m)
 	{
-		
 
 		/**
 		 * this conversion uses conventions as described on page:
 		 * http://www.euclideanspace
-		 * .com/maths/geometry/rotations/euler/index.htm Coordinate System: right
-		 * hand Positive angle: right hand Order of euler angles: heading first,
-		 * then attitude, then bank matrix row column ordering: [m00 m01 m02]
-		 * [m10 m11 m12] [m20 m21 m22]
+		 * .com/maths/geometry/rotations/euler/index.htm Coordinate System:
+		 * right hand Positive angle: right hand Order of euler angles: heading
+		 * first, then attitude, then bank matrix row column ordering: [m00 m01
+		 * m02] [m10 m11 m12] [m20 m21 m22]
 		 */
-		
+
 		// Assuming the angles are in radians.
 		if (m.m10 > 0.998)
 		{ // singularity at north pole
 			float heading = (float) Math.atan2(m.m02, m.m22);
 			float attitude = (float) (Math.PI / 2f);
 			float bank = 0f;
-			return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+			return new Vector3f(bank * F3D.RADTODEG, heading * F3D.RADTODEG, attitude * F3D.RADTODEG);
 		}
 		if (m.m10 < -0.998)
 		{ // singularity at south pole
 			float heading = (float) Math.atan2(m.m02, m.m22);
 			float attitude = (float) (-Math.PI / 2f);
 			float bank = 0;
-			return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+			return new Vector3f(bank * F3D.RADTODEG, heading * F3D.RADTODEG, attitude * F3D.RADTODEG);
 		}
 		float heading = (float) Math.atan2(-m.m20, m.m00);
 		float bank = (float) Math.atan2(m.m12, m.m11);
 		float attitude = (float) Math.asin(m.m10);
 
-		
-		return new Vector3f(bank*F3D.RADTODEG, heading*F3D.RADTODEG, attitude*F3D.RADTODEG);
+		return new Vector3f(bank * F3D.RADTODEG, heading * F3D.RADTODEG, attitude * F3D.RADTODEG);
 	}
 
 	public static Vector3f Quad2Angles(Quat4f q)
@@ -65,7 +71,7 @@ public class TF3D_MathUtils
 		float sqy = q.y * q.y;
 		float sqz = q.z * q.z;
 		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
-		                                    // is correction factor
+											// is correction factor
 		float test = q.x * q.y + q.z * q.w;
 		if (test > 0.499 * unit)
 		{ // singularity at north pole
@@ -81,22 +87,17 @@ public class TF3D_MathUtils
 		{
 			// X
 			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw
-			                                                                                       // or
-			                                                                                       // bank
+																									// or
+																									// bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll
-			                                                                                      // or
-			                                                                                      // heading
+																									// or
+																									// heading
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 
 		}
 
-		/*
-		 * QuaternionUtil.setRotation(q, new Vector3f(1,0,0), angles[0]);
-		 * QuaternionUtil.setRotation(q, new Vector3f(0,1,0), angles[1]);
-		 * QuaternionUtil.setRotation(q, new Vector3f(0,0,1), angles[2]);
-		 */
 		return new Vector3f(360f - angles[0] * F3D.RADTODEG, 360f - angles[1] * F3D.RADTODEG, 360f - angles[2] * F3D.RADTODEG);
 
 	}
@@ -107,5 +108,26 @@ public class TF3D_MathUtils
 		Quat4f q = new Quat4f();
 		QuaternionUtil.setEuler(q, roll * F3D.DEGTORAD, yaw * F3D.DEGTORAD, pitch * F3D.DEGTORAD);
 		return q;
+	}
+
+	public static Vector3f World3DtoScreen2D(Vector3f pos)
+	{
+		Vector3f res = new Vector3f();
+		FloatBuffer modelMatrix = BufferUtils.createFloatBuffer(16);
+		FloatBuffer projMatrix = BufferUtils.createFloatBuffer(16);
+		IntBuffer viewport = BufferUtils.createIntBuffer(16);
+		FloatBuffer win_pos = BufferUtils.createFloatBuffer(16);
+
+		glGetFloat(GL_MODELVIEW_MATRIX, modelMatrix);
+		glGetFloat(GL_PROJECTION_MATRIX, projMatrix);
+		glGetInteger(GL_VIEWPORT, viewport);
+
+		GLU.gluProject(pos.x, pos.y, pos.z, modelMatrix, projMatrix, viewport, win_pos);
+
+		res.x = win_pos.get(0);
+		res.y = F3D.Config.r_display_height - win_pos.get(1);
+		res.z = win_pos.get(2);
+
+		return res;
 	}
 }
