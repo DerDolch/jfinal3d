@@ -217,7 +217,6 @@ public class TF3D_World
 	// -----------------------------------------------------------------------
 	public void Destroy()
 	{
-		// TODO change remove to foreach fnc!!!
 		for (int i = 0; i < this.entities.size(); i++)
 		{
 			this.entities.get(i).Destroy();
