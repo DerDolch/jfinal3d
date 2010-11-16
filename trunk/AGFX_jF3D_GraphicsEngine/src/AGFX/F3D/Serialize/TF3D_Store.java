@@ -69,12 +69,12 @@ public class TF3D_Store
 		InputStream is = null;
 		try
 		{
-			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+			if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_JAR"))
 			{
 				
 				is = (FileInputStream)ClassLoader.getSystemResourceAsStream(filename);
 			}
-			if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+			if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_FOLDER"))
 			{
 				is = new FileInputStream(F3D.AbstractFiles.GetFullPath(filename));
 			}

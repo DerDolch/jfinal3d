@@ -48,17 +48,17 @@ public class TF3D_AppWrapper
 	// -----------------------------------------------------------------------
 	public void onConfigure()
 	{
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_JAR"))
 		{
 			// [2] disable auto preloading data like (.event, .texture, .a3da ,
 			// .mat )
 			F3D.Config.io_preload_data = false;
 
 			// [3] load list of files stored in media folder
-			F3D.AbstractFiles.Load("config/" + F3D.Config.io_preload_source_name);
+			F3D.AbstractFiles.Load("config/" + F3D.Config.io_preload_source_filelist);
 		}
 		F3D.Create();
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_JAR"))
 		{
 			F3D.Config.io_preload_data = true;
 		}

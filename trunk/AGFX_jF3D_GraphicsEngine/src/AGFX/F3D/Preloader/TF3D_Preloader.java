@@ -47,6 +47,13 @@ public class TF3D_Preloader
 	// -----------------------------------------------------------------------
 	public void PreloadData()
 	{
+		
+		this.b_preload_textures = F3D.Config.io_preload_textures;
+		this.b_preload_events = F3D.Config.io_preload_events;
+		this.b_preload_fonts = F3D.Config.io_preload_fonts;
+		this.b_preload_materials = F3D.Config.io_preload_materials;
+		this.b_preload_shaders = F3D.Config.io_preload_shaders;
+		
 
 		// .frag /. vert <-----------------------
 		if (this.b_preload_shaders)
@@ -159,8 +166,6 @@ public class TF3D_Preloader
 	
 	private void Preload_Fonts()
 	{
-
-		
 		F3D.Fonts.Load("abstract::system.font");
 	}
 	

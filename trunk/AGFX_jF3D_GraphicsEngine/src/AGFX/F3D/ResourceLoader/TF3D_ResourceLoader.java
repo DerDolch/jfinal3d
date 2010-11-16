@@ -25,12 +25,12 @@ public class TF3D_ResourceLoader
 	{
 		InputStream is = null;
 
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_JAR"))
 		{
 			is = getClass().getClassLoader().getResourceAsStream(filename);
 		}
 
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_FOLDER"))
 		{
 			try
 			{
