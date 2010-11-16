@@ -160,6 +160,11 @@ public class TF3D_AppWrapper
 			{
 				F3D.Log.error("TF3D_AppWrapper", "Error during swich display");
 			}
+			
+			if (F3D.Input.IsKeyUp(Keyboard.KEY_SYSRQ))
+			{
+				F3D.Viewport.ScreenShot("screenshot.png", F3D.Config.r_display_width, F3D.Config.r_display_height);
+			}
 	}
 
 	public void onGUI()
