@@ -48,7 +48,7 @@ public class Demo_ResourceFrom_JAR extends TF3D_AppWrapper
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - Reasurce from JAR";
 			
 			// [1] set resource destination 
-			F3D.Config.io_preload_source = "PRELOAD_FROM_JAR";
+			F3D.Config.io_preload_source_mode = "PRELOAD_FROM_JAR";
 			
 			super.onConfigure();
 

@@ -65,7 +65,7 @@ public class TF3D_Mesh
 	{
 		String o_fname = filename;
 
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_FOLDER"))
 		{
 
 			filename = filename.replace(".a3da", ".a3db");
@@ -84,7 +84,7 @@ public class TF3D_Mesh
 			}
 		}
 
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_JAR"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_JAR"))
 		{
 
 			if (F3D.AbstractFiles.ExistFile(filename))

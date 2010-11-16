@@ -192,7 +192,7 @@ public class F3D
 
 		//F3D.Config = new TF3D_Config();
 		
-		if (F3D.Config.io_preload_source.equals("PRELOAD_FROM_FOLDER"))
+		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_FOLDER"))
 		{
 			F3D.AbstractFiles = new TF3D_AbstractFiles();
 		}
