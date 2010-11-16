@@ -160,7 +160,7 @@ public class TF3D_AppWrapper
 			{
 				F3D.Log.error("TF3D_AppWrapper", "Error during swich display");
 			}
-			
+			// make screenshot
 			if (F3D.Input.IsKeyDown(Keyboard.KEY_LCONTROL) & F3D.Input.IsKeyDown(Keyboard.KEY_LSHIFT) & F3D.Input.IsKeyUp(Keyboard.KEY_P))
 			{
 				F3D.Viewport.ScreenShot("screenshot.png", F3D.Config.r_display_width, F3D.Config.r_display_height);
