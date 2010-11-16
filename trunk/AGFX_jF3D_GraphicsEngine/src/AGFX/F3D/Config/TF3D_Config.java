@@ -69,7 +69,7 @@ public class TF3D_Config
 	public String	io_preload_folder;
 
 	/** preolad data from "PRELOAD_FROM_FOLDER" or "PRELOAD_FROM_JAR" */
-	public String	io_preload_source_mode			= "PRELOAD_FROM_FOLDER";
+	public String	io_preload_source_mode		= "PRELOAD_FROM_FOLDER";
 
 	public String	io_preload_source_filelist	= "media.folders";
 
@@ -78,6 +78,20 @@ public class TF3D_Config
 	public Boolean	io_preload_materials		= true;
 	public Boolean	io_preload_shaders			= true;
 	public Boolean	io_preload_fonts			= true;
+
+	// shaders
+
+	public Boolean	shd_load_diffuse			= true;
+	public Boolean	shd_load_phong				= true;
+	public Boolean	shd_load_envmap				= true;
+	public Boolean	shd_load_glow				= true;
+	public Boolean	shd_load_posterize			= true;
+	public Boolean	shd_load_dream				= true;
+	public Boolean	shd_load_warp				= true;
+	public Boolean	shd_load_blur_v				= true;
+	public Boolean	shd_load_blur_h				= true;
+	public Boolean	shd_load_gaussian_v			= true;
+	public Boolean	shd_load_gaussian_h			= true;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Config:
@@ -153,6 +167,19 @@ public class TF3D_Config
 			this.io_preload_materials = PARSER.GetAs_BOOLEAN("io_preload_materials");
 			this.io_preload_shaders = PARSER.GetAs_BOOLEAN("io_preload_shaders");
 			this.io_preload_fonts = PARSER.GetAs_BOOLEAN("io_preload_fonts");
+
+			this.shd_load_diffuse = PARSER.GetAs_BOOLEAN("shd_load_diffuse");
+			this.shd_load_phong = PARSER.GetAs_BOOLEAN("shd_load_phong");
+			this.shd_load_envmap = PARSER.GetAs_BOOLEAN("shd_load_envmap");
+			this.shd_load_glow = PARSER.GetAs_BOOLEAN("shd_load_glow");
+			this.shd_load_posterize = PARSER.GetAs_BOOLEAN("shd_load_posterize");
+			this.shd_load_dream = PARSER.GetAs_BOOLEAN("shd_load_dream");
+			this.shd_load_warp = PARSER.GetAs_BOOLEAN("shd_load_warp");
+			this.shd_load_blur_v = PARSER.GetAs_BOOLEAN("shd_load_blur_v");
+			this.shd_load_blur_h = PARSER.GetAs_BOOLEAN("shd_load_blur_h");
+			this.shd_load_gaussian_v = PARSER.GetAs_BOOLEAN("shd_load_gaussian_v");
+			this.shd_load_gaussian_h = PARSER.GetAs_BOOLEAN("shd_load_gaussian_h");
+
 		}
 
 		F3D.AbstractFiles = new TF3D_AbstractFiles();
