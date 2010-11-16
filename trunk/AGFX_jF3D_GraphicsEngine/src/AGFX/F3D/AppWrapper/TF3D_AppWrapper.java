@@ -16,7 +16,7 @@ import AGFX.F3D.Engine.TF3D_Log;
  */
 public class TF3D_AppWrapper
 {
-	public Boolean AppTerminate;
+	public Boolean	AppTerminate;
 
 	// -----------------------------------------------------------------------
 	// TA3D_AppWrapper:
@@ -161,7 +161,7 @@ public class TF3D_AppWrapper
 				F3D.Log.error("TF3D_AppWrapper", "Error during swich display");
 			}
 			
-			if (F3D.Input.IsKeyUp(Keyboard.KEY_SYSRQ))
+			if (F3D.Input.IsKeyDown(Keyboard.KEY_LCONTROL) & F3D.Input.IsKeyDown(Keyboard.KEY_LSHIFT) & F3D.Input.IsKeyUp(Keyboard.KEY_P))
 			{
 				F3D.Viewport.ScreenShot("screenshot.png", F3D.Config.r_display_width, F3D.Config.r_display_height);
 			}
