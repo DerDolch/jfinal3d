@@ -4,6 +4,7 @@
 package demos;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.fenggui.FengGUI;
 import org.fenggui.actor.ScreenshotActor;
@@ -53,7 +54,8 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
-
+			
+			
 			super.onConfigure();
 
 		} catch (Exception e)

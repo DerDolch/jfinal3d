@@ -3,14 +3,9 @@
  */
 package demos;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.vecmath.Vector3f;
 
-import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
