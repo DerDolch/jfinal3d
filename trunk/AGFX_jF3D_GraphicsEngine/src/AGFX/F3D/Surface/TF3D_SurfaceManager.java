@@ -278,7 +278,7 @@ public class TF3D_SurfaceManager
 		int BLOCK_ID;
 		String tmp_str;
 
-		System.out.print("Loading config... " + filename);
+		System.out.println("Loading config... " + filename);
 		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);
 
 		if (!Exist)

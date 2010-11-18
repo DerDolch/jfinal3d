@@ -119,13 +119,15 @@ public class TF3D_Model extends TF3D_Entity
 
 						glPushMatrix();
 
-						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+						
 						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
 
 						glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
 						glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
 						glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
 
+						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+						
 						mesh.Render(i);
 						
 						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
