@@ -14,6 +14,7 @@ import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Math.TF3D_MathUtils;
+import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Model.TF3D_Model;
 
 /**
@@ -26,6 +27,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 	public TF3D_Camera Camera;
 	public TF3D_Model model;
 	public Vector3f pos2D;
+	public TF3D_Matrix mat;
 
 	int odx = 0;
 	int ody = 0;
@@ -85,7 +87,9 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		this.model = new TF3D_Model("AUTO");
 		this.model.AssignMesh("abstract::karoseria.a3da");
 		
-		
+		this.mat = new TF3D_Matrix();
+		this.mat.LoadIdentity();
+		F3D.Log.info("MAIN", mat.toString());
 	}
 	
 	
@@ -133,10 +137,13 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		}
 		
 		pos2D = TF3D_MathUtils.World3DtoScreen2D(this.model.GetPosition());
-		F3D.Log.info("MAIN 2d pos", pos2D.toString());
+		
 		//this.model.Turn(0, 1, 0);
 		//F3D.Draw.Axis(2.0f);	
 	
+		
+		
+		
 	}
 	
 	
