@@ -19,35 +19,35 @@ public abstract class TF3D_Entity
 {
 
 	/** Entity start position - used for physics restart */
-	public Vector3f               start_position;
+	public Vector3f					start_position;
 	/** Entity rotation - used for physics restart */
-	public Vector3f               start_rotation;
+	public Vector3f					start_rotation;
 
 	/** Entity position */
-	private Vector3f              position;
+	private Vector3f				position;
 	/** Entity rotation */
-	private Vector3f              rotation;
+	private Vector3f				rotation;
 	/** Entity scale */
-	private Vector3f              scale;
+	private Vector3f				scale;
 	/** Entity axis vectors */
-	public TF3D_Axis3f            axis;
+	public TF3D_Axis3f				axis;
 	/** class name of entity */
-	public int                    classname;
+	public int						classname;
 	/** name of entity */
-	public String                 name;
+	public String					name;
 	/** move speed */
-	public float                  movespeed;
+	public float					movespeed;
 	/** rotation speed */
-	public float                  turnspeed;
-	public Boolean                visibility = false;
-	private Boolean               enable     = true;
+	public float					turnspeed;
+	public Boolean					visibility			= false;
+	private Boolean					enable				= true;
 
-	public ArrayList<TF3D_Entity> childs;
-	public TF3D_Entity            parent;
-	public Boolean                is_child   = false;
+	public ArrayList<TF3D_Entity>	childs;
+	public TF3D_Entity				parent;
+	public Boolean					is_child			= false;
 
-	public TF3D_BoundingBox       BBOX;
-	public Boolean                enableFrustumTest=true;
+	public TF3D_BoundingBox			BBOX;
+	public Boolean					enableFrustumTest	= true;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Entity:
@@ -352,15 +352,38 @@ public abstract class TF3D_Entity
 	{
 		if (this.enableFrustumTest)
 		{
-		Vector3f sum = new Vector3f(0, 0, 0);
-		sum.add(this.GetPosition(), this.BBOX.center);
-		this.visibility = F3D.Frustum.BoxInFrustum(sum, this.BBOX.size);
-		}
-		else
+			Vector3f sum = new Vector3f(0, 0, 0);
+			sum.add(this.GetPosition(), this.BBOX.center);
+			this.visibility = F3D.Frustum.BoxInFrustum(sum, this.BBOX.size);
+		} else
 		{
 			this.visibility = true;
 		}
 		return this.visibility;
+
+	}
+
+	public void PointTo(TF3D_Entity e)
+	{
+		Vector3f forward = new Vector3f(0, 0, -1);
+		Vector3f up = new Vector3f(0, 1, 0);
+		Vector3f target = new Vector3f(e.GetPosition());
+
+		Vector3f e_pos = new Vector3f(this.GetPosition());
+
+		target.sub(e_pos);
+		Vector3f target2 = new Vector3f(target);
+
+		target.normalize();
+		target2.normalize();
+
+		target.y = 0;
+		target2.x = 0;
+		float aY = forward.angle(target) * F3D.RADTODEG;
+		float aX = target2.angle(up) * F3D.RADTODEG;
+		float aZ = 0 * F3D.RADTODEG;
+
+		this.rotation.set(aX, aY, aZ);
 
 	}
 
