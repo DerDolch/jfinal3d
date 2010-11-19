@@ -3,7 +3,11 @@
  */
 package AGFX.F3D.Math;
 
+import java.nio.FloatBuffer;
+
 import javax.vecmath.Vector3f;
+
+import AGFX.F3D.F3D;
 
 /**
  * @author AndyGFX
@@ -417,5 +421,22 @@ public class TF3D_Matrix
 		}
 		
 		return res;
+	}
+	
+	
+	public FloatBuffer toFloatBuffer()
+	{
+		float[] res = new float[16];
+		int i=0;
+		for (int Y = 0; Y < 4; Y++)
+		{
+			for (int X = 0; X < 4; X++)
+			{
+				 res[i] = grid[X][Y];
+				 i++;
+			}
+		}
+		
+		return F3D.GetBuffer.Float(res);
 	}
 }

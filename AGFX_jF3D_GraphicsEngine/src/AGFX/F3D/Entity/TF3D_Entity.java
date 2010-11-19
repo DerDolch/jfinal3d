@@ -4,11 +4,15 @@
 
 package AGFX.F3D.Entity;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import javax.vecmath.*;
 
+import org.lwjgl.BufferUtils;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_Axis3f;
+import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
 /**
@@ -48,6 +52,7 @@ public abstract class TF3D_Entity
 
 	public TF3D_BoundingBox			BBOX;
 	public Boolean					enableFrustumTest	= true;
+	public TF3D_Matrix				matrix;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Entity:
@@ -75,6 +80,8 @@ public abstract class TF3D_Entity
 		this.movespeed = 1.0f;
 		this.turnspeed = 1.0f;
 
+		this.matrix = new TF3D_Matrix();
+	
 		this.BBOX = new TF3D_BoundingBox();
 
 		this.childs = new ArrayList<TF3D_Entity>();
