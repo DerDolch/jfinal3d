@@ -4,6 +4,10 @@
 package AGFX.F3D.Model;
 
 import java.util.ArrayList;
+
+import javax.vecmath.Matrix4f;
+import javax.vecmath.Vector3f;
+
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Mesh.TF3D_Mesh;
@@ -116,7 +120,7 @@ public class TF3D_Model extends TF3D_Entity
 						{							 
 							F3D.Surfaces.ApplyMaterial(mid);
 						}
-
+						
 						glPushMatrix();
 
 						
@@ -129,6 +133,7 @@ public class TF3D_Model extends TF3D_Entity
 						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 						
 						mesh.Render(i);
+						
 						
 						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
 						
@@ -155,6 +160,7 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Update()
 	{
+		
 	}
 
 	@Override

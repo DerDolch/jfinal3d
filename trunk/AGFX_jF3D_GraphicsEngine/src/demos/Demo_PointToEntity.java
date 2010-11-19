@@ -86,11 +86,12 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 		this.modelA.AssignMesh("abstract::Cube.a3da");
 		this.modelA.SetPosition(0,0,0);
 		this.modelA.SetScale(0.1f,0.1f,1);
-		
+	
 		
 		this.modelB = new TF3D_Model("CUBE2");
 		this.modelB.AssignMesh("abstract::Cube.a3da");
-		this.modelB.SetPosition(1,1,1);
+		this.modelB.SetPosition(2,2,2);
+		this.modelB.matrix.toString();
 
 	}
 	
@@ -100,7 +101,7 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 	{
 		
 
-		
+		this.modelB.Turn(0, 1, 0);
 
 		if (Mouse.isInsideWindow())
 		{
@@ -140,7 +141,7 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 		
 		
 		
-		this.modelA.PointTo(this.modelB);
+		//this.modelA.PointTo(this.modelB);
 		F3D.Draw.Axis(2.0f);	
 	
 	}

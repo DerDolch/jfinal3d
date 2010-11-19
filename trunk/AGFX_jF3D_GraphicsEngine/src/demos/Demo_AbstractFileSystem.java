@@ -23,6 +23,7 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 			
 			
 			F3D.Config = new TF3D_Config();
+			
 			/*
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
@@ -32,7 +33,7 @@ public class Demo_AbstractFileSystem extends TF3D_AppWrapper
 			*/
 			
 			F3D.Config.Load("abstract::default.cfg");
-			
+			F3D.Config.r_display_title = F3D.Config.r_display_title + this.getClass().getName();
 			super.onConfigure();
 			
 
