@@ -40,7 +40,7 @@ public class F3D
 	// '-----------------------------------------------------------------
 	public static final boolean             PARSER_LOG                 = false;
 	public static final boolean             ABSTARCTFILE_LOG           = false;
-	
+
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
 	// '-----------------------------------------------------------------
@@ -145,17 +145,20 @@ public class F3D
 	public final static int                 SHADER_EVENT_EYEPOS        = 1;
 	public final static int                 SHADER_EVENT_CAMERA        = 2;
 
+	public final static int                 ROTATE_IN_SEQ_XYZ          = 0;
+	public final static int                 ROTATE_IN_SEQ_YXZ          = 1;
+	
 	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 
-	public static TF3D_ResourceLoader		Resource = new TF3D_ResourceLoader();
-	public static TF3D_AbstractFiles        AbstractFiles = new TF3D_AbstractFiles();
+	public static TF3D_ResourceLoader       Resource                   = new TF3D_ResourceLoader();
+	public static TF3D_AbstractFiles        AbstractFiles              = new TF3D_AbstractFiles();
 	public static TF3D_Config               Config;
 	public static TF3D_Extensions           Extensions;
 	public static TF3D_Viewport             Viewport;
 	public static TF3D_Display              Display;
-	public static TF3D_Log                  Log = new TF3D_Log();
+	public static TF3D_Log                  Log                        = new TF3D_Log();
 	public static TF3D_CameraManager        Cameras;
 	public static TF3D_Frustum              Frustum;
 	public static TF3D_TextureManager       Textures;
@@ -181,22 +184,19 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
-	
-	
+
 	public static void Create()
 	{
 
-		
-
 		F3D.Log.info("F3D", "---- START ----");
 
-		//F3D.Config = new TF3D_Config();
-		
+		// F3D.Config = new TF3D_Config();
+
 		if (F3D.Config.io_preload_source_mode.equals("PRELOAD_FROM_FOLDER"))
 		{
 			F3D.AbstractFiles = new TF3D_AbstractFiles();
 		}
-		
+
 		F3D.Preloader = new TF3D_Preloader();
 
 		F3D.Display = new TF3D_Display();
@@ -206,8 +206,6 @@ public class F3D
 		F3D.Worlds = new TF3D_WorldManager();
 
 		F3D.Cameras = new TF3D_CameraManager();
-
-		
 
 		F3D.Frustum = new TF3D_Frustum();
 
@@ -228,7 +226,7 @@ public class F3D
 		F3D.FrameBuffers = new TF3D_FBO_manager();
 
 		F3D.Shaders = new TF3D_ShaderManager();
-		
+
 		F3D.GetBuffer = new TF3D_Buffer();
 
 		if (F3D.Config.use_physics)

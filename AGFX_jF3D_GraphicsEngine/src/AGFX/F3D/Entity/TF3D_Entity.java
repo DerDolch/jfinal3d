@@ -12,6 +12,7 @@ import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_Axis3f;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
@@ -23,36 +24,37 @@ public abstract class TF3D_Entity
 {
 
 	/** Entity start position - used for physics restart */
-	public Vector3f					start_position;
+	public Vector3f               start_position;
 	/** Entity rotation - used for physics restart */
-	public Vector3f					start_rotation;
+	public Vector3f               start_rotation;
 
 	/** Entity position */
-	private Vector3f				position;
+	private Vector3f              position;
 	/** Entity rotation */
-	private Vector3f				rotation;
+	private Vector3f              rotation;
 	/** Entity scale */
-	private Vector3f				scale;
+	private Vector3f              scale;
 	/** Entity axis vectors */
-	public TF3D_Axis3f				axis;
+	public TF3D_Axis3f            axis;
 	/** class name of entity */
-	public int						classname;
+	public int                    classname;
 	/** name of entity */
-	public String					name;
+	public String                 name;
 	/** move speed */
-	public float					movespeed;
+	public float                  movespeed;
 	/** rotation speed */
-	public float					turnspeed;
-	public Boolean					visibility			= false;
-	private Boolean					enable				= true;
+	public float                  turnspeed;
+	public Boolean                visibility        = false;
+	private Boolean               enable            = true;
 
-	public ArrayList<TF3D_Entity>	childs;
-	public TF3D_Entity				parent;
-	public Boolean					is_child			= false;
+	public ArrayList<TF3D_Entity> childs;
+	public TF3D_Entity            parent;
+	public Boolean                is_child          = false;
 
-	public TF3D_BoundingBox			BBOX;
-	public Boolean					enableFrustumTest	= true;
-	public TF3D_Matrix				matrix;
+	public TF3D_BoundingBox       BBOX;
+	public Boolean                enableFrustumTest = true;
+	public TF3D_Matrix            matrix;
+	public int                    rotation_seq      = F3D.ROTATE_IN_SEQ_XYZ;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Entity:
@@ -81,7 +83,7 @@ public abstract class TF3D_Entity
 		this.turnspeed = 1.0f;
 
 		this.matrix = new TF3D_Matrix();
-	
+
 		this.BBOX = new TF3D_BoundingBox();
 
 		this.childs = new ArrayList<TF3D_Entity>();
@@ -372,25 +374,25 @@ public abstract class TF3D_Entity
 
 	public void PointTo(TF3D_Entity e)
 	{
-		Vector3f forward = new Vector3f(0, 0, -1);
-		Vector3f up = new Vector3f(0, 1, 0);
-		Vector3f target = new Vector3f(e.GetPosition());
-
-		Vector3f e_pos = new Vector3f(this.GetPosition());
-
-		target.sub(e_pos);
-		Vector3f target2 = new Vector3f(target);
-
+		this.rotation_seq = F3D.ROTATE_IN_SEQ_YXZ;
+		
+		Vector3f eye = new Vector3f(this.GetPosition());
+		
+		
+		
+		Vector3f forward = new Vector3f(e.GetPosition());
+		forward.sub(eye);
+		forward.normalize();
+		
+		Vector3f target = new Vector3f(forward);
 		target.normalize();
-		target2.normalize();
-
 		target.y = 0;
-		target2.x = 0;
-		float aY = forward.angle(target) * F3D.RADTODEG;
-		float aX = target2.angle(up) * F3D.RADTODEG;
-		float aZ = 0 * F3D.RADTODEG;
-
-		this.rotation.set(aX, aY, aZ);
+		
+		float aY = TF3D_MathUtils.VectorAngle(forward,new Vector3f(0,0,1),new Vector3f(1,0,0)) * F3D.RADTODEG; 
+		float aX = -TF3D_MathUtils.VectorAngle(forward,target,new Vector3f(0,1,0)) * F3D.RADTODEG;
+		float aZ = 0;
+		
+		this.SetRotation(aX, aY, aZ);
 
 	}
 
