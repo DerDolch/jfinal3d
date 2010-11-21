@@ -65,7 +65,6 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 		
 		this.Camera = new TF3D_Camera("TargetCamera");
 		this.Camera.SetPosition(5.0f, 5.0f, -15.0f);		
-		this.Camera.movespeed = 0.2f;
 		this.Camera.TargetPoint = new Vector3f(0,0,0);
 		this.Camera.ctype = F3D.CAMERA_TYPE_TARGET;
 		

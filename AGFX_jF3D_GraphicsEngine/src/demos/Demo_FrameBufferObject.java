@@ -82,7 +82,6 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 		this.Camera1 = new TF3D_Camera("TargetCamera1");
 		this.Camera1.SetPosition(0.0f, 5.0f, 15.0f);
 		this.Camera1.SetRotation(15, 0, 0);
-		this.Camera1.movespeed = 0.2f;
 		this.Camera1.TargetPoint = new Vector3f(0f, 0f, 0);
 		this.Camera1.ctype = F3D.CAMERA_TYPE_FPS;
 
@@ -122,7 +121,6 @@ public class Demo_FrameBufferObject extends TF3D_AppWrapper
 
 		this.Camera2 = new TF3D_Camera("TargetCamera2");
 		this.Camera2.SetPosition(0.0f, 15.0f, -25.0f);
-		this.Camera2.movespeed = 0.2f;
 		this.Camera2.TargetPoint = new Vector3f(-2f, 1f, 0);
 		this.Camera2.ctype = F3D.CAMERA_TYPE_TARGET;
 
