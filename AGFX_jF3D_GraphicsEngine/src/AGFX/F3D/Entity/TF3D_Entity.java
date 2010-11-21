@@ -117,9 +117,31 @@ public abstract class TF3D_Entity
 		this.position.set(_x, _y, _z);
 	}
 
-	public Vector3f GetPosition()
+	// -----------------------------------------------------------------------
+	// TF3D_Entity:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Set entity position with hold start position <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _x
+	 *            - X position
+	 * @param _y
+	 *            - Y position
+	 * @param _z
+	 *            - Z position
+	 * @param store
+	 *            - true save pos to start_position
+	 */
+	// -----------------------------------------------------------------------
+	public void SetPosition(float _x, float _y, float _z, Boolean store)
 	{
-		return this.position;
+		if (store)
+			this.start_position.set(_x, _y, _z);
+
+		this.position.set(_x, _y, _z);
 	}
 
 	// -----------------------------------------------------------------------
@@ -141,6 +163,58 @@ public abstract class TF3D_Entity
 	}
 
 	// -----------------------------------------------------------------------
+	// TF3D_Entity:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Set entity position with hold start position <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param p
+	 *            - position vector
+	 * @param store
+	 *            - true save pos to start_position
+	 */
+	// -----------------------------------------------------------------------
+	public void SetPosition(Vector3f p, Boolean store)
+	{
+		if (store)
+			this.start_position.set(p);
+		this.position.set(p);
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_Entity: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  return position vector
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public Vector3f GetPosition()
+	{
+		return this.position;
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_Entity: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *   return start position vector
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public Vector3f GetStartPosition()
+	{
+		return this.start_position;
+	}
+	
+	// -----------------------------------------------------------------------
 	// TA3D_Entity:
 	// -----------------------------------------------------------------------
 	/**
@@ -159,6 +233,10 @@ public abstract class TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void SetRotation(float _x, float _y, float _z)
 	{
+		_x = _x % 360f;
+		_y = _y % 360f;
+		_z = _z % 360f;
+
 		this.rotation.set(_x, _y, _z);
 	}
 
@@ -177,9 +255,11 @@ public abstract class TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void SetRotation(Vector3f r)
 	{
-		this.rotation = r;
+		this.SetRotation(r.x, r.y, r.z);
 	}
 
+	
+	
 	public Vector3f GetRotation()
 	{
 		return this.rotation;
@@ -316,6 +396,72 @@ public abstract class TF3D_Entity
 		this.axis.GetFromEuler(this.rotation);
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Entity: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Turn entity around position on radius
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param angle - delta axis angles as vector3f
+	 * @param radius - distance to position
+	 */
+	// -----------------------------------------------------------------------
+	public void Turn(Vector3f angle, float radius)
+	{
+		this.Turn(angle.x, angle.y, angle.z, radius);
+	}
+	
+	// -----------------------------------------------------------------------
+	// TF3D_Entity: 
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 *  Turn entity around position on radius
+	 * <BR>-------------------------------------------------------------------<BR> 
+	 * @param dx - delta of X angle
+	 * @param dy - delta of Y angle
+	 * @param dz - delta of Z angle
+	 * @param radius - distance to position
+	 */
+	// -----------------------------------------------------------------------
+	public void Turn(float dx, float dy, float dz, float radius)
+	{
+
+		Vector3f res = new Vector3f(0, 0, 0);
+		res.add(this.rotation, new Vector3f(dx, dy, dz));
+
+		this.SetRotation(res);
+
+		Matrix4f rot = new Matrix4f();
+		Matrix4f rot_X = new Matrix4f();
+		Matrix4f rot_Y = new Matrix4f();
+		Matrix4f rot_Z = new Matrix4f();
+
+		Vector3f new_position = new Vector3f();
+
+		rot.setIdentity();
+		rot_X.setIdentity();
+		rot_Y.setIdentity();
+		rot_Z.setIdentity();
+
+		rot_X.rotX(this.GetRotation().x * F3D.DEGTORAD);
+		rot_Y.rotY(this.GetRotation().y * F3D.DEGTORAD);
+		rot_Z.rotZ(this.GetRotation().z * F3D.DEGTORAD);
+
+		rot.mul(rot_Y);
+		rot.mul(rot_X);
+		rot.mul(rot_Z);
+
+		rot.transform(new Vector3f(0, 0, radius), new_position);
+
+		new_position.add(this.start_position);
+		this.SetPosition(new_position);
+
+		F3D.Log.info("POS NEW", new_position.toString());
+		F3D.Log.info("ROT NEW", this.GetRotation().toString());
+	}
+
 	public void Turn(float dx, float dy, float dz)
 	{
 		Vector3f res = new Vector3f(0, 0, 0);
@@ -323,6 +469,11 @@ public abstract class TF3D_Entity
 		res.add(this.rotation, new Vector3f(dx, dy, dz));
 
 		this.SetRotation(res);
+	}
+
+	public void Turn(Vector3f ta)
+	{
+		this.Turn(ta.x, ta.y, ta.z);
 	}
 
 	public void Move(float dx, float dy, float dz)
@@ -375,23 +526,21 @@ public abstract class TF3D_Entity
 	public void PointTo(TF3D_Entity e)
 	{
 		this.rotation_seq = F3D.ROTATE_IN_SEQ_YXZ;
-		
+
 		Vector3f eye = new Vector3f(this.GetPosition());
-		
-		
-		
+
 		Vector3f forward = new Vector3f(e.GetPosition());
 		forward.sub(eye);
 		forward.normalize();
-		
+
 		Vector3f target = new Vector3f(forward);
 		target.normalize();
 		target.y = 0;
-		
-		float aY = TF3D_MathUtils.VectorAngle(forward,new Vector3f(0,0,1),new Vector3f(1,0,0)) * F3D.RADTODEG; 
-		float aX = -TF3D_MathUtils.VectorAngle(forward,target,new Vector3f(0,1,0)) * F3D.RADTODEG;
+
+		float aY = TF3D_MathUtils.VectorAngle(forward, new Vector3f(0, 0, 1), new Vector3f(1, 0, 0)) * F3D.RADTODEG;
+		float aX = -TF3D_MathUtils.VectorAngle(forward, target, new Vector3f(0, 1, 0)) * F3D.RADTODEG;
 		float aZ = 0;
-		
+
 		this.SetRotation(aX, aY, aZ);
 
 	}
