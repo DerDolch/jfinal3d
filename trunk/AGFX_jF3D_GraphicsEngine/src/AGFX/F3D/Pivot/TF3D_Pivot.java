@@ -37,7 +37,7 @@ public class TF3D_Pivot extends TF3D_Entity
 		{
 			glPushMatrix();
 
-			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			//glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 			glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
 
 			glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
@@ -50,7 +50,7 @@ public class TF3D_Pivot extends TF3D_Entity
 				this.childs.get(i).Render();
 			}
 
-			glScalef(1, 1, 1);
+			//glScalef(1, 1, 1);
 			glPopMatrix();
 		}
 

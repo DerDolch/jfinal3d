@@ -72,9 +72,9 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		F3D.Worlds.SetCamera(this.Camera);
 		
-		F3D.Meshes.Add("abstract::MultiSurfCube.a3da",true);
-		F3D.Meshes.Add("abstract::Sphere.a3da",true);
-		F3D.Meshes.Add("abstract::Cone.a3da",true);
+		F3D.Meshes.Add("abstract::MultiSurfCube.a3da");
+		F3D.Meshes.Add("abstract::Sphere.a3da");
+		F3D.Meshes.Add("abstract::Cone.a3da");
 		
 		
 		

@@ -9,6 +9,7 @@ public class TF3D_Timer2
 	
 	private Timer timer;
     private int m_lastTick;
+    private int m_deltaTick;
 	private float m_fpsDuration;
 	private int m_fpsFrames;
 	private int m_fps;
@@ -40,6 +41,7 @@ public class TF3D_Timer2
 		    m_fpsDuration = 0;
 		    m_fpsFrames= 0;
 		  }
+		  m_deltaTick = tick - m_lastTick;
 		  m_lastTick = tick;
 		  m_fpsFrames++;
 		//  glFlush();
@@ -58,6 +60,10 @@ public class TF3D_Timer2
 	}
 
 	
+	public int GetDelta()
+	{
+		return this.m_deltaTick;
+	}
 	
 	public int GetTickCount()
 	{
