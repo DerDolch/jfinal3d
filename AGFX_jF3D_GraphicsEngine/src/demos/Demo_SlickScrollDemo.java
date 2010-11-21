@@ -65,8 +65,6 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 	 */
 	private boolean[][]        blocked;
 
-	public Graphics            graphics;
-
 	public Demo_SlickScrollDemo()
 	{
 	}
@@ -85,7 +83,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - app"+this.getClass().getName();
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - app" + this.getClass().getName();
 
 			super.onConfigure();
 
@@ -98,10 +96,9 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
-		this.graphics = new Graphics();
-		this.graphics.setAntiAlias(true);
-		
-		
+
+		F3D.SlickGraphics.setAntiAlias(true);
+
 		// load the sprites and tiles, note that underneath the texture
 		// will be shared between the sprite sheet and tilemap
 		SpriteSheet sheet = null;
@@ -235,7 +232,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 	 * @see org.newdawn.slick.Game#render(org.newdawn.slick.GameContainer,
 	 *      org.newdawn.slick.Graphics)
 	 */
-	public void render() throws SlickException
+	public void render() 
 	{
 		// draw the appropriate section of the tilemap based on the centre
 		// (hence the -(TANK_SIZE/2)) of
@@ -260,12 +257,12 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 
 		// draw entities relative to the player that must appear in the centre
 		// of the screen
-		this.graphics.translate(400 - (int) (playerX * 32), 300 - (int) (playerY * 32));
+		F3D.SlickGraphics.translate(400 - (int) (playerX * 32), 300 - (int) (playerY * 32));
 
-		drawTank(this.graphics, playerX, playerY, ang);
+		drawTank(F3D.SlickGraphics, playerX, playerY, ang);
 		// draw other entities here if there were any
 
-		this.graphics.resetTransform();
+		F3D.SlickGraphics.resetTransform();
 	}
 
 	/**
@@ -300,8 +297,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 	@Override
 	public void onUpdate2D()
 	{
-		
-		
+
 		int delta = F3D.Timer.GetDelta();
 
 		// check the controls, left/right adjust the rotation of the tank,
@@ -335,16 +331,8 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 			}
 		}
 
-		try
-        {
-			this.graphics.setDrawMode(this.graphics.MODE_NORMAL);
-	        this.render();
-	        
-        } catch (SlickException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
+		F3D.SlickGraphics.setDrawMode(F3D.SlickGraphics.MODE_NORMAL);
+		this.render();
 	}
 
 	@Override

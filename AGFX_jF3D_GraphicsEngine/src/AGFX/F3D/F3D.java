@@ -4,6 +4,8 @@
 package AGFX.F3D;
 
 import org.lwjgl.LWJGLException;
+import org.newdawn.slick.Graphics;
+
 import AGFX.F3D.Camera.TF3D_CameraManager;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Engine.TF3D_Display;
@@ -184,7 +186,8 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
-
+	public static Graphics            		SlickGraphics;
+	
 	public static void Create()
 	{
 
@@ -236,6 +239,11 @@ public class F3D
 		} else
 		{
 			F3D.Physic = null;
+		}
+		
+		if (F3D.Config.use_slick)
+		{
+			F3D.SlickGraphics = new Graphics();
 		}
 
 	}
