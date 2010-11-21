@@ -20,8 +20,13 @@ public class TF3D_MeshManager
 
 	public void Add(String name)
 	{
+		this.Add(name, false);
+	}
+	
+	public void Add(String name,boolean flip)
+	{
 		TF3D_Mesh m = new TF3D_Mesh();
-		m.Load(name);
+		m.Load(name,flip);
 		
 		this.items.add(m);
 		m = null;

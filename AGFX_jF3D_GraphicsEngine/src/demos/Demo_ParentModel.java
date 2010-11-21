@@ -46,6 +46,7 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
+			F3D.Config.use_shaders = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
 
 			super.onConfigure();
@@ -71,9 +72,12 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 		F3D.Cameras.Add(this.Camera);
 		F3D.Worlds.SetCamera(this.Camera);
 		
-		F3D.Meshes.Add("abstract::MultiSurfCube.a3da");
-		F3D.Meshes.Add("abstract::Sphere.a3da");
-		F3D.Meshes.Add("abstract::Cone.a3da");
+		F3D.Meshes.Add("abstract::MultiSurfCube.a3da",true);
+		F3D.Meshes.Add("abstract::Sphere.a3da",true);
+		F3D.Meshes.Add("abstract::Cone.a3da",true);
+		
+		
+		
 		
 		this.sign = new TF3D_Model("SIGN");				
 		this.sign.AssignMesh("abstract::MultiSurfCube.a3da");		
@@ -90,6 +94,7 @@ public class Demo_ParentModel extends TF3D_AppWrapper
 		this.p2mesh = new TF3D_Model("Cube3");
 		this.p2mesh.AssignMesh("abstract::MultiSurfCube.a3da");
 		this.p2mesh.SetPosition(-2,0,0);
+		
 			
 		this.mesh.AddChild(this.pmesh);
 		this.mesh.AddChild(this.p2mesh);
