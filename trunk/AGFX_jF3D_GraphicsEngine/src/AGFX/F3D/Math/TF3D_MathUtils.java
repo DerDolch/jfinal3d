@@ -3,9 +3,7 @@ package AGFX.F3D.Math;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
+import javax.vecmath.*;
 import com.bulletphysics.linearmath.QuaternionUtil;
 
 import org.lwjgl.BufferUtils;
@@ -71,7 +69,7 @@ public class TF3D_MathUtils
 		float sqy = q.y * q.y;
 		float sqz = q.z * q.z;
 		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
-											// is correction factor
+		                                    // is correction factor
 		float test = q.x * q.y + q.z * q.w;
 		if (test > 0.499 * unit)
 		{ // singularity at north pole
@@ -87,12 +85,12 @@ public class TF3D_MathUtils
 		{
 			// X
 			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw
-																									// or
-																									// bank
+			                                                                                       // or
+			                                                                                       // bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll
-																									// or
-																									// heading
+			                                                                                      // or
+			                                                                                      // heading
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 
@@ -102,6 +100,24 @@ public class TF3D_MathUtils
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_MathUtils:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Create Quat3f vector f rom angles <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param yaw
+	 *            - Y angle
+	 * @param roll
+	 *            - X angle
+	 * @param pitch
+	 *            - Z angle
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
 	public static Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
 	{
 
@@ -110,6 +126,19 @@ public class TF3D_MathUtils
 		return q;
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_MathUtils:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * convert world 3D point to screen space 2D <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param pos
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
 	public static Vector3f World3DtoScreen2D(Vector3f pos)
 	{
 		Vector3f res = new Vector3f();
@@ -129,5 +158,62 @@ public class TF3D_MathUtils
 		res.z = win_pos.get(2);
 
 		return res;
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_MathUtils:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Calc angle between 2 vectors [0-PI/2] <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param a
+	 *            - vector A
+	 * @param b
+	 *            - vector B
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public static float VectorAngle(Vector3f a, Vector3f b)
+	{
+		float res = 0;
+
+		Vector3f c = new Vector3f();
+
+		c.cross(a, b);
+		res = (float) Math.atan2(c.length(), a.dot(b));
+
+		return res;
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_MathUtils:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Calc angle between 2 vectors [-PI/2,PI/2] <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param a
+	 *            - vector A
+	 * @param b
+	 *            - vector B
+	 * @param reference
+	 *            - ref. vector to determine +/- angle
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public static float VectorAngle(Vector3f a, Vector3f b, Vector3f reference)
+	{
+		float res = 0;
+
+		Vector3f c = new Vector3f();
+
+		c.cross(a, b);
+		res = (float) Math.atan2(c.length(), a.dot(b));
+		return a.dot(reference) < 0.f ? -res : res;
 	}
 }

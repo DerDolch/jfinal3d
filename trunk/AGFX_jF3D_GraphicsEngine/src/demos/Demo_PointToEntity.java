@@ -3,6 +3,7 @@
  */
 package demos;
 
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
 
 import org.lwjgl.input.Keyboard;
@@ -26,6 +27,8 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 	public TF3D_Camera Camera;
 	public TF3D_Model modelA;
 	public TF3D_Model modelB;
+	public float speed = 0.5f;
+	public float ang = 0;
 
 	int odx = 0;
 	int ody = 0;
@@ -84,14 +87,13 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 		
 		this.modelA = new TF3D_Model("CUBE1");
 		this.modelA.AssignMesh("abstract::Cube.a3da");
-		this.modelA.SetPosition(0,0,0);
-		this.modelA.SetScale(0.1f,0.1f,1);
+		this.modelA.SetPosition(1,-2,1);
+		//this.modelA.SetScale(0.1f,0.1f,1);
 	
 		
 		this.modelB = new TF3D_Model("CUBE2");
 		this.modelB.AssignMesh("abstract::Cube.a3da");
-		this.modelB.SetPosition(2,2,2);
-		this.modelB.matrix.toString();
+		
 
 	}
 	
@@ -100,9 +102,24 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 	public void onUpdate3D()
 	{
 		
+		Matrix4f rotate = new Matrix4f();
+		Vector3f new_position = new Vector3f();
+		
+		rotate.setIdentity();
+		rotate.rotY(ang*F3D.DEGTORAD);
+		
+		rotate.transform(new Vector3f(0,0,4), new_position);
+		new_position.y = (float) Math.sin(ang*F3D.DEGTORAD*10f);
+		this.modelB.SetPosition(new_position);
+		
+		this.modelA.PointTo(this.modelB);
 
-		this.modelB.Turn(0, 1, 0);
-
+		F3D.Log.info("ROT Y", this.modelA.GetRotation().toString());
+		
+		
+		ang=ang+0.05f;
+		if (ang>360f) ang=0f;
+		
 		if (Mouse.isInsideWindow())
 		{
     		if (Mouse.isButtonDown(0))
@@ -122,21 +139,21 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_W))
 		{
-			this.Camera.Move(0.0f, 0.0f, -0.05f);
+			this.Camera.Move(0.0f, 0.0f, -this.speed*F3D.Timer.AppSpeed());
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_A))
 		{
-			this.Camera.Move(-0.05f, 0.0f, 0.0f);
+			this.Camera.Move(-this.speed*F3D.Timer.AppSpeed(), 0.0f, 0.0f);
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_S))
 		{
-			this.Camera.Move(0.0f, 0.0f, 0.05f);
+			this.Camera.Move(0.0f, 0.0f, this.speed*F3D.Timer.AppSpeed());
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
 		{
-			this.Camera.Move(0.05f, 0.0f, 0.0f);
+			this.Camera.Move(this.speed*F3D.Timer.AppSpeed(), 0.0f, 0.0f);
 		}
 		
 		

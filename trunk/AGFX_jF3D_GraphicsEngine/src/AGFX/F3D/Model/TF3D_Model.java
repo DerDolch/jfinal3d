@@ -81,10 +81,11 @@ public class TF3D_Model extends TF3D_Entity
 				this.surfaces.get(i).ChangeTo(new_surface);
 				done = true;
 			}
-			
+
 		}
-		
-		if (!done) F3D.Log.warning("TF3D_Model", ".ChangeSurface(...)" + "Surafce '"+old_surface+"' doesn't exist");
+
+		if (!done)
+			F3D.Log.warning("TF3D_Model", ".ChangeSurface(...)" + "Surafce '" + old_surface + "' doesn't exist");
 	}
 
 	public void SetRenderSurface(String sname, Boolean state)
@@ -117,26 +118,34 @@ public class TF3D_Model extends TF3D_Entity
 						mid = this.surfaces.get(i).id;
 
 						if (mid >= 0)
-						{							 
+						{
 							F3D.Surfaces.ApplyMaterial(mid);
 						}
-						
+
 						glPushMatrix();
 
-						
 						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
+						if (this.rotation_seq == F3D.ROTATE_IN_SEQ_XYZ)
+						{
+							glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
+							glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+							glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+						}
 
-						glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
-						glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-						glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
-
+						if (this.rotation_seq == F3D.ROTATE_IN_SEQ_YXZ)
+						{
+							glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
+							glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);							
+							glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
+						}
+						
 						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-						
+
 						mesh.Render(i);
-						
-						
-						if (F3D.Surfaces.materials.get(mid).use_shader) F3D.Shaders.StopProgram();
-						
+
+						if (F3D.Surfaces.materials.get(mid).use_shader)
+							F3D.Shaders.StopProgram();
+
 						// render childs
 						for (int ci = 0; ci < this.childs.size(); ci++)
 						{
@@ -160,7 +169,7 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Update()
 	{
-		
+
 	}
 
 	@Override
