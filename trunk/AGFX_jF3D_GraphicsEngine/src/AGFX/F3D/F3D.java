@@ -24,6 +24,7 @@ import AGFX.F3D.Pick.TF3D_Pick;
 import AGFX.F3D.Preloader.TF3D_Preloader;
 import AGFX.F3D.ResourceLoader.TF3D_ResourceLoader;
 import AGFX.F3D.Shader.TF3D_ShaderManager;
+import AGFX.F3D.Slick.TF3D_Slick;
 import AGFX.F3D.Surface.TF3D_SurfaceManager;
 import AGFX.F3D.Texture.TF3D_TextureManager;
 import AGFX.F3D.Timer.TF3D_Timer2;
@@ -186,7 +187,8 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
-	public static Graphics            		SlickGraphics;
+	
+	public static TF3D_Slick            	Slick;
 	
 	public static void Create()
 	{
@@ -241,10 +243,7 @@ public class F3D
 			F3D.Physic = null;
 		}
 		
-		if (F3D.Config.use_slick)
-		{
-			F3D.SlickGraphics = new Graphics();
-		}
+		
 
 	}
 
@@ -265,6 +264,12 @@ public class F3D
 
 		if (F3D.Config.use_physics)
 			F3D.Physic.Initialize();
+		
+		if (F3D.Config.use_slick)
+		{
+			F3D.Slick = new TF3D_Slick();
+			F3D.Slick.Initialize();
+		}
 
 	}
 

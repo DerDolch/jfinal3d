@@ -96,8 +96,8 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 	@Override
 	public void onInitialize()
 	{
-
-		F3D.SlickGraphics.setAntiAlias(true);
+		
+		F3D.Slick.graphics.setAntiAlias(true);
 
 		// load the sprites and tiles, note that underneath the texture
 		// will be shared between the sprite sheet and tilemap
@@ -257,12 +257,12 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 
 		// draw entities relative to the player that must appear in the centre
 		// of the screen
-		F3D.SlickGraphics.translate(400 - (int) (playerX * 32), 300 - (int) (playerY * 32));
+		F3D.Slick.graphics.translate(400 - (int) (playerX * 32), 300 - (int) (playerY * 32));
 
-		drawTank(F3D.SlickGraphics, playerX, playerY, ang);
+		drawTank(F3D.Slick.graphics, playerX, playerY, ang);
 		// draw other entities here if there were any
 
-		F3D.SlickGraphics.resetTransform();
+		F3D.Slick.graphics.resetTransform();
 	}
 
 	/**
@@ -331,7 +331,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 			}
 		}
 
-		F3D.SlickGraphics.setDrawMode(F3D.SlickGraphics.MODE_NORMAL);
+		F3D.Slick.graphics.setDrawMode(F3D.Slick.graphics.MODE_NORMAL);
 		this.render();
 	}
 
