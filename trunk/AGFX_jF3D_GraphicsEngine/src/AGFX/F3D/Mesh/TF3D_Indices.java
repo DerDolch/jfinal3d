@@ -59,4 +59,5 @@ public class TF3D_Indices
 		this.indexBuffer.put(this.indices);
 		this.indexBuffer.position(0);
 	}
+
 }

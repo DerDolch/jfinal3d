@@ -16,51 +16,50 @@ import static org.lwjgl.opengl.ARBVertexBufferObject.*;
 public class TF3D_VBO
 {
 
-	float				matDiffuse[]		= new float[] { 1.0f, 0.0f, 0.0f,
-			1.0f							};
+	float               matDiffuse[]     = new float[] { 1.0f, 0.0f, 0.0f, 1.0f };
 
 	/** The buffer holding the vertices */
-	private FloatBuffer	vertexBuffer;
-	private boolean		b_vertexBuffer		= false;
-	private int			vertex_buffer_id;
+	private FloatBuffer vertexBuffer;
+	private boolean     b_vertexBuffer   = false;
+	private int         vertex_buffer_id;
 
 	/** The buffer holding the texture coordinates for TMU=0 */
-	private FloatBuffer	textureBuffer0;
-	private boolean		b_textureBuffer0	= false;
-	private int			texture0_buffer_id;
+	private FloatBuffer textureBuffer0;
+	private boolean     b_textureBuffer0 = false;
+	private int         texture0_buffer_id;
 
 	/** The buffer holding the texture coordinates for TMU=1 */
-	private FloatBuffer	textureBuffer1;
-	private boolean		b_textureBuffer1	= false;
-	private int			texture1_buffer_id;
+	private FloatBuffer textureBuffer1;
+	private boolean     b_textureBuffer1 = false;
+	private int         texture1_buffer_id;
 
 	/** The buffer holding the texture coordinates for TMU=2 */
-	private FloatBuffer	textureBuffer2;
-	private boolean		b_textureBuffer2	= false;
-	private int			texture2_buffer_id;
+	private FloatBuffer textureBuffer2;
+	private boolean     b_textureBuffer2 = false;
+	private int         texture2_buffer_id;
 
 	/** The buffer holding the texture coordinates for TMU=3 */
-	private FloatBuffer	textureBuffer3;
-	private boolean		b_textureBuffer3	= false;
-	private int			texture3_buffer_id;
+	private FloatBuffer textureBuffer3;
+	private boolean     b_textureBuffer3 = false;
+	private int         texture3_buffer_id;
 
 	/** The buffer holding the indices */
-	private ShortBuffer	indexBuffer;
-	private boolean		b_indexBuffer		= false;
-	private int			indices_length;
-	private int			indices_id;
+	private ShortBuffer indexBuffer;
+	private boolean     b_indexBuffer    = false;
+	private int         indices_length;
+	private int         indices_id;
 
 	/** The buffer holding the normals */
-	private FloatBuffer	normalBuffer;
-	private boolean		b_normalBuffer		= false;
-	private int			normal_buffer_id;
+	private FloatBuffer normalBuffer;
+	private boolean     b_normalBuffer   = false;
+	private int         normal_buffer_id;
 
 	/** The buffer holding the normals */
-	private FloatBuffer	colorBuffer;
-	private boolean		b_colorBuffer		= false;
-	private int			color_buffer_id;
+	private FloatBuffer colorBuffer;
+	private boolean     b_colorBuffer    = false;
+	private int         color_buffer_id;
 
-	private Boolean		b_build				= false;
+	private Boolean     b_build          = false;
 
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
@@ -334,6 +333,21 @@ public class TF3D_VBO
 		this.indices_length = indices.length;
 	}
 
+	public void BuildNormals()
+	{
+		if (F3D.Extensions.VertexBufferObject)
+		{
+			if (this.b_normalBuffer)
+			{
+				this.normal_buffer_id = glGenBuffersARB();
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.normal_buffer_id);
+				this.normalBuffer.rewind();
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.normalBuffer, GL_STATIC_DRAW_ARB);
+
+			}
+		}
+	}
+
 	public void Build()
 	{
 		// AS VBO
@@ -346,8 +360,7 @@ public class TF3D_VBO
 				this.vertex_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.vertex_buffer_id);
 				this.vertexBuffer.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.vertexBuffer,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.vertexBuffer, GL_STATIC_DRAW_ARB);
 			}
 
 			if (this.b_colorBuffer)
@@ -355,8 +368,7 @@ public class TF3D_VBO
 				this.color_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.color_buffer_id);
 				this.colorBuffer.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.colorBuffer,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.colorBuffer, GL_STATIC_DRAW_ARB);
 
 			}
 
@@ -365,8 +377,7 @@ public class TF3D_VBO
 				this.normal_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.normal_buffer_id);
 				this.normalBuffer.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.normalBuffer,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.normalBuffer, GL_STATIC_DRAW_ARB);
 
 			}
 
@@ -375,32 +386,28 @@ public class TF3D_VBO
 				this.texture0_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.texture0_buffer_id);
 				this.textureBuffer0.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer0,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer0, GL_STATIC_DRAW_ARB);
 			}
 			if (this.b_textureBuffer1)
 			{
 				this.texture1_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.texture1_buffer_id);
 				this.textureBuffer1.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer1,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer1, GL_STATIC_DRAW_ARB);
 			}
 			if (this.b_textureBuffer2)
 			{
 				this.texture2_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.texture2_buffer_id);
 				this.textureBuffer2.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer2,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer2, GL_STATIC_DRAW_ARB);
 			}
 			if (this.b_textureBuffer3)
 			{
 				this.texture3_buffer_id = glGenBuffersARB();
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.texture3_buffer_id);
 				this.textureBuffer3.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer3,
-						GL_STATIC_DRAW_ARB);
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer3, GL_STATIC_DRAW_ARB);
 			}
 			/*
 			 * if (this.b_indexBuffer) { this.indices_id= glGenBuffersARB();
@@ -547,37 +554,21 @@ public class TF3D_VBO
 	 */
 	// -----------------------------------------------------------------------
 	/*
-	public void DrawVertexBuffer()
-	{
-		if (this.b_build)
-		{
-			this.Bind();
-
-			if (F3D.Extensions.VertexBufferObject)
-			{
-
-				if (this.b_indexBuffer)
-				{
-					glDrawElements(GL_TRIANGLES, this.indexBuffer);
-					// glDrawElemen(GL_TRIANGLES, indices_length,
-					// GL_UNSIGNED_INT, 0);
-				}
-			} else
-			{
-				glDrawArrays(GL_TRIANGLES, 0, this.indices_length);
-			}
-
-			// Disable the client state before leaving
-			this.UnBind();
-		} else
-		{
-			F3D.Log.error(
-					"TF3D_VBO",
-					"DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation");
-		}
-
-	}
-    */
+	 * public void DrawVertexBuffer() { if (this.b_build) { this.Bind();
+	 * 
+	 * if (F3D.Extensions.VertexBufferObject) {
+	 * 
+	 * if (this.b_indexBuffer) { glDrawElements(GL_TRIANGLES, this.indexBuffer);
+	 * // glDrawElemen(GL_TRIANGLES, indices_length, // GL_UNSIGNED_INT, 0); } }
+	 * else { glDrawArrays(GL_TRIANGLES, 0, this.indices_length); }
+	 * 
+	 * // Disable the client state before leaving this.UnBind(); } else {
+	 * F3D.Log.error( "TF3D_VBO",
+	 * "DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation"
+	 * ); }
+	 * 
+	 * }
+	 */
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -601,9 +592,7 @@ public class TF3D_VBO
 			}
 		} else
 		{
-			F3D.Log.error(
-					"TF3D_VBO",
-					"DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation");
+			F3D.Log.error("TF3D_VBO", "DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation");
 		}
 
 	}
