@@ -61,6 +61,8 @@ public class TF3D_Config
 
 	/** enable/disable using GLSL shaders */
 	public Boolean	use_shaders					= true;
+	
+	public Boolean	use_slick					= true;
 
 	/** enable/disdable preloading data from defined folder on start-up */
 	public Boolean	io_preload_data;
@@ -152,14 +154,19 @@ public class TF3D_Config
 			this.r_anisotropy_filtering = PARSER.GetAs_INTEGER("r_anisotropy_filtering");
 			this.r_display_vsync = PARSER.GetAs_BOOLEAN("r_display_vsync");
 			this.r_display_title = PARSER.GetAs_STRING("r_display_title");
+			
+			this.e_world_autoassign = PARSER.GetAs_BOOLEAN("e_world_autoassign");
+			
 			this.io_preload_data = PARSER.GetAs_BOOLEAN("io_preload_data");
 			this.io_preload_folder = PARSER.GetAs_STRING("io_preload_folder");
-			this.use_gl_light = PARSER.GetAs_BOOLEAN("use_gl_light");
-			this.e_world_autoassign = PARSER.GetAs_BOOLEAN("e_world_autoassign");
-			this.use_physics_debug = PARSER.GetAs_BOOLEAN("use_physics_debug");
 			this.io_mesh_asci_to_bin = PARSER.GetAs_BOOLEAN("io_mesh_asci_to_bin");
+			
+			this.use_gl_light = PARSER.GetAs_BOOLEAN("use_gl_light");
+			this.use_physics_debug = PARSER.GetAs_BOOLEAN("use_physics_debug");
 			this.use_physics = PARSER.GetAs_BOOLEAN("use_physics");
 			this.use_shaders = PARSER.GetAs_BOOLEAN("use_shaders");
+			this.use_slick = PARSER.GetAs_BOOLEAN("use_slick");
+			
 			this.io_preload_source_mode = PARSER.GetAs_STRING("io_preload_source_mode");
 			this.io_preload_source_filelist = PARSER.GetAs_STRING("io_preload_source_filelist");
 			this.io_preload_textures = PARSER.GetAs_BOOLEAN("io_preload_textures");
