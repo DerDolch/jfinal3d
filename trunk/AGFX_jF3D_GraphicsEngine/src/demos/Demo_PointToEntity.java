@@ -93,7 +93,7 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 		
 		this.modelB = new TF3D_Model("CUBE2");
 		this.modelB.AssignMesh("abstract::Cube.a3da");
-		
+		this.modelB.SetPosition(4,0,0, true);
 
 	}
 	
@@ -102,19 +102,12 @@ public class Demo_PointToEntity extends TF3D_AppWrapper
 	public void onUpdate3D()
 	{
 		
-		Matrix4f rotate = new Matrix4f();
-		Vector3f new_position = new Vector3f();
 		
-		rotate.setIdentity();
-		rotate.rotY(ang*F3D.DEGTORAD);
-		
-		rotate.transform(new Vector3f(0,0,4), new_position);
-		new_position.y = (float) Math.sin(ang*F3D.DEGTORAD*10f);
-		this.modelB.SetPosition(new_position);
+		this.modelB.Turn(0,this.speed*F3D.Timer.AppSpeed()*10f,0,4f);
 		
 		this.modelA.PointTo(this.modelB);
 
-		F3D.Log.info("ROT Y", this.modelA.GetRotation().toString());
+		//F3D.Log.info("ROT Y", this.modelA.GetRotation().toString());
 		
 		
 		ang=ang+0.05f;
