@@ -40,10 +40,6 @@ public abstract class TF3D_Entity
 	public int                    classname;
 	/** name of entity */
 	public String                 name;
-	/** move speed */
-	public float                  movespeed;
-	/** rotation speed */
-	public float                  turnspeed;
 	public Boolean                visibility        = false;
 	private Boolean               enable            = true;
 
@@ -79,13 +75,8 @@ public abstract class TF3D_Entity
 		this.scale.set(1.0f, 1.0f, 1.0f);
 		this.name = "noname";
 		this.axis = new TF3D_Axis3f();
-		this.movespeed = 1.0f;
-		this.turnspeed = 1.0f;
-
 		this.matrix = new TF3D_Matrix();
-
 		this.BBOX = new TF3D_BoundingBox();
-
 		this.childs = new ArrayList<TF3D_Entity>();
 
 		if (F3D.Config.e_world_autoassign)
@@ -319,76 +310,6 @@ public abstract class TF3D_Entity
 	public Vector3f GetScale()
 	{
 		return this.scale;
-	}
-
-	// -----------------------------------------------------------------------
-	// TA3D_Entity:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * set entity move speed <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param s
-	 *            speed [0.1f]
-	 */
-	// -----------------------------------------------------------------------
-	public void SetMoveSpeed(float s)
-	{
-		this.movespeed = s;
-	}
-
-	// -----------------------------------------------------------------------
-	// TA3D_Entity:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * get move speed <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @return move speed
-	 */
-	// -----------------------------------------------------------------------
-	public float GetMoveSpeed()
-	{
-		return this.movespeed;
-	}
-
-	// -----------------------------------------------------------------------
-	// TA3D_Entity:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * set turn speed <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param s
-	 *            turn speed [1.0f]
-	 */
-	// -----------------------------------------------------------------------
-	public void SetTurnSpeed(float s)
-	{
-		this.turnspeed = s;
-	}
-
-	// -----------------------------------------------------------------------
-	// TA3D_Entity:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * Get entity turn speed <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @return turn speed
-	 */
-	// -----------------------------------------------------------------------
-	public float GetTurnSpeed()
-	{
-		return this.turnspeed;
 	}
 
 	public void UpdateAxisDirection()

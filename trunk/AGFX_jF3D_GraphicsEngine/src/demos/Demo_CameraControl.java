@@ -70,7 +70,6 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		this.Camera = new TF3D_Camera("FPSCamera");
 		this.Camera.SetPosition(0.0f, 3.0f,10.0f);
 		this.Camera.SetRotation(0, 0, 0);
-		this.Camera.movespeed = 0.2f;
 		this.Camera.ctype = F3D.CAMERA_TYPE_FPS;
 		
 		F3D.Cameras.Add(this.Camera);
