@@ -141,6 +141,16 @@ public class F3D
 	// ' HUD: CONST
 	// '-----------------------------------------------------------------
 	public final static int                 HUD_IMAGE                  = 0;
+	public final static int                 HUD_IMAGEBUTTON            = 1;
+
+	// '-----------------------------------------------------------------
+	// ' HUD STATE: CONST
+	// '-----------------------------------------------------------------
+	public final static int                 HUD_STATE_NORMAL           = 0;
+	public final static int                 HUD_STATE_OVER             = 1;
+	public final static int                 HUD_STATE_PRESSED          = 2;
+	public final static int                 HUD_STATE_CHECKED          = 3;
+	public final static int                 HUD_STATE_UNCHECKED        = 4;
 
 	// '-----------------------------------------------------------------
 	// ' SHADER UNIFORMS TYPE: CONST
