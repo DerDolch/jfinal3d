@@ -34,7 +34,8 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 	public TF3D_HUD_Image       HUD_img6;
 	public TF3D_HUD_Image       HUD_img7;
 
-	public TF3D_HUD_ImageButton HUD_button;
+	public TF3D_HUD_ImageButton HUD_button0;
+	public TF3D_HUD_ImageButton HUD_button1;
 
 	public Demo_HUDImage()
 	{
@@ -126,17 +127,30 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 		this.HUD_img7 = new TF3D_HUD_Image();
 		this.HUD_img7.Load("abstract::hud_image_shapeangle.hud", true);
 
-		this.HUD_button = new TF3D_HUD_ImageButton();
-		this.HUD_button.Load("abstract::hud_image_button.hud", true);
+		this.HUD_button0 = new TF3D_HUD_ImageButton();
+		this.HUD_button0.Load("abstract::hud_image_button.hud", true);
 
-		this.HUD_button.OnPress = new TF3D_HudCallback()
+		this.HUD_button0.OnPress = new TF3D_HudCallback()
 		{
+			@Override
 			public void Call()
 			{
-				F3D.Log.info("BUTTON", "Pressed");
+				F3D.Log.info("BUTTON-1", "Pressed");
 			}
 		};
 
+		
+		this.HUD_button1 = new TF3D_HUD_ImageButton();
+		this.HUD_button1.Load("abstract::hud_image_button.hud", true);
+
+		this.HUD_button1.OnPress = new TF3D_HudCallback()
+		{
+			@Override
+			public void Call()
+			{
+				F3D.Log.info("BUTTON-2", "Pressed");
+			}
+		};
 	}
 
 	@Override
@@ -208,7 +222,8 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 		this.HUD_img6.DrawAt(200, 10 + 150 * 2);
 		this.HUD_img7.DrawAt(232, 42 + 150 * 3);
 
-		this.HUD_button.DrawAt(400, 10 + 150 * 1);
+		this.HUD_button0.DrawAt(400, 10 + 150 * 1);
+		this.HUD_button1.DrawAt(400, 74 + 150 * 1);
 
 		// this.HUD_img7.shape_angle = this.HUD_img7.shape_angle +
 		// 10.0f*F3D.Timer.AppSpeed();
