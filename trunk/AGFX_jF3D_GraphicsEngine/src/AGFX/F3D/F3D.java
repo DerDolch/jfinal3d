@@ -275,12 +275,14 @@ public class F3D
 
 	public static void Destroy()
 	{
+		
 		F3D.Worlds.Destroy();
 		F3D.Fonts.Destroy();
 		F3D.Meshes.Destroy();
 		F3D.Textures.Destroy();
 		F3D.Surfaces.Destroy();
 		F3D.Cameras.Destroy();
+		F3D.Slick.Destroy();
 		F3D.Display.Destroy();
 
 		F3D.Log.info("F3D", "---- END ----");

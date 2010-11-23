@@ -76,4 +76,6 @@ public class TF3D_HUD_Gadget
 		this.property = new TF3D_HUD_GadgetProperties();
 		
 	}
+	
+	
 }

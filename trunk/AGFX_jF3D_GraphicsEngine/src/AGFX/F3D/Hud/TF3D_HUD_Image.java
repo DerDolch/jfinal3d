@@ -61,7 +61,7 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Draw HUD image on positionm (x,y) <BR>
+	 * Draw HUD image at positionm (x,y) <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
 	 * @param _x
