@@ -138,6 +138,11 @@ public class F3D
 	public final static int                 MAT_TYPE_SHADER            = 2;
 
 	// '-----------------------------------------------------------------
+	// ' HUD: CONST
+	// '-----------------------------------------------------------------
+	public final static int                 HUD_IMAGE                  = 0;
+
+	// '-----------------------------------------------------------------
 	// ' SHADER UNIFORMS TYPE: CONST
 	// '-----------------------------------------------------------------
 	public final static int                 SHADER_UNIFORM_INT         = 0;
@@ -150,7 +155,7 @@ public class F3D
 
 	public final static int                 ROTATE_IN_SEQ_XYZ          = 0;
 	public final static int                 ROTATE_IN_SEQ_YXZ          = 1;
-	
+
 	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
@@ -187,9 +192,9 @@ public class F3D
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
 	public static TF3D_Buffer               GetBuffer;
-	
-	public static TF3D_Slick            	Slick;
-	
+
+	public static TF3D_Slick                Slick;
+
 	public static void Create()
 	{
 
@@ -242,8 +247,6 @@ public class F3D
 		{
 			F3D.Physic = null;
 		}
-		
-		
 
 	}
 
@@ -264,7 +267,7 @@ public class F3D
 
 		if (F3D.Config.use_physics)
 			F3D.Physic.Initialize();
-		
+
 		if (F3D.Config.use_slick)
 		{
 			F3D.Slick = new TF3D_Slick();
@@ -275,7 +278,7 @@ public class F3D
 
 	public static void Destroy()
 	{
-		
+
 		F3D.Worlds.Destroy();
 		F3D.Fonts.Destroy();
 		F3D.Meshes.Destroy();

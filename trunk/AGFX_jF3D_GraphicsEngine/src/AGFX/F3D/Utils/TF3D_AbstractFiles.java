@@ -15,8 +15,8 @@ import AGFX.F3D.F3D;
 
 public class TF3D_AbstractFiles
 {
-	public ArrayList<String>	Dir;
-	static final int			MAX_DEPTH	= 20;
+	public ArrayList<String> Dir;
+	static final int         MAX_DEPTH = 20;
 
 	// -----------------------------------------------------------------------
 	// TF3D_AbstractFiles:
@@ -30,9 +30,9 @@ public class TF3D_AbstractFiles
 	// -----------------------------------------------------------------------
 	public TF3D_AbstractFiles()
 	{
-		
+
 		this.Dir = new ArrayList<String>();
-		
+
 		if (F3D.Config == null)
 		{
 			this.GererateFilesList("config");
@@ -99,7 +99,7 @@ public class TF3D_AbstractFiles
 		String replaced = TF3D_AbstractFiles.backlashReplace(fdir.getAbsolutePath());
 		// String replaced = fdir.getAbsolutePath();
 
-		if (replaced.contains(".svn"))
+		if (replaced.contains(".svn") | replaced.contains(".bak"))
 		{
 			// IGNORE
 		} else
@@ -120,8 +120,7 @@ public class TF3D_AbstractFiles
 	public static String backlashReplace(String myStr)
 	{
 		final StringBuilder result = new StringBuilder();
-		final StringCharacterIterator iterator = new StringCharacterIterator(
-				myStr);
+		final StringCharacterIterator iterator = new StringCharacterIterator(myStr);
 		char character = iterator.current();
 		while (character != CharacterIterator.DONE)
 		{
@@ -220,9 +219,9 @@ public class TF3D_AbstractFiles
 	{
 
 		InputStream is = null;
-		
+
 		is = F3D.Resource.GetInputStream(filename);
-		
+
 		// asset can't be more than 2 gigs.
 		int size;
 		try
@@ -231,7 +230,6 @@ public class TF3D_AbstractFiles
 			// Read the entire asset into a local byte buffer.
 			byte[] buffer = new byte[size];
 			is.read(buffer);
-			
 
 			// Convert the buffer into a string.
 			String[] text = new String(buffer).split("\n");
@@ -245,7 +243,7 @@ public class TF3D_AbstractFiles
 				this.Dir.add(text[i]);
 				F3D.Log.info("Manulay load Abstract list", text[i]);
 			}
-			
+
 			is.close();
 		} catch (IOException e)
 		{

@@ -3,8 +3,10 @@
 // -----------------------------------------------------------------------
 package AGFX.F3D.Hud;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector4f;
+
+
 
 
 //-----------------------------------------------------------------------
@@ -19,10 +21,10 @@ public class TF3D_HUD_Gadget
 	public TF3D_HUD_GadgetTransform transform;
 	
 	/**  hud Gadget type */
-	public int HudType;
+	public int hudtype;
 	
 	/**  hud Gadget name */
-	public String Name;
+	public String name;
 	
 	/**  hud Gadget size */
 	public Vector2f size;
@@ -63,7 +65,7 @@ public class TF3D_HUD_Gadget
 		this.angle = 0.0f;
 		this.shape_angle = 0.0f;
 		this.color = new Vector4f(1.0f,1.0f,1.0f,1.0f);
-		this.Name = "noname";
+		this.name = "noname";
 		this.offset = new Vector2f();
 		this.offset.set(0.0f,0.0f);
 		this.origin = new Vector2f(0.0f,0.0f);		// texture center
