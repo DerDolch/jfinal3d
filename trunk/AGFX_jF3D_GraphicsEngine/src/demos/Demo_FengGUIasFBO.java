@@ -137,7 +137,7 @@ public class Demo_FengGUIasFBO extends TF3D_AppWrapper
 		// create cursor
 		
 		this.mouse_cur = new TF3D_HUD_Image();
-		this.mouse_cur.texture_id =  F3D.Textures.FindByName("mouse");
+		this.mouse_cur.texture_id0 =  F3D.Textures.FindByName("mouse");
 		// Add image FX
 		this.mouse_cur.size.set(64, 64);
 		this.mouse_cur.property.Autosize = false;
