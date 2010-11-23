@@ -1,6 +1,8 @@
 package AGFX.F3D.Hud;
 
-import org.lwjgl.util.vector.Vector2f;
+import javax.vecmath.Vector2f;
+
+
 
 
 public class TF3D_HUD_GadgetTransform 

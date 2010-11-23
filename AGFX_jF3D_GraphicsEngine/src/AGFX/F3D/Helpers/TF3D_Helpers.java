@@ -106,6 +106,23 @@ public class TF3D_Helpers
 
 	}
 
+	public void QuadBySize(float X, float Y, float Wid, float Hgt, float offx, float offy, float Lev)
+	{
+		this._light_off();
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(X + offx, Y + offy, -Lev);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(X + offx + Wid, Y + offy, -Lev);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(X + offx + Wid, Y + offy + Hgt, -Lev);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(X + offx, Y + offy + Hgt, -Lev);
+		glEnd();
+		this._light_on();
+
+	}
+
 	public void QuadBySizeAndUV(float X, float Y, float Wid, float Hgt, float Lev, float Tu, float Tu2, float Tv, float Tv2)
 	{
 		this._light_off();

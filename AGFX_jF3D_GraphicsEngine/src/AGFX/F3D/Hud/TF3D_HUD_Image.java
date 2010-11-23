@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.vector.Vector2f;
 
 import AGFX.F3D.F3D;
+import AGFX.F3D.Material.TF3D_Material;
+import AGFX.F3D.Parser.TF3D_PARSER;
 
 //-----------------------------------------------------------------------
 //A3D_HUD_Image: CLASS 
@@ -29,7 +31,7 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 
 	public TF3D_HUD_Image()
 	{
-		this.HudType = 0;
+		this.hudtype = 0;
 
 	}
 
@@ -93,6 +95,11 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			}
+			else
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			}
 
 			glColor4f(this.color.x, this.color.y, this.color.z, this.color.w);
 			this.angle = this.angle + this.transform.rotate * F3D.Timer.AppSpeed();
@@ -104,10 +111,11 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 
 			glPushMatrix();
 
-			glTranslatef(_x - this.shape_origin.x, _y - this.shape_origin.y, 0.0f);
+			
+			glTranslatef(_x, _y, 0.0f);			
 			glRotatef(this.shape_angle, 0.0f, 0.0f, 1.0f);
-
-			F3D.Draw.QuadBySize(_x, _y, this.size.x, this.size.y, 0f);
+						
+			F3D.Draw.QuadBySize(0, 0, this.size.x, this.size.y, this.shape_origin.x,this.shape_origin.y,0f);
 			
 			
 			glPopMatrix();
@@ -142,5 +150,67 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 	public void Draw()
 	{
 		this.DrawAt(this.position.x, this.position.y);
+	}
+	
+	
+	public void Load(String filename, Boolean init_after_load)
+	{
+		TF3D_PARSER PARSER = new TF3D_PARSER();
+		TF3D_Material mat;
+		int BLOCK_ID;
+		String tmp_str;
+
+		System.out.println("Loading config... " + filename);
+		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);
+
+		if (!Exist)
+		{
+			System.out.print("Can't load file:" + filename);			
+		}
+
+		PARSER.ParseFile(F3D.AbstractFiles.GetFullPath(filename));
+		
+		for (BLOCK_ID = 0; BLOCK_ID < PARSER.GetBlocksCount(); BLOCK_ID++)
+		{
+			PARSER.SetBlock(BLOCK_ID);
+			
+			
+			this.angle = PARSER.GetAs_FLOAT("angle");
+			this.color.set(PARSER.GetAs_VECTOR4F("color"));
+			
+			String type = PARSER.GetAs_STRING("type");
+			if (type.equals("HUD_IMAGE"))  this.hudtype = F3D.HUD_IMAGE;
+			
+			this.name = PARSER.GetAs_STRING("name");
+			this.offset.set(PARSER.GetAs_VECTOR2F("offset"));
+			this.origin.set(PARSER.GetAs_VECTOR2F("origin"));
+			this.scale.set(PARSER.GetAs_VECTOR2F("scale"));
+			this.shape_angle = PARSER.GetAs_FLOAT("shape_angle");
+			this.shape_origin.set(PARSER.GetAs_VECTOR2F("shape_origin"));
+			this.size.set(PARSER.GetAs_VECTOR2F("size"));
+			
+			String texture = PARSER.GetAs_STRING("texture_name");
+			this.texture_id = F3D.Textures.FindByName(texture);
+			
+			if (this.texture_id>=0) this.property.Texture = true;
+			
+			this.visible = true;
+			this.property.Autosize = PARSER.GetAs_BOOLEAN("autosize");
+			this.property.Blend = PARSER.GetAs_BOOLEAN("blend");
+			this.property.Clamp = PARSER.GetAs_BOOLEAN("clamp");
+			this.property.Scissor = PARSER.GetAs_BOOLEAN("scissor");
+			this.transform.rotate = PARSER.GetAs_FLOAT("rotate");
+			this.transform.scroll.set(PARSER.GetAs_VECTOR2F("scroll"));
+			
+			
+			
+			
+			
+		}
+		
+		if (init_after_load)
+		{
+			this.Initialize();
+		}
 	}
 }

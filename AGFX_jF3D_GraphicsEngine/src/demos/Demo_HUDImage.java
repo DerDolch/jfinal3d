@@ -23,7 +23,14 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public TF3D_Mesh mesh;
-	public TF3D_HUD_Image HUD_img;
+	public TF3D_HUD_Image HUD_img1;
+	public TF3D_HUD_Image HUD_img2;
+	public TF3D_HUD_Image HUD_img3;
+	public TF3D_HUD_Image HUD_img4;
+	public TF3D_HUD_Image HUD_img5;
+	public TF3D_HUD_Image HUD_img6;
+	public TF3D_HUD_Image HUD_img7;
+	
 	public Demo_HUDImage()
 	{
 		
@@ -37,8 +44,8 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 			
 			F3D.Config = new TF3D_Config();
 			
-			F3D.Config.r_display_width = 800;
-			F3D.Config.r_display_height = 600;
+			F3D.Config.r_display_width = 1024;
+			F3D.Config.r_display_height = 768;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
@@ -81,25 +88,45 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 		
 		// add HUD image
 		// basic HUD image
-		this.HUD_img = new TF3D_HUD_Image();
-		this.HUD_img.texture_id = F3D.Textures.FindByName("jf3d_logo");
+		this.HUD_img1 = new TF3D_HUD_Image();
+		this.HUD_img1.texture_id = F3D.Textures.FindByName("jf3d_logo");
 
 		// Add image FX
-		this.HUD_img.size.set(128, 128);
-		this.HUD_img.property.Autosize = true;
-		this.HUD_img.property.Texture = true;
-		this.HUD_img.property.Blend = true;
-		this.HUD_img.color.set(1.0f, 1.0f, 1.0f, 1.0f);
-		this.HUD_img.transform.scroll.x = 0.0f;
-		this.HUD_img.transform.scroll.y = 0.0f;
-		this.HUD_img.transform.rotate = 0.0f;
-		this.HUD_img.scale.set(1.0f, 1.0f);
-		this.HUD_img.shape_angle = 0.0f;
-		this.HUD_img.shape_origin.set(0, 0);
+		this.HUD_img1.size.set(128, 128);
+		this.HUD_img1.property.Autosize = true;
+		this.HUD_img1.property.Texture = true;
+		this.HUD_img1.property.Blend = true;
+		this.HUD_img1.color.set(1.0f, 1.0f, 1.0f, 1.0f);
+		this.HUD_img1.transform.scroll.x = 0.0f;
+		this.HUD_img1.transform.scroll.y = 0.0f;
+		this.HUD_img1.transform.rotate = 0f;
+		this.HUD_img1.origin.set(0,0);
+		this.HUD_img1.scale.set(1.0f, 1.0f);
+		this.HUD_img1.shape_angle = 0.0f;
+		this.HUD_img1.shape_origin.set(0, 0);
 
 		// initialize HUD element
-		this.HUD_img.Initialize();
+		this.HUD_img1.Initialize();
 
+		this.HUD_img2 = new TF3D_HUD_Image();
+		this.HUD_img2.Load("abstract::hud_image_normal.hud",true);
+	
+		this.HUD_img3 = new TF3D_HUD_Image();
+		this.HUD_img3.Load("abstract::hud_image_scroll.hud",true);
+		
+		this.HUD_img4 = new TF3D_HUD_Image();
+		this.HUD_img4.Load("abstract::hud_image_rotate.hud",true);
+		
+		this.HUD_img5 = new TF3D_HUD_Image();
+		this.HUD_img5.Load("abstract::hud_image_rotcenter.hud",true);
+	
+		this.HUD_img6 = new TF3D_HUD_Image();
+		this.HUD_img6.Load("abstract::hud_image_scale.hud",true);
+		
+		this.HUD_img7 = new TF3D_HUD_Image();
+		this.HUD_img7.Load("abstract::hud_image_shapeangle.hud",true);
+		//this.HUD_img7.property.Autosize = true;
+		
 		
 	}
 	
@@ -152,7 +179,17 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		F3D.Viewport.DrawInfo(0,0);
-		this.HUD_img.DrawAt(100,100);
+		
+		
+		this.HUD_img1.DrawAt(10,10+150*0);		
+		this.HUD_img2.DrawAt(10,10+150*1);
+		this.HUD_img3.DrawAt(10,10+150*2);		
+		this.HUD_img4.DrawAt(10,10+150*3);
+		
+		this.HUD_img5.DrawAt(200,10+150*1);
+		this.HUD_img6.DrawAt(200,10+150*2);
+		this.HUD_img7.DrawAt(232,42+150*3);
+		//this.HUD_img7.shape_angle = this.HUD_img7.shape_angle + 10.0f*F3D.Timer.AppSpeed();
 	}
 	
 	@Override
