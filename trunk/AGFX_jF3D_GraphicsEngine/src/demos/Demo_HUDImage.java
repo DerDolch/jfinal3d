@@ -3,6 +3,20 @@
  */
 package demos;
 
+import java.io.IOException;
+
+import org.fenggui.Container;
+import org.fenggui.FengGUI;
+import org.fenggui.TextEditor;
+import org.fenggui.actor.ScreenshotActor;
+import org.fenggui.binding.render.lwjgl.EventHelper;
+import org.fenggui.binding.render.lwjgl.LWJGLBinding;
+import org.fenggui.composite.Window;
+import org.fenggui.layout.RowExLayoutData;
+import org.fenggui.theme.ITheme;
+import org.fenggui.theme.XMLTheme;
+import org.fenggui.theme.xml.IXMLStreamableException;
+import org.fenggui.util.Point;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -139,7 +153,6 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 			}
 		};
 
-		
 		this.HUD_button1 = new TF3D_HUD_ImageButton();
 		this.HUD_button1.Load("abstract::hud_image_button.hud", true);
 
@@ -224,8 +237,7 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 
 		this.HUD_button0.DrawAt(400, 10 + 150 * 1);
 		this.HUD_button1.DrawAt(400, 74 + 150 * 1);
-
-		// this.HUD_img7.shape_angle = this.HUD_img7.shape_angle +10.0f*F3D.Timer.AppSpeed();
+		
 	}
 
 	@Override
@@ -233,6 +245,8 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 	{
 
 	}
+
+	
 
 	public static void main(String[] args)
 	{

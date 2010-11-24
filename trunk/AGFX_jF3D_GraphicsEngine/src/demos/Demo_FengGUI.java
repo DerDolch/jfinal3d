@@ -35,7 +35,6 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 	private int             lastButtonDown = -1;
 	private ScreenshotActor screenshotActor;
 	private ITheme          theme;
-	
 
 	public Demo_FengGUI()
 	{
@@ -48,14 +47,15 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 		{
 
 			F3D.Config = new TF3D_Config();
-			
+
 			F3D.Config.r_display_width = 800;
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = true;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
-			
-			
+			F3D.Config.io_keyboard_update = false;
+			F3D.Config.io_mouse_update = false;
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - " + this.getClass().getName();
+
 			super.onConfigure();
 
 		} catch (Exception e)
@@ -73,7 +73,6 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 
 		screenshotActor = new ScreenshotActor();
 		screenshotActor.hook(desk);
-		
 
 	}
 
@@ -96,8 +95,6 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 		readBufferedMouse();
 		desk.display();
 		screenshotActor.renderToDos(desk.getBinding().getOpenGL(), 512, 512);
-		
-		
 
 	}
 
