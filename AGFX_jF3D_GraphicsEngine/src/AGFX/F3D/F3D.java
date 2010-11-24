@@ -14,6 +14,7 @@ import AGFX.F3D.Engine.TF3D_Log;
 import AGFX.F3D.Engine.TF3D_Viewport;
 import AGFX.F3D.Font.TF3D_FontManager;
 import AGFX.F3D.FrameBufferObject.TF3D_FBO_manager;
+import AGFX.F3D.Gui.TF3D_FengGUI;
 import AGFX.F3D.Helpers.TF3D_Helpers;
 import AGFX.F3D.Input.TF3D_InputManager;
 import AGFX.F3D.Input.TF3D_Keyboard;
@@ -205,6 +206,7 @@ public class F3D
 	public static TF3D_Buffer               GetBuffer;
 
 	public static TF3D_Slick                Slick;
+	public static TF3D_FengGUI              Gui;
 
 	public static void Create()
 	{
@@ -258,6 +260,8 @@ public class F3D
 		{
 			F3D.Physic = null;
 		}
+		
+		F3D.Gui = new TF3D_FengGUI();
 
 	}
 
@@ -284,6 +288,8 @@ public class F3D
 			F3D.Slick = new TF3D_Slick();
 			F3D.Slick.Initialize();
 		}
+		
+		F3D.Gui.Initialize();
 
 	}
 

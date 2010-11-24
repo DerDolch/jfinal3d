@@ -15,85 +15,87 @@ import AGFX.F3D.Utils.TF3D_AbstractFiles;
 public class TF3D_Config
 {
 	/** Fullscreen mode true/false */
-	public Boolean	r_fullscreen;
+	public Boolean r_fullscreen;
 
 	/** define screen width */
-	public int		r_display_width;
+	public int     r_display_width;
 
 	/** setup display field of view */
-	public float	r_display_fov;
+	public float   r_display_fov;
 
 	/** define screen height */
-	public int		r_display_height;
+	public int     r_display_height;
 
 	/** define color depth (Bit Per Pixel) */
-	public int		r_display_bpp;
+	public int     r_display_bpp;
 
-	public int		r_anisotropy_filtering		= 0;
+	public int     r_anisotropy_filtering     = 0;
 
 	/** Enable/Disable Vertical Sync (true/false) */
-	public Boolean	r_display_vsync;
+	public Boolean r_display_vsync;
 
 	/** set application title */
-	public String	r_display_title;
+	public String  r_display_title;
 
 	/**
 	 * enable/disable using OpenGL lights
 	 */
-	public Boolean	use_gl_light				= true;
+	public Boolean use_gl_light               = true;
 
 	/**
 	 * Enable/DIsable Auto assign entity to world.entities list
 	 */
-	public Boolean	e_world_autoassign			= true;
+	public Boolean e_world_autoassign         = true;
 
 	/** Enable DEBUG BULLET physics when is used F10 works like ON/OFF */
-	public Boolean	use_physics_debug			= true;
+	public Boolean use_physics_debug          = true;
 
 	/**
 	 * enable/disable autosave mesh data to serialized format when asci file
 	 * format a3da is loaded
 	 */
-	public Boolean	io_mesh_asci_to_bin			= true;
+	public Boolean io_mesh_asci_to_bin        = true;
 
 	/** enable/disable using Bullet physics in application */
-	public Boolean	use_physics					= true;
+	public Boolean use_physics                = true;
 
 	/** enable/disable using GLSL shaders */
-	public Boolean	use_shaders					= true;
-	
-	public Boolean	use_slick					= true;
+	public Boolean use_shaders                = true;
+
+	public Boolean use_slick                  = true;
 
 	/** enable/disdable preloading data from defined folder on start-up */
-	public Boolean	io_preload_data;
+	public Boolean io_preload_data;
 
 	/** set folder for preloading */
-	public String	io_preload_folder;
+	public String  io_preload_folder;
 
 	/** preolad data from "PRELOAD_FROM_FOLDER" or "PRELOAD_FROM_JAR" */
-	public String	io_preload_source_mode		= "PRELOAD_FROM_FOLDER";
+	public String  io_preload_source_mode     = "PRELOAD_FROM_FOLDER";
 
-	public String	io_preload_source_filelist	= "media.folders";
+	public String  io_preload_source_filelist = "media.folders";
 
-	public Boolean	io_preload_textures			= true;
-	public Boolean	io_preload_events			= true;
-	public Boolean	io_preload_materials		= true;
-	public Boolean	io_preload_shaders			= true;
-	public Boolean	io_preload_fonts			= true;
+	public Boolean io_preload_textures        = true;
+	public Boolean io_preload_events          = true;
+	public Boolean io_preload_materials       = true;
+	public Boolean io_preload_shaders         = true;
+	public Boolean io_preload_fonts           = true;
+	public Boolean io_keyboard_update         = true;
+	public Boolean io_mouse_update            = true;
 
 	// shaders
 
-	public Boolean	shd_load_diffuse			= true;
-	public Boolean	shd_load_phong				= true;
-	public Boolean	shd_load_envmap				= true;
-	public Boolean	shd_load_glow				= true;
-	public Boolean	shd_load_posterize			= true;
-	public Boolean	shd_load_dream				= true;
-	public Boolean	shd_load_warp				= true;
-	public Boolean	shd_load_blur_v				= true;
-	public Boolean	shd_load_blur_h				= true;
-	public Boolean	shd_load_gaussian_v			= true;
-	public Boolean	shd_load_gaussian_h			= true;
+	public Boolean shd_load_diffuse           = true;
+	public Boolean shd_load_phong             = true;
+	public Boolean shd_load_envmap            = true;
+	public Boolean shd_load_glow              = true;
+	public Boolean shd_load_posterize         = true;
+	public Boolean shd_load_dream             = true;
+	public Boolean shd_load_warp              = true;
+	public Boolean shd_load_blur_v            = true;
+	public Boolean shd_load_blur_h            = true;
+	public Boolean shd_load_gaussian_v        = true;
+	public Boolean shd_load_gaussian_h        = true;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Config:
@@ -154,19 +156,19 @@ public class TF3D_Config
 			this.r_anisotropy_filtering = PARSER.GetAs_INTEGER("r_anisotropy_filtering");
 			this.r_display_vsync = PARSER.GetAs_BOOLEAN("r_display_vsync");
 			this.r_display_title = PARSER.GetAs_STRING("r_display_title");
-			
+
 			this.e_world_autoassign = PARSER.GetAs_BOOLEAN("e_world_autoassign");
-			
+
 			this.io_preload_data = PARSER.GetAs_BOOLEAN("io_preload_data");
 			this.io_preload_folder = PARSER.GetAs_STRING("io_preload_folder");
 			this.io_mesh_asci_to_bin = PARSER.GetAs_BOOLEAN("io_mesh_asci_to_bin");
-			
+
 			this.use_gl_light = PARSER.GetAs_BOOLEAN("use_gl_light");
 			this.use_physics_debug = PARSER.GetAs_BOOLEAN("use_physics_debug");
 			this.use_physics = PARSER.GetAs_BOOLEAN("use_physics");
 			this.use_shaders = PARSER.GetAs_BOOLEAN("use_shaders");
 			this.use_slick = PARSER.GetAs_BOOLEAN("use_slick");
-			
+
 			this.io_preload_source_mode = PARSER.GetAs_STRING("io_preload_source_mode");
 			this.io_preload_source_filelist = PARSER.GetAs_STRING("io_preload_source_filelist");
 			this.io_preload_textures = PARSER.GetAs_BOOLEAN("io_preload_textures");
@@ -174,6 +176,8 @@ public class TF3D_Config
 			this.io_preload_materials = PARSER.GetAs_BOOLEAN("io_preload_materials");
 			this.io_preload_shaders = PARSER.GetAs_BOOLEAN("io_preload_shaders");
 			this.io_preload_fonts = PARSER.GetAs_BOOLEAN("io_preload_fonts");
+			this.io_keyboard_update = PARSER.GetAs_BOOLEAN("io_keyboard_update");
+			this.io_mouse_update = PARSER.GetAs_BOOLEAN("io_mouse_update");
 
 			this.shd_load_diffuse = PARSER.GetAs_BOOLEAN("shd_load_diffuse");
 			this.shd_load_phong = PARSER.GetAs_BOOLEAN("shd_load_phong");

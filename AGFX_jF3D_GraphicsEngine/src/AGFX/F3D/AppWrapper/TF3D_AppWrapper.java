@@ -199,8 +199,8 @@ public class TF3D_AppWrapper
 
 			if (F3D.Display.isVisible())
 			{
-				this.KeyInput();
-				this.MouseInput();
+				if (F3D.Config.io_keyboard_update) this.KeyInput();
+				if (F3D.Config.io_mouse_update) this.MouseInput();
 
 				F3D.Viewport.BeginRender3D();
 
