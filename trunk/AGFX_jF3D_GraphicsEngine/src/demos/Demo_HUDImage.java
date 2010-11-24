@@ -225,8 +225,7 @@ public class Demo_HUDImage extends TF3D_AppWrapper
 		this.HUD_button0.DrawAt(400, 10 + 150 * 1);
 		this.HUD_button1.DrawAt(400, 74 + 150 * 1);
 
-		// this.HUD_img7.shape_angle = this.HUD_img7.shape_angle +
-		// 10.0f*F3D.Timer.AppSpeed();
+		// this.HUD_img7.shape_angle = this.HUD_img7.shape_angle +10.0f*F3D.Timer.AppSpeed();
 	}
 
 	@Override
