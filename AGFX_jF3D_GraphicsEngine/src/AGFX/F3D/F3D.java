@@ -15,6 +15,7 @@ import AGFX.F3D.Engine.TF3D_Viewport;
 import AGFX.F3D.Font.TF3D_FontManager;
 import AGFX.F3D.FrameBufferObject.TF3D_FBO_manager;
 import AGFX.F3D.Helpers.TF3D_Helpers;
+import AGFX.F3D.Input.TF3D_InputManager;
 import AGFX.F3D.Input.TF3D_Keyboard;
 import AGFX.F3D.Material.TF3D_MaterialEventManager;
 import AGFX.F3D.Math.TF3D_Frustum;
@@ -197,7 +198,7 @@ public class F3D
 	public static TF3D_Helpers              Draw;
 	public static TF3D_WorldManager         Worlds;
 	public static TF3D_Physics              Physic;
-	public static TF3D_Keyboard             Input;
+	public static TF3D_InputManager         Input;
 	public static TF3D_Pick                 Pick;
 	public static TF3D_FBO_manager          FrameBuffers;
 	public static TF3D_ShaderManager        Shaders;
@@ -266,7 +267,7 @@ public class F3D
 		// Additional initialization
 		F3D.Display.Create();
 		F3D.Extensions = new TF3D_Extensions();
-		F3D.Input = new TF3D_Keyboard();
+		F3D.Input = new TF3D_InputManager();
 		F3D.Viewport.Init3D();
 
 		if (F3D.Config.io_preload_data)

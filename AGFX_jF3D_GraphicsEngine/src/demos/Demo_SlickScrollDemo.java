@@ -304,17 +304,17 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 		// up/down
 		// move backwards and forwards
 
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_LEFT))
+		if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_LEFT))
 		{
 			ang -= delta * TANK_ROTATE_SPEED;
 			updateMovementVector();
 		}
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_RIGHT))
+		if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_RIGHT))
 		{
 			ang += delta * TANK_ROTATE_SPEED;
 			updateMovementVector();
 		}
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_UP))
+		if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_UP))
 		{
 			if (tryMove(dirX * delta * TANK_MOVE_SPEED, dirY * delta * TANK_MOVE_SPEED))
 			{
@@ -322,7 +322,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 				player.update((long) delta);
 			}
 		}
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_DOWN))
+		if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_DOWN))
 		{
 			if (tryMove(-dirX * delta * TANK_MOVE_SPEED, -dirY * delta * TANK_MOVE_SPEED))
 			{

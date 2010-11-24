@@ -131,6 +131,10 @@ public class TF3D_AppWrapper
 
 	}
 
+	private void MouseInput()
+	{
+		F3D.Input.Mouse.Update();
+	}
 	// -----------------------------------------------------------------------
 	// TF3D_AppWrapper:
 	// -----------------------------------------------------------------------
@@ -143,16 +147,16 @@ public class TF3D_AppWrapper
 	 * -------------------------------------------------------------------<BR>
 	 */
 	// -----------------------------------------------------------------------
-	private void KeyPressed()
+	private void KeyInput()
 	{
 
-		F3D.Input.Update();
+		F3D.Input.Key.Update();
 
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_ESCAPE))
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_ESCAPE))
 			this.AppTerminate = true;
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_F10))
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_F10))
 			F3D.Config.use_physics_debug = !F3D.Config.use_physics_debug;
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_F12))
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_F12))
 			try
 			{
 				F3D.Display.SwitchSceenMode();
@@ -161,7 +165,7 @@ public class TF3D_AppWrapper
 				F3D.Log.error("TF3D_AppWrapper", "Error during swich display");
 			}
 			// make screenshot
-			if (F3D.Input.IsKeyDown(Keyboard.KEY_LCONTROL) & F3D.Input.IsKeyDown(Keyboard.KEY_LSHIFT) & F3D.Input.IsKeyUp(Keyboard.KEY_P))
+			if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_LCONTROL) & F3D.Input.Key.IsKeyDown(Keyboard.KEY_LSHIFT) & F3D.Input.Key.IsKeyUp(Keyboard.KEY_P))
 			{
 				F3D.Viewport.ScreenShot("screenshot.png", F3D.Config.r_display_width, F3D.Config.r_display_height);
 			}
@@ -195,7 +199,8 @@ public class TF3D_AppWrapper
 
 			if (F3D.Display.isVisible())
 			{
-				this.KeyPressed();
+				this.KeyInput();
+				this.MouseInput();
 
 				F3D.Viewport.BeginRender3D();
 

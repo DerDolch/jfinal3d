@@ -57,17 +57,25 @@ public class Demo_KeyControll extends TF3D_AppWrapper
 	@Override
 	public void onUpdate3D()
 	{
-		F3D.Input.Update();
 		
+		if (F3D.Input.Mouse.IsButtonDown(0))
+		{
+			F3D.Log.info("BUTTON_0", "Down");
+			F3D.Log.info("BUTTON_0", F3D.Input.Mouse.GetButtonEvent(0).toString());
+		}
 		
+		if (F3D.Input.Mouse.IsButtonUp(0))
+		{
+			F3D.Log.info("BUTTON_0", F3D.Input.Mouse.GetButtonEvent(0).toString());
+		}
 		
-		if (F3D.Input.IsKeyDown(Keyboard.KEY_SPACE))
+		if (F3D.Input.Key.IsKeyDown(Keyboard.KEY_SPACE))
 		{
 			F3D.Log.info("", "presss");
 		}
 		
 		
-		if (F3D.Input.IsKeyUp(Keyboard.KEY_R))
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_R))
 		{
 			F3D.Log.info("", "hold");
 		}
