@@ -192,6 +192,8 @@ public class TF3D_Helpers
 	{
 		Vector3f a = new Vector3f(ent.GetPosition());
 
+		ent.UpdateAxisDirection();
+		
 		glPushMatrix();
 		// X
 		glColor3f(1, 0, 0);

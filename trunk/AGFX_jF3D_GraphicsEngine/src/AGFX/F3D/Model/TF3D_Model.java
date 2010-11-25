@@ -177,5 +177,10 @@ public class TF3D_Model extends TF3D_Entity
 	{
 
 	}
+	
+	public void DrawAxis()
+	{
+		
+	}
 
 }
