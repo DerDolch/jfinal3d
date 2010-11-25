@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 package AGFX.F3D.Math;
 
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
@@ -40,7 +41,7 @@ public class TF3D_Axis3f
 	// -----------------------------------------------------------------------
 	public void GetFromEuler(float _x, float _y, float _z)
 	{
-		
+		/*
 		double a, b, c, d, e, f, ad, bd;
 
 		a = Math.cos(0.0174532925f * _x);
@@ -64,9 +65,8 @@ public class TF3D_Axis3f
 		this._forward.x = (float) (-ad * e + b * f);
 		this._forward.y = (float) (ad * f + b * e);
 		this._forward.z = (float) (a * c);
-		
-		
-		/*
+		*/
+	
 		TF3D_Matrix mat = new TF3D_Matrix();
 		
 		mat.LoadIdentity();
@@ -84,7 +84,6 @@ public class TF3D_Axis3f
 		this._forward.x = mat.grid[0][2];
 		this._forward.y = mat.grid[1][2];
 		this._forward.z = mat.grid[2][2];
-		*/
 		
 		
 		

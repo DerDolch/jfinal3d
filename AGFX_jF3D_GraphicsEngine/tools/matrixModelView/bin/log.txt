@@ -8,3 +8,7 @@
 20:23:52  Entering OpenGL rendering thread...
 20:23:52  OpenGL form dialog is created.
 20:23:52  Changed OpenGL rendering window size: 300x600.
+22:18:59  Exit OpenGL rendering thread.
+
+
+===== END OF LOG =====
