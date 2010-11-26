@@ -27,7 +27,7 @@ public class TF3D_FengGUI
 	public org.fenggui.Display display        = null;
 	public final Container     container      = new Container();
 	private ITheme             theme;
-	private int                lastButtonDown = -1;
+	//private int                lastButtonDown = -1;
 
 	public TF3D_FengGUI()
 	{
@@ -56,7 +56,7 @@ public class TF3D_FengGUI
 		}
 		FengGUI.setTheme(this.theme);
 	}
-	
+	/*
 	private void readBufferedKeyboard()
 	{
 
@@ -65,6 +65,7 @@ public class TF3D_FengGUI
 
 		while (Keyboard.next())
 		{
+			/*
 			if (Keyboard.getEventKeyState())
 			{
 				this.display.fireKeyPressedEvent(EventHelper.mapKeyChar(), EventHelper.mapEventKey());
@@ -74,13 +75,16 @@ public class TF3D_FengGUI
 			{
 				this.display.fireKeyReleasedEvent(EventHelper.mapKeyChar(), EventHelper.mapEventKey());
 			}
+			
 		}
 
 	}
-
+	*/
 	/**
 	 * reads a mouse in buffered mode
 	 */
+	
+	/*
 	private void readBufferedMouse()
 	{
 		int x = Mouse.getX();
@@ -119,13 +123,13 @@ public class TF3D_FengGUI
 			}
 		}
 	}
-	
+	*/
 	public void Render()
 	{
 		F3D.Textures.DeactivateLayers();
 		F3D.Textures.ActivateLayer(0);
-		this.readBufferedMouse();
-		this.readBufferedKeyboard();
+		//this.readBufferedMouse();
+		//this.readBufferedKeyboard();
 		this.display.display();
 	}
 }

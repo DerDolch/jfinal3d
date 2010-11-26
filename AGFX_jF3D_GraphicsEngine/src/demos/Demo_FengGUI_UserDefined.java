@@ -65,8 +65,8 @@ public class Demo_FengGUI_UserDefined extends TF3D_AppWrapper
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";
 			F3D.Config.use_physics_debug = false;
 
-			F3D.Config.io_keyboard_update = false;
-			F3D.Config.io_mouse_update = false;
+			//F3D.Config.io_keyboard_update = false;
+			//F3D.Config.io_mouse_update = false;
 
 			super.onConfigure();
 
