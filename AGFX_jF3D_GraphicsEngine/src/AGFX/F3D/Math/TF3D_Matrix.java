@@ -245,21 +245,37 @@ public class TF3D_Matrix
 		grid[3][2] = grid[0][2] * x + grid[1][2] * y + grid[2][2] * z + grid[3][2];
 	}
 
+	public Vector3f TransformVector(Vector3f V)
+	{
+		Vector3f TV = new Vector3f();
+		int X = 0;
+		int Y = 1;
+		int Z = 2;
+		int W = 3;
+
+		TV.x = V.x * this.grid[X][X] + V.y * this.grid[Y][X] + V.z * this.grid[Z][X] + this.grid[W][X];
+		TV.y = V.x * this.grid[X][Y] + V.y * this.grid[Y][Y] + V.z * this.grid[Z][Y] + this.grid[W][Y];
+		TV.z = V.x * this.grid[X][Z] + V.y * this.grid[Y][Z] + V.z * this.grid[Z][Z] + this.grid[W][Z];
+
+		return TV;
+	}
+
 	public Vector3f RotateVector(Vector3f v)
 	{
 		return this.RotateVector(v.x, v.y, v.z);
 	}
+
 	public Vector3f RotateVector(float x, float y, float z)
 	{
 		Vector3f res = new Vector3f();
-		
+
 		res.x = grid[0][0] * x + grid[1][0] * y + grid[2][0] * z + grid[3][0];
 		res.y = grid[0][1] * x + grid[1][1] * y + grid[2][1] * z + grid[3][1];
 		res.z = grid[0][2] * x + grid[1][2] * y + grid[2][2] * z + grid[3][2];
-		
+
 		return res;
 	}
-	
+
 	public void Scale(Vector3f v)
 	{
 		this.Scale(v.x, v.y, v.z);
@@ -476,37 +492,43 @@ public class TF3D_Matrix
 	{
 		this.CreateRotationMatrix(angle.x, angle.y, angle.z);
 	}
+
 	public void CreateRotationMatrix(float _x, float _y, float _z)
 	{
-		float AX = _x*F3D.DEGTORAD;
-		float AY = _y*F3D.DEGTORAD;
-		float AZ = _z*F3D.DEGTORAD;
-		
-		  float sx = (float) Math.sin(AX);
-		  float sy = (float) Math.sin(AY);
-		  float sz =(float)  Math.sin(AZ);
+		float AX = _x * F3D.DEGTORAD;
+		float AY = _y * F3D.DEGTORAD;
+		float AZ = _z * F3D.DEGTORAD;
 
-		  float cx = (float) Math.cos(AX);
-		  float cy = (float) Math.cos(AY);
-		  float cz = (float) Math.cos(AZ);
-		  
-		  TF3D_Matrix mx = new TF3D_Matrix();
-		  mx.CreateRotationMatrixX(sx, cx);
-		  
-		  TF3D_Matrix my = new TF3D_Matrix();
-		  my.CreateRotationMatrixY(sy, cy);
-		  
-		  TF3D_Matrix mz = new TF3D_Matrix();
-		  mz.CreateRotationMatrixZ(sz, cz);
-		  
-		  my.Multiply(mz);
-		  my.Multiply(mx);
-		  
-		  this.grid = my.grid;
-		  
-		  
+		float sx = (float) Math.sin(AX);
+		float sy = (float) Math.sin(AY);
+		float sz = (float) Math.sin(AZ);
+
+		float cx = (float) Math.cos(AX);
+		float cy = (float) Math.cos(AY);
+		float cz = (float) Math.cos(AZ);
+
+		TF3D_Matrix mx = new TF3D_Matrix();
+		mx.CreateRotationMatrixX(sx, cx);
+
+		TF3D_Matrix my = new TF3D_Matrix();
+		my.CreateRotationMatrixY(sy, cy);
+
+		TF3D_Matrix mz = new TF3D_Matrix();
+		mz.CreateRotationMatrixZ(sz, cz);
+
+		TF3D_Matrix m = new TF3D_Matrix();
+		m.LoadIdentity();
+		
+		m.Multiply(mx);
+		m.Multiply(my);
+		m.Multiply(mz);
+		
+		
+
+		this.grid = m.grid;
+
 	}
-	
+
 	private void CreateRotationMatrixX(float Sine, float Cosine)
 	{
 		int X = 0;
@@ -589,5 +611,23 @@ public class TF3D_Matrix
 		this.grid[W][Y] = 0;
 		this.grid[W][Z] = 0;
 		this.grid[W][W] = 1;
+	}
+	
+	
+	public void CreateTranslationMatrix(Vector3f V)
+	{
+		this.CreateTranslationMatrix(V.x,V.y,V.z);
+	}
+	public void CreateTranslationMatrix(float _x, float _y, float _z)
+	{
+	  this.LoadIdentity();
+	  int X = 0;
+		int Y = 1;
+		int Z = 2;
+		int W = 3;
+		
+		this.grid[W][X]=_x;
+		this.grid[W][Y]=_y;
+		this.grid[W][Z]=_z;
 	}
 }

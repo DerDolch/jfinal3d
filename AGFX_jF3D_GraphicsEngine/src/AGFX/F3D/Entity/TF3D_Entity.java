@@ -370,28 +370,9 @@ public abstract class TF3D_Entity
 
 		this.SetRotation(res);
 
-		Matrix4f rot = new Matrix4f();
-		Matrix4f rot_X = new Matrix4f();
-		Matrix4f rot_Y = new Matrix4f();
-		Matrix4f rot_Z = new Matrix4f();
-
 		Vector3f new_position = new Vector3f();
-
-		rot.setIdentity();
-		rot_X.setIdentity();
-		rot_Y.setIdentity();
-		rot_Z.setIdentity();
-
-		rot_X.rotX(this.GetRotation().x * F3D.DEGTORAD);
-		rot_Y.rotY(this.GetRotation().y * F3D.DEGTORAD);
-		rot_Z.rotZ(this.GetRotation().z * F3D.DEGTORAD);
-
-		rot.mul(rot_Y);
-		rot.mul(rot_X);
-		rot.mul(rot_Z);
-
-		rot.transform(new Vector3f(0, 0, radius), new_position);
-
+		
+		new_position = TF3D_MathUtils.RotatePoint(this.GetRotation(), new Vector3f(0, 0, radius));
 		new_position.add(this.start_position);
 		this.SetPosition(new_position);
 

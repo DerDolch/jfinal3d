@@ -252,7 +252,8 @@ public class TF3D_SurfaceManager
 	public void ResetMaterial()
 	{
 		F3D.Textures.DeactivateLayers();
-		if (F3D.Config.use_shaders)
+		
+		if ((F3D.Config.use_shaders) & (F3D.Extensions.GLSL_VertexShader) &(F3D.Extensions.GLSL_FragmenShader))
 		{
 				F3D.Shaders.StopProgram();
 		}

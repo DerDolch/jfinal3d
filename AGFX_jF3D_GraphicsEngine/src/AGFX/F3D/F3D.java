@@ -302,7 +302,7 @@ public class F3D
 		F3D.Textures.Destroy();
 		F3D.Surfaces.Destroy();
 		F3D.Cameras.Destroy();
-		F3D.Slick.Destroy();
+		if (F3D.Config.use_slick) F3D.Slick.Destroy();
 		F3D.Display.Destroy();
 
 		F3D.Log.info("F3D", "---- END ----");
