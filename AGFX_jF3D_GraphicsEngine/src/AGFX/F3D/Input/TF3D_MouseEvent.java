@@ -1,6 +1,5 @@
 package AGFX.F3D.Input;
 
-import javax.vecmath.Vector2f;
 
 public class TF3D_MouseEvent
 {

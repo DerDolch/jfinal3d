@@ -6,7 +6,9 @@ package demos;
 import java.io.IOException;
 import java.util.Date;
 
+import org.fenggui.Container;
 import org.fenggui.FengGUI;
+import org.fenggui.TextEditor;
 import org.fenggui.actor.ScreenshotActor;
 
 import org.fenggui.binding.render.lwjgl.EventHelper;
@@ -35,6 +37,7 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 	private int             lastButtonDown = -1;
 	private ScreenshotActor screenshotActor;
 	private ITheme          theme;
+
 
 	public Demo_FengGUI()
 	{
@@ -129,6 +132,9 @@ public class Demo_FengGUI extends TF3D_AppWrapper
 		}
 		FengGUI.setTheme(theme);
 
+		//FengGUI.createWindow(true, true, true, true);
+		
+        
 	}
 
 	private void readBufferedKeyboard()

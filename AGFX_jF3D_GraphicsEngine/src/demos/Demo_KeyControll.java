@@ -79,6 +79,14 @@ public class Demo_KeyControll extends TF3D_AppWrapper
 		{
 			F3D.Log.info("", "hold");
 		}
+		
+		
+		while (Keyboard.next())
+		{
+			int keyCode = Keyboard.getEventKey();
+			char keyChar = Keyboard.getEventCharacter();
+			boolean pressed = Keyboard.getEventKeyState();
+		}
 	}
 	
 	

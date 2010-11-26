@@ -41,37 +41,13 @@ public class TF3D_Axis3f
 	// -----------------------------------------------------------------------
 	public void GetFromEuler(float _x, float _y, float _z)
 	{
-		/*
-		double a, b, c, d, e, f, ad, bd;
-
-		a = Math.cos(0.0174532925f * _x);
-		b = Math.sin(0.0174532925f * _x);
-		c = Math.cos(0.0174532925f * _y);
-		d = Math.sin(0.0174532925f * _y);
-		e = Math.cos(0.0174532925f * _z);
-		f = Math.sin(0.0174532925f * _z);
-
-		ad = a * d;
-		bd = b * d;
-
-		this._right.x = (float) (c * e);
-		this._right.y = (float) (-c * f);
-		this._right.z = (float) d;
-
-		this._up.x = (float) (bd * e + a * f);
-		this._up.y = (float) (-bd * f + a * e);
-		this._up.z = (float) (-b * c);
-
-		this._forward.x = (float) (-ad * e + b * f);
-		this._forward.y = (float) (ad * f + b * e);
-		this._forward.z = (float) (a * c);
-		*/
-	
+		
+		
 		TF3D_Matrix mat = new TF3D_Matrix();
 		
 		mat.LoadIdentity();
 		
-		mat.Rotate(_x*F3D.DEGTORAD,_y*F3D.DEGTORAD,_z*F3D.DEGTORAD);
+		mat.CreateRotationMatrix(new Vector3f(_x,_y,_z));
 		
 		this._right.x = mat.grid[0][0];
 		this._right.y = mat.grid[1][0];
@@ -84,8 +60,6 @@ public class TF3D_Axis3f
 		this._forward.x = mat.grid[0][2];
 		this._forward.y = mat.grid[1][2];
 		this._forward.z = mat.grid[2][2];
-		
-		
 		
 		
 	}
