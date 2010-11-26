@@ -188,7 +188,8 @@ public class Demo_FengGUI_UserDefined extends TF3D_AppWrapper
 
 		F3D.Gui.SetTheme("data/themes/jF3D/jF3D_theme.xml");
 
-		this.window1 = FengGUI.createWindow(F3D.Gui.display, true, false, false, true);
+	
+		this.window1 = FengGUI.createWindow(true, true, false, true);
 		window1.setTitle("TEST WIndow");
 		window1.setSize(320, 200);
 		window1.setPosition(new Point(50, 200));
@@ -196,10 +197,16 @@ public class Demo_FengGUI_UserDefined extends TF3D_AppWrapper
 		final TextEditor text = FengGUI.createWidget(TextEditor.class);
 		text.setMultiline(false);
 		text.setText("text ...");
-
+		this.window1.addWidget(text);
 		
-		//text.setEnabled(true);
-		window1.getContentContainer().addWidget(text);
+		text.setEnabled(true);		
+		F3D.Gui.display.addWidget(this.window1);
+		
+		F3D.Gui.display.addWidget(text);
+		
+	
+		
+		
 	}
 
 	
