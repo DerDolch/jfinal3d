@@ -4,6 +4,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import javax.vecmath.*;
+
 import com.bulletphysics.linearmath.QuaternionUtil;
 
 import org.lwjgl.BufferUtils;
@@ -69,7 +70,7 @@ public class TF3D_MathUtils
 		float sqy = q.y * q.y;
 		float sqz = q.z * q.z;
 		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
-		                                    // is correction factor
+											// is correction factor
 		float test = q.x * q.y + q.z * q.w;
 		if (test > 0.499 * unit)
 		{ // singularity at north pole
@@ -85,12 +86,12 @@ public class TF3D_MathUtils
 		{
 			// X
 			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw
-			                                                                                       // or
-			                                                                                       // bank
+																									// or
+																									// bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll
-			                                                                                      // or
-			                                                                                      // heading
+																									// or
+																									// heading
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 
@@ -215,5 +216,58 @@ public class TF3D_MathUtils
 		c.cross(a, b);
 		res = (float) Math.atan2(c.length(), a.dot(b));
 		return a.dot(reference) < 0.f ? -res : res;
+	}
+
+	public static Vector3f RotatePoint(Vector3f angle, Vector3f point)
+	{
+		Matrix4f rot = new Matrix4f();
+		Matrix4f rot_X = new Matrix4f();
+		Matrix4f rot_Y = new Matrix4f();
+		Matrix4f rot_Z = new Matrix4f();
+
+		Vector3f new_position = new Vector3f();
+
+		rot.setIdentity();
+		rot_X.setIdentity();
+		rot_Y.setIdentity();
+		rot_Z.setIdentity();
+
+		rot_X.rotX(angle.x * F3D.DEGTORAD);
+		rot_Y.rotY(angle.y * F3D.DEGTORAD);
+		rot_Z.rotZ(angle.z * F3D.DEGTORAD);
+
+		rot.mul(rot_Y);
+		rot.mul(rot_X);
+		rot.mul(rot_Z);
+
+		rot.transform(point, new_position);
+		return new_position;
+	}
+	
+	
+	public static Vector3f RotatePoint(Vector3f angle, float _x, float _y, float _z)
+	{
+		Matrix4f rot = new Matrix4f();
+		Matrix4f rot_X = new Matrix4f();
+		Matrix4f rot_Y = new Matrix4f();
+		Matrix4f rot_Z = new Matrix4f();
+
+		Vector3f new_position = new Vector3f();
+
+		rot.setIdentity();
+		rot_X.setIdentity();
+		rot_Y.setIdentity();
+		rot_Z.setIdentity();
+
+		rot_X.rotX(angle.x * F3D.DEGTORAD);
+		rot_Y.rotY(angle.y * F3D.DEGTORAD);
+		rot_Z.rotZ(angle.z * F3D.DEGTORAD);
+
+		rot.mul(rot_Y);
+		rot.mul(rot_X);
+		rot.mul(rot_Z);
+
+		rot.transform(new Vector3f(_x,_y,_z), new_position);
+		return new_position;
 	}
 }

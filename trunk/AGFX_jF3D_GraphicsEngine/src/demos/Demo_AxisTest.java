@@ -30,6 +30,7 @@ public class Demo_AxisTest extends TF3D_AppWrapper
 	public TF3D_Body	body;
 	public Vector3f		pos2D;
 	public TF3D_Matrix	mat;
+	public TF3D_Matrix	tmat;
 	public Vector3f		vec;
 
 	int					odx	= 0;
@@ -89,7 +90,7 @@ public class Demo_AxisTest extends TF3D_AppWrapper
 		this.model = new TF3D_Model("AUTO");
 		this.model.AssignMesh("abstract::jeep.a3da");
 		this.model.SetPosition(3, 0, 0);
-		this.model.SetRotation(0, 15, 0);
+		this.model.SetRotation(0, 90, 0);
 		
 		
 		
@@ -103,12 +104,26 @@ public class Demo_AxisTest extends TF3D_AppWrapper
 		
 		this.mat = new TF3D_Matrix();
 		this.vec = new Vector3f(0,0,1);
+		
+		this.tmat = new TF3D_Matrix();
+		
+		tmat.CreateTranslationMatrix(0,0,0);
+		
 		mat.CreateRotationMatrix(0,90,0);
+		this.vec = mat.RotateVector(0, 0, 1);
+		tmat.Multiply(mat);
+		
+		F3D.Log.info("ROT", mat.toString());
+		
 		Vector3f res = new Vector3f(mat.RotateVector(vec));
 		
 		F3D.Log.info("POS", vec.toString());
 		F3D.Log.info("ROT", res.toString());
+		F3D.Log.info("ROT", this.model.axis._forward.toString());
+		
+		
 
+		
 	}
 
 	@Override
@@ -151,7 +166,7 @@ public class Demo_AxisTest extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 	
-		this.model.Turn(1f * F3D.Timer.AppSpeed(), 1f * F3D.Timer.AppSpeed(),0);
+		//this.model.Turn(1f * F3D.Timer.AppSpeed(), 1f * F3D.Timer.AppSpeed(),0);
 		F3D.Draw.Axis(1f);
 		F3D.Draw.Axis(this.model, 3);
 		
