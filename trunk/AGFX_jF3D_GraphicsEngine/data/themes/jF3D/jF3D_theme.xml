@@ -21,7 +21,7 @@
 		</ImageFont>
 	
 		<ImageFont name="defaultFont">
-			<create fontName="Serif" type="plain" size="14" antialiasing="false"/>
+			<create fontName="Verdana" type="plain" size="14" antialiasing="true"/>
 		</ImageFont>
 		
 		<!-- TextRenderer use a font to render Text. They should be defined globally to save resources -->

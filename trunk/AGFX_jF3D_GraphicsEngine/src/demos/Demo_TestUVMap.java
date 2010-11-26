@@ -3,6 +3,8 @@
  */
 package demos;
 
+
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -46,7 +48,7 @@ public class Demo_TestUVMap extends TF3D_AppWrapper
 			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - "+ this.getClass().getName();
 
 			// [1] set resource destination 
-			F3D.Config.io_preload_source_mode = "PRELOAD_FROM_JAR"; 
+			//F3D.Config.io_preload_source_mode = "PRELOAD_FROM_JAR"; 
 			
 			super.onConfigure();
 
@@ -75,11 +77,19 @@ public class Demo_TestUVMap extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
+		F3D.Textures.Add("tiger", "abstract::tiger.svg", false);
 		
 		F3D.Meshes.Add("abstract::test_uv_map.a3da");
 		
 		this.model = new TF3D_Model("UVPLANE");
 		this.model.AssignMesh("abstract::test_uv_map.a3da");
+		
+		int tiger_id = F3D.Textures.FindByName("tiger");
+		int sid = F3D.Surfaces.FindByName("MATuvmap");
+		
+		F3D.Surfaces.materials.get(sid).texture_unit[0].texture_id = tiger_id;
+		
+		
 		
 	}
 	
@@ -126,14 +136,16 @@ public class Demo_TestUVMap extends TF3D_AppWrapper
 		{
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
-		
+	
 	}
 	
 	
 	@Override
 	public void onUpdate2D()
 	{
+		F3D.Textures.DeactivateLayers();
 		F3D.Viewport.DrawInfo(0,0);
+		this.model.DrawInfoAt(0,100);
 		
 	}
 	

@@ -45,7 +45,7 @@ public class F3D
 	// ' LOG: CONST
 	// '-----------------------------------------------------------------
 	public static final boolean             PARSER_LOG                 = false;
-	public static final boolean             ABSTARCTFILE_LOG           = false;
+	public static final boolean             ABSTARCTFILE_LOG           = true;
 
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
