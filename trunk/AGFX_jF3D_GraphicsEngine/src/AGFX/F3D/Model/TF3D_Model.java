@@ -123,7 +123,8 @@ public class TF3D_Model extends TF3D_Entity
 						}
 
 						glPushMatrix();
-
+						
+						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
 						
 						if (this.rotation_seq == F3D.ROTATE_IN_SEQ_XYZ)
 						{
@@ -139,7 +140,7 @@ public class TF3D_Model extends TF3D_Entity
 							glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
 						}
 						
-						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
+						
 						
 						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 						

@@ -15,7 +15,7 @@ import org.lwjgl.opengl.Display;
 public class TF3D_Keyboard
 {
 	private HashMap<String, TF3D_KeyEvent> Keys = new HashMap<String, TF3D_KeyEvent>();
-
+	
 	public TF3D_Keyboard()
 	{
 

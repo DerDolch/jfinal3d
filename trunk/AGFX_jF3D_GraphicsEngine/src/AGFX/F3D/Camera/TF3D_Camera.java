@@ -15,11 +15,11 @@ import static org.lwjgl.opengl.GL11.*;
 public class TF3D_Camera extends TF3D_Entity
 {
 
-	public Vector3f TargetPoint;
-	public int      cmode;
-	public int      ctype;
-	public TF3D_Skybox			Sky;
-	
+	public Vector3f		TargetPoint;
+	public int			cmode;
+	public int			ctype;
+	public TF3D_Skybox	Sky;
+
 	// -----------------------------------------------------------------------
 	// A3D_Camera: constructor
 	// -----------------------------------------------------------------------
@@ -124,17 +124,15 @@ public class TF3D_Camera extends TF3D_Entity
 	@Override
 	public void Update()
 	{
-		if (this.Sky!=null)
+		if (this.Sky != null)
 		{
 			this.Sky.Render(this.GetPosition());
 		}
-		
-		this.UpdateAxisDirection();
 
 		if (this.ctype == F3D.CAMERA_TYPE_TARGET)
 		{
 			glLoadIdentity();
-			
+
 			this.LookAt(this.TargetPoint.x, this.TargetPoint.y, this.TargetPoint.z);
 		}
 
@@ -153,7 +151,6 @@ public class TF3D_Camera extends TF3D_Entity
 
 		F3D.Frustum.Update();
 
-		
 	}
 
 	@Override
@@ -162,4 +159,30 @@ public class TF3D_Camera extends TF3D_Entity
 
 	}
 
+	public void UpdateAxisDirection()
+	{
+		double a, b, c, d, e, f, ad, bd;
+
+		a = Math.cos(0.0174532925f * this.GetRotation().x);
+		b = Math.sin(0.0174532925f * this.GetRotation().x);
+		c = Math.cos(0.0174532925f * this.GetRotation().y);
+		d = Math.sin(0.0174532925f * this.GetRotation().y);
+		e = Math.cos(0.0174532925f * this.GetRotation().z);
+		f = Math.sin(0.0174532925f * this.GetRotation().z);
+
+		ad = a * d;
+		bd = b * d;
+
+		this.axis._right.x = (float) (c * e);
+		this.axis._right.y = (float) (-c * f);
+		this.axis._right.z = (float) d;
+
+		this.axis._up.x = (float) (bd * e + a * f);
+		this.axis._up.y = (float) (-bd * f + a * e);
+		this.axis._up.z = (float) (-b * c);
+
+		this.axis._forward.x = (float) (-ad * e + b * f);
+		this.axis._forward.y = (float) (ad * f + b * e);
+		this.axis._forward.z = (float) (a * c);
+	}
 }
