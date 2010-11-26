@@ -14,7 +14,6 @@ import AGFX.F3D.Body.TF3D_Body;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Model.TF3D_Model;
 

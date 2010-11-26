@@ -3,20 +3,17 @@
  */
 package demos;
 
-import java.io.IOException;
+
 
 import javax.vecmath.Vector3f;
+
 
 import org.fenggui.Container;
 import org.fenggui.FengGUI;
 import org.fenggui.TextEditor;
-import org.fenggui.actor.ScreenshotActor;
-import org.fenggui.binding.render.lwjgl.EventHelper;
-import org.fenggui.binding.render.lwjgl.LWJGLBinding;
+
 import org.fenggui.composite.Window;
-import org.fenggui.theme.ITheme;
-import org.fenggui.theme.XMLTheme;
-import org.fenggui.theme.xml.IXMLStreamableException;
+
 import org.fenggui.util.Point;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -200,11 +197,8 @@ public class Demo_FengGUI_UserDefined extends TF3D_AppWrapper
 		text.setMultiline(false);
 		text.setText("text ...");
 
-		// assign to window
-		F3D.Gui.container.addWidget(text);
-		F3D.Gui.container.setPosition(new Point(100, 100));
-
-		// text.setEnabled(true);
+		
+		//text.setEnabled(true);
 		window1.getContentContainer().addWidget(text);
 	}
 

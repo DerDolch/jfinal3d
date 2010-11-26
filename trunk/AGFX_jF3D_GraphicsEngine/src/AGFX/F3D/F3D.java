@@ -20,6 +20,7 @@ import AGFX.F3D.Input.TF3D_InputManager;
 import AGFX.F3D.Input.TF3D_Keyboard;
 import AGFX.F3D.Material.TF3D_MaterialEventManager;
 import AGFX.F3D.Math.TF3D_Frustum;
+import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_MeshManager;
 import AGFX.F3D.Physics.TF3D_Physics;
 import AGFX.F3D.Pick.TF3D_Pick;
@@ -207,6 +208,7 @@ public class F3D
 
 	public static TF3D_Slick                Slick;
 	public static TF3D_FengGUI              Gui;
+	public static TF3D_MathUtils			MathUtils;
 
 	public static void Create()
 	{
@@ -262,6 +264,9 @@ public class F3D
 		}
 		
 		F3D.Gui = new TF3D_FengGUI();
+		
+		F3D.MathUtils = new TF3D_MathUtils();
+		
 
 	}
 

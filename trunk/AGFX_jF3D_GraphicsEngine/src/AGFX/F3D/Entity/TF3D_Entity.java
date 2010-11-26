@@ -4,19 +4,14 @@
 
 package AGFX.F3D.Entity;
 
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW_MATRIX;
-import static org.lwjgl.opengl.GL11.glGetFloat;
-
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import javax.vecmath.*;
 
-import org.lwjgl.BufferUtils;
+
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Math.TF3D_Axis3f;
-import AGFX.F3D.Math.TF3D_MathUtils;
-import AGFX.F3D.Math.TF3D_Matrix;
+
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
 /**
@@ -52,8 +47,6 @@ public abstract class TF3D_Entity
 
 	public TF3D_BoundingBox       BBOX;
 	public Boolean                enableFrustumTest = true;
-	public TF3D_Matrix            matrix;
-	public FloatBuffer            modelMatrix       = BufferUtils.createFloatBuffer(16);
 	public int                    rotation_seq      = F3D.ROTATE_IN_SEQ_XYZ;
 
 	// -----------------------------------------------------------------------
@@ -79,7 +72,7 @@ public abstract class TF3D_Entity
 		this.scale.set(1.0f, 1.0f, 1.0f);
 		this.name = "noname";
 		this.axis = new TF3D_Axis3f();
-		this.matrix = new TF3D_Matrix();
+	
 		this.BBOX = new TF3D_BoundingBox();
 		this.childs = new ArrayList<TF3D_Entity>();
 
@@ -372,7 +365,7 @@ public abstract class TF3D_Entity
 
 		Vector3f new_position = new Vector3f();
 		
-		new_position = TF3D_MathUtils.RotatePoint(this.GetRotation(), new Vector3f(0, 0, radius));
+		new_position = F3D.MathUtils.RotatePoint(this.GetRotation(), new Vector3f(0, 0, radius));
 		new_position.add(this.start_position);
 		this.SetPosition(new_position);
 
@@ -455,8 +448,8 @@ public abstract class TF3D_Entity
 		target.normalize();
 		target.y = 0;
 
-		float aY = TF3D_MathUtils.VectorAngle(forward, new Vector3f(0, 0, 1), new Vector3f(1, 0, 0)) * F3D.RADTODEG;
-		float aX = -TF3D_MathUtils.VectorAngle(forward, target, new Vector3f(0, 1, 0)) * F3D.RADTODEG;
+		float aY = F3D.MathUtils.VectorAngle(forward, new Vector3f(0, 0, 1), new Vector3f(1, 0, 0)) * F3D.RADTODEG;
+		float aX = -F3D.MathUtils.VectorAngle(forward, target, new Vector3f(0, 1, 0)) * F3D.RADTODEG;
 		float aZ = 0;
 
 		this.SetRotation(aX, aY, aZ);

@@ -13,7 +13,6 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Model.TF3D_Model;
 
@@ -135,7 +134,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
-		pos2D = TF3D_MathUtils.World3DtoScreen2D(this.model.GetPosition());
+		pos2D = F3D.MathUtils.World3DtoScreen2D(this.model.GetPosition());
 		
 		//this.model.Turn(0, 1, 0);
 		//F3D.Draw.Axis(2.0f);	

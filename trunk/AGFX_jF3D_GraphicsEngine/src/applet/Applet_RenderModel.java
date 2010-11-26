@@ -11,7 +11,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
 import demos.Demo_RenderModel;
-import demos.Demo_TestUVMap;
+
 
 /**
  * @author AndyGFX

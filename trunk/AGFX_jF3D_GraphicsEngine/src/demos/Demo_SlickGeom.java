@@ -4,6 +4,7 @@ import javax.vecmath.*;
 
 import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Ellipse;
@@ -132,7 +133,7 @@ public class Demo_SlickGeom extends TF3D_AppWrapper
 	public void render()
 	{
 
-		F3D.Slick.graphics.setDrawMode(F3D.Slick.graphics.MODE_NORMAL);
+		F3D.Slick.graphics.setDrawMode(Graphics.MODE_NORMAL);
 
 		F3D.Slick.graphics.setAntiAlias(true);
 		F3D.Slick.graphics.setColor(Color.white);
