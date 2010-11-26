@@ -10,10 +10,9 @@ import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
-import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
-import AGFX.F3D.World.TF3D_World;
+
 
 /**
  * @author AndyGFX

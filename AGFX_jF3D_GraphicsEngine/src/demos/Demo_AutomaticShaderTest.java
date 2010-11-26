@@ -7,14 +7,11 @@ import org.lwjgl.input.Mouse;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
-import AGFX.F3D.Callback.TF3D_ShaderCallback;
+
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Model.TF3D_Model;
-import AGFX.F3D.Parser.TF3D_PARSER;
-import AGFX.F3D.Shader.TF3D_GLSL_Shader;
-import AGFX.F3D.Shader.TF3D_Shader;
 import AGFX.F3D.Texture.TF3D_Texture;
 
 public class Demo_AutomaticShaderTest extends TF3D_AppWrapper

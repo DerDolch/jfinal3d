@@ -3,9 +3,6 @@
  */
 package demos;
 
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Vector3f;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -14,7 +11,7 @@ import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Math.TF3D_MathUtils;
+//
 import AGFX.F3D.Model.TF3D_Model;
 
 /**

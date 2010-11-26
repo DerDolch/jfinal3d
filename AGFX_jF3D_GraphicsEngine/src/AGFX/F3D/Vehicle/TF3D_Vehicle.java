@@ -29,7 +29,6 @@ import com.bulletphysics.linearmath.Transform;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
-import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
 
 /**
@@ -136,7 +135,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 		compound.addChildShape(localTrans, chassisShape);
 
 		RigidBody_tr.origin.set(this.GetPosition());
-		RigidBody_tr.setRotation(TF3D_MathUtils.AnglesToQuat4f(this.GetRotation().x, this.GetRotation().y, this.GetRotation().z));
+		RigidBody_tr.setRotation(F3D.MathUtils.AnglesToQuat4f(this.GetRotation().x, this.GetRotation().y, this.GetRotation().z));
 
 		RB_carChassis = F3D.Physic.localCreateRigidBody(1200, RigidBody_tr, compound);
 		F3D.Physic.AddBody(RB_carChassis);

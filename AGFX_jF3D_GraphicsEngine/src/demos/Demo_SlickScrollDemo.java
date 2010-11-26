@@ -331,7 +331,7 @@ public class Demo_SlickScrollDemo extends TF3D_AppWrapper
 			}
 		}
 
-		F3D.Slick.graphics.setDrawMode(F3D.Slick.graphics.MODE_NORMAL);
+		F3D.Slick.graphics.setDrawMode(Graphics.MODE_NORMAL);
 		this.render();
 	}
 

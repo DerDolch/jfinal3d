@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import AGFX.F3D.F3D;
-import AGFX.F3D.Engine.TF3D_Log;
+
 
 /**
  * @author AndyGFX

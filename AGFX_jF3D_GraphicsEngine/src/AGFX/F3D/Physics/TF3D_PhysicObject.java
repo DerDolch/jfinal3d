@@ -14,7 +14,6 @@ import javax.vecmath.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
-import AGFX.F3D.Math.TF3D_MathUtils;
 import AGFX.F3D.Mesh.TF3D_Mesh;
 
 import com.bulletphysics.collision.shapes.BoxShape;
@@ -167,7 +166,7 @@ public class TF3D_PhysicObject
 		qrot.z = rot.z * F3D.DEGTORAD;
 		qrot.w = 2.0f;
 
-		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
+		this.Transform.setRotation(F3D.MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
 		/*
 		 * 
@@ -266,7 +265,7 @@ public class TF3D_PhysicObject
 
 		this.Transform.origin.set(pos);
 
-		this.Transform.setRotation(TF3D_MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
+		this.Transform.setRotation(F3D.MathUtils.AnglesToQuat4f(rot.x, rot.y, rot.z));
 
 		this.RigidBody = F3D.Physic.localCreateRigidBody(this.mass, this.Transform, this.Shape);
 
@@ -375,11 +374,11 @@ public class TF3D_PhysicObject
 		// get current rotation
 		Quat4f qm = new Quat4f();
 		this.Transform.getRotation(qm);
-		rot.set(TF3D_MathUtils.Quad2Angles(qm));
+		rot.set(F3D.MathUtils.Quad2Angles(qm));
 		
 		Matrix4f mat = new Matrix4f();
 		this.Transform.getMatrix(mat);
-		rot.set(TF3D_MathUtils.Matrix2Angles(mat));
+		rot.set(F3D.MathUtils.Matrix2Angles(mat));
 		
 		
 		return rot;
