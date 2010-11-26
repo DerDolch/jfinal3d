@@ -44,7 +44,7 @@ import org.fenggui.binding.render.AWTFont;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.ImageFont;
 import org.fenggui.binding.render.Pixmap;
-import org.fenggui.binding.render.jogl.JOGLTextRenderer;
+//import org.fenggui.binding.render.jogl.JOGLTextRenderer;
 import org.fenggui.binding.render.text.DirectTextRenderer;
 import org.fenggui.composite.Window;
 import org.fenggui.composite.menu.Menu;
@@ -173,7 +173,7 @@ public class XMLTheme implements ITheme
     TYPE_REGISTRY.register(AWTFont.class);
 
     TYPE_REGISTRY.register(DirectTextRenderer.class);
-    TYPE_REGISTRY.register(JOGLTextRenderer.class);
+    //TYPE_REGISTRY.register(JOGLTextRenderer.class);
 
     TYPE_REGISTRY.register("ComplexTextRendererData", TextContentManager.class);
     TYPE_REGISTRY.register("AdvancedTextRendererData", EditableTextContentManager.class);
@@ -182,7 +182,7 @@ public class XMLTheme implements ITheme
 
     //SIMPLE TEXT RENDERERS
     TEXTRENDERER_REGISTRY.register(DirectTextRenderer.class);
-    TEXTRENDERER_REGISTRY.register(JOGLTextRenderer.class);
+   // TEXTRENDERER_REGISTRY.register(JOGLTextRenderer.class);
 
     //COMPLEX TEXT RENDERER DATA
     COMPLEXTEXTRENDERERDATA_REGISTRY.register("ComplexTextRendererData", TextContentManager.class);

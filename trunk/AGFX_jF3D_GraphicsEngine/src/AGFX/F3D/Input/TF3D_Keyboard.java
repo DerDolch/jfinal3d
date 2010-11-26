@@ -5,8 +5,11 @@ package AGFX.F3D.Input;
 
 import java.util.HashMap;
 
+import org.fenggui.binding.render.lwjgl.EventHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+
+import AGFX.F3D.F3D;
 
 /**
  * @author AndyGFX
@@ -44,6 +47,16 @@ public class TF3D_Keyboard
 				boolean up = true;
 				TF3D_KeyEvent key = new TF3D_KeyEvent(keyCode, keyChar, pressed, down, up, 0);
 				this.Keys.put(Keyboard.getKeyName(Keyboard.getEventKey()), key);
+			}
+			
+			if (Keyboard.getEventKeyState())
+			{
+				F3D.Gui.display.fireKeyPressedEvent(EventHelper.mapKeyChar(), EventHelper.mapEventKey());
+
+				F3D.Gui.display.fireKeyTypedEvent(EventHelper.mapKeyChar());
+			} else
+			{
+				F3D.Gui.display.fireKeyReleasedEvent(EventHelper.mapKeyChar(), EventHelper.mapEventKey());
 			}
 		}
 	}
