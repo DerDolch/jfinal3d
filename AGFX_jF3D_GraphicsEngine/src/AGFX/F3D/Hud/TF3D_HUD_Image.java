@@ -5,12 +5,8 @@ package AGFX.F3D.Hud;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
-
-//import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.vector.Vector2f;
-
 import AGFX.F3D.F3D;
-import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;
 
 //-----------------------------------------------------------------------
@@ -160,9 +156,7 @@ public class TF3D_HUD_Image extends TF3D_HUD_Gadget
 	public void Load(String filename, Boolean init_after_load)
 	{
 		TF3D_PARSER PARSER = new TF3D_PARSER();
-		TF3D_Material mat;
 		int BLOCK_ID;
-		String tmp_str;
 
 		System.out.println("Loading config... " + filename);
 		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);

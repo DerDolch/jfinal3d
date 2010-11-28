@@ -4,11 +4,8 @@
 package AGFX.F3D.Input;
 
 import java.util.HashMap;
-
 import org.fenggui.binding.render.lwjgl.EventHelper;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-
 import AGFX.F3D.F3D;
 
 /**

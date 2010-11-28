@@ -6,14 +6,11 @@ package applet;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-
 import org.lwjgl.LWJGLException;
-
 import org.lwjgl.opengl.Display;
-
 import demos.Demo_TestUVMap;
 
-import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+
 
 
 /**
@@ -110,6 +107,9 @@ public class Applet_TestUVMap extends Applet
 		{
 			display_parent = new Canvas()
 			{
+				/**  */
+                private static final long serialVersionUID = 202517488977311139L;
+
 				public void addNotify()
 				{
 					super.addNotify();

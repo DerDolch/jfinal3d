@@ -7,14 +7,9 @@ import static org.lwjgl.opengl.GL11.glMultMatrix;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glScalef;
-
 import java.nio.FloatBuffer;
-
-import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
-
 import org.lwjgl.BufferUtils;
-
 import com.bulletphysics.collision.dispatch.CollisionObject;
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
@@ -26,7 +21,6 @@ import com.bulletphysics.dynamics.vehicle.VehicleRaycaster;
 import com.bulletphysics.dynamics.vehicle.VehicleTuning;
 import com.bulletphysics.dynamics.vehicle.WheelInfo;
 import com.bulletphysics.linearmath.Transform;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Mesh.TF3D_BoundingBox;
@@ -46,7 +40,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 	public float            steeringIncrement              = 0.04f;
 	public float            steeringClamp                  = 0.5f;
 	private float           wheelRadius                    = 0.5f;
-	private float           wheelWidth                     = 0.4f;
+	//private float           wheelWidth                     = 0.4f;
 	private float           wheelFriction                  = 100;
 	private float           suspensionStiffness            = 20.f;
 	private float           suspensionDamping              = 2.3f;

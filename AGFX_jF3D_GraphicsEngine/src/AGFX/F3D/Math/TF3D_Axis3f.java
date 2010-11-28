@@ -3,11 +3,7 @@
 // -----------------------------------------------------------------------
 package AGFX.F3D.Math;
 
-import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
-
-import AGFX.F3D.F3D;
-
 
 public class TF3D_Axis3f
 {

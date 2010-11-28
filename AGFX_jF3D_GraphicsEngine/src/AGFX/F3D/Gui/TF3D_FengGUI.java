@@ -4,17 +4,12 @@
 package AGFX.F3D.Gui;
 
 import java.io.IOException;
-
 import org.fenggui.Container;
 import org.fenggui.FengGUI;
-import org.fenggui.binding.render.lwjgl.EventHelper;
 import org.fenggui.binding.render.lwjgl.LWJGLBinding;
-import org.fenggui.composite.Window;
 import org.fenggui.theme.ITheme;
 import org.fenggui.theme.XMLTheme;
 import org.fenggui.theme.xml.IXMLStreamableException;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import AGFX.F3D.F3D;
 

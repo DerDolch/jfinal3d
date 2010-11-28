@@ -4,11 +4,8 @@
 package AGFX.F3D.Shader;
 
 import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL20;
-
 import AGFX.F3D.F3D;
-import AGFX.F3D.Callback.TF3D_ShaderCallback;
 
 /**
  * @author AndyGFX

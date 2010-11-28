@@ -17,7 +17,7 @@ public class TF3D_MaterialColor
 	public float specular[] = new float[] { 0.0f, 0.0f, 0.0f, 1.0f };
 	public float shinisess = 0f;
 
-	public void TF3D_MaterialColor()
+	public TF3D_MaterialColor()
 	{
 		
 	}

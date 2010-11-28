@@ -4,10 +4,6 @@
 package AGFX.F3D.Model;
 
 import java.util.ArrayList;
-
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Vector3f;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
 import AGFX.F3D.Mesh.TF3D_Mesh;
@@ -122,6 +118,7 @@ public class TF3D_Model extends TF3D_Entity
 							F3D.Surfaces.ApplyMaterial(mid);
 						}
 
+						
 						glPushMatrix();
 						
 						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
@@ -157,7 +154,10 @@ public class TF3D_Model extends TF3D_Entity
 							this.childs.get(ci).Render();
 						}
 						glScalef(1, 1, 1);
+						
+						
 						glPopMatrix();
+						
 						
 						
 					}

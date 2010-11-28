@@ -4,9 +4,6 @@
 package demos;
 
 import javax.vecmath.Vector3f;
-
-import org.lwjgl.input.Keyboard;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Callback.TF3D_TimeEventCallBack;

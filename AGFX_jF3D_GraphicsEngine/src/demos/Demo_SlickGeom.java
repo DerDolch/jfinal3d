@@ -2,19 +2,14 @@ package demos;
 
 import javax.vecmath.*;
 
-import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
-import org.newdawn.slick.svg.InkscapeLoader;
-import org.newdawn.slick.svg.SimpleDiagramRenderer;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
@@ -128,6 +123,7 @@ public class Demo_SlickGeom extends TF3D_AppWrapper
 		this.roundRect = new RoundedRectangle(50, 175, 100, 100, 20);
 		this.roundRect2 = new RoundedRectangle(50, 280, 50, 50, 20, 20, RoundedRectangle.TOP_LEFT | RoundedRectangle.BOTTOM_RIGHT);
 
+		
 	}
 
 	public void render()
@@ -180,7 +176,7 @@ public class Demo_SlickGeom extends TF3D_AppWrapper
 		
 		
 		
-		F3D.Slick.graphics.resetTransform();
+		
 	}
 	@Override
 	public void onUpdate3D()

@@ -7,13 +7,9 @@ package AGFX.F3D.Serialize;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import javax.crypto.SealedObject;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Mesh.TF3D_MeshData;
 

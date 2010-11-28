@@ -22,7 +22,7 @@ public class TF3D_MathUtils
 
 	}
 
-	public static Vector3f Matrix2Angles(Matrix4f m)
+	public  Vector3f Matrix2Angles(Matrix4f m)
 	{
 
 		/**
@@ -56,7 +56,7 @@ public class TF3D_MathUtils
 		return new Vector3f(bank * F3D.RADTODEG, heading * F3D.RADTODEG, attitude * F3D.RADTODEG);
 	}
 
-	public static Vector3f Quad2Angles(Quat4f q)
+	public Vector3f Quad2Angles(Quat4f q)
 	{
 		/*
 		 * Heading = rotation about y axis Attitude = rotation about z axis Bank
@@ -119,7 +119,7 @@ public class TF3D_MathUtils
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public static Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
+	public Quat4f AnglesToQuat4f(float yaw, float roll, float pitch)
 	{
 
 		Quat4f q = new Quat4f();
@@ -140,7 +140,7 @@ public class TF3D_MathUtils
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public static Vector3f World3DtoScreen2D(Vector3f pos)
+	public Vector3f World3DtoScreen2D(Vector3f pos)
 	{
 		Vector3f res = new Vector3f();
 		FloatBuffer modelMatrix = BufferUtils.createFloatBuffer(16);
@@ -155,7 +155,7 @@ public class TF3D_MathUtils
 		GLU.gluProject(pos.x, pos.y, pos.z, modelMatrix, projMatrix, viewport, win_pos);
 
 		res.x = win_pos.get(0);
-		res.y = F3D.Config.r_display_height - win_pos.get(1);
+		res.y = F3D.Config.r_display_height - win_pos.get(1);		
 		res.z = win_pos.get(2);
 
 		return res;
@@ -177,7 +177,7 @@ public class TF3D_MathUtils
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public static float VectorAngle(Vector3f a, Vector3f b)
+	public float VectorAngle(Vector3f a, Vector3f b)
 	{
 		float res = 0;
 
@@ -207,7 +207,7 @@ public class TF3D_MathUtils
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
-	public static float VectorAngle(Vector3f a, Vector3f b, Vector3f reference)
+	public float VectorAngle(Vector3f a, Vector3f b, Vector3f reference)
 	{
 		float res = 0;
 
@@ -218,7 +218,7 @@ public class TF3D_MathUtils
 		return a.dot(reference) < 0.f ? -res : res;
 	}
 
-	public static Vector3f RotatePoint(Vector3f angle, Vector3f point)
+	public Vector3f RotatePoint(Vector3f angle, Vector3f point)
 	{
 		Matrix4f rot = new Matrix4f();
 		Matrix4f rot_X = new Matrix4f();
@@ -245,7 +245,7 @@ public class TF3D_MathUtils
 	}
 	
 	
-	public static Vector3f RotatePoint(Vector3f angle, float _x, float _y, float _z)
+	public  Vector3f RotatePoint(Vector3f angle, float _x, float _y, float _z)
 	{
 		Matrix4f rot = new Matrix4f();
 		Matrix4f rot_X = new Matrix4f();

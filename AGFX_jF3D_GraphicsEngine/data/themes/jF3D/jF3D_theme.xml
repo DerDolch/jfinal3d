@@ -53,6 +53,7 @@
 		     Binding.getInstance().setUseClassLoader(true) to true and FengGUI
 		     will globally use the classloader to retrieve resources. -->
 		<Texture name="jF3D" filename="jf3d_pixmaps.png"/>
+		<Texture name="jF3D_FRAME" filename="jf3d_frame.png"/>
 
 		<ContentFactory default="true">
 			<Color ref="textColor"/>

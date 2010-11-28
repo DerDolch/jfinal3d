@@ -107,6 +107,9 @@ public class Applet_RenderModel extends Applet
 		{
 			display_parent = new Canvas()
 			{
+				/**  */
+                private static final long serialVersionUID = 1L;
+
 				public void addNotify()
 				{
 					super.addNotify();

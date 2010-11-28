@@ -8,13 +8,21 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.Date;
+
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector3f;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Font.TF3D_Font;
+import AGFX.F3D.Utils.TF3D_Buffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -202,18 +210,17 @@ public class TF3D_Viewport
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void ScreenShot(String filename, int width, int height)
 	{
-		
+
 		// allocate space for RBG pixels
 		ByteBuffer fb = BufferUtils.createByteBuffer(width * height * 3);
 		int[] pixels = new int[width * height];
 		int bindex;
 		// grab a copy of the current frame contents as RGB
 		GL11.glReadPixels(0, 0, width, height, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, fb);
-		
-		
-		
+
 		// convert RGB data in ByteBuffer to integer array
 		for (int i = 0; i < pixels.length; i++)
 		{
@@ -224,29 +231,75 @@ public class TF3D_Viewport
 		try
 		{
 			BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			
+
 			image.setRGB(0, 0, width, height, pixels, 0, width);
-			
+
 			AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
 			tx.translate(0, -image.getHeight(null));
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 			image = op.filter(image, null);
-			
-			
-			
-			
+
 			Date dd = new Date();
 			int DH = dd.getHours();
 			int DM = dd.getMinutes();
 			int DS = dd.getSeconds();
-			
-			String time = String.valueOf(DH)+"_"+String.valueOf(DM)+"_"+String.valueOf(DS);
-			
-			javax.imageio.ImageIO.write(image, "png", new File( F3D.Config.io_preload_folder+"/"+time+"_"+filename));
+
+			String time = String.valueOf(DH) + "_" + String.valueOf(DM) + "_" + String.valueOf(DS);
+
+			javax.imageio.ImageIO.write(image, "png", new File(F3D.Config.io_preload_folder + "/" + time + "_" + filename));
 		} catch (Exception e)
 		{
 			System.out.println("ScreenShot() exception: " + e);
 		}
+
+	}
+
+	// -----------------------------------------------------------------------
+	// TF3D_Viewport:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Check point visibility from DEPTH BUFFER <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param point
+	 *            - Vector3f point
+	 * @return - true/false
+	 */
+	// -----------------------------------------------------------------------
+	public Boolean IsPointVisible(Vector3f point)
+	{
+		Boolean res = false;
 		
+		FloatBuffer modelMatrix = BufferUtils.createFloatBuffer(16);
+		FloatBuffer projMatrix = BufferUtils.createFloatBuffer(16);
+		IntBuffer viewport = BufferUtils.createIntBuffer(16);
+		FloatBuffer win_pos = BufferUtils.createFloatBuffer(16);
+
+		glGetFloat(GL_MODELVIEW_MATRIX, modelMatrix);
+		glGetFloat(GL_PROJECTION_MATRIX, projMatrix);
+		glGetInteger(GL_VIEWPORT, viewport);
+
+		GLU.gluProject(point.x, point.y, point.z, modelMatrix, projMatrix, viewport, win_pos);
+		
+		
+		FloatBuffer zdepth = BufferUtils.createFloatBuffer(1);
+		zdepth.clear();
+		
+		// set pixel packing		
+		GL11.glReadPixels((int) win_pos.get(0), (int) (win_pos.get(1)), 1, 1, GL11.GL_DEPTH_COMPONENT, GL11.GL_FLOAT, zdepth);
+		
+		float z = zdepth.get(0);
+			
+		if (z >= win_pos.get(2))
+		{
+			res = true;
+		} else
+		{
+			res = false;
+		}
+		
+		return res;
 	}
 }

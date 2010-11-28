@@ -5,18 +5,11 @@ package AGFX.F3D.FrameBufferObject;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.EXTFramebufferObject;
-
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.*;
-import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
-
-import AGFX.F3D.F3D;
 
 /**
  * @author AndyGFX http://lwjgl.org/forum/index.php/topic,2892.0.html
