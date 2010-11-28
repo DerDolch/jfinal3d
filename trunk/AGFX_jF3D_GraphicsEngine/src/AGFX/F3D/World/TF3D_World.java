@@ -51,9 +51,32 @@ public class TF3D_World
 		{
 			if (this.entities.get(i).parent == null)
 			{
-				if (this.entities.get(i).classname != F3D.CLASS_CAMERA)
+				switch (this.entities.get(i).classname)
 				{
+				case F3D.CLASS_BODY:
 					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_CAMERA:
+					// nothing
+					break;
+				case F3D.CLASS_LIGHT:
+					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_MESH:
+					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_MODEL:
+					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_PIVOT:
+					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_SPRITE:
+					this.entities.get(i).Update();
+					break;
+				case F3D.CLASS_VEHICLE:
+					this.entities.get(i).Update();
+					break;
 				}
 
 			}
@@ -81,11 +104,33 @@ public class TF3D_World
 		{
 			if (this.entities.get(i).parent == null)
 			{
-				if (this.entities.get(i).classname != F3D.CLASS_CAMERA)
+				switch (this.entities.get(i).classname)
 				{
+				case F3D.CLASS_BODY:
 					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_CAMERA:
+					// nothing
+					break;
+				case F3D.CLASS_LIGHT:
+					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_MESH:
+					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_MODEL:
+					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_PIVOT:
+					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_SPRITE:
+					this.entities.get(i).Render();
+					break;
+				case F3D.CLASS_VEHICLE:
+					this.entities.get(i).Render();
+					break;
 				}
-
 			}
 		}
 
