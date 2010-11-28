@@ -474,13 +474,6 @@ public abstract class TF3D_Entity
 	 * -------------------------------------------------------------------<BR>
 	 * Check if Entity is visible in Frustum <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * 
-	 * @param vertices
-	 *            vertex array
-	 * @param indices
-	 *            indices array
-	 * @param length
-	 *            lenght of indices
 	 * @return
 	 */
 	// -----------------------------------------------------------------------

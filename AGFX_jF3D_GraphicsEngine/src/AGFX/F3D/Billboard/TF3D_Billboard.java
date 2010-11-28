@@ -26,11 +26,12 @@ public class TF3D_Billboard extends TF3D_Entity
 	/** material ID assigned to surface */
 	public int      material_id;
 	// ** help var for alpha fading */
-	// private float Alpha;
+	public float Alpha = 1f;
 	/** depth sort true/false */
 	public boolean  bDepthSort;
 	/** alpha fade true/false */
 	public boolean  bFadeAlpha;
+	public float  alpha_fade_speed;
 	/** enable rendering true/false */
 	public boolean  enable;
 
@@ -50,9 +51,10 @@ public class TF3D_Billboard extends TF3D_Entity
 		this.Dir = new Vector3f(0, -1f, 0);
 		this.mode = F3D.BM_SPRITE;
 		this.enable = true;
-		// this.Alpha = 1.0f;
-		// this.bDepthSort = true;
-		// this.bFadeAlpha = true;
+		this.Alpha = 1.0f;
+		this.alpha_fade_speed = 1f;
+		this.bDepthSort = true;
+		this.bFadeAlpha = false;
 		this.material_id = -1;
 		this.name = "none";
 	}
@@ -342,40 +344,68 @@ public class TF3D_Billboard extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void Render()
 	{
+		
 		if (this.IsEnabled())
 		{
-			F3D.Surfaces.ApplyMaterial(this.material_id);
-
-			glPushMatrix();
-
-			switch (this.mode)
+			if (this.IsVisible())
 			{
-			case F3D.BM_SPRITE:
-				this._BillboardPoint(this.GetPosition());
-				this._DrawPlane(this.GetScale().x, this.GetScale().y);
-				break;
-			case F3D.BM_AXIS_X:
-				this._BillboardAxisX(this.GetPosition());
-				this._DrawPlane(this.GetScale().x, this.GetScale().y);
-				break;
-			case F3D.BM_AXIS_Y:
-				this._BillboardAxisY(this.GetPosition());
-				this._DrawPlane(this.GetScale().x, this.GetScale().y);
-				break;
-			case F3D.BM_AXIS_Z:
-				this._BillboardAxisZ(this.GetPosition());
-				this._DrawPlane(this.GetScale().x, this.GetScale().y);
-				break;
-			case F3D.BM_DIRECTIONAL:
-				this._BillboardAxisDir(this.GetPosition(), this.Dir);
-				this._DrawDirPlane(this.GetScale().x, this.GetScale().y);
-				break;
-			default:
-				break;
-			}
+				if (this.bFadeAlpha)
+				{
+					glEnable(GL_BLEND);
+					if (F3D.Viewport.IsPointVisible(this.GetPosition()))
+					{
+						this.Alpha = this.Alpha + this.alpha_fade_speed*F3D.Timer.AppSpeed();
+						if (this.Alpha>1f) this.Alpha=1f;
+					}
+					else
+					{
+						this.Alpha = this.Alpha - this.alpha_fade_speed*F3D.Timer.AppSpeed();
+						if (this.Alpha<0f) this.Alpha=0f;
+					}
+					 
+				}
+				else
+				{
+					this.Alpha = 1f;
+				}
+				
+				
+				F3D.Surfaces.materials.get(this.material_id).colors.diffuse[3]=this.Alpha;
+				F3D.Surfaces.ApplyMaterial(this.material_id);
+				
+				
+				
+				glPushMatrix();
 
-			glPopMatrix();
-			glDisable(GL_BLEND);
+				switch (this.mode)
+				{
+				case F3D.BM_SPRITE:
+					this._BillboardPoint(this.GetPosition());
+					this._DrawPlane(this.GetScale().x, this.GetScale().y);
+					break;
+				case F3D.BM_AXIS_X:
+					this._BillboardAxisX(this.GetPosition());
+					this._DrawPlane(this.GetScale().x, this.GetScale().y);
+					break;
+				case F3D.BM_AXIS_Y:
+					this._BillboardAxisY(this.GetPosition());
+					this._DrawPlane(this.GetScale().x, this.GetScale().y);
+					break;
+				case F3D.BM_AXIS_Z:
+					this._BillboardAxisZ(this.GetPosition());
+					this._DrawPlane(this.GetScale().x, this.GetScale().y);
+					break;
+				case F3D.BM_DIRECTIONAL:
+					this._BillboardAxisDir(this.GetPosition(), this.Dir);
+					this._DrawDirPlane(this.GetScale().x, this.GetScale().y);
+					break;
+				default:
+					break;
+				}
+
+				glPopMatrix();
+				glDisable(GL_BLEND);
+			}
 		}
 
 	}
@@ -409,6 +439,31 @@ public class TF3D_Billboard extends TF3D_Entity
 	@Override
 	public void Destroy()
 	{
+	}
+
+	// -----------------------------------------------------------------------
+	// TA3D_Entity:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Check if Entity is visible in Frustum <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
+	public boolean IsVisible()
+	{
+		if (this.enableFrustumTest)
+		{
+			this.visibility = F3D.Frustum.PointInFrustum(this.GetPosition());
+		} else
+		{
+			this.visibility = true;
+		}
+		return this.visibility;
+
 	}
 
 	public static TF3D_Billboard CreateSprite(String _name, Vector3f pos, Vector3f dir, float sx, float sy, String mat, int type)
