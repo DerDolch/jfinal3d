@@ -6,9 +6,7 @@ package AGFX.F3D.Mesh;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
-
 import AGFX.F3D.F3D;
-import AGFX.F3D.Math.TF3D_TBN;
 import AGFX.F3D.Parser.TF3D_PARSER;
 import AGFX.F3D.Serialize.TF3D_Store;
 import static org.lwjgl.opengl.GL13.*;

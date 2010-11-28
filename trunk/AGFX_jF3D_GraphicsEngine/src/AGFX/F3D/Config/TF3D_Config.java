@@ -4,7 +4,6 @@
 package AGFX.F3D.Config;
 
 import AGFX.F3D.F3D;
-import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;
 import AGFX.F3D.Utils.TF3D_AbstractFiles;
 
@@ -130,9 +129,7 @@ public class TF3D_Config
 	public void Load(String filename)
 	{
 		TF3D_PARSER PARSER = new TF3D_PARSER();
-		TF3D_Material mat;
 		int BLOCK_ID;
-		String tmp_str;
 
 		F3D.Log.info("TF3D_Config", "Loading ... " + filename);
 		Boolean Exist = F3D.AbstractFiles.ExistFile(filename);

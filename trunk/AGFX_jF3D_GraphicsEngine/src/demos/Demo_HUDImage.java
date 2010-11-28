@@ -3,26 +3,11 @@
  */
 package demos;
 
-import java.io.IOException;
 
-import org.fenggui.Container;
-import org.fenggui.FengGUI;
-import org.fenggui.TextEditor;
-import org.fenggui.actor.ScreenshotActor;
-import org.fenggui.binding.render.lwjgl.EventHelper;
-import org.fenggui.binding.render.lwjgl.LWJGLBinding;
-import org.fenggui.composite.Window;
-import org.fenggui.layout.RowExLayoutData;
-import org.fenggui.theme.ITheme;
-import org.fenggui.theme.XMLTheme;
-import org.fenggui.theme.xml.IXMLStreamableException;
-import org.fenggui.util.Point;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
-
 import AGFX.F3D.Callback.TF3D_HudCallback;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;

@@ -4,9 +4,6 @@
 package AGFX.F3D.Surface;
 
 import java.util.ArrayList;
-
-import javax.vecmath.Vector4f;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Parser.TF3D_PARSER;

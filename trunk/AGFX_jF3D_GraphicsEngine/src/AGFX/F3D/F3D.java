@@ -4,8 +4,6 @@
 package AGFX.F3D;
 
 import org.lwjgl.LWJGLException;
-import org.newdawn.slick.Graphics;
-
 import AGFX.F3D.Camera.TF3D_CameraManager;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Engine.TF3D_Display;
@@ -17,7 +15,6 @@ import AGFX.F3D.FrameBufferObject.TF3D_FBO_manager;
 import AGFX.F3D.Gui.TF3D_FengGUI;
 import AGFX.F3D.Helpers.TF3D_Helpers;
 import AGFX.F3D.Input.TF3D_InputManager;
-import AGFX.F3D.Input.TF3D_Keyboard;
 import AGFX.F3D.Material.TF3D_MaterialEventManager;
 import AGFX.F3D.Math.TF3D_Frustum;
 import AGFX.F3D.Math.TF3D_MathUtils;

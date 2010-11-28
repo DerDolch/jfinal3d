@@ -3,7 +3,6 @@
  */
 package AGFX.F3D.Material;
 
-import javax.vecmath.*;
 
 import AGFX.F3D.F3D;
 

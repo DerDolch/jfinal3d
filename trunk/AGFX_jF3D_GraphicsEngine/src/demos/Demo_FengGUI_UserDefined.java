@@ -6,24 +6,18 @@ package demos;
 
 
 import javax.vecmath.Vector3f;
-
-
-import org.fenggui.Container;
 import org.fenggui.FengGUI;
 import org.fenggui.TextEditor;
-
 import org.fenggui.composite.Window;
-
 import org.fenggui.util.Point;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Math.TF3D_MathUtils;
+
 import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Model.TF3D_Model;
 
@@ -155,7 +149,7 @@ public class Demo_FengGUI_UserDefined extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 
-		pos2D = TF3D_MathUtils.World3DtoScreen2D(this.model.GetPosition());
+		pos2D = F3D.MathUtils.World3DtoScreen2D(this.model.GetPosition());
 
 	}
 

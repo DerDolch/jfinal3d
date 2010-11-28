@@ -220,6 +220,8 @@ public class TF3D_AppWrapper
 
 				this.onUpdate2D();
 
+				if (F3D.Config.use_slick) F3D.Slick.graphics.resetTransform();
+				
 				F3D.Viewport.EndRender2D();
 
 			}

@@ -1,14 +1,10 @@
 package AGFX.F3D.Texture;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-
+import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.ITexture;
 import org.fenggui.util.SVGImageFactory;
 import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
