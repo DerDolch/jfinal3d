@@ -116,6 +116,16 @@ public class TF3D_Model extends TF3D_Entity
 						if (mid >= 0)
 						{
 							F3D.Surfaces.ApplyMaterial(mid);
+							int shd_id = F3D.Surfaces.materials.get(mid).shader_id;
+							// TODO add bind TBN when is in shader
+							if (shd_id>=0)
+							{
+								
+								if (F3D.Shaders.items.get(shd_id).Attribs.size()>0)
+								{
+									mesh.vbo.Bind_TBN_Attributs();
+								}
+							}
 						}
 
 						
