@@ -22,6 +22,8 @@ public class TF3D_MeshData implements Serializable
 
 	public float				vertices[];
 	public float				normals[];
+	public float				tangents[];
+	public float				binormals[];
 	public float				colors[];
 	public float				uv0[];
 	public float				uv1[];
@@ -33,6 +35,8 @@ public class TF3D_MeshData implements Serializable
 	public int					v_id				= 0;
 	public int					f_id				= 0;
 	public int					n_id				= 0;
+	public int					tn_id				= 0;
+	public int					bn_id				= 0;
 	public int					c_id				= 0;
 	public int					u0_id				= 0;
 	public int					u1_id				= 0;
@@ -66,6 +70,8 @@ public class TF3D_MeshData implements Serializable
 		this.vertices = new float[this.facecount * 3 * 3];
 		this.colors = new float[this.facecount * 3 * 4];
 		this.normals = new float[this.facecount * 3 * 3];
+		this.tangents = new float[this.facecount * 3 * 3];
+		this.binormals = new float[this.facecount * 3 * 3];
 		this.uv0 = new float[this.facecount * 3 * 2];
 		this.uv1 = new float[this.facecount * 3 * 2];
 		this.uv2 = new float[this.facecount * 3 * 2];
@@ -76,6 +82,8 @@ public class TF3D_MeshData implements Serializable
 		F3D.Log.info("vertices", String.valueOf(this.vertices.length));
 		F3D.Log.info("colors", String.valueOf(this.colors.length));
 		F3D.Log.info("normals", String.valueOf(this.normals.length));
+		F3D.Log.info("binormals", String.valueOf(this.binormals.length));
+		F3D.Log.info("tangents", String.valueOf(this.tangents.length));
 		F3D.Log.info("indices", String.valueOf(this.indices.length));
 		F3D.Log.info("faces", String.valueOf(this.facecount));
 
@@ -124,7 +132,25 @@ public class TF3D_MeshData implements Serializable
 
 		this.n_id += 3;
 	}
+	
+	public void AddTangent(Vector3f v)
+	{
+		this.tangents[this.tn_id + 0] = v.x;
+		this.tangents[this.tn_id + 1] = v.y;
+		this.tangents[this.tn_id + 2] = v.z;
 
+		this.tn_id += 3;
+	}
+
+	public void AddBinormal(Vector3f v)
+	{
+		this.binormals[this.bn_id + 0] = v.x;
+		this.binormals[this.bn_id + 1] = v.y;
+		this.binormals[this.bn_id + 2] = v.z;
+
+		this.bn_id += 3;
+	}
+	
 	// -----------------------------------------------------------------------
 	// TF3D_MeshData:
 	// -----------------------------------------------------------------------

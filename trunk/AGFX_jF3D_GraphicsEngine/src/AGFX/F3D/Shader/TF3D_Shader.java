@@ -9,16 +9,16 @@ import org.lwjgl.opengl.GL20;
 
 import AGFX.F3D.F3D;
 
-
 /**
  * @author AndyGFX
  * 
  */
 public class TF3D_Shader
 {
-	public String								name;
-	public int									id	= -1;
-	public ArrayList<TF3D_ShaderUniformData>	Uniforms;
+	public String                            name;
+	public int                               id = -1;
+	public ArrayList<TF3D_ShaderUniformData> Uniforms;
+	public ArrayList<TF3D_ShaderAttribData>  Attribs;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Shader:
@@ -38,6 +38,7 @@ public class TF3D_Shader
 		this.name = name;
 		this.id = -1;
 		this.Uniforms = new ArrayList<TF3D_ShaderUniformData>();
+		this.Attribs = new ArrayList<TF3D_ShaderAttribData>();
 	}
 
 	public void AddUniformEvent(String var_name, int _event)
@@ -46,7 +47,7 @@ public class TF3D_Shader
 		un.SetAsEvent(_event);
 		this.Uniforms.add(un);
 	}
-	
+
 	public void AddUniform1i(String var_name, int _i1)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
@@ -76,7 +77,7 @@ public class TF3D_Shader
 		un.SetAsInteger(ii);
 		this.Uniforms.add(un);
 	}
-	
+
 	public void AddUniform4i(String var_name, int _i1, int _i2, int _i3, int _i4)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
@@ -88,7 +89,7 @@ public class TF3D_Shader
 		un.SetAsInteger(ii);
 		this.Uniforms.add(un);
 	}
-	
+
 	public void AddUniform1f(String var_name, float _f1)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
@@ -98,7 +99,7 @@ public class TF3D_Shader
 		this.Uniforms.add(un);
 	}
 
-	public void AddUniform2f(String var_name, float _f1,float _f2)
+	public void AddUniform2f(String var_name, float _f1, float _f2)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
 		float[] ff = new float[2];
@@ -107,8 +108,8 @@ public class TF3D_Shader
 		un.SetAsFloat(ff);
 		this.Uniforms.add(un);
 	}
-	
-	public void AddUniform3f(String var_name, float _f1,float _f2,float _f3)
+
+	public void AddUniform3f(String var_name, float _f1, float _f2, float _f3)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
 		float[] ff = new float[3];
@@ -118,8 +119,8 @@ public class TF3D_Shader
 		un.SetAsFloat(ff);
 		this.Uniforms.add(un);
 	}
-	
-	public void AddUniform4f(String var_name, float _f1,float _f2,float _f3,float _f4)
+
+	public void AddUniform4f(String var_name, float _f1, float _f2, float _f3, float _f4)
 	{
 		TF3D_ShaderUniformData un = new TF3D_ShaderUniformData(var_name);
 		float[] ff = new float[4];
@@ -130,7 +131,49 @@ public class TF3D_Shader
 		un.SetAsFloat(ff);
 		this.Uniforms.add(un);
 	}
-	
+
+	public void AddAttrib1f(String var_name, float _f1)
+	{
+		TF3D_ShaderAttribData un = new TF3D_ShaderAttribData(var_name);
+		float[] ff = new float[1];
+		ff[0] = _f1;
+		un.SetAsFloat(ff);
+		this.Attribs.add(un);
+	}
+
+	public void AddAttrib2f(String var_name, float _f1, float _f2)
+	{
+		TF3D_ShaderAttribData un = new TF3D_ShaderAttribData(var_name);
+		float[] ff = new float[2];
+		ff[0] = _f1;
+		ff[1] = _f2;
+		un.SetAsFloat(ff);
+		this.Attribs.add(un);
+	}
+
+	public void AddAttrib3f(String var_name, float _f1, float _f2, float _f3)
+	{
+		TF3D_ShaderAttribData un = new TF3D_ShaderAttribData(var_name);
+		float[] ff = new float[3];
+		ff[0] = _f1;
+		ff[1] = _f2;
+		ff[2] = _f3;
+		un.SetAsFloat(ff);
+		this.Attribs.add(un);
+	}
+
+	public void AddAttrib3f(String var_name, float _f1, float _f2, float _f3, float _f4)
+	{
+		TF3D_ShaderAttribData un = new TF3D_ShaderAttribData(var_name);
+		float[] ff = new float[4];
+		ff[0] = _f1;
+		ff[1] = _f2;
+		ff[2] = _f3;
+		ff[3] = _f4;
+		un.SetAsFloat(ff);
+		this.Attribs.add(un);
+	}
+
 	// -----------------------------------------------------------------------
 	// TF3D_Shader:
 	// -----------------------------------------------------------------------
@@ -163,12 +206,19 @@ public class TF3D_Shader
 	public void UseProgram()
 	{
 		GL20.glUseProgram(this.id);
-		
-		for (int i=0;i<this.Uniforms.size();i++)
+
+		// set uniforms
+		for (int i = 0; i < this.Uniforms.size(); i++)
 		{
 			this.Uniforms.get(i).Set(this.id);
 		}
 		
+		// set attribs
+		for (int i = 0; i < this.Attribs.size(); i++)
+		{
+			this.Attribs.get(i).Set(this.id);
+		}
+
 	}
 
 	public void StopProgram()
