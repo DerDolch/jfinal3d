@@ -214,23 +214,7 @@ public class TF3D_Vehicle extends TF3D_Entity
 	@Override
 	public void Render()
 	{
-		if (this.model_chassis >= 0)
-		{
-
-			int mid;
-			mid = F3D.Meshes.items.get(this.model_chassis).data.material_id;
-			if (mid >= 0)
-			{
-				F3D.Surfaces.ApplyMaterial(mid);
-			}
-
-			glPushMatrix();
-			glMultMatrix(this.chassis_transformMatrixBuffer);
-			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-			F3D.Meshes.items.get(this.model_chassis).Render();
-			glScalef(1, 1, 1);
-			glPopMatrix();
-		}
+		
 
 		if (this.model_wheel_FL >= 0)
 		{
@@ -300,6 +284,24 @@ public class TF3D_Vehicle extends TF3D_Entity
 			glMultMatrix(this.wheel_BR_transformMatrixBuffer);
 			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
 			F3D.Meshes.items.get(this.model_wheel_BR).Render();
+			glScalef(1, 1, 1);
+			glPopMatrix();
+		}
+		
+		if (this.model_chassis >= 0)
+		{
+
+			int mid;
+			mid = F3D.Meshes.items.get(this.model_chassis).data.material_id;
+			if (mid >= 0)
+			{
+				F3D.Surfaces.ApplyMaterial(mid);
+			}
+
+			glPushMatrix();
+			glMultMatrix(this.chassis_transformMatrixBuffer);
+			glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
+			F3D.Meshes.items.get(this.model_chassis).Render();
 			glScalef(1, 1, 1);
 			glPopMatrix();
 		}
