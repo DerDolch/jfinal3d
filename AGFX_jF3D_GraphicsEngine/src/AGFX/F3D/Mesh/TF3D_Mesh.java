@@ -15,6 +15,12 @@ import static org.lwjgl.opengl.GL13.*;
  * @author AndyGFX
  * 
  */
+class TBN_vectors
+{
+	Vector3f InvNormal   = new Vector3f();
+	Vector3f InvTangent  = new Vector3f();
+	Vector3f InvBinormal = new Vector3f();
+}
 
 public class TF3D_Mesh
 {
@@ -103,6 +109,10 @@ public class TF3D_Mesh
 			this.vbo.CreateVertexBuffer(this.data.vertices);
 		if (this.data.normals.length > 0)
 			this.vbo.CreateNormalBuffer(this.data.normals);
+		if (this.data.binormals.length > 0)
+			this.vbo.CreateBinormalBuffer(this.data.binormals);
+		if (this.data.tangents.length > 0)
+			this.vbo.CreateTangentBuffer(this.data.tangents);
 		if (this.data.colors.length > 0)
 			this.vbo.CreateColorBuffer(this.data.colors);
 		if (this.data.uv0.length > 0)
@@ -116,9 +126,6 @@ public class TF3D_Mesh
 		if (this.data.indices.length > 0)
 			this.vbo.CreateIndicesBuffer(this.data.indices);
 
-		// ADD TBN generator
-		this.GenerateTBN();
-		
 		// Build VBO
 		this.vbo.Build();
 
@@ -204,6 +211,9 @@ public class TF3D_Mesh
 
 			if (flip)
 			{
+
+				TBN_vectors TBN = this.GenerateTBN(vC, vB, vA, uv0C, uv0B, uv0A);
+
 				this.data.AddVertex(vC);
 				this.data.AddVertex(vB);
 				this.data.AddVertex(vA);
@@ -211,6 +221,19 @@ public class TF3D_Mesh
 				this.data.AddNormal(nC);
 				this.data.AddNormal(nB);
 				this.data.AddNormal(nA);
+
+				
+				//this.data.AddNormal(TBN.InvNormal);
+				//this.data.AddNormal(TBN.InvNormal);
+				//this.data.AddNormal(TBN.InvNormal);
+
+				this.data.AddBinormal(TBN.InvBinormal);
+				this.data.AddBinormal(TBN.InvBinormal);
+				this.data.AddBinormal(TBN.InvBinormal);
+
+				this.data.AddTangent(TBN.InvTangent);
+				this.data.AddTangent(TBN.InvTangent);
+				this.data.AddTangent(TBN.InvTangent);
 
 				this.data.AddColor(cC);
 				this.data.AddColor(cB);
@@ -223,9 +246,11 @@ public class TF3D_Mesh
 				this.data.AddUV(uv0C, 1);
 				this.data.AddUV(uv0B, 1);
 				this.data.AddUV(uv0A, 1);
-				
+
 			} else
 			{
+				TBN_vectors TBN = this.GenerateTBN(vA, vB, vC, uv0A, uv0B, uv0C);
+
 				this.data.AddVertex(vA);
 				this.data.AddVertex(vB);
 				this.data.AddVertex(vC);
@@ -233,6 +258,18 @@ public class TF3D_Mesh
 				this.data.AddNormal(nA);
 				this.data.AddNormal(nB);
 				this.data.AddNormal(nC);
+
+				//this.data.AddNormal(TBN.InvNormal);
+				//this.data.AddNormal(TBN.InvNormal);
+				//this.data.AddNormal(TBN.InvNormal);
+
+				this.data.AddBinormal(TBN.InvBinormal);
+				this.data.AddBinormal(TBN.InvBinormal);
+				this.data.AddBinormal(TBN.InvBinormal);
+
+				this.data.AddTangent(TBN.InvTangent);
+				this.data.AddTangent(TBN.InvTangent);
+				this.data.AddTangent(TBN.InvTangent);
 
 				this.data.AddColor(cA);
 				this.data.AddColor(cB);
@@ -325,8 +362,104 @@ public class TF3D_Mesh
 
 	}
 
-	public void GenerateTBN()
+	public TBN_vectors GenerateTBN(Vector3f v0, Vector3f v1, Vector3f v2, Vector2f TexCoords0, Vector2f TexCoords1, Vector2f TexCoords2)
 	{
-		
+		TBN_vectors TBN = new TBN_vectors();
+
+		Vector3f T = new Vector3f();
+		Vector3f B = new Vector3f();
+		Vector3f N = new Vector3f();
+
+		Vector3f v2v1 = new Vector3f(v0);
+		Vector3f v3v1 = new Vector3f(v1);
+
+		v2v1.sub(v2);
+		v3v1.sub(v2);
+
+		// Calculate the “direction” of the triangle based on texture
+		// coordinates.
+
+		// Calculate c2c1_T and c2c1_B
+		float c2c1_T = TexCoords0.x - TexCoords2.x;
+		float c2c1_B = TexCoords0.y - TexCoords2.y;
+
+		// Calculate c3c1_T and c3c1_B
+		float c3c1_T = TexCoords1.x - TexCoords2.x;
+		float c3c1_B = TexCoords1.y - TexCoords2.y;
+
+		// Look at the references for more explanation for this one.
+		float fDenominator = c2c1_T * c3c1_B - c3c1_T * c2c1_B;
+
+		if (Math.round(fDenominator) == 0.0f)
+		{
+			/*
+			 * We won't risk a divide by zero, so set the tangent matrix to the
+			 * identity matrix
+			 */
+			TBN.InvTangent = new Vector3f(1.0f, 0.0f, 0.0f);
+			TBN.InvBinormal = new Vector3f(0.0f, 1.0f, 0.0f);
+			TBN.InvNormal = new Vector3f(0.0f, 0.0f, 1.0f);
+		} else
+		{
+			// Calculate the reciprocal value once and for all (to achieve
+			// speed)
+			float fScale1 = 1.0f / fDenominator;
+
+			/*
+			 * Time to calculate the tangent, binormal, and normal. Look at
+			 * Søren’s article for more information.
+			 */
+
+			T = new Vector3f((c3c1_B * v2v1.x - c2c1_B * v3v1.x) * fScale1, (c3c1_B * v2v1.y - c2c1_B * v3v1.y) * fScale1, (c3c1_B * v2v1.z - c2c1_B * v3v1.z) * fScale1);
+
+			B = new Vector3f((-c3c1_T * v2v1.x + c2c1_T * v3v1.x) * fScale1, (-c3c1_T * v2v1.y + c2c1_T * v3v1.y) * fScale1, (-c3c1_T * v2v1.z + c2c1_T * v3v1.z) * fScale1);
+
+			T.cross(B, N); // Cross product!
+			// This is where programmers should break up the function to smooth
+			// the tangent, binormal and normal values.
+
+			// Look at “Derivation of the Tangent Space Matrix” for more
+			// information.
+
+			float fScale2 = 1.0f / ((T.x * B.y * N.z - T.z * B.y * N.x) + (B.x * N.y * T.z - B.z * N.y * T.x) + (N.x * T.y * B.z - N.z * T.y * B.x));
+
+			Vector3f invT = new Vector3f(T);
+			invT.scale(-1f);
+
+			Vector3f invB = new Vector3f(B);
+			invB.scale(-1f);
+
+			Vector3f invN = new Vector3f(N);
+			invN.scale(-1f);
+
+			Vector3f cross_BN = new Vector3f();
+			B.cross(N, cross_BN);
+
+			Vector3f cross_NT = new Vector3f();
+			N.cross(T, cross_NT);
+
+			Vector3f cross_TB = new Vector3f();
+			T.cross(B, cross_TB);
+
+			Vector3f cross_intNT = new Vector3f();
+			invN.cross(T, cross_intNT);
+
+			Vector3f cross_invBN = new Vector3f();
+			invB.cross(N, cross_invBN);
+
+			Vector3f cross_invTB = new Vector3f();
+			invT.cross(B, cross_invTB);
+
+			TBN.InvTangent.set(cross_BN.x * fScale2, cross_intNT.x * fScale2, cross_TB.x * fScale2);
+			TBN.InvTangent.normalize();
+
+			TBN.InvBinormal.set(cross_invBN.y * fScale2, cross_NT.y * fScale2, cross_invTB.y * fScale2);
+			TBN.InvBinormal.normalize();
+
+			TBN.InvNormal.set(cross_BN.z * fScale2, cross_intNT.z * fScale2, cross_TB.z * fScale2);
+			TBN.InvNormal.normalize();
+		}
+
+		return TBN;
 	}
 }

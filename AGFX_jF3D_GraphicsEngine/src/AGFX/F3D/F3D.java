@@ -159,6 +159,8 @@ public class F3D
 	public final static int                 SHADER_UNIFORM_FLOAT       = 1;
 	public final static int                 SHADER_UNIFORM_EVENT       = 2;
 
+	public final static int                 SHADER_ATTRIB_FLOAT        = 3;
+
 	public final static int                 SHADER_EVENT_TIMER         = 0;
 	public final static int                 SHADER_EVENT_EYEPOS        = 1;
 	public final static int                 SHADER_EVENT_CAMERA        = 2;
@@ -205,7 +207,7 @@ public class F3D
 
 	public static TF3D_Slick                Slick;
 	public static TF3D_FengGUI              Gui;
-	public static TF3D_MathUtils			MathUtils;
+	public static TF3D_MathUtils            MathUtils;
 
 	public static void Create()
 	{
@@ -259,11 +261,10 @@ public class F3D
 		{
 			F3D.Physic = null;
 		}
-		
+
 		F3D.Gui = new TF3D_FengGUI();
-		
+
 		F3D.MathUtils = new TF3D_MathUtils();
-		
 
 	}
 
@@ -290,7 +291,7 @@ public class F3D
 			F3D.Slick = new TF3D_Slick();
 			F3D.Slick.Initialize();
 		}
-		
+
 		F3D.Gui.Initialize();
 
 	}
@@ -304,7 +305,8 @@ public class F3D
 		F3D.Textures.Destroy();
 		F3D.Surfaces.Destroy();
 		F3D.Cameras.Destroy();
-		if (F3D.Config.use_slick) F3D.Slick.Destroy();
+		if (F3D.Config.use_slick)
+			F3D.Slick.Destroy();
 		F3D.Display.Destroy();
 
 		F3D.Log.info("F3D", "---- END ----");

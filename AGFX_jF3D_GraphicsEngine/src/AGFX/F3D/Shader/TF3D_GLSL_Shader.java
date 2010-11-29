@@ -5,11 +5,13 @@ package AGFX.F3D.Shader;
 /* Fixed Memory leaks due to too many bytebuffers - TheSmit  email: TheSmit@warmtart.co.uk */
 
 import org.lwjgl.opengl.ARBFragmentProgram;
+import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.ARBVertexProgram;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL20.*;
 import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
@@ -23,9 +25,8 @@ import java.nio.IntBuffer;
 
 public class TF3D_GLSL_Shader
 {
-	static ByteBuffer        buffer    = BufferUtils.createByteBuffer(1024); ;
-	static IntBuffer logBuffer = BufferUtils.createIntBuffer(1);
-
+	static ByteBuffer buffer    = BufferUtils.createByteBuffer(1024); ;
+	static IntBuffer  logBuffer = BufferUtils.createIntBuffer(1);
 
 	public static int loadProgramCode(String filename, boolean isFragment)
 	{
@@ -38,11 +39,10 @@ public class TF3D_GLSL_Shader
 			System.out.println("GL_ARB_vertex_program is not supported, skipping.");
 			return 0;
 		}
-		
-		
+
 		ByteBuffer shaderPro = getProgramCode(filename);
 		IntBuffer id = BufferUtils.createIntBuffer(1);
-		
+
 		if (isFragment)
 		{
 			ARBFragmentProgram.glGenProgramsARB(id);
@@ -65,7 +65,7 @@ public class TF3D_GLSL_Shader
 		{
 			F3D.Log.error("TF3D_GLSL_Shader", "GL_ARB_fragment_shader or GL_ARB_vertex_shader is not supported, skipping.");
 		}
-		
+
 		ByteBuffer vertexShader = getProgramCode(vertexShaderFile), fragmentShader = getProgramCode(fragmentShaderFile);
 		int vertexShaderID = 0, fragmentShaderID = 0, linkedShadersID = 0;
 		vertexShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBVertexShader.GL_VERTEX_SHADER_ARB);
@@ -75,7 +75,7 @@ public class TF3D_GLSL_Shader
 		ARBShaderObjects.glGetObjectParameterARB(vertexShaderID, ARBShaderObjects.GL_OBJECT_COMPILE_STATUS_ARB, logBuffer);
 		if (logBuffer.get(0) == GL11.GL_FALSE)
 		{
-			
+
 			F3D.Log.error("TF3D_GLSL_Shader", "Error in vertex shader");
 		}
 		fragmentShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
@@ -84,7 +84,7 @@ public class TF3D_GLSL_Shader
 		printShaderObjectInfoLog(fragmentShaderFile, fragmentShaderID);
 		ARBShaderObjects.glGetObjectParameterARB(fragmentShaderID, ARBShaderObjects.GL_OBJECT_COMPILE_STATUS_ARB, logBuffer);
 		if (logBuffer.get(0) == GL11.GL_FALSE)
-		{			
+		{
 			F3D.Log.error("TF3D_GLSL_Shader", "Error in fragment shader");
 		}
 		linkedShadersID = ARBShaderObjects.glCreateProgramObjectARB();
@@ -99,11 +99,50 @@ public class TF3D_GLSL_Shader
 			F3D.Log.error("TF3D_GLSL_Shader", "Error in linking shaders");
 		}
 		F3D.Log.info("TF3D_GLSL_Shader", "Loading and Link: ");
-		F3D.Log.info("TF3D_GLSL_Shader", "	Vertex shaders   : '"+vertexShaderFile+"' linked OK.");
-		F3D.Log.info("TF3D_GLSL_Shader", "	Fragment shaders : '"+fragmentShaderFile+"' linked OK.");
+		F3D.Log.info("TF3D_GLSL_Shader", "	Vertex shaders   : '" + vertexShaderFile + "' linked OK.");
+		F3D.Log.info("TF3D_GLSL_Shader", "	Fragment shaders : '" + fragmentShaderFile + "' linked OK.");
 		return linkedShadersID;
 	}
 
+	public static void sendAttrib1f(int id, String name, float value)
+	{
+
+		int location = ARBVertexShader.glGetAttribLocationARB(id, name);
+		if (checkGLError(location, name) == 0)
+			return;
+		ARBVertexShader.glVertexAttrib1fARB(location, value);
+	}
+
+	public static void sendAttrib2f(int id, String name, float value1, float value2)
+	{
+
+		int location = ARBVertexShader.glGetAttribLocationARB(id, name);
+		if (checkGLError(location, name) == 0)
+			return;
+		ARBVertexShader.glVertexAttrib2fARB(location, value1, value2);
+	}
+
+	public static void sendAttrib3f(int id, String name, float value1, float value2, float value3)
+	{
+
+		int location = ARBVertexShader.glGetAttribLocationARB(id, name);
+		if (checkGLError(location, name) == 0)
+			return;
+		ARBVertexShader.glVertexAttrib3fARB(location, value1, value2, value3);
+	}
+
+	public static void sendAttrib4f(int id, String name, float value1, float value2, float value3, float value4)
+	{
+
+		int location = ARBVertexShader.glGetAttribLocationARB(id, name);
+		if (checkGLError(location, name) == 0)
+			return;
+		ARBVertexShader.glVertexAttrib4fARB(location, value1, value2, value3,value4);
+	}
+	
+	
+	
+	
 	public static void sendUniform1i(int id, String name, int value)
 	{
 		int location = getUniformLocation(id, name);

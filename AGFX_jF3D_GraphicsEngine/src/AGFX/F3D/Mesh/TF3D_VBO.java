@@ -7,6 +7,7 @@ import org.lwjgl.BufferUtils;
 
 import AGFX.F3D.F3D;
 
+import static org.lwjgl.opengl.ARBVertexProgram.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.ARBBufferObject.*;
@@ -469,6 +470,7 @@ public class TF3D_VBO
 
 			}
 
+			/*
 			if (this.b_binormalBuffer)
 			{
 				this.binormal_buffer_id = glGenBuffersARB();
@@ -486,6 +488,7 @@ public class TF3D_VBO
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.tangentBuffer, GL_STATIC_DRAW_ARB);
 
 			}
+			*/
 			
 			if (this.b_textureBuffer0)
 			{
@@ -549,9 +552,11 @@ public class TF3D_VBO
 				glNormalPointer(GL_FLOAT, 0, 0);
 			}
 
+			/*
 			if (this.b_binormalBuffer)
 			{
 				glEnableClientState(GL_NORMAL_ARRAY);
+				glEnableVertexAttribArrayARB()
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.binormal_buffer_id);
 				glNormalPointer(GL_FLOAT, 0, 0);
 			}
@@ -562,6 +567,7 @@ public class TF3D_VBO
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.tangent_buffer_id);
 				glNormalPointer(GL_FLOAT, 0, 0);
 			}
+			*/
 			
 			if (this.b_textureBuffer0)
 			{
@@ -613,6 +619,7 @@ public class TF3D_VBO
 				glNormalPointer(3, this.normalBuffer);
 			}
 			
+			/*
 			if (this.b_binormalBuffer)
 			{
 				glEnableClientState(GL_NORMAL_ARRAY);
@@ -624,7 +631,8 @@ public class TF3D_VBO
 				glEnableClientState(GL_NORMAL_ARRAY);
 				glNormalPointer(3, this.tangentBuffer);
 			}
-
+			*/
+			
 			if (this.b_textureBuffer0)
 			{
 				glClientActiveTextureARB(GL_TEXTURE0);
