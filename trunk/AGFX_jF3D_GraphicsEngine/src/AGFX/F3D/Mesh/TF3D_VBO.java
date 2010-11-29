@@ -54,17 +54,15 @@ public class TF3D_VBO
 	private FloatBuffer normalBuffer;
 	private boolean     b_normalBuffer   = false;
 	private int         normal_buffer_id;
-	
-	
+
 	/** The buffer holding the binormals */
 	private FloatBuffer binormalBuffer;
-	private boolean     b_binormalBuffer   = false;
+	private boolean     b_binormalBuffer = false;
 	private int         binormal_buffer_id;
-	
-	
+
 	/** The buffer holding the normals */
 	private FloatBuffer tangentBuffer;
-	private boolean     b_tangentBuffer   = false;
+	private boolean     b_tangentBuffer  = false;
 	private int         tangent_buffer_id;
 
 	/** The buffer holding the normals */
@@ -220,8 +218,7 @@ public class TF3D_VBO
 		this.b_binormalBuffer = true;
 
 	}
-	
-	
+
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -244,6 +241,7 @@ public class TF3D_VBO
 		this.b_tangentBuffer = true;
 
 	}
+
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -259,7 +257,7 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void UpdateNormalBuffer(float[] arr)
 	{
-		
+
 		this.normalBuffer.position(0);
 		this.normalBuffer.put(arr);
 		this.normalBuffer.rewind();
@@ -281,13 +279,13 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void UpdateBinormalBuffer(float[] arr)
 	{
-		
+
 		this.binormalBuffer.position(0);
 		this.binormalBuffer.put(arr);
 		this.binormalBuffer.rewind();
 
-	}	
-	
+	}
+
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -303,13 +301,13 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void UpdateTangentBuffer(float[] arr)
 	{
-		
+
 		this.tangentBuffer.position(0);
 		this.tangentBuffer.put(arr);
 		this.tangentBuffer.rewind();
 
 	}
-	
+
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -470,7 +468,6 @@ public class TF3D_VBO
 
 			}
 
-			/*
 			if (this.b_binormalBuffer)
 			{
 				this.binormal_buffer_id = glGenBuffersARB();
@@ -479,7 +476,7 @@ public class TF3D_VBO
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.binormalBuffer, GL_STATIC_DRAW_ARB);
 
 			}
-			
+
 			if (this.b_tangentBuffer)
 			{
 				this.tangent_buffer_id = glGenBuffersARB();
@@ -488,8 +485,7 @@ public class TF3D_VBO
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.tangentBuffer, GL_STATIC_DRAW_ARB);
 
 			}
-			*/
-			
+
 			if (this.b_textureBuffer0)
 			{
 				this.texture0_buffer_id = glGenBuffersARB();
@@ -497,6 +493,7 @@ public class TF3D_VBO
 				this.textureBuffer0.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer0, GL_STATIC_DRAW_ARB);
 			}
+			
 			if (this.b_textureBuffer1)
 			{
 				this.texture1_buffer_id = glGenBuffersARB();
@@ -504,6 +501,7 @@ public class TF3D_VBO
 				this.textureBuffer1.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer1, GL_STATIC_DRAW_ARB);
 			}
+			
 			if (this.b_textureBuffer2)
 			{
 				this.texture2_buffer_id = glGenBuffersARB();
@@ -511,6 +509,7 @@ public class TF3D_VBO
 				this.textureBuffer2.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer2, GL_STATIC_DRAW_ARB);
 			}
+			
 			if (this.b_textureBuffer3)
 			{
 				this.texture3_buffer_id = glGenBuffersARB();
@@ -518,11 +517,65 @@ public class TF3D_VBO
 				this.textureBuffer3.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer3, GL_STATIC_DRAW_ARB);
 			}
-			
-		} 
+
+		}
 
 		this.b_build = true;
 
+	}
+
+	public void Bind_TBN_Attributs()
+	{
+		// http://www.fabiensanglard.net/bumpMapping/index.php
+		
+		if (F3D.Extensions.VertexBufferObject)
+		{
+
+			if (this.b_binormalBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.binormal_buffer_id);
+				glNormalPointer(GL_FLOAT, 0, 0);
+				
+				// glEnableVertexAttribArrayARB(F3D.Shaders.shader[shd_id].loc_Tangent);
+				 /*
+                 glBindBufferARB(GL_ARRAY_BUFFER_ARB, VBOTangents);
+                 glVertexAttribPointerARB(F3D.Shaders.shader[shd_id].loc_Tangent, 3, GL_FLOAT, false, 0, nil);
+                 */
+
+				
+			}
+
+			if (this.b_tangentBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.tangent_buffer_id);
+				glNormalPointer(GL_FLOAT, 0, 0);
+
+				/*
+				 glEnableVertexAttribArrayARB(F3D.Shaders.shader[shd_id].loc_Tangent);
+                 glBindBufferARB(GL_ARRAY_BUFFER_ARB, VBOTangents);
+                 glVertexAttribPointerARB(F3D.Shaders.shader[shd_id].loc_Tangent, 3, GL_FLOAT, false, 0, nil);
+                 */
+
+			}
+
+		} else
+		{
+
+			if (this.b_binormalBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(3, this.binormalBuffer);
+			}
+
+			if (this.b_tangentBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(3, this.tangentBuffer);
+			}
+
+		}
 	}
 
 	public void Bind()
@@ -552,23 +605,6 @@ public class TF3D_VBO
 				glNormalPointer(GL_FLOAT, 0, 0);
 			}
 
-			/*
-			if (this.b_binormalBuffer)
-			{
-				glEnableClientState(GL_NORMAL_ARRAY);
-				glEnableVertexAttribArrayARB()
-				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.binormal_buffer_id);
-				glNormalPointer(GL_FLOAT, 0, 0);
-			}
-			
-			if (this.b_tangentBuffer)
-			{
-				glEnableClientState(GL_NORMAL_ARRAY);
-				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.tangent_buffer_id);
-				glNormalPointer(GL_FLOAT, 0, 0);
-			}
-			*/
-			
 			if (this.b_textureBuffer0)
 			{
 				glClientActiveTextureARB(GL_TEXTURE0);
@@ -618,21 +654,7 @@ public class TF3D_VBO
 				glEnableClientState(GL_NORMAL_ARRAY);
 				glNormalPointer(3, this.normalBuffer);
 			}
-			
-			/*
-			if (this.b_binormalBuffer)
-			{
-				glEnableClientState(GL_NORMAL_ARRAY);
-				glNormalPointer(3, this.binormalBuffer);
-			}
-			
-			if (this.b_tangentBuffer)
-			{
-				glEnableClientState(GL_NORMAL_ARRAY);
-				glNormalPointer(3, this.tangentBuffer);
-			}
-			*/
-			
+
 			if (this.b_textureBuffer0)
 			{
 				glClientActiveTextureARB(GL_TEXTURE0);
@@ -674,7 +696,6 @@ public class TF3D_VBO
 		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 
-	
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
