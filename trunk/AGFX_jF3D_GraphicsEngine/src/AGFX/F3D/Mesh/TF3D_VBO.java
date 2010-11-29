@@ -53,6 +53,18 @@ public class TF3D_VBO
 	private FloatBuffer normalBuffer;
 	private boolean     b_normalBuffer   = false;
 	private int         normal_buffer_id;
+	
+	
+	/** The buffer holding the binormals */
+	private FloatBuffer binormalBuffer;
+	private boolean     b_binormalBuffer   = false;
+	private int         binormal_buffer_id;
+	
+	
+	/** The buffer holding the normals */
+	private FloatBuffer tangentBuffer;
+	private boolean     b_tangentBuffer   = false;
+	private int         tangent_buffer_id;
 
 	/** The buffer holding the normals */
 	private FloatBuffer colorBuffer;
@@ -191,6 +203,52 @@ public class TF3D_VBO
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
+	 * create binormal buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param arr
+	 *            array of normals
+	 */
+	// -----------------------------------------------------------------------
+	public void CreateBinormalBuffer(float[] arr)
+	{
+
+		this.binormalBuffer = BufferUtils.createFloatBuffer(arr.length);
+		this.binormalBuffer.put(arr);
+		this.binormalBuffer.rewind();
+		this.b_binormalBuffer = true;
+
+	}
+	
+	
+	// -----------------------------------------------------------------------
+	// TA3D_VBO:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * create tangent buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param arr
+	 *            array of normals
+	 */
+	// -----------------------------------------------------------------------
+	public void CreateTangentBuffer(float[] arr)
+	{
+
+		this.tangentBuffer = BufferUtils.createFloatBuffer(arr.length);
+		this.tangentBuffer.put(arr);
+		this.tangentBuffer.rewind();
+		this.b_tangentBuffer = true;
+
+	}
+	// -----------------------------------------------------------------------
+	// TA3D_VBO:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
 	 * update normal buffer <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
@@ -200,12 +258,57 @@ public class TF3D_VBO
 	// -----------------------------------------------------------------------
 	public void UpdateNormalBuffer(float[] arr)
 	{
+		
 		this.normalBuffer.position(0);
 		this.normalBuffer.put(arr);
 		this.normalBuffer.rewind();
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TA3D_VBO:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * update binormal buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param arr
+	 *            array of normals
+	 */
+	// -----------------------------------------------------------------------
+	public void UpdateBinormalBuffer(float[] arr)
+	{
+		
+		this.binormalBuffer.position(0);
+		this.binormalBuffer.put(arr);
+		this.binormalBuffer.rewind();
+
+	}	
+	
+	// -----------------------------------------------------------------------
+	// TA3D_VBO:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * update tangent buffer <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param arr
+	 *            array of normals
+	 */
+	// -----------------------------------------------------------------------
+	public void UpdateTangentBuffer(float[] arr)
+	{
+		
+		this.tangentBuffer.position(0);
+		this.tangentBuffer.put(arr);
+		this.tangentBuffer.rewind();
+
+	}
+	
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
@@ -333,21 +436,6 @@ public class TF3D_VBO
 		this.indices_length = indices.length;
 	}
 
-	public void BuildNormals()
-	{
-		if (F3D.Extensions.VertexBufferObject)
-		{
-			if (this.b_normalBuffer)
-			{
-				this.normal_buffer_id = glGenBuffersARB();
-				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.normal_buffer_id);
-				this.normalBuffer.rewind();
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.normalBuffer, GL_STATIC_DRAW_ARB);
-
-			}
-		}
-	}
-
 	public void Build()
 	{
 		// AS VBO
@@ -381,6 +469,24 @@ public class TF3D_VBO
 
 			}
 
+			if (this.b_binormalBuffer)
+			{
+				this.binormal_buffer_id = glGenBuffersARB();
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.binormal_buffer_id);
+				this.binormalBuffer.rewind();
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.binormalBuffer, GL_STATIC_DRAW_ARB);
+
+			}
+			
+			if (this.b_tangentBuffer)
+			{
+				this.tangent_buffer_id = glGenBuffersARB();
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.tangent_buffer_id);
+				this.tangentBuffer.rewind();
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.tangentBuffer, GL_STATIC_DRAW_ARB);
+
+			}
+			
 			if (this.b_textureBuffer0)
 			{
 				this.texture0_buffer_id = glGenBuffersARB();
@@ -409,17 +515,8 @@ public class TF3D_VBO
 				this.textureBuffer3.rewind();
 				glBufferDataARB(GL_ARRAY_BUFFER_ARB, this.textureBuffer3, GL_STATIC_DRAW_ARB);
 			}
-			/*
-			 * if (this.b_indexBuffer) { this.indices_id= glGenBuffersARB();
-			 * glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.indices_id);
-			 * this.indexBuffer.rewind(); glBufferDataARB(GL_ARRAY_BUFFER_ARB,
-			 * this.indexBuffer,GL_STATIC_DRAW_ARB); }
-			 */
-		} else
-		{
-			// F3D.Log.error("TF3D_VBO",
-			// "Build() : You can't build VBO data - Vertex Buffer Object isn't supported on you card");
-		}
+			
+		} 
 
 		this.b_build = true;
 
@@ -452,6 +549,20 @@ public class TF3D_VBO
 				glNormalPointer(GL_FLOAT, 0, 0);
 			}
 
+			if (this.b_binormalBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.binormal_buffer_id);
+				glNormalPointer(GL_FLOAT, 0, 0);
+			}
+			
+			if (this.b_tangentBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glBindBufferARB(GL_ARRAY_BUFFER_ARB, this.tangent_buffer_id);
+				glNormalPointer(GL_FLOAT, 0, 0);
+			}
+			
 			if (this.b_textureBuffer0)
 			{
 				glClientActiveTextureARB(GL_TEXTURE0);
@@ -501,6 +612,18 @@ public class TF3D_VBO
 				glEnableClientState(GL_NORMAL_ARRAY);
 				glNormalPointer(3, this.normalBuffer);
 			}
+			
+			if (this.b_binormalBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(3, this.binormalBuffer);
+			}
+			
+			if (this.b_tangentBuffer)
+			{
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(3, this.tangentBuffer);
+			}
 
 			if (this.b_textureBuffer0)
 			{
@@ -543,32 +666,7 @@ public class TF3D_VBO
 		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 
-	// -----------------------------------------------------------------------
-	// TA3D_VBO:
-	// -----------------------------------------------------------------------
-	/**
-	 * <BR>
-	 * -------------------------------------------------------------------<BR>
-	 * draw assigned Elements <BR>
-	 * -------------------------------------------------------------------<BR>
-	 */
-	// -----------------------------------------------------------------------
-	/*
-	 * public void DrawVertexBuffer() { if (this.b_build) { this.Bind();
-	 * 
-	 * if (F3D.Extensions.VertexBufferObject) {
-	 * 
-	 * if (this.b_indexBuffer) { glDrawElements(GL_TRIANGLES, this.indexBuffer);
-	 * // glDrawElemen(GL_TRIANGLES, indices_length, // GL_UNSIGNED_INT, 0); } }
-	 * else { glDrawArrays(GL_TRIANGLES, 0, this.indices_length); }
-	 * 
-	 * // Disable the client state before leaving this.UnBind(); } else {
-	 * F3D.Log.error( "TF3D_VBO",
-	 * "DrawVertexBuffer() : You have to call Build method when you have finished VBO data creation"
-	 * ); }
-	 * 
-	 * }
-	 */
+	
 	// -----------------------------------------------------------------------
 	// TA3D_VBO:
 	// -----------------------------------------------------------------------
