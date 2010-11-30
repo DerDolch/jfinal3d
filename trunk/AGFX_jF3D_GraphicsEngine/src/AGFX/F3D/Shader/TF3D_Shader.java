@@ -16,9 +16,13 @@ import AGFX.F3D.F3D;
 public class TF3D_Shader
 {
 	public String                            name;
-	public int                               id = -1;
+	public int                               id         = -1;
 	public ArrayList<TF3D_ShaderUniformData> Uniforms;
 	public ArrayList<TF3D_ShaderAttribData>  Attribs;
+	public int                               loc_tangent;
+	public Boolean                           b_tangent  = false;
+	public int                               loc_binormal;
+	public Boolean                           b_binormal = false;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Shader:
@@ -174,6 +178,27 @@ public class TF3D_Shader
 		this.Attribs.add(un);
 	}
 
+	public void SetAttribTangent(String attr_name)
+	{
+		this.loc_tangent =  TF3D_GLSL_Shader.GetAttribLocation(this.id, attr_name);
+		if (this.loc_tangent!=-1)
+		{
+			this.b_tangent = true;
+		}
+		
+	}
+	
+	
+	public void SetAttribBinormal(String attr_name)
+	{
+		this.loc_binormal =  TF3D_GLSL_Shader.GetAttribLocation(this.id, attr_name);
+		if (this.loc_binormal!=-1)
+		{
+			this.b_binormal = true;
+		}
+		
+	}
+	
 	// -----------------------------------------------------------------------
 	// TF3D_Shader:
 	// -----------------------------------------------------------------------
@@ -212,7 +237,7 @@ public class TF3D_Shader
 		{
 			this.Uniforms.get(i).Set(this.id);
 		}
-		
+
 		// set attribs
 		for (int i = 0; i < this.Attribs.size(); i++)
 		{
