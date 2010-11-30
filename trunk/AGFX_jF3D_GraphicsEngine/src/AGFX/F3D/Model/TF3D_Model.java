@@ -74,14 +74,21 @@ public class TF3D_Model extends TF3D_Entity
 		{
 			if (this.surfaces.get(i).name.equals(old_surface))
 			{
-				this.surfaces.get(i).ChangeTo(new_surface);
-				done = true;
+				int res = this.surfaces.get(i).ChangeTo(new_surface);
+				
+				if (res == -1)
+				{
+					done = false;
+				} else
+				{
+					done = true;
+				}
 			}
 
 		}
 
 		if (!done)
-			F3D.Log.warning("TF3D_Model", ".ChangeSurface(...)" + "Surafce '" + old_surface + "' doesn't exist");
+			F3D.Log.error("TF3D_Model", ".ChangeSurface(...)" + "Material name: '" + new_surface + "' doesn't exist");
 	}
 
 	public void SetRenderSurface(String sname, Boolean state)
@@ -118,21 +125,20 @@ public class TF3D_Model extends TF3D_Entity
 							F3D.Surfaces.ApplyMaterial(mid);
 							int shd_id = F3D.Surfaces.materials.get(mid).shader_id;
 							// TODO add bind TBN when is in shader
-							if (shd_id>=0)
+							if (shd_id >= 0)
 							{
-								
-								if (F3D.Shaders.items.get(shd_id).Attribs.size()>0)
+
+								if (F3D.Shaders.items.get(shd_id).Attribs.size() > 0)
 								{
 									mesh.vbo.Bind_TBN_Attributs();
 								}
 							}
 						}
 
-						
 						glPushMatrix();
-						
+
 						glTranslatef(this.GetPosition().x, this.GetPosition().y, this.GetPosition().z);
-						
+
 						if (this.rotation_seq == F3D.ROTATE_IN_SEQ_XYZ)
 						{
 							glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
@@ -143,18 +149,14 @@ public class TF3D_Model extends TF3D_Entity
 						if (this.rotation_seq == F3D.ROTATE_IN_SEQ_YXZ)
 						{
 							glRotatef(this.GetRotation().y, 0.0f, 1.0f, 0.0f);
-							glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);							
+							glRotatef(this.GetRotation().x, 1.0f, 0.0f, 0.0f);
 							glRotatef(this.GetRotation().z, 0.0f, 0.0f, 1.0f);
 						}
-						
-						
-						
+
 						glScalef(this.GetScale().x, this.GetScale().y, this.GetScale().z);
-						
+
 						mesh.Render(i);
-						
-						
-						
+
 						if (F3D.Surfaces.materials.get(mid).use_shader)
 							F3D.Shaders.StopProgram();
 
@@ -164,12 +166,9 @@ public class TF3D_Model extends TF3D_Entity
 							this.childs.get(ci).Render();
 						}
 						glScalef(1, 1, 1);
-						
-						
+
 						glPopMatrix();
-						
-						
-						
+
 					}
 				}
 
@@ -186,8 +185,7 @@ public class TF3D_Model extends TF3D_Entity
 	@Override
 	public void Update()
 	{
-		
-		
+
 	}
 
 	@Override
@@ -195,10 +193,10 @@ public class TF3D_Model extends TF3D_Entity
 	{
 
 	}
-	
+
 	public void DrawAxis()
 	{
-		
+
 	}
 
 }
