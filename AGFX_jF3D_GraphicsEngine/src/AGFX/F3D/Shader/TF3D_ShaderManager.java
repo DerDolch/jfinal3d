@@ -26,6 +26,7 @@ public class TF3D_ShaderManager
 	public TF3D_Shader				shader_gaussian_v;
 	public TF3D_Shader				shader_gaussian_h;
 	public TF3D_Shader				shader_bumpmap;
+	public TF3D_Shader				shader_complex;
 
 	public TF3D_ShaderManager()
 	{
@@ -409,10 +410,23 @@ public class TF3D_ShaderManager
 				shader_bumpmap = new TF3D_Shader("BUMPMAP");
 				shader_bumpmap.Load("abstract::f3d_bumpmap.vert", "abstract::f3d_bumpmap.frag");
 				shader_bumpmap.AddUniform1i("colorMap", 0);
-				shader_bumpmap.AddUniform1i("normalMap", 0);
+				shader_bumpmap.AddUniform1i("normalMap", 1);
 				shader_bumpmap.AddUniform1f("invRadius", 0.0005f);
 
 				this.Add(shader_bumpmap);
+			}
+			
+			// Shader: COMPLEX
+			if (F3D.Config.shd_load_complex)
+			{
+				shader_complex = new TF3D_Shader("COMPLEX");
+				shader_complex.Load("abstract::f3d_complex_DNSL.vert", "abstract::f3d_complex_DNSL.frag");
+				shader_complex.AddUniform1i("baseMap", 0);
+				shader_complex.AddUniform1i("bumpMap", 1);
+				shader_complex.AddUniform1i("glossMap", 2);
+				shader_complex.AddUniform1i("lightMap", 3);
+
+				this.Add(shader_complex);
 			}
 
 		}

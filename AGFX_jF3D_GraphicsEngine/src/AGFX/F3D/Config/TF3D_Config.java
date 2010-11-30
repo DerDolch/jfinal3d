@@ -96,6 +96,8 @@ public class TF3D_Config
 	public Boolean shd_load_gaussian_v        = true;
 	public Boolean shd_load_gaussian_h        = true;
 	public Boolean shd_load_bumpmap           = true;
+	public Boolean shd_load_complex           = true;
+	
 
 	// -----------------------------------------------------------------------
 	// TF3D_Config:
@@ -189,6 +191,8 @@ public class TF3D_Config
 			this.shd_load_gaussian_v = PARSER.GetAs_BOOLEAN("shd_load_gaussian_v");
 			this.shd_load_gaussian_h = PARSER.GetAs_BOOLEAN("shd_load_gaussian_h");
 			this.shd_load_bumpmap = PARSER.GetAs_BOOLEAN("shd_load_bumpmap");
+			this.shd_load_complex = PARSER.GetAs_BOOLEAN("shd_load_complex");
+			
 			
 
 		}
