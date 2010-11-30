@@ -141,7 +141,11 @@ public class TF3D_GLSL_Shader
 	}
 	
 	
-	
+	public static int GetAttribLocation(int id,String name)
+	{
+		int res = -1;
+		return ARBVertexShader.glGetAttribLocationARB(id, name);
+	}
 	
 	public static void sendUniform1i(int id, String name, int value)
 	{
