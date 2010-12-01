@@ -246,7 +246,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		}
 		
 		
-		F3D.Shaders.ChangeUniform("COMPLEX", "glow_intesity", (float)Math.abs(Math.sin(glow_wave*F3D.DEGTORAD)));
+		F3D.Shaders.ChangeUniform("COMPLEX", "glow_intesity", 2.0f*(float)Math.abs(Math.sin(glow_wave*F3D.DEGTORAD)));
 		
 	}
 
