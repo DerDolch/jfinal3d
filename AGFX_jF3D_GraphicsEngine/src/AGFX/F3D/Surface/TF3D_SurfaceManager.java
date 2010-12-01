@@ -322,6 +322,11 @@ public class TF3D_SurfaceManager
 			mat.colors.SetEmissive(PARSER.GetAs_VECTOR4F("emissive"));
 			mat.colors.shinisess = PARSER.GetAs_FLOAT("shinisess");
 			
+			if (mat.colors.shinisess>128.0f)
+			{
+				mat.colors.shinisess=127.0f;
+			}
+			
 			// get texture 0 .. 3
 			mat.texture_unit[0].texture_name = PARSER.GetAs_STRING("texture_0");
 			mat.texture_unit[1].texture_name = PARSER.GetAs_STRING("texture_1");
