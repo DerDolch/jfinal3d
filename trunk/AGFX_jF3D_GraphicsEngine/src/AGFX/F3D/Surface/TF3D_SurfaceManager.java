@@ -147,7 +147,7 @@ public class TF3D_SurfaceManager
 				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
 				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
 				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
-				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this.materials.get(id).colors.shinisess);
+				glMaterialf(GL_FRONT, GL_SHININESS, this.materials.get(id).colors.shinisess);
 
 			} else
 			{
@@ -211,7 +211,7 @@ public class TF3D_SurfaceManager
 				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
 				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
 				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
-				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, this.materials.get(id).colors.shinisess);
+				glMaterialf(GL_FRONT, GL_SHININESS, this.materials.get(id).colors.shinisess);
 
 			
 

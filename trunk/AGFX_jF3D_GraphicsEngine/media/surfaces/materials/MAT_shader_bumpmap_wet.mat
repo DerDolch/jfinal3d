@@ -1,11 +1,11 @@
 [MATERIALS]
 {
          type = MAT_SHADER
-         name = MAT_shader_bumpmap
+         name = MAT_shader_bumpmap_wet
       diffuse = 1,1,1,1
       ambient = 0.1,0.1,0.1,1.0
      emissive = 0,0,0,1
-     specular = 0,0,0,1
+     specular = 1,1,1,1
     shinisess = 200
     texture_0 = mur_Ambiant
     texture_1 = mur_NormalMap

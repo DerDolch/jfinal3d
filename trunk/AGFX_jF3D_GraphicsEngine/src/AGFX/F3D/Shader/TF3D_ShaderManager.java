@@ -409,9 +409,9 @@ public class TF3D_ShaderManager
 			{
 				shader_bumpmap = new TF3D_Shader("BUMPMAP");
 				shader_bumpmap.Load("abstract::f3d_bumpmap.vert", "abstract::f3d_bumpmap.frag");
-				shader_bumpmap.AddUniform1i("colorMap", 0);
-				shader_bumpmap.AddUniform1i("normalMap", 1);
-				shader_bumpmap.AddUniform1f("invRadius", 0.0005f);
+				shader_bumpmap.AddUniform1i("baseMap", 0);
+				shader_bumpmap.AddUniform1i("bumpMap", 1);
+				
 
 				this.Add(shader_bumpmap);
 			}
