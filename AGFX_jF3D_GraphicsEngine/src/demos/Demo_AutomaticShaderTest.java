@@ -33,7 +33,8 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 	public TF3D_Model	model3;
 	public TF3D_Model	model3a;
 	public TF3D_Model	model3b;
-	
+
+	public float glow_wave;
 	
 
 	public Demo_AutomaticShaderTest()
@@ -236,6 +237,17 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		this.model0a.Turn(0,F3D.Timer.AppSpeed()*2f,0);
 		this.model0b.Turn(0,F3D.Timer.AppSpeed()*2f,0);
 		this.model0c.Turn(0,F3D.Timer.AppSpeed()*2f,0);
+		
+		
+		glow_wave = glow_wave + 5.0f*F3D.Timer.AppSpeed();
+		if (glow_wave>360.0f)
+		{
+			glow_wave = 0f;
+		}
+		
+		
+		F3D.Shaders.ChangeUniform("COMPLEX", "glow_intesity", (float)Math.abs(Math.sin(glow_wave*F3D.DEGTORAD)));
+		
 	}
 
 	@Override

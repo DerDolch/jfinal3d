@@ -218,6 +218,20 @@ public class TF3D_Shader
 		this.id = TF3D_GLSL_Shader.loadShadersCode(F3D.AbstractFiles.GetFullPath(vertexShaderFile), F3D.AbstractFiles.GetFullPath(fragmentShaderFile));
 	}
 
+	public int FindUniformByName(String _name)
+	{
+		int res = -1;
+
+		for (int i = 0; i < this.Uniforms.size(); i++)
+		{
+			if (this.Uniforms.get(i).name.equalsIgnoreCase(_name))
+			{
+				res = i;
+			}
+		}
+
+		return res;
+	}
 	// -----------------------------------------------------------------------
 	// TF3D_Shader:
 	// -----------------------------------------------------------------------
