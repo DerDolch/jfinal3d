@@ -6,7 +6,7 @@
       ambient = 0.1,0.1,0.1,1.0
      emissive = 0,0,0,1
      specular = 0,0,0,1
-    shinisess = 200
+    shinisess = 120
     texture_0 = mur_Ambiant
     texture_1 = mur_NormalMap
     texture_2 = none
