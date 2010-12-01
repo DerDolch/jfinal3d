@@ -1,37 +1,54 @@
-varying vec3 lightVec; 
-varying vec3 eyeVec;
-varying vec2 texCoord;					 
 
-void main(void)
+//uniform float finvRad;
+
+varying vec2 Texcoord;
+varying vec3 ViewDirection;
+varying vec3 LightDirection;
+
+   
+//attribute vec3 binormal;
+//attribute vec3 tangent;
+   
+vec3 tangent; 
+vec3 binormal;
+   
+void main()
 {
 	gl_Position = ftransform();
-	texCoord = gl_MultiTexCoord0.xy;
 	
-	// jPCT doesn't provide the tangent vector...compute it (this isn't 100% accurate...) 
-		
-	vec3 c1 = cross(gl_Normal, vec3(0.0, 0.0, 1.0)); 
-	vec3 c2 = cross(gl_Normal, vec3(0.0, 1.0, 0.0));
+	gl_TexCoord[0] = gl_MultiTexCoord0;
+	Texcoord    = gl_MultiTexCoord0.xy;
+
+    // vypocitame tangent & binormal z vertex normal
+	vec3 c1 = cross( gl_Normal, vec3(0.0, 0.0, 1.0) ); 
+	vec3 c2 = cross( gl_Normal, vec3(0.0, -1.0, 0.0) ); 
 	
-	vec3 vTangent=c1;
-	if (length(c2)>length(vTangent)) {
-		vTangent=c2;
+	if( length(c1)>length(c2) )
+	{
+		tangent = c1; 
+	}
+	else
+	{
+		tangent = c2; 
 	}
 	
-	vTangent = normalize(vTangent);
-
-	vec3 n = normalize(gl_NormalMatrix * gl_Normal);
-	vec3 t = normalize(gl_NormalMatrix * vTangent);
-	vec3 b = cross(n, t);
+	tangent = normalize(tangent);
 	
-	vec3 vVertex = vec3(gl_ModelViewMatrix * gl_Vertex);
-	vec3 tmpVec = gl_LightSource[0].position.xyz - vVertex;
+	binormal = cross(gl_Normal, tangent); 
+	binormal = normalize(binormal);
 
-	lightVec.x = dot(tmpVec, t);
-	lightVec.y = dot(tmpVec, b);
-	lightVec.z = dot(tmpVec, n);
-
-	tmpVec = -vVertex;
-	eyeVec.x = dot(tmpVec, t);
-	eyeVec.y = dot(tmpVec, b);
-	eyeVec.z = dot(tmpVec, n);
+	// vypocitame TBN na zaklade face normal
+	mat3 TBN_Matrix = gl_NormalMatrix * mat3(tangent, binormal, gl_Normal);
+	
+	// skonvertujeme vertex do MODELVIEW matrix a prenesieme do fragmetu
+	vec4 mv_Vertex = gl_ModelViewMatrix * gl_Vertex;	
+	ViewDirection = vec3(-mv_Vertex) * TBN_Matrix ;	
+	
+	// skonvertujeme lightposition do MODELVIEW matrix a prenesieme do fragmetu
+	//vec4 lightEye = gl_ModelViewMatrix *  vec4(gl_LightSource[0].position.xyz,1.0);
+	
+	vec3 lightEye = normalize(gl_LightSource[0].position.xyz - mv_Vertex.xyz);
+	vec3 lightVec =(lightEye.xyz - mv_Vertex.xyz);				
+	LightDirection = lightVec * TBN_Matrix; 
 }
+

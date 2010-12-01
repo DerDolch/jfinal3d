@@ -86,6 +86,7 @@ public class TF3D_Light extends TF3D_Entity
 				glLight(GL_LIGHT0 + this.ID, GL_AMBIENT, F3D.GetBuffer.Float(this.Ambient));
 				glLight(GL_LIGHT0 + this.ID, GL_DIFFUSE, F3D.GetBuffer.Float(this.Diffuse));
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.spot_constant_att);
+				
 			}
 
 			if (this._type == LT_SPOT)
@@ -99,7 +100,7 @@ public class TF3D_Light extends TF3D_Entity
 				glLightf(GL_LIGHT0 + this.ID, GL_CONSTANT_ATTENUATION, this.Attenuation);
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_CUTOFF, this.spot_cut_off);
 				glLightf(GL_LIGHT0 + this.ID, GL_SPOT_EXPONENT, this.spot_exponent);
-				glLightf(GL_LIGHT0 + this.ID, GL_SHININESS, 500f);
+				//glLightf(GL_LIGHT0 + this.ID, GL_SHININESS, 500f);
 				
 				glLight(GL_LIGHT0 + this.ID, GL_SPOT_DIRECTION, F3D.GetBuffer.Float(this.spot_direction));
 

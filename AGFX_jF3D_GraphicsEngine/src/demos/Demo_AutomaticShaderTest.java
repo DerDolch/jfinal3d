@@ -22,6 +22,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 	public TF3D_Model	model0;
 	public TF3D_Model	model0a;
 	public TF3D_Model	model0b;
+	public TF3D_Model	model0c;
 	
 	public TF3D_Model	model1;
 	public TF3D_Model	model1a;
@@ -102,12 +103,18 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		this.model0.Enable();
 		this.model0.ChangeSurface("MATbase", "MAT_shader_glow");
 		
+		
 		this.model0a = new TF3D_Model("Cube_bumpmap");
 		this.model0a.AssignMesh(F3D.Meshes.FindByName("abstract::BaseCube.a3da"));
 		this.model0a.SetPosition(-4, 0, 2);
 		this.model0a.Enable();
 		this.model0a.ChangeSurface("MATbase", "MAT_shader_bumpmap");
-		
+	
+		this.model0c = new TF3D_Model("Cube_bumpmap");
+		this.model0c.AssignMesh(F3D.Meshes.FindByName("abstract::BaseCube.a3da"));
+		this.model0c.SetPosition(-6, 0, 2);
+		this.model0c.Enable();
+		this.model0c.ChangeSurface("MATbase", "MAT_shader_bumpmap_wet");
 		
 		this.model0b = new TF3D_Model("Cube_complex");
 		this.model0b.AssignMesh(F3D.Meshes.FindByName("abstract::BaseCube.a3da"));
@@ -228,6 +235,7 @@ public class Demo_AutomaticShaderTest extends TF3D_AppWrapper
 		
 		this.model0a.Turn(0,F3D.Timer.AppSpeed()*2f,0);
 		this.model0b.Turn(0,F3D.Timer.AppSpeed()*2f,0);
+		this.model0c.Turn(0,F3D.Timer.AppSpeed()*2f,0);
 	}
 
 	@Override
