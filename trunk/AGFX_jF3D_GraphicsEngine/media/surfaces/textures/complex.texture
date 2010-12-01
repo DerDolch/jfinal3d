@@ -18,3 +18,8 @@
     file= abstract::f3d_test_lightmap.tga
   mipmap= true
 }
+{
+    name= bio_organic_300b_sg
+    file= abstract::bio_organic_300b_sg.tga
+  mipmap= true
+}

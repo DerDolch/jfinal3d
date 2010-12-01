@@ -13,20 +13,20 @@ import AGFX.F3D.F3D;
  */
 public class TF3D_ShaderManager
 {
-	public ArrayList<TF3D_Shader>	items;
-	public TF3D_Shader				shader_diffuse;
-	public TF3D_Shader				shader_phong;
-	public TF3D_Shader				shader_envmap;
-	public TF3D_Shader				shader_glow;
-	public TF3D_Shader				shader_posterize;
-	public TF3D_Shader				shader_dream;
-	public TF3D_Shader				shader_warp;
-	public TF3D_Shader				shader_blur_h;
-	public TF3D_Shader				shader_blur_v;
-	public TF3D_Shader				shader_gaussian_v;
-	public TF3D_Shader				shader_gaussian_h;
-	public TF3D_Shader				shader_bumpmap;
-	public TF3D_Shader				shader_complex;
+	public ArrayList<TF3D_Shader> items;
+	public TF3D_Shader            shader_diffuse;
+	public TF3D_Shader            shader_phong;
+	public TF3D_Shader            shader_envmap;
+	public TF3D_Shader            shader_glow;
+	public TF3D_Shader            shader_posterize;
+	public TF3D_Shader            shader_dream;
+	public TF3D_Shader            shader_warp;
+	public TF3D_Shader            shader_blur_h;
+	public TF3D_Shader            shader_blur_v;
+	public TF3D_Shader            shader_gaussian_v;
+	public TF3D_Shader            shader_gaussian_h;
+	public TF3D_Shader            shader_bumpmap;
+	public TF3D_Shader            shader_complex;
 
 	public TF3D_ShaderManager()
 	{
@@ -268,6 +268,74 @@ public class TF3D_ShaderManager
 		GL20.glUseProgram(0);
 	}
 
+	public void ChangeUniform(String shader_name, String uniform_name, float val0)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[0] = val0;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, float val0, float val1)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[1] = val1;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, float val0, float val1, float val2)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[1] = val1;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[2] = val2;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, float val0, float val1, float val2, float val3)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[1] = val1;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[2] = val2;
+		this.items.get(shd_id).Uniforms.get(uniform_id).f[3] = val3;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, int val0)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[0] = val0;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, int val0, int val1)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[1] = val1;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, int val0, int val1, int val2)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[1] = val1;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[2] = val2;
+	}
+
+	public void ChangeUniform(String shader_name, String uniform_name, int val0, int val1, int val2, int val3)
+	{
+		int shd_id = this.FindByName(shader_name);
+		int uniform_id = this.items.get(shd_id).FindUniformByName(uniform_name);
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[0] = val0;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[1] = val1;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[2] = val2;
+		this.items.get(shd_id).Uniforms.get(uniform_id).i[2] = val3;
+	}
+
 	public void InitPresets()
 	{
 
@@ -403,7 +471,7 @@ public class TF3D_ShaderManager
 
 				this.Add(shader_gaussian_h);
 			}
-			
+
 			// Shader: BUMPMAP
 			if (F3D.Config.shd_load_bumpmap)
 			{
@@ -411,11 +479,10 @@ public class TF3D_ShaderManager
 				shader_bumpmap.Load("abstract::f3d_bumpmap.vert", "abstract::f3d_bumpmap.frag");
 				shader_bumpmap.AddUniform1i("baseMap", 0);
 				shader_bumpmap.AddUniform1i("bumpMap", 1);
-				
 
 				this.Add(shader_bumpmap);
 			}
-			
+
 			// Shader: COMPLEX
 			if (F3D.Config.shd_load_complex)
 			{
@@ -425,6 +492,7 @@ public class TF3D_ShaderManager
 				shader_complex.AddUniform1i("bumpMap", 1);
 				shader_complex.AddUniform1i("glossMap", 2);
 				shader_complex.AddUniform1i("lightMap", 3);
+				shader_complex.AddUniform1f("glow_intesity", 0);
 
 				this.Add(shader_complex);
 			}
