@@ -51,4 +51,3 @@ void main()
 	vec3 lightVec =(lightEye.xyz - mv_Vertex.xyz);				
 	LightDirection = lightVec * TBN_Matrix; 
 }
-
