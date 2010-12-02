@@ -31,4 +31,3 @@ void main( void )
    gl_FragColor =  fvTotalAmbient + fvTotalDiffuse + fvTotalSpecular;
        
 }
-
