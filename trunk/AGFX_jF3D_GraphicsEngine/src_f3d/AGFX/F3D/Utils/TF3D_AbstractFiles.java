@@ -149,6 +149,10 @@ public class TF3D_AbstractFiles
 			}
 		}
 
+		if (res==false)
+		{
+			F3D.Log.warning("AbstarctFile", "File :"+file+"doesn't exist in medial list file !!!");
+		}
 		return res;
 	}
 
