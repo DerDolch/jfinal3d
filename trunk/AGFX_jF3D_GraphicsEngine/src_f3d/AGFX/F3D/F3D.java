@@ -136,6 +136,8 @@ public class F3D
 	public final static int                 MAT_TYPE_COLOR             = 0;
 	public final static int                 MAT_TYPE_TEXTURE           = 1;
 	public final static int                 MAT_TYPE_SHADER            = 2;
+	public final static int                 UV_MODE_NORMAL             = 0;
+	public final static int                 UV_MODE_SPHERE_MAP         = 1;
 
 	// '-----------------------------------------------------------------
 	// ' HUD: CONST

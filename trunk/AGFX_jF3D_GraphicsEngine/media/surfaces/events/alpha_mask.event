@@ -11,4 +11,5 @@
 alphablend = true
  blend_src = GL_SRC_ALPHA
  blend_dst = GL_ONE_MINUS_SRC_ALPHA
+   uv_mode = UV_MODE_NORMAL
 }

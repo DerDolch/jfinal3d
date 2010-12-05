@@ -84,10 +84,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		
 		this.model = new TF3D_Model("AUTO");
 		this.model.AssignMesh("abstract::karoseria.a3da");
+		this.model.ChangeSurface("ZabaKompletka3", "ZabaKompletka3_env");
 		
-		this.mat = new TF3D_Matrix();
-		this.mat.LoadIdentity();
-		F3D.Log.info("MAIN", mat.toString());
 	}
 	
 	
