@@ -6,6 +6,7 @@ package AGFX.F3D.Material;
 import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Parser.TF3D_PARSER;
@@ -183,6 +184,7 @@ public class TF3D_MaterialEventManager
 		{
 			glDisable(GL_TEXTURE_GEN_S);
 			glDisable(GL_TEXTURE_GEN_T);
+			glDisable(GL_TEXTURE_GEN_R);
 		}
 
 		if (this.items.get(id).uv_mode == F3D.UV_MODE_SPHERE_MAP)
@@ -191,6 +193,15 @@ public class TF3D_MaterialEventManager
 			glEnable(GL_TEXTURE_GEN_T);
 			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+		}
+		
+		if (this.items.get(id).uv_mode == F3D.UV_MODE_REFLECTION_MAP)
+		{
+			glEnable(GL_TEXTURE_GEN_S);
+			glEnable(GL_TEXTURE_GEN_T);
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
+			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
+			glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
 		}
 		
 	}
@@ -329,8 +340,12 @@ public class TF3D_MaterialEventManager
 
 			if (_tmp_str.equals("UV_MODE_NORMAL"))
 				_event.uv_mode = F3D.UV_MODE_NORMAL;
+			
 			if (_tmp_str.equals("UV_MODE_SPHERE_MAP"))
 				_event.uv_mode = F3D.UV_MODE_SPHERE_MAP;
+			
+			if (_tmp_str.equals("UV_MODE_REFLECTION_MAP"))
+				_event.uv_mode = F3D.UV_MODE_REFLECTION_MAP;
 
 			this.Add(_event);
 
