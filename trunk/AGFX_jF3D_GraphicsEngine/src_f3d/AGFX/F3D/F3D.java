@@ -138,6 +138,9 @@ public class F3D
 	public final static int                 MAT_TYPE_SHADER            = 2;
 	public final static int                 UV_MODE_NORMAL             = 0;
 	public final static int                 UV_MODE_SPHERE_MAP         = 1;
+	public final static int                 UV_MODE_REFLECTION_MAP     = 2;
+	public final static int                 UV_MODE_OBJECT_LINEAR      = 3;
+	public final static int                 UV_MODE_EYE_LINEAR         = 4;
 
 	// '-----------------------------------------------------------------
 	// ' HUD: CONST
