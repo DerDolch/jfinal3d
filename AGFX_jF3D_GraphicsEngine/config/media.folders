@@ -83,6 +83,7 @@ media/models/jeep/jeep_wheel_R.a3da
 media/models/jeep/jeep_wheel_R.mat
 media/models/karoseria
 media/models/karoseria/karoseria.a3da
+media/models/karoseria/karoseria.a3db
 media/models/karoseria/koleso
 media/models/karoseria/koleso/kolesoL.a3da
 media/models/karoseria/koleso/kolesoR.a3da
@@ -90,6 +91,7 @@ media/models/karoseria/ZabaKompletka1024.png
 media/models/karoseria/ZabaKompletka1024_2.png
 media/models/karoseria/ZabaKompletka3.mat
 media/models/karoseria/ZabaKompletka3.texture
+media/models/karoseria/ZabaKompletka3_env.mat
 media/models/landscape
 media/models/landscape/collision_landscape.a3da
 media/models/landscape/detail_map.png
@@ -166,6 +168,7 @@ media/surfaces/events/e_scroll_y.event
 media/surfaces/events/flip_y.event
 media/surfaces/events/rotate_billboard.event
 media/surfaces/events/scale_xy.event
+media/surfaces/events/sphere_map.event
 media/surfaces/materials
 media/surfaces/materials/billboard.mat
 media/surfaces/materials/courier_new_8_bold.mat
@@ -174,6 +177,7 @@ media/surfaces/materials/Cube_MAT_095A.mat
 media/surfaces/materials/jf3d_logo.mat
 media/surfaces/materials/MATbase.mat
 media/surfaces/materials/Material.mat
+media/surfaces/materials/MAT_env_map.mat
 media/surfaces/materials/MAT_shader_bumpmap.mat
 media/surfaces/materials/MAT_shader_bumpmap_wet.mat
 media/surfaces/materials/MAT_shader_complex.mat

@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Parser.TF3D_PARSER;
+
 /**
  * @author AndyGFX
  * 
@@ -34,7 +35,7 @@ public class TF3D_MaterialEventManager
 	{
 		F3D.Log.info("TF3D_MaterialEventManager", "TA3D_MaterialEventManager: constructor");
 		this.items = new ArrayList<TF3D_MaterialEvent>();
-		
+
 	}
 
 	// -----------------------------------------------------------------------
@@ -167,6 +168,8 @@ public class TF3D_MaterialEventManager
 			glAlphaFunc(GL_GREATER, 0);
 		}
 
+		
+
 		this.items.get(id).offset.x = this.items.get(id).offset.x + (this.items.get(id).scroll.x * F3D.Timer.AppSpeed());
 		this.items.get(id).offset.y = this.items.get(id).offset.y + (-this.items.get(id).scroll.y * F3D.Timer.AppSpeed());
 
@@ -174,6 +177,22 @@ public class TF3D_MaterialEventManager
 
 		F3D.Textures.Begin_TranslateLayer(tmu, this.items.get(id).position.x, this.items.get(id).position.y, this.items.get(id).offset.x, this.items.get(id).offset.y, this.items.get(id).scale.x, this.items.get(id).scale.y, this.items.get(id).angle);
 
+		// uv mode
+
+		if (this.items.get(id).uv_mode == F3D.UV_MODE_NORMAL)
+		{
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+		}
+
+		if (this.items.get(id).uv_mode == F3D.UV_MODE_SPHERE_MAP)
+		{
+			glEnable(GL_TEXTURE_GEN_S);
+			glEnable(GL_TEXTURE_GEN_T);
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+		}
+		
 	}
 
 	// -----------------------------------------------------------------------
@@ -282,7 +301,6 @@ public class TF3D_MaterialEventManager
 		TF3D_MaterialEvent _event;
 
 		PARSER.ParseFile(F3D.AbstractFiles.GetFullPath(assetname));
-		
 
 		for (int i = 0; i < PARSER.GetBlocksCount(); i++)
 		{
@@ -306,6 +324,13 @@ public class TF3D_MaterialEventManager
 
 			_tmp_str = PARSER.GetAs_STRING("blend_dst");
 			_event.Blend_DST = this.GetAsGLENUM(_tmp_str);
+
+			_tmp_str = PARSER.GetAs_STRING("uv_mode");
+
+			if (_tmp_str.equals("UV_MODE_NORMAL"))
+				_event.uv_mode = F3D.UV_MODE_NORMAL;
+			if (_tmp_str.equals("UV_MODE_SPHERE_MAP"))
+				_event.uv_mode = F3D.UV_MODE_SPHERE_MAP;
 
 			this.Add(_event);
 
@@ -341,10 +366,10 @@ public class TF3D_MaterialEventManager
 
 		return res;
 	}
-	
+
 	public void Destroy()
 	{
-		for(int m=0;m<this.items.size();m++)
+		for (int m = 0; m < this.items.size(); m++)
 		{
 			this.items.remove(m);
 		}
