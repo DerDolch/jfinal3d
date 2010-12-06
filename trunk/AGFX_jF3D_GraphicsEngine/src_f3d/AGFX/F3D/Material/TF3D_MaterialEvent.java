@@ -30,7 +30,7 @@ public class TF3D_MaterialEvent
 	public boolean  bDepthMask   = true;
 	public int      Blend_SRC    = GL_ONE;
 	public int      Blend_DST    = GL_ONE;
-	public int      uv_mode      = F3D.UV_MODE_NORMAL;
+	public int      uv_mode      = F3D.UV_MODE_UV_MAP;
 
 	// -----------------------------------------------------------------------
 	// TA3D_MaterialEvent:
