@@ -84,8 +84,9 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 		
 		this.model = new TF3D_Model("AUTO");
 		this.model.AssignMesh("abstract::karoseria.a3da");
-		this.model.ChangeSurface("ZabaKompletka3", "ZabaKompletka3_ref");
-		
+		//this.model.ChangeSurface("ZabaKompletka3", "ZabaKompletka3_ref");
+		this.model.ChangeSurface("ZabaKompletka3", "ZabaKompletka3_env");
+		//this.model.ChangeSurface("ZabaKompletka3", "ZabaKompletka3_norm");
 	}
 	
 	
@@ -132,6 +133,8 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
+	
+		
 		pos2D = F3D.MathUtils.World3DtoScreen2D(this.model.GetPosition());
 		
 		//this.model.Turn(0, 1, 0);
@@ -147,7 +150,7 @@ public class Demo_CameraControl extends TF3D_AppWrapper
 	public void onUpdate2D()
 	{
 		
-		F3D.Viewport.DrawInfo((int)pos2D.x,(int)pos2D.y);
+		//F3D.Viewport.DrawInfo((int)pos2D.x,(int)pos2D.y);
 		
 	}
 	
