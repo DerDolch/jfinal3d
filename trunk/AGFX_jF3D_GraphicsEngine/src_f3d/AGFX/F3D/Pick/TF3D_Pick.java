@@ -17,7 +17,7 @@ import com.bulletphysics.dynamics.RigidBody;
  */
 public class TF3D_Pick
 {
-	private CollisionWorld.ClosestRayResultCallback rayCallback;
+	public CollisionWorld.ClosestRayResultCallback rayCallback;
 
 	public TF3D_Pick()
 	{
