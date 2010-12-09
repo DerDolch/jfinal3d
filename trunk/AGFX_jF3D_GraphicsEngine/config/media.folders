@@ -81,7 +81,6 @@ media/models/jeep/jeep_wheel_R.a3da
 media/models/jeep/jeep_wheel_R.mat
 media/models/karoseria
 media/models/karoseria/karoseria.a3da
-media/models/karoseria/karoseria.a3db
 media/models/karoseria/koleso
 media/models/karoseria/koleso/kolesoL.a3da
 media/models/karoseria/koleso/kolesoR.a3da
@@ -90,6 +89,7 @@ media/models/karoseria/ZabaKompletka1024_2.png
 media/models/karoseria/ZabaKompletka3.mat
 media/models/karoseria/ZabaKompletka3.texture
 media/models/karoseria/ZabaKompletka3_env.mat
+media/models/karoseria/ZabaKompletka3_norm.mat
 media/models/karoseria/ZabaKompletka3_ref.mat
 media/models/landscape
 media/models/landscape/collision_landscape.a3da
@@ -100,6 +100,7 @@ media/models/landscape/landscape.texture
 media/models/landscape/landscape_detail.texture
 media/models/landscape/land_color.png
 media/models/MultiSurfCube.a3da
+media/models/MultiSurfCube.a3db
 media/models/Plane.a3da
 media/models/SKY_Dome
 media/models/SKY_Dome/sky_gradient.png
@@ -164,6 +165,7 @@ media/surfaces/events/e_detail_map.event
 media/surfaces/events/e_scroll_x.event
 media/surfaces/events/e_scroll_y.event
 media/surfaces/events/flip_y.event
+media/surfaces/events/normal_map.event
 media/surfaces/events/reflection_map.event
 media/surfaces/events/rotate_billboard.event
 media/surfaces/events/scale_xy.event
