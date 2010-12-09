@@ -32,50 +32,55 @@ import AGFX.F3D.Mesh.TF3D_BoundingBox;
 public class TF3D_Vehicle extends TF3D_Entity
 {
 
-	public float            gEngineForce                   = 0.f;
-	public float            gBreakingForce                 = 0.f;
-	public float            maxEngineForce                 = 300.f;
-	public float            maxBreakingForce               = 100.f;
-	public float            gVehicleSteering               = 0.f;
-	public float            steeringIncrement              = 0.04f;
-	public float            steeringClamp                  = 0.5f;
-	private float           wheelRadius                    = 0.5f;
-	//private float           wheelWidth                     = 0.4f;
-	private float           wheelFriction                  = 100;
-	private float           suspensionStiffness            = 20.f;
-	private float           suspensionDamping              = 2.3f;
-	private float           suspensionCompression          = 4.4f;
-	private float           rollInfluence                  = 0.1f;
+	public float			gEngineForce					= 0.f;
+	public float			gBreakingForce					= 0.f;
+	public float			maxEngineForce					= 300.f;
+	public float			maxBreakingForce				= 100.f;
+	public float			gVehicleSteering				= 0.f;
+	public float			steeringIncrement				= 0.04f;
+	public float			steeringClamp					= 0.5f;
+	private float			wheelRadius						= 0.5f;
+	// private float wheelWidth = 0.4f;
+	private float			wheelFriction					= 100;
+	private float			suspensionStiffness				= 20.f;
+	private float			suspensionDamping				= 2.3f;
+	private float			suspensionCompression			= 4.4f;
+	private float			rollInfluence					= 0.1f;
 
-	private float           suspensionRestLength           = 0.7f;
+	private float			suspensionRestLength			= 0.7f;
 
 	// assigned vehicle models
-	public int              model_wheel_FL                 = -1;
-	public float[]          wheel_FL_transformMatrix       = new float[16];
-	public FloatBuffer      wheel_FL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int				model_wheel_FL					= -1;
+	public int				material_wheel_FL				= -1;
+	public float[]			wheel_FL_transformMatrix		= new float[16];
+	public FloatBuffer		wheel_FL_transformMatrixBuffer	= BufferUtils.createFloatBuffer(16);
 
-	public int              model_wheel_FR                 = -1;
-	public float[]          wheel_FR_transformMatrix       = new float[16];
-	public FloatBuffer      wheel_FR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int				model_wheel_FR					= -1;
+	public int				material_wheel_FR				= -1;
+	public float[]			wheel_FR_transformMatrix		= new float[16];
+	public FloatBuffer		wheel_FR_transformMatrixBuffer	= BufferUtils.createFloatBuffer(16);
 
-	public int              model_wheel_BL                 = -1;
-	public float[]          wheel_BL_transformMatrix       = new float[16];
-	public FloatBuffer      wheel_BL_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int				model_wheel_BL					= -1;
+	public int				material_wheel_BL				= -1;
+	public float[]			wheel_BL_transformMatrix		= new float[16];
+	public FloatBuffer		wheel_BL_transformMatrixBuffer	= BufferUtils.createFloatBuffer(16);
 
-	public int              model_wheel_BR                 = -1;
-	public float[]          wheel_BR_transformMatrix       = new float[16];
-	public FloatBuffer      wheel_BR_transformMatrixBuffer = BufferUtils.createFloatBuffer(16);
+	public int				model_wheel_BR					= -1;
+	public int				material_wheel_BR				= -1;
+	public float[]			wheel_BR_transformMatrix		= new float[16];
+	public FloatBuffer		wheel_BR_transformMatrixBuffer	= BufferUtils.createFloatBuffer(16);
 
-	public int              model_chassis                  = -1;
-	public float[]          chassis_transformMatrix        = new float[16];
-	public FloatBuffer      chassis_transformMatrixBuffer  = BufferUtils.createFloatBuffer(16);
+	public int				model_chassis					= -1;
+	public int				material_chassis				= -1;
+	public float[]			chassis_transformMatrix			= new float[16];
+	public FloatBuffer		chassis_transformMatrixBuffer	= BufferUtils.createFloatBuffer(16);
 
 	// Physics vehicle definition
-	public RigidBody        RB_carChassis;
-	public Transform        RigidBody_tr                   = new Transform();
-	public VehicleTuning    tuning                         = new VehicleTuning();
-	public VehicleRaycaster vehicleRayCaster;
-	public RaycastVehicle   vehicle;
+	public RigidBody		RB_carChassis;
+	public Transform		RigidBody_tr					= new Transform();
+	public VehicleTuning	tuning							= new VehicleTuning();
+	public VehicleRaycaster	vehicleRayCaster;
+	public RaycastVehicle	vehicle;
 
 	// -----------------------------------------------------------------------
 	// TF3D_Vehicle:
@@ -214,13 +219,20 @@ public class TF3D_Vehicle extends TF3D_Entity
 	@Override
 	public void Render()
 	{
-		
 
 		if (this.model_wheel_FL >= 0)
 		{
 
 			int mid;
-			mid = F3D.Meshes.items.get(this.model_wheel_FL).data.material_id;
+			if (this.material_wheel_FL!=-1)
+			{
+				mid = this.material_wheel_FL;
+			}
+			else
+			{
+				mid = F3D.Meshes.items.get(this.model_wheel_FL).data.material_id;
+			}
+			
 			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
@@ -238,7 +250,14 @@ public class TF3D_Vehicle extends TF3D_Entity
 		{
 
 			int mid;
-			mid = F3D.Meshes.items.get(this.model_wheel_FR).data.material_id;
+			if (this.material_wheel_FR!=-1)
+			{
+				mid = this.material_wheel_FR;
+			}
+			else
+			{
+				mid = F3D.Meshes.items.get(this.model_wheel_FR).data.material_id;
+			}
 			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
@@ -256,7 +275,15 @@ public class TF3D_Vehicle extends TF3D_Entity
 		{
 
 			int mid;
-			mid = F3D.Meshes.items.get(this.model_wheel_BL).data.material_id;
+			if (this.material_wheel_BL!=-1)
+			{
+				mid = this.material_wheel_BL;
+			}
+			else
+			{
+				mid = F3D.Meshes.items.get(this.model_wheel_BL).data.material_id;
+			}
+			
 			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
@@ -274,7 +301,15 @@ public class TF3D_Vehicle extends TF3D_Entity
 		{
 
 			int mid;
-			mid = F3D.Meshes.items.get(this.model_wheel_BR).data.material_id;
+			
+			if (this.material_wheel_BR!=-1)
+			{
+				mid = this.material_wheel_BR;
+			}
+			else
+			{
+				mid = F3D.Meshes.items.get(this.model_wheel_BR).data.material_id;
+			}
 			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
@@ -287,12 +322,19 @@ public class TF3D_Vehicle extends TF3D_Entity
 			glScalef(1, 1, 1);
 			glPopMatrix();
 		}
-		
+
 		if (this.model_chassis >= 0)
 		{
 
 			int mid;
-			mid = F3D.Meshes.items.get(this.model_chassis).data.material_id;
+			if (this.material_chassis!=-1)
+			{
+				mid = this.material_chassis;
+			}
+			else
+			{
+				mid = F3D.Meshes.items.get(this.model_chassis).data.material_id;
+			}
 			if (mid >= 0)
 			{
 				F3D.Surfaces.ApplyMaterial(mid);
@@ -405,9 +447,9 @@ public class TF3D_Vehicle extends TF3D_Entity
 	{
 		gVehicleSteering = 0f;
 		Transform tr = new Transform();
-		tr.setIdentity();		
-		tr.origin.set(new Vector3f(0,0,5f));
-		
+		tr.setIdentity();
+		tr.origin.set(new Vector3f(0, 0, 5f));
+
 		this.RB_carChassis.setCenterOfMassTransform(tr);
 		this.RB_carChassis.setWorldTransform(RigidBody_tr);
 		this.RB_carChassis.setLinearVelocity(new Vector3f(0, 0, 0));
