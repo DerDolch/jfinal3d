@@ -56,7 +56,7 @@ public class Demo_ShapePhysic extends TF3D_AppWrapper
 			//F3D.Config.Load("abstract::default.cfg");
 			F3D.Config.r_display_title = F3D.Config.r_display_title + "   [ "+this.getClass().getName()+"]"; 
 			// [1] set resource destination 
-			F3D.Config.io_preload_source_mode = "PRELOAD_FROM_JAR";
+			//F3D.Config.io_preload_source_mode = "PRELOAD_FROM_JAR";
 			super.onConfigure();
 
 		} catch (Exception e)
