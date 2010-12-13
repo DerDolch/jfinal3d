@@ -63,13 +63,15 @@ public class TF3D_Particle_emitter
 			}
 
 			// Kill particle if it hits the ground or died.
-			if (p[i].getPosY() < 0.0f || !p[i].isAlive())
+			if (p[i].position.y < 0.0f || !p[i].isAlive())
 			{
 				p[i] = createParticle();
 			}
 
 			// Apply gravity.
-			p[i].incSpeed(-0.00004f);
+			
+			p[i].incSpeed();
+			p[i].applyGravity();
 			p[i].evolve();
 
 			// Select texture and draw.
