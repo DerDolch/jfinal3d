@@ -41,150 +41,143 @@ public class F3D
 	// '-----------------------------------------------------------------
 	// ' LOG: CONST
 	// '-----------------------------------------------------------------
-	public static final boolean             PARSER_LOG                 = false;
-	public static final boolean             ABSTARCTFILE_LOG           = true;
+	public static final boolean             PARSER_LOG              = false;
+	public static final boolean             ABSTARCTFILE_LOG        = true;
 
 	// '-----------------------------------------------------------------
 	// ' CLASSNAME: CONST
 	// '-----------------------------------------------------------------
-	public static final int                 CLASS_LIGHT                = 0;
-	public static final int                 CLASS_MESH                 = 1;
-	public static final int                 CLASS_MODEL                = 2;
-	public static final int                 CLASS_PIVOT                = 3;
-	public static final int                 CLASS_SPRITE               = 4;
-	public static final int                 CLASS_CAMERA               = 5;
-	public static final int                 CLASS_BODY                 = 6;
-	public static final int                 CLASS_VEHICLE              = 7;
+	public static final int                 CLASS_LIGHT             = 0;
+	public static final int                 CLASS_MESH              = 1;
+	public static final int                 CLASS_MODEL             = 2;
+	public static final int                 CLASS_PIVOT             = 3;
+	public static final int                 CLASS_SPRITE            = 4;
+	public static final int                 CLASS_CAMERA            = 5;
+	public static final int                 CLASS_BODY              = 6;
+	public static final int                 CLASS_VEHICLE           = 7;
 
 	// '-----------------------------------------------------------------
 	// ' CAMERA: CONST
 	// '-----------------------------------------------------------------
-	public static final int                 CAMERA_MODE_FREELOOK       = 0;
-	public static final int                 CAMERA_MODE_WALK           = 1;
+	public static final int                 CAMERA_MODE_FREELOOK    = 0;
+	public static final int                 CAMERA_MODE_WALK        = 1;
 
-	public static final int                 CAMERA_TYPE_FPS            = 0;
-	public static final int                 CAMERA_TYPE_ORBIT          = 1;
-	public static final int                 CAMERA_TYPE_TARGET         = 2;
+	public static final int                 CAMERA_TYPE_FPS         = 0;
+	public static final int                 CAMERA_TYPE_ORBIT       = 1;
+	public static final int                 CAMERA_TYPE_TARGET      = 2;
 
 	// '-----------------------------------------------------------------
 	// ' TEXTURES: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 MAX_TMU                    = 4;
+	public static final int                 MAX_TMU                 = 4;
 
 	// '-----------------------------------------------------------------
 	// ' FONT: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 MAX_CHARS                  = 255;
+	public static final int                 MAX_CHARS               = 255;
 
 	// '-----------------------------------------------------------------
 	// ' BILLBOARD: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 BM_AXIS_X                  = 1;
-	public static final int                 BM_AXIS_Y                  = 2;
-	public static final int                 BM_AXIS_Z                  = 3;
-	public static final int                 BM_DIRECTIONAL             = 4;
-	public static final int                 BM_SPRITE                  = 5;
+	public static final int                 BM_AXIS_X               = 1;
+	public static final int                 BM_AXIS_Y               = 2;
+	public static final int                 BM_AXIS_Z               = 3;
+	public static final int                 BM_DIRECTIONAL          = 4;
+	public static final int                 BM_SPRITE               = 5;
 
 	// '-----------------------------------------------------------------
 	// ' MATH: CONST
 	// '-----------------------------------------------------------------
 
-	public static final float               DEGTORAD                   = 0.017453292519943295769236907684886f;
-	public static final float               RADTODEG                   = 57.295779513082320876798154814105f;
+	public static final float               DEGTORAD                = 0.017453292519943295769236907684886f;
+	public static final float               RADTODEG                = 57.295779513082320876798154814105f;
 
 	// '-----------------------------------------------------------------
 	// ' BULLET SHAPE: CONST
 	// '-----------------------------------------------------------------
 
-	public static final int                 BULLET_SHAPE_PLANE         = 1;
-	public static final int                 BULLET_SHAPE_BOX           = 2;
-	public static final int                 BULLET_SHAPE_SPHERE        = 3;
-	public static final int                 BULLET_SHAPE_CYLINDER      = 5;
-	public static final int                 BULLET_SHAPE_CYLINDER_X    = 6;
-	public static final int                 BULLET_SHAPE_CYLINDER_Z    = 7;
-	public static final int                 BULLET_SHAPE_CONE          = 8;
-	public static final int                 BULLET_SHAPE_CONE_X        = 9;
-	public static final int                 BULLET_SHAPE_CONE_Z        = 10;
-	public static final int                 BULLET_SHAPE_CAPSULE_X     = 11;
-	public static final int                 BULLET_SHAPE_CAPSULE_Z     = 12;
-	public static final int                 BULLET_SHAPE_CAPSULE       = 13;
-	public static final int                 BULLET_SHAPE_TRIMESH       = 14;
-	public static final int                 BULLET_SHAPE_CONVEXHULL    = 15;
+	public static final int                 BULLET_SHAPE_PLANE      = 1;
+	public static final int                 BULLET_SHAPE_BOX        = 2;
+	public static final int                 BULLET_SHAPE_SPHERE     = 3;
+	public static final int                 BULLET_SHAPE_CYLINDER   = 5;
+	public static final int                 BULLET_SHAPE_CYLINDER_X = 6;
+	public static final int                 BULLET_SHAPE_CYLINDER_Z = 7;
+	public static final int                 BULLET_SHAPE_CONE       = 8;
+	public static final int                 BULLET_SHAPE_CONE_X     = 9;
+	public static final int                 BULLET_SHAPE_CONE_Z     = 10;
+	public static final int                 BULLET_SHAPE_CAPSULE_X  = 11;
+	public static final int                 BULLET_SHAPE_CAPSULE_Z  = 12;
+	public static final int                 BULLET_SHAPE_CAPSULE    = 13;
+	public static final int                 BULLET_SHAPE_TRIMESH    = 14;
+	public static final int                 BULLET_SHAPE_CONVEXHULL = 15;
 
 	// '-----------------------------------------------------------------
 	// ' PARTICLE ENGINE: CONST
 	// '-----------------------------------------------------------------
 
-	public final static int                 PARTICLE_TYPE_CONSTANT     = 0;
-	public final static int                 PARTICLE_TYPE_FADE         = 1;
-	public final static int                 PARTICLE_TYPE_FLICKERFADE  = 2;
-
-	public final static int                 PARTICLE_COLOR_TYPE_GREEN  = 0;
-	public final static int                 PARTICLE_COLOR_TYPE_RED    = 1;
-	public final static int                 PARTICLE_COLOR_TYPE_WHITE  = 2;
-	public final static int                 PARTICLE_COLOR_TYPE_YELLOW = 3;
-
-	public final static int                 PARTICLE_STATE_DEAD        = 0;
-	public final static int                 PARTICLE_STATE_ALIVE       = 1;
+	public final static int                 EMITTER_SPRITE          = 0;
+	public final static int                 EMITTER_ENTITY          = 1;
+	public final static int                 EMITTER_ACTION_DELAY    = 0;
+	public final static int                 EMITTER_ACTION_TRIGGER  = 1;
 
 	// '-----------------------------------------------------------------
 	// ' MATERIAL: CONST
 	// '-----------------------------------------------------------------
-	public final static int                 MAT_TYPE_COLOR             = 0;
-	public final static int                 MAT_TYPE_TEXTURE           = 1;
-	public final static int                 MAT_TYPE_SHADER            = 2;
-	public final static int                 UV_MODE_UV_MAP             = 0;
-	public final static int                 UV_MODE_SPHERE_MAP         = 1;
-	public final static int                 UV_MODE_REFLECTION_MAP     = 2;
-	public final static int                 UV_MODE_OBJECT_LINEAR      = 3;
-	public final static int                 UV_MODE_EYE_LINEAR         = 4;
-	public final static int                 UV_MODE_NORMAL_MAP         = 5;
+	public final static int                 MAT_TYPE_COLOR          = 0;
+	public final static int                 MAT_TYPE_TEXTURE        = 1;
+	public final static int                 MAT_TYPE_SHADER         = 2;
+	public final static int                 UV_MODE_UV_MAP          = 0;
+	public final static int                 UV_MODE_SPHERE_MAP      = 1;
+	public final static int                 UV_MODE_REFLECTION_MAP  = 2;
+	public final static int                 UV_MODE_OBJECT_LINEAR   = 3;
+	public final static int                 UV_MODE_EYE_LINEAR      = 4;
+	public final static int                 UV_MODE_NORMAL_MAP      = 5;
 
 	// '-----------------------------------------------------------------
 	// ' HUD: CONST
 	// '-----------------------------------------------------------------
-	public final static int                 HUD_IMAGE                  = 0;
-	public final static int                 HUD_IMAGEBUTTON            = 1;
+	public final static int                 HUD_IMAGE               = 0;
+	public final static int                 HUD_IMAGEBUTTON         = 1;
 
 	// '-----------------------------------------------------------------
 	// ' HUD STATE: CONST
 	// '-----------------------------------------------------------------
-	public final static int                 HUD_STATE_NORMAL           = 0;
-	public final static int                 HUD_STATE_OVER             = 1;
-	public final static int                 HUD_STATE_PRESSED          = 2;
-	public final static int                 HUD_STATE_CHECKED          = 3;
-	public final static int                 HUD_STATE_UNCHECKED        = 4;
+	public final static int                 HUD_STATE_NORMAL        = 0;
+	public final static int                 HUD_STATE_OVER          = 1;
+	public final static int                 HUD_STATE_PRESSED       = 2;
+	public final static int                 HUD_STATE_CHECKED       = 3;
+	public final static int                 HUD_STATE_UNCHECKED     = 4;
 
 	// '-----------------------------------------------------------------
 	// ' SHADER UNIFORMS TYPE: CONST
 	// '-----------------------------------------------------------------
-	public final static int                 SHADER_UNIFORM_INT         = 0;
-	public final static int                 SHADER_UNIFORM_FLOAT       = 1;
-	public final static int                 SHADER_UNIFORM_EVENT       = 2;
+	public final static int                 SHADER_UNIFORM_INT      = 0;
+	public final static int                 SHADER_UNIFORM_FLOAT    = 1;
+	public final static int                 SHADER_UNIFORM_EVENT    = 2;
 
-	public final static int                 SHADER_ATTRIB_FLOAT        = 3;
+	public final static int                 SHADER_ATTRIB_FLOAT     = 3;
 
-	public final static int                 SHADER_EVENT_TIMER         = 0;
-	public final static int                 SHADER_EVENT_EYEPOS        = 1;
-	public final static int                 SHADER_EVENT_CAMERA        = 2;
+	public final static int                 SHADER_EVENT_TIMER      = 0;
+	public final static int                 SHADER_EVENT_EYEPOS     = 1;
+	public final static int                 SHADER_EVENT_CAMERA     = 2;
 
-	public final static int                 ROTATE_IN_SEQ_XYZ          = 0;
-	public final static int                 ROTATE_IN_SEQ_YXZ          = 1;
+	public final static int                 ROTATE_IN_SEQ_XYZ       = 0;
+	public final static int                 ROTATE_IN_SEQ_YXZ       = 1;
 
 	// '-----------------------------------------------------------------
 	// ' FIELDS
 	// '-----------------------------------------------------------------
 
-	public static TF3D_ResourceLoader       Resource                   = new TF3D_ResourceLoader();
-	public static TF3D_AbstractFiles        AbstractFiles              = new TF3D_AbstractFiles();
+	public static TF3D_ResourceLoader       Resource                = new TF3D_ResourceLoader();
+	public static TF3D_AbstractFiles        AbstractFiles           = new TF3D_AbstractFiles();
 	public static TF3D_Config               Config;
 	public static TF3D_Extensions           Extensions;
 	public static TF3D_Viewport             Viewport;
 	public static TF3D_Display              Display;
-	public static TF3D_Log                  Log                        = new TF3D_Log();
+	public static TF3D_Log                  Log                     = new TF3D_Log();
 	public static TF3D_CameraManager        Cameras;
 	public static TF3D_Frustum              Frustum;
 	public static TF3D_TextureManager       Textures;
