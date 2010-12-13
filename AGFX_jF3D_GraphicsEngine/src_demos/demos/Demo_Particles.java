@@ -80,7 +80,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 		light.Enable();
 		
 		
-		this.emitter = new TF3D_Particle_emitter(100, 500f, F3D.Textures.FindByName("spark_white"), new Vector3f(0,0.000001f,0));
+		this.emitter = new TF3D_Particle_emitter(2, 100f, F3D.Textures.FindByName("spark_white"), new Vector3f(0,0.01f,0));
 	}
 	
 	

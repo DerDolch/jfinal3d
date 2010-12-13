@@ -217,4 +217,32 @@ public class TF3D_Helpers
 
 		glColor3f(1, 1, 1);
 	}
+	
+	public void Axis(Vector3f a, float length)
+	{
+		
+		
+		glPushMatrix();
+		// X
+		glColor3f(1, 0, 0);
+		Vector3f X = new Vector3f(1,0,0);
+		X.scale(length);
+		X.add(a);
+		this.Line3D(a, X);
+		// Y
+		glColor3f(0, 1, 0);
+		Vector3f Y = new Vector3f(0,1,0);
+		Y.scale(length);
+		Y.add(a);
+		this.Line3D(a, Y);
+		// Z
+		glColor3f(0, 0, 1);
+		Vector3f Z = new Vector3f(0,0,1);
+		Z.scale(length);
+		Z.add(a);
+		this.Line3D(a, Z);
+		glPopMatrix();
+
+		glColor3f(1, 1, 1);
+	}
 }
