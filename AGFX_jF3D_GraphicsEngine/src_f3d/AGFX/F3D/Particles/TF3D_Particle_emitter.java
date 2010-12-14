@@ -17,31 +17,31 @@ public class TF3D_Particle_emitter
 
 	// /////////////// Constants /////////////////////////
 
-	private int                count      = 0;
-	private float              lifetime   = 100f;
-	private int                texture_id = -1;
-	private Vector3f           speed;
+	private int					count		= 0;
+	private float				lifetime	= 100f;
+	private int					texture_id	= -1;
+	private Vector3f			accel;
+	public float				decay		= 1f;
 
 	// ////////////// Variables /////////////////////////
 
-	private TF3D_Particle_item p[];
+	private TF3D_Particle_item	p[];
 
-	public TF3D_Particle_emitter(int count, float lifetime, int texture_id, Vector3f speed)
+	public TF3D_Particle_emitter(int count, float lifetime, int texture_id, Vector3f accel, float decay)
 	{
 		this.count = count;
 		this.texture_id = texture_id;
 		this.lifetime = lifetime;
-		this.speed = new Vector3f(speed);
+		this.decay = decay;
+		this.accel = new Vector3f(accel);
 		this.p = new TF3D_Particle_item[this.count];
 
 	}
 
 	private TF3D_Particle_item createParticle()
 	{
-		TF3D_Particle_item p = new TF3D_Particle_item(this.lifetime, 0f, 0f);
-		Vector3f delta_speed = new Vector3f(this.speed);
-		delta_speed.scale(this.lifetime);
-		p.setSpeed(delta_speed);
+		TF3D_Particle_item p = new TF3D_Particle_item(this.lifetime, this.decay, 1f);
+		p.SetAcceleration(accel);
 		return p;
 	}
 
@@ -68,14 +68,12 @@ public class TF3D_Particle_emitter
 				p[i] = createParticle();
 			}
 
-			// Apply gravity.
-			
-			p[i].incSpeed();
-			p[i].applyGravity();
-			p[i].evolve();
+			// Update
+
+			p[i].Update();
 
 			// Select texture and draw.
-			if (this.texture_id>=0)
+			if (this.texture_id >= 0)
 			{
 				F3D.Textures.Bind(this.texture_id);
 			}
