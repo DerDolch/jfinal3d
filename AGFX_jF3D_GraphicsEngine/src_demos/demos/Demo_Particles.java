@@ -15,7 +15,7 @@ import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 import AGFX.F3D.Math.TF3D_Matrix;
 import AGFX.F3D.Model.TF3D_Model;
-import AGFX.F3D.Particles.TF3D_Particle_emitter;
+
 
 /**
  * @author AndyGFX
@@ -25,7 +25,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 {
 
 	public TF3D_Camera Camera;
-	public TF3D_Particle_emitter emitter;
+	//public TF3D_Particle_emitter emitter;
 
 
 	int odx = 0;
@@ -80,7 +80,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 		light.Enable();
 		
 		
-		this.emitter = new TF3D_Particle_emitter(100, 100f, F3D.Textures.FindByName("spark_white"), new Vector3f(0.1f,0.1f,0),0.1f);
+		//this.emitter = new TF3D_Particle_emitter(100, 100f, F3D.Textures.FindByName("spark_white"), new Vector3f(0.1f,0.1f,0),0.1f);
 	}
 	
 	
@@ -131,7 +131,8 @@ public class Demo_Particles extends TF3D_AppWrapper
 		F3D.Draw.Axis(2.0f);	
 	
 		F3D.Textures.ActivateLayer(0);
-		this.emitter.Render();
+		
+		//this.emitter.Render();
 		
 		
 	}

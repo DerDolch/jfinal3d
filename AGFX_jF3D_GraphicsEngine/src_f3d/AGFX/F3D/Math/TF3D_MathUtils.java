@@ -22,7 +22,7 @@ public class TF3D_MathUtils
 
 	}
 
-	public  Vector3f Matrix2Angles(Matrix4f m)
+	public Vector3f Matrix2Angles(Matrix4f m)
 	{
 
 		/**
@@ -70,7 +70,7 @@ public class TF3D_MathUtils
 		float sqy = q.y * q.y;
 		float sqz = q.z * q.z;
 		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise
-											// is correction factor
+		                                    // is correction factor
 		float test = q.x * q.y + q.z * q.w;
 		if (test > 0.499 * unit)
 		{ // singularity at north pole
@@ -86,12 +86,12 @@ public class TF3D_MathUtils
 		{
 			// X
 			angles[0] = (float) Math.atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw); // yaw
-																									// or
-																									// bank
+			                                                                                       // or
+			                                                                                       // bank
 			// Y axis
 			angles[1] = (float) Math.atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw); // roll
-																									// or
-																									// heading
+			                                                                                      // or
+			                                                                                      // heading
 			// Z axis
 			angles[2] = (float) Math.asin(2 * test / unit); // pitch or attitude
 
@@ -155,7 +155,7 @@ public class TF3D_MathUtils
 		GLU.gluProject(pos.x, pos.y, pos.z, modelMatrix, projMatrix, viewport, win_pos);
 
 		res.x = win_pos.get(0);
-		res.y = F3D.Config.r_display_height - win_pos.get(1);		
+		res.y = F3D.Config.r_display_height - win_pos.get(1);
 		res.z = win_pos.get(2);
 
 		return res;
@@ -243,9 +243,8 @@ public class TF3D_MathUtils
 		rot.transform(point, new_position);
 		return new_position;
 	}
-	
-	
-	public  Vector3f RotatePoint(Vector3f angle, float _x, float _y, float _z)
+
+	public Vector3f RotatePoint(Vector3f angle, float _x, float _y, float _z)
 	{
 		Matrix4f rot = new Matrix4f();
 		Matrix4f rot_X = new Matrix4f();
@@ -267,7 +266,16 @@ public class TF3D_MathUtils
 		rot.mul(rot_X);
 		rot.mul(rot_Z);
 
-		rot.transform(new Vector3f(_x,_y,_z), new_position);
+		rot.transform(new Vector3f(_x, _y, _z), new_position);
 		return new_position;
 	}
+
+	public float UpdateValue(float current, float destination, float rate)
+	{
+
+		float res = current + ((destination - current) * rate);
+
+		return res;
+	}
+
 }
