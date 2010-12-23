@@ -120,6 +120,7 @@ public class F3D
 
 	public final static int                 EMITTER_SPRITE          = 0;
 	public final static int                 EMITTER_ENTITY          = 1;
+	public final static int                 EMITTER_MESH            = 2;
 	public final static int                 EMITTER_ACTION_DELAY    = 0;
 	public final static int                 EMITTER_ACTION_TRIGGER  = 1;
 
