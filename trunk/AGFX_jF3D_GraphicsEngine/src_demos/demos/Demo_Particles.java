@@ -13,6 +13,7 @@ import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
 
+import AGFX.F3D.Particles.TF3D_Particle_Sprite;
 import AGFX.F3D.Particles.TF3D_Particles;
 
 
@@ -48,7 +49,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 			F3D.Config.r_display_height = 600;
 			F3D.Config.r_fullscreen = false;
 			F3D.Config.r_display_vsync = false;
-			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - CAMERA CONTROL";
+			F3D.Config.r_display_title = "jFinal3D Graphics Engine 2010 - PARTICLE SYSTEM";
 			F3D.Config.use_physics_debug = false;
 
 			super.onConfigure();
@@ -78,7 +79,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
-		TF3D_Billboard sprite1 = new TF3D_Billboard();
+		TF3D_Particle_Sprite sprite1 = new TF3D_Particle_Sprite();
 
 		sprite1.mode = F3D.BM_SPRITE;
 		sprite1.name = "BM_sprite";
@@ -91,7 +92,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 		sprite1.SetScale(0.5f, 0.5f, 0.5f);
 		sprite1.Dir.set(0, 0, 0);
 		
-		this.particles = new TF3D_Particles(50,sprite1,100f);
+		this.particles = new TF3D_Particles("PARTICLE_01",50,sprite1,100f);
 		this.particles.Init();
 		
 	}
