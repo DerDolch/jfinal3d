@@ -3,18 +3,17 @@
  */
 package demos;
 
-import javax.vecmath.Vector3f;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.AppWrapper.TF3D_AppWrapper;
+import AGFX.F3D.Billboard.TF3D_Billboard;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
-import AGFX.F3D.Math.TF3D_Matrix;
-import AGFX.F3D.Model.TF3D_Model;
+
+import AGFX.F3D.Particles.TF3D_Particles;
 
 
 /**
@@ -25,7 +24,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 {
 
 	public TF3D_Camera Camera;
-	//public TF3D_Particle_emitter emitter;
+	public TF3D_Particles particles;
 
 
 	int odx = 0;
@@ -79,8 +78,22 @@ public class Demo_Particles extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 		
+		TF3D_Billboard sprite1 = new TF3D_Billboard();
+
+		sprite1.mode = F3D.BM_SPRITE;
+		sprite1.name = "BM_sprite";
+		sprite1.enable = true;
+		sprite1.SetScale(1.0f, 1.0f, 0.0f);
+		sprite1.bFadeAlpha = false;
+		sprite1.bDepthSort = true;
+		sprite1.material_id = F3D.Surfaces.FindByName("MAT_BEAM_3");
+		sprite1.SetPosition(0, 0, 0);
+		sprite1.SetScale(0.5f, 0.5f, 0.5f);
+		sprite1.Dir.set(0, 0, 0);
 		
-		//this.emitter = new TF3D_Particle_emitter(100, 100f, F3D.Textures.FindByName("spark_white"), new Vector3f(0.1f,0.1f,0),0.1f);
+		this.particles = new TF3D_Particles(50,sprite1,100f);
+		this.particles.Init();
+		
 	}
 	
 	
@@ -88,7 +101,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 	public void onUpdate3D()
 	{
 		
-
+		
 		
 
 		if (Mouse.isInsideWindow())
@@ -127,12 +140,23 @@ public class Demo_Particles extends TF3D_AppWrapper
 			this.Camera.Move(0.05f, 0.0f, 0.0f);
 		}
 		
+		
+		
+		
 
 		F3D.Draw.Axis(2.0f);	
 	
 		F3D.Textures.ActivateLayer(0);
 		
-		//this.emitter.Render();
+		
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_TAB)) this.particles.createBurst();
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_1)) this.particles.slowDown(true);
+		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_2)) this.particles.slowDown(false);
+		
+		
+		
+		this.particles.Update();
+		this.particles.Render();
 		
 		
 	}

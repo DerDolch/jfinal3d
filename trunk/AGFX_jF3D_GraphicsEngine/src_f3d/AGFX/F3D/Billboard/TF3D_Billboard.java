@@ -16,8 +16,7 @@ public class TF3D_Billboard extends TF3D_Entity
 {
 
 	/**
-	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D
-	 * as const
+	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D as const
 	 */
 	public int      mode;
 
@@ -26,12 +25,12 @@ public class TF3D_Billboard extends TF3D_Entity
 	/** material ID assigned to surface */
 	public int      material_id;
 	// ** help var for alpha fading */
-	public float Alpha = 1f;
+	public float    Alpha = 1f;
 	/** depth sort true/false */
 	public boolean  bDepthSort;
 	/** alpha fade true/false */
 	public boolean  bFadeAlpha;
-	public float  alpha_fade_speed;
+	public float    alpha_fade_speed;
 	/** enable rendering true/false */
 	public boolean  enable;
 
@@ -344,7 +343,7 @@ public class TF3D_Billboard extends TF3D_Entity
 	// -----------------------------------------------------------------------
 	public void Render()
 	{
-		
+
 		if (this.IsEnabled())
 		{
 			if (this.IsVisible())
@@ -354,27 +353,24 @@ public class TF3D_Billboard extends TF3D_Entity
 					glEnable(GL_BLEND);
 					if (F3D.Viewport.IsPointVisible(this.GetPosition()))
 					{
-						this.Alpha = this.Alpha + this.alpha_fade_speed*F3D.Timer.AppSpeed();
-						if (this.Alpha>1f) this.Alpha=1f;
-					}
-					else
+						this.Alpha = this.Alpha + this.alpha_fade_speed * F3D.Timer.AppSpeed();
+						if (this.Alpha > 1f)
+							this.Alpha = 1f;
+					} else
 					{
-						this.Alpha = this.Alpha - this.alpha_fade_speed*F3D.Timer.AppSpeed();
-						if (this.Alpha<0f) this.Alpha=0f;
+						this.Alpha = this.Alpha - this.alpha_fade_speed * F3D.Timer.AppSpeed();
+						if (this.Alpha < 0f)
+							this.Alpha = 0f;
 					}
-					 
-				}
-				else
+
+				} else
 				{
 					this.Alpha = 1f;
 				}
-				
-				
-				F3D.Surfaces.materials.get(this.material_id).colors.diffuse[3]=this.Alpha;
+
+				F3D.Surfaces.materials.get(this.material_id).colors.diffuse[3] = this.Alpha;
 				F3D.Surfaces.ApplyMaterial(this.material_id);
-				
-				
-				
+
 				glPushMatrix();
 
 				switch (this.mode)
@@ -482,5 +478,26 @@ public class TF3D_Billboard extends TF3D_Entity
 
 		return sprite;
 
+	}
+
+	public TF3D_Billboard Clone()
+	{
+		TF3D_Billboard res = new TF3D_Billboard();
+
+		res.Alpha = this.Alpha;
+		res.alpha_fade_speed = this.alpha_fade_speed;
+		res.Dir = (Vector3f) this.Dir.clone();
+
+		res.classname = this.classname;
+
+		res.mode = this.mode;
+		res.enable = this.enable;
+
+		res.bDepthSort = this.bDepthSort;
+		res.bFadeAlpha = this.bFadeAlpha = false;
+		res.material_id = this.material_id;
+		res.name = this.name;
+
+		return res;
 	}
 }
