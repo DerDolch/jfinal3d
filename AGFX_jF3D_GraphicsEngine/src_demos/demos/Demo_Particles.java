@@ -156,9 +156,6 @@ public class Demo_Particles extends TF3D_AppWrapper
 		
 		
 		
-		this.particles.Update();
-		this.particles.Render();
-		
 		
 	}
 	
