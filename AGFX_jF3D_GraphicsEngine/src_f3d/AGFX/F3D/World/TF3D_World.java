@@ -76,12 +76,14 @@ public class TF3D_World
 					break;
 				case F3D.CLASS_VEHICLE:
 					this.entities.get(i).Update();
+				case F3D.CLASS_PARTICLE_SPRITE:
+					this.entities.get(i).Update();
 					break;
 				}
 
 			}
 		}
-		
+
 	}
 
 	// -----------------------------------------------------------------------
@@ -128,6 +130,8 @@ public class TF3D_World
 					this.entities.get(i).Render();
 					break;
 				case F3D.CLASS_VEHICLE:
+					this.entities.get(i).Render();
+				case F3D.CLASS_PARTICLE_SPRITE:
 					this.entities.get(i).Render();
 					break;
 				}

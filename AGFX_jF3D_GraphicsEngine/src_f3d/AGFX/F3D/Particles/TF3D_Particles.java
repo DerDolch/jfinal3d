@@ -8,17 +8,18 @@ import static org.lwjgl.opengl.GL11.*;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Billboard.TF3D_Billboard;
+import AGFX.F3D.Entity.TF3D_Entity;
 
 /**
  * @author AndyGFX
  * 
  */
-public class TF3D_Particles
+public class TF3D_Particles extends TF3D_Entity
 {
 
 	private int                  PARTICLES_COUNT = 500;
 	private TF3D_Particle_item[] particles;
-	private TF3D_Billboard       sprite;
+	private TF3D_Particle_Sprite sprite;
 
 	private boolean              rainbow         = true;                 // Rainbow Mode?
 	private float                lifetime        = 1000f;
@@ -62,7 +63,7 @@ public class TF3D_Particles
 	                                             { 1.0f, 0.5f, 1.0f },
 	                                             { 1.0f, 0.5f, 0.75f } };
 
-	public TF3D_Particles(int count, TF3D_Billboard sprite, float life)
+	public TF3D_Particles(String name, int count, TF3D_Particle_Sprite sprite, float life)
 	{
 		this.PARTICLES_COUNT = count;
 
@@ -74,6 +75,8 @@ public class TF3D_Particles
 		this.particles = new TF3D_Particle_item[this.PARTICLES_COUNT];
 		this.sprite = sprite;
 		this.lifetime = life;
+		this.classname = F3D.CLASS_PARTICLE_EMITTER;
+		this.name = name;
 	}
 
 	public void increasePullDownwards(boolean pull)
@@ -159,19 +162,11 @@ public class TF3D_Particles
 		{
 			particles[loop] = new TF3D_Particle_item();
 
-			particles[loop].sprite = new TF3D_Billboard();
-
-			particles[loop].sprite.mode = this.sprite.mode;
-			particles[loop].sprite.name = this.sprite.name + "-" + String.valueOf(loop);
-			particles[loop].sprite.enable = this.sprite.enable;
-			particles[loop].sprite.SetScale(this.sprite.GetScale());
-			particles[loop].sprite.bFadeAlpha = this.sprite.bFadeAlpha;
-			particles[loop].sprite.bDepthSort = this.sprite.bDepthSort;
-			particles[loop].sprite.material_id = this.sprite.material_id;
-			particles[loop].sprite.SetScale(this.sprite.GetScale());
-
-			particles[loop].sprite.Dir.set(this.sprite.Dir);
-
+			//particles[loop].sprite = new TF3D_Particle_Sprite();
+			
+			particles[loop].sprite = this.sprite.Clone();
+			particles[loop].sprite.name = this.sprite.name+"_"+String.valueOf(loop);
+			
 			// Make All The Particles Active
 			particles[loop].active = true;
 
@@ -187,17 +182,17 @@ public class TF3D_Particles
 			particles[loop].b = colors[loop * (12 / this.PARTICLES_COUNT)][2];
 
 			// Random Speed
-			particles[loop].xi = (float) ((50 * Math.random()) - 26.0f) * 10.0f;
-			particles[loop].yi = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
-			particles[loop].zi = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
+			particles[loop].direction.x = (float) ((50 * Math.random()) - 26.0f) * 10.0f;
+			particles[loop].direction.y = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
+			particles[loop].direction.z = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
 
-			particles[loop].sprite.SetPosition(particles[loop].xi, particles[loop].yi, particles[loop].zi);
+			// particles[loop].sprite.SetPosition(particles[loop].direction);
+			particles[loop].sprite.SetPosition(0, 0, 0);
 
 			// Set GRAVITY
-			particles[loop].xg = 0.0f;
-			particles[loop].yg = 0.0f;
-			particles[loop].zg = 0.0f;
+			particles[loop].gravity.set(0, 0, 0);
 		}
+		
 	}
 
 	public void Update()
@@ -232,37 +227,36 @@ public class TF3D_Particles
 			{
 
 				// If Number Pad 8 And Y Gravity Is Less Than 1.5 Increase Pull Upwards
-				if (doPullUp && (particles[loop].yg < 1.5f))
+				if (doPullUp && (particles[loop].gravity.y < 1.5f))
 				{
-					particles[loop].yg += 0.01f * F3D.Timer.AppSpeed();
+					particles[loop].gravity.y += 0.01f * F3D.Timer.AppSpeed();
 				}
 
 				// If Number Pad 2 And Y Gravity Is Greater Than -1.5 Increase Pull Downwards
-				if (doPullDown && (particles[loop].yg > -1.5f))
+				if (doPullDown && (particles[loop].gravity.y > -1.5f))
 				{
-					particles[loop].yg -= 0.01f * F3D.Timer.AppSpeed();
+					particles[loop].gravity.y -= 0.01f * F3D.Timer.AppSpeed();
 				}
 
 				// If Number Pad 6 And X Gravity Is Less Than 1.5 Increase Pull Right
-				if (doPullRight && (particles[loop].xg < 1.5f))
+				if (doPullRight && (particles[loop].gravity.x < 1.5f))
 				{
-					particles[loop].xg += 0.01f * F3D.Timer.AppSpeed();
+					particles[loop].gravity.x += 0.01f * F3D.Timer.AppSpeed();
 				}
 
 				// If Number Pad 4 And X Gravity Is Greater Than -1.5 Increase Pull Left
-				if (doPullLeft && (particles[loop].xg > -1.5f))
+				if (doPullLeft && (particles[loop].gravity.x > -1.5f))
 				{
-					particles[loop].xg -= 0.01f * F3D.Timer.AppSpeed();
+					particles[loop].gravity.x -= 0.01f * F3D.Timer.AppSpeed();
 				}
 
 				if (doBurst) // Tab Key Causes A Burst
 				{
-					particles[loop].x = 0.0f; // Center On X Axis
-					particles[loop].y = 0.0f; // Center On Y Axis
-					particles[loop].z = 0.0f; // Center On Z Axis
-					particles[loop].xi = (float) ((50 * Math.random()) - 26.0f) * 10.0f; // Random Speed On X Axis
-					particles[loop].yi = (float) ((50 * Math.random()) - 25.0f) * 10.0f; // Random Speed On Y Axis
-					particles[loop].zi = (float) ((50 * Math.random()) - 25.0f) * 10.0f; // Random Speed On Z Axis
+					particles[loop].position.set(0, 0, 0);
+
+					particles[loop].direction.x = (float) ((50 * Math.random()) - 26.0f) * 10.0f; // Random Speed On X Axis
+					particles[loop].direction.y = (float) ((50 * Math.random()) - 25.0f) * 10.0f; // Random Speed On Y Axis
+					particles[loop].direction.z = (float) ((50 * Math.random()) - 25.0f) * 10.0f; // Random Speed On Z Axis
 				}
 			}
 		}
@@ -276,29 +270,31 @@ public class TF3D_Particles
 		{
 			if (particles[loop].active) // If The Particle Is Active
 			{
-				// GRAB position
-				float x = particles[loop].x;
-				float y = particles[loop].y;
-				float z = particles[loop].z;
 
 				// set sprite position
 
 				// TODO scale from - to size
-				//particles[loop].sprite.SetScale(zoomRate, zoomRate, zoomRate);
-				
-				particles[loop].sprite.SetPosition(x, y, z);
+				// particles[loop].sprite.SetScale(zoomRate, zoomRate, zoomRate);
+
+				particles[loop].sprite.SetPosition(particles[loop].position);
 
 				// Draw The Particle Using Our RGB Values, Fade The Particle Based On It's Life
 
-				// TODO set particle color
+				// SET COLOR !!!!
+				// TODO rewrite TF3D_Billboard to special version for particle with separated material per particle item
 
-				particles[loop].x += F3D.Timer.AppSpeed() * (particles[loop].xi / (slowdown * this.lifetime));// Move On The X Axis By X Speed
-				particles[loop].y += F3D.Timer.AppSpeed() * (particles[loop].yi / (slowdown * this.lifetime));// Move On The Y Axis By Y Speed
-				particles[loop].z += F3D.Timer.AppSpeed() * (particles[loop].zi / (slowdown * this.lifetime));// Move On The Z Axis By Z Speed
+				F3D.Surfaces.materials.get(particles[loop].sprite.material_id).colors.diffuse[0] = particles[loop].r;
+				F3D.Surfaces.materials.get(particles[loop].sprite.material_id).colors.diffuse[1] = particles[loop].g;
+				F3D.Surfaces.materials.get(particles[loop].sprite.material_id).colors.diffuse[2] = particles[loop].b;
 
-				particles[loop].xi += particles[loop].xg; // Take Pull On X Axis Into Account
-				particles[loop].yi += particles[loop].yg; // Take Pull On Y Axis Into Account
-				particles[loop].zi += particles[loop].zg; // Take Pull On Z Axis Into Account
+				// POS = POS + ((appApeed)*(DIR/(slowdown * this.lifetime)
+
+				Vector3f delta_dir = new Vector3f(particles[loop].direction);
+				delta_dir.scale(F3D.Timer.AppSpeed() * (1f / (slowdown * this.lifetime)));
+				particles[loop].position.add(delta_dir);
+
+				// ADD GRAVITY
+				particles[loop].direction.add(particles[loop].gravity);
 
 				particles[loop].life -= particles[loop].fade; // Reduce Particles Life By 'Fade'
 
@@ -306,12 +302,10 @@ public class TF3D_Particles
 				{
 					particles[loop].life = this.lifetime; // Give It New Life
 					particles[loop].fade = (float) (100 * Math.random()) / this.lifetime + 0.003f; // Random Fade Value
-					particles[loop].x = 0.0f; // Center On X Axis
-					particles[loop].y = 0.0f; // Center On Y Axis
-					particles[loop].z = 0.0f; // Center On Z Axis
-					particles[loop].xi = xspeed + (float) ((60 * Math.random()) - 32.0f); // X Axis Speed And Direction
-					particles[loop].yi = yspeed + (float) ((60 * Math.random()) - 30.0f); // Y Axis Speed And Direction
-					particles[loop].zi = (float) ((60 * Math.random()) - 30.0f); // Z Axis Speed And Direction
+					particles[loop].position.set(0, 0, 0);
+					particles[loop].direction.x = xspeed + (float) ((60 * Math.random()) - 32.0f); // X Axis Speed And Direction
+					particles[loop].direction.y = yspeed + (float) ((60 * Math.random()) - 30.0f); // Y Axis Speed And Direction
+					particles[loop].direction.z = (float) ((60 * Math.random()) - 30.0f); // Z Axis Speed And Direction
 					particles[loop].r = colors[col][0]; // Select Red From Color Table
 					particles[loop].g = colors[col][1]; // Select Green From Color Table
 					particles[loop].b = colors[col][2]; // Select Blue From Color Table
@@ -325,5 +319,17 @@ public class TF3D_Particles
 		{
 			cycleColor();
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AGFX.F3D.Entity.TF3D_Entity#Destroy()
+	 */
+	@Override
+	public void Destroy()
+	{
+		// TODO Auto-generated method stub
+
 	}
 }

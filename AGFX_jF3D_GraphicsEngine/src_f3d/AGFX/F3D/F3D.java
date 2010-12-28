@@ -55,6 +55,8 @@ public class F3D
 	public static final int                 CLASS_CAMERA            = 5;
 	public static final int                 CLASS_BODY              = 6;
 	public static final int                 CLASS_VEHICLE           = 7;
+	public static final int                 CLASS_PARTICLE_EMITTER  = 8;
+	public static final int                 CLASS_PARTICLE_SPRITE   = 9;
 
 	// '-----------------------------------------------------------------
 	// ' CAMERA: CONST
@@ -190,8 +192,7 @@ public class F3D
 	/** Fonts container */
 	public static TF3D_FontManager          Fonts;
 	/**
-	 * Preloading data events/textures/materials when is ptreloading enabled in
-	 * config
+	 * Preloading data events/textures/materials when is ptreloading enabled in config
 	 */
 	public static TF3D_Preloader            Preloader;
 	/** Billboard and sprites container */
