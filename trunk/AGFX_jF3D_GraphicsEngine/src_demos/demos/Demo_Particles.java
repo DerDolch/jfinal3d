@@ -3,6 +3,9 @@
  */
 package demos;
 
+import javax.vecmath.Vector3f;
+import javax.vecmath.Vector4f;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -94,15 +97,19 @@ public class Demo_Particles extends TF3D_AppWrapper
 		sprite1.bFadeAlpha = false;
 		sprite1.bDepthSort = true;
 		int material_id = F3D.Surfaces.FindByName("MAT_BEAM_3");
-		sprite1.material = F3D.Surfaces.materials.get(material_id).Clone();
-		sprite1.SetPosition(0, 0, 0);
+		sprite1.material = F3D.Surfaces.materials.get(material_id).Clone();		
 		sprite1.SetScale(0.5f, 0.5f, 0.5f);
 		sprite1.Dir.set(0, 0, 0);
 		
 		// create particle emitter
 		this.particles = new TF3D_Particles("PARTICLE_01",100,sprite1,200f);
 		this.particles.SetGravity(0, 0.2f, 0);
-		this.particles.SetDirection(1, 0, 0);
+		this.particles.SetDirection(10.1f, 0, 0);
+		this.particles.SetPosition(3,0,0);
+		this.particles.setColorStart(new Vector4f(1,1,1,1));
+		this.particles.setColorEnd(new Vector4f(1,1,1,0));
+		this.particles.setScaleStart(new Vector3f(1,1,1));
+		this.particles.setScaleEnd(new Vector3f(1,1,1));
 		this.particles.Init();
 		
 		

@@ -22,6 +22,7 @@ public class TF3D_Particle_item
 	float					r;								// Red Value
 	float					g;								// Green Value
 	float					b;								// Blue Value
+	float					a;								// Blue Value
 	Vector3f				position	= new Vector3f();
 	Vector3f				direction	= new Vector3f();
 	Vector3f				gravity		= new Vector3f();
