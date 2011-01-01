@@ -12,6 +12,7 @@ import AGFX.F3D.Billboard.TF3D_Billboard;
 import AGFX.F3D.Camera.TF3D_Camera;
 import AGFX.F3D.Config.TF3D_Config;
 import AGFX.F3D.Light.TF3D_Light;
+import AGFX.F3D.Material.TF3D_Material;
 
 import AGFX.F3D.Particles.TF3D_Particle_Sprite;
 import AGFX.F3D.Particles.TF3D_Particles;
@@ -26,7 +27,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 
 	public TF3D_Camera Camera;
 	public TF3D_Particles particles;
-
+	public TF3D_Material mat;
 
 	int odx = 0;
 	int ody = 0;
@@ -78,6 +79,10 @@ public class Demo_Particles extends TF3D_AppWrapper
 		TF3D_Light light = new TF3D_Light("light_0", 0);
 		light.SetPosition(3, 3, 3);
 		light.Enable();
+	
+		int mid=F3D.Surfaces.FindByName("MAT_BEAM_3");
+		
+		this.mat=F3D.Surfaces.materials.get(mid).Copy();
 		
 		TF3D_Particle_Sprite sprite1 = new TF3D_Particle_Sprite();
 
@@ -87,12 +92,15 @@ public class Demo_Particles extends TF3D_AppWrapper
 		sprite1.SetScale(1.0f, 1.0f, 0.0f);
 		sprite1.bFadeAlpha = false;
 		sprite1.bDepthSort = true;
-		sprite1.material_id = F3D.Surfaces.FindByName("MAT_BEAM_3");
+		int material_id = F3D.Surfaces.FindByName("MAT_BEAM_3");
+		sprite1.material = F3D.Surfaces.materials.get(material_id).Clone();
 		sprite1.SetPosition(0, 0, 0);
 		sprite1.SetScale(0.5f, 0.5f, 0.5f);
 		sprite1.Dir.set(0, 0, 0);
 		
-		this.particles = new TF3D_Particles("PARTICLE_01",50,sprite1,100f);
+		this.particles = new TF3D_Particles("PARTICLE_01",500,sprite1,1000f);
+		this.particles.SetGravity(0, 1, 0);
+		this.particles.SetDirection(1, 0, 0);
 		this.particles.Init();
 		
 	}
@@ -149,14 +157,7 @@ public class Demo_Particles extends TF3D_AppWrapper
 	
 		F3D.Textures.ActivateLayer(0);
 		
-		
-		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_TAB)) this.particles.createBurst();
-		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_1)) this.particles.slowDown(true);
-		if (F3D.Input.Key.IsKeyUp(Keyboard.KEY_2)) this.particles.slowDown(false);
-		
-		
-		
-		
+		if(F3D.Input.Key.IsKeyUp(Keyboard.KEY_TAB)) this.particles.createBurst();
 	}
 	
 	
