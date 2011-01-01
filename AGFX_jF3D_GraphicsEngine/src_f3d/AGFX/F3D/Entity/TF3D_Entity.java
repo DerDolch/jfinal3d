@@ -474,6 +474,7 @@ public abstract class TF3D_Entity
 	 * -------------------------------------------------------------------<BR>
 	 * Check if Entity is visible in Frustum <BR>
 	 * -------------------------------------------------------------------<BR>
+	 * 
 	 * @return
 	 */
 	// -----------------------------------------------------------------------
@@ -638,8 +639,7 @@ public abstract class TF3D_Entity
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Abstract method for rendering entity, you need define this method in your
-	 * extends<BR>
+	 * Abstract method for rendering entity, you need define this method in your extends<BR>
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
 	 */
@@ -652,8 +652,7 @@ public abstract class TF3D_Entity
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Abstract method for update entity, you need define this method in your
-	 * extends<BR>
+	 * Abstract method for update entity, you need define this method in your extends<BR>
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
 	 */

@@ -34,24 +34,23 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 {
 
 	/**
-	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D
-	 * as const
+	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D as const
 	 */
-	public int				mode;
+	public int           mode;
 
 	/** Target point for Directional billboard type */
-	public Vector3f			Dir;
+	public Vector3f      Dir;
 	/** material assigned to surface */
-	public TF3D_Material	material;
+	public TF3D_Material material;
 	// ** help var for alpha fading */
-	public float			Alpha	= 1f;
+	public float         Alpha = 1f;
 	/** depth sort true/false */
-	public boolean			bDepthSort;
+	public boolean       bDepthSort;
 	/** alpha fade true/false */
-	public boolean			bFadeAlpha;
-	public float			alpha_fade_speed;
+	public boolean       bFadeAlpha;
+	public float         alpha_fade_speed;
 	/** enable rendering true/false */
-	public boolean			enable;
+	public boolean       enable;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Billboard:
@@ -442,6 +441,7 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 	@Override
 	public void Destroy()
 	{
+		this.material = null;
 	}
 
 	// -----------------------------------------------------------------------
@@ -469,6 +469,32 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Particle_Sprite:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Create particle SPRITE [graphics] element <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @param _name
+	 *            - name
+	 * @param pos
+	 *            - position
+	 * @param dir
+	 *            - direction
+	 * @param sx
+	 *            - width
+	 * @param sy
+	 *            - height
+	 * @param mat
+	 *            - material name
+	 * @param type
+	 *            - type
+	 * @return - TF3D_Particle_Sprite instance
+	 */
+	// -----------------------------------------------------------------------
 	public static TF3D_Particle_Sprite CreateSprite(String _name, Vector3f pos, Vector3f dir, float sx, float sy, String mat, int type)
 	{
 		TF3D_Particle_Sprite sprite = new TF3D_Particle_Sprite();
@@ -482,12 +508,22 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 		sprite.SetPosition(pos);
 		sprite.Dir.set(dir);
 
-		F3D.Log.info("TF3D_World", "Create Sprite: '" + sprite.name + "'");
-
 		return sprite;
 
 	}
 
+	// -----------------------------------------------------------------------
+	// TF3D_Particle_Sprite:
+	// -----------------------------------------------------------------------
+	/**
+	 * <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * Clone particle SPRITE [graphics] element <BR>
+	 * -------------------------------------------------------------------<BR>
+	 * 
+	 * @return
+	 */
+	// -----------------------------------------------------------------------
 	public TF3D_Particle_Sprite Clone()
 	{
 		TF3D_Particle_Sprite res = new TF3D_Particle_Sprite();
