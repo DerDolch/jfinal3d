@@ -23,33 +23,35 @@ import javax.vecmath.Vector3f;
 
 import AGFX.F3D.F3D;
 import AGFX.F3D.Entity.TF3D_Entity;
+import AGFX.F3D.Material.TF3D_Material;
 import AGFX.F3D.Math.TF3D_Axis3f;
 
 /**
  * @author AndyGFX
- *
+ * 
  */
 public class TF3D_Particle_Sprite extends TF3D_Entity
 {
 
 	/**
-	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D as const
+	 * Billboard rendering mode (set one from BILLBOARD: CONST included in A3D
+	 * as const
 	 */
-	public int      mode;
+	public int				mode;
 
 	/** Target point for Directional billboard type */
-	public Vector3f Dir;
-	/** material ID assigned to surface */
-	public int      material_id;
+	public Vector3f			Dir;
+	/** material assigned to surface */
+	public TF3D_Material	material;
 	// ** help var for alpha fading */
-	public float    Alpha = 1f;
+	public float			Alpha	= 1f;
 	/** depth sort true/false */
-	public boolean  bDepthSort;
+	public boolean			bDepthSort;
 	/** alpha fade true/false */
-	public boolean  bFadeAlpha;
-	public float    alpha_fade_speed;
+	public boolean			bFadeAlpha;
+	public float			alpha_fade_speed;
 	/** enable rendering true/false */
-	public boolean  enable;
+	public boolean			enable;
 
 	// -----------------------------------------------------------------------
 	// TA3D_Billboard:
@@ -71,7 +73,7 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 		this.alpha_fade_speed = 1f;
 		this.bDepthSort = true;
 		this.bFadeAlpha = false;
-		this.material_id = -1;
+		this.material = null;
 		this.name = "none";
 	}
 
@@ -385,8 +387,11 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 					this.Alpha = 1f;
 				}
 
-				F3D.Surfaces.materials.get(this.material_id).colors.diffuse[3] = this.Alpha;
-				F3D.Surfaces.ApplyMaterial(this.material_id);
+				if (this.material != null)
+				{
+					this.material.colors.diffuse[3] = this.Alpha;
+					F3D.Surfaces.ApplyMaterial(this.material);
+				}
 
 				glPushMatrix();
 
@@ -472,7 +477,8 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 		sprite.name = _name;
 		sprite.enable = true;
 		sprite.SetScale(sx, sy, 0.0f);
-		sprite.material_id = F3D.Surfaces.FindByName(mat);
+		int material_id = F3D.Surfaces.FindByName(mat);
+		sprite.material = F3D.Surfaces.materials.get(material_id).Clone();
 		sprite.SetPosition(pos);
 		sprite.Dir.set(dir);
 
@@ -486,14 +492,13 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 	{
 		TF3D_Particle_Sprite res = new TF3D_Particle_Sprite();
 
-		
 		res.mode = this.mode;
 		res.name = this.name;
 		res.enable = this.enable;
 		res.SetScale(this.GetScale());
 		res.bFadeAlpha = this.bFadeAlpha;
 		res.bDepthSort = this.bDepthSort;
-		res.material_id = this.material_id;
+		res.material = this.material.Clone();
 		res.SetScale(this.GetScale());
 		res.Dir.set(this.Dir);
 		res.classname = this.classname;
@@ -503,4 +508,3 @@ public class TF3D_Particle_Sprite extends TF3D_Entity
 		return res;
 	}
 }
-
