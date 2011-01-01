@@ -111,13 +111,21 @@ public class TF3D_SurfaceManager
 	// -----------------------------------------------------------------------
 	public void ApplyMaterial(int id)
 	{
+		TF3D_Material mat = this.materials.get(id);
+		this.ApplyMaterial(mat);		
+	}
+
+	
+	public void ApplyMaterial(TF3D_Material mat)
+	{
+		
 		// is material type=0 (MAT_TEXTURE)
-		if (this.materials.get(id).typ == F3D.MAT_TYPE_TEXTURE)
+		if (mat.typ == F3D.MAT_TYPE_TEXTURE)
 		{
 
 			this.ResetMaterial();
 			
-			if (this.materials.get(id).bAlphaTest)
+			if (mat.bAlphaTest)
 			{
 				glEnable(GL_ALPHA_TEST);
 			} else
@@ -125,7 +133,7 @@ public class TF3D_SurfaceManager
 				glDisable(GL_ALPHA_TEST);
 			}
 
-			if (this.materials.get(id).bDepthTest)
+			if (mat.bDepthTest)
 			{
 				glEnable(GL_DEPTH_TEST);
 			} else
@@ -133,7 +141,7 @@ public class TF3D_SurfaceManager
 				glDisable(GL_DEPTH_TEST);
 			}
 
-			if (this.materials.get(id).bFaceCulling)
+			if (mat.bFaceCulling)
 			{
 				glEnable(GL_CULL_FACE);
 			} else
@@ -143,31 +151,31 @@ public class TF3D_SurfaceManager
 
 			if (F3D.Config.use_gl_light)
 			{
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.materials.get(id).colors.ambient));
-				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
-				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
-				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
-				glMaterialf(GL_FRONT, GL_SHININESS, this.materials.get(id).colors.shinisess);
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(mat.colors.ambient));
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(mat.colors.diffuse));
+				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(mat.colors.specular));
+				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(mat.colors.emissive));
+				glMaterialf(GL_FRONT, GL_SHININESS, mat.colors.shinisess);
 
 			} else
 			{
-				glColor4f(this.materials.get(id).colors.diffuse[0], this.materials.get(id).colors.diffuse[1], this.materials.get(id).colors.diffuse[2], this.materials.get(id).colors.diffuse[3]);
+				glColor4f(mat.colors.diffuse[0], mat.colors.diffuse[1], mat.colors.diffuse[2], mat.colors.diffuse[3]);
 			}
 
 			for (int u = 0; u < F3D.MAX_TMU; u++)
 			{
-				if (this.materials.get(id).texture_unit[u].bEvent)
+				if (mat.texture_unit[u].bEvent)
 				{
-					F3D.MaterialEvents.Apply(u, this.materials.get(id).texture_unit[u].event_id);
+					F3D.MaterialEvents.Apply(u, mat.texture_unit[u].event_id);
 				} else
 				{
 					F3D.MaterialEvents.ResetEvent(u);
 				}
 
-				if (this.materials.get(id).texture_unit[u].bTexture)
+				if (mat.texture_unit[u].bTexture)
 				{
 					F3D.Textures.ActivateLayer(u);
-					F3D.Textures.Bind(this.materials.get(id).texture_unit[u].texture_id);
+					F3D.Textures.Bind(mat.texture_unit[u].texture_id);
 
 				} else
 				{
@@ -179,10 +187,10 @@ public class TF3D_SurfaceManager
 		}
 
 		// SHADER
-		if (this.materials.get(id).typ == F3D.MAT_TYPE_SHADER)
+		if (mat.typ == F3D.MAT_TYPE_SHADER)
 		{
 
-			if (this.materials.get(id).bAlphaTest)
+			if (mat.bAlphaTest)
 			{
 				glEnable(GL_ALPHA_TEST);
 			} else
@@ -190,7 +198,7 @@ public class TF3D_SurfaceManager
 				glDisable(GL_ALPHA_TEST);
 			}
 
-			if (this.materials.get(id).bDepthTest)
+			if (mat.bDepthTest)
 			{
 				glEnable(GL_DEPTH_TEST);
 			} else
@@ -198,7 +206,7 @@ public class TF3D_SurfaceManager
 				glDisable(GL_DEPTH_TEST);
 			}
 
-			if (this.materials.get(id).bFaceCulling)
+			if (mat.bFaceCulling)
 			{
 				glEnable(GL_CULL_FACE);
 			} else
@@ -207,33 +215,33 @@ public class TF3D_SurfaceManager
 			}
 
 			
-				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(this.materials.get(id).colors.ambient));
-				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(this.materials.get(id).colors.diffuse));
-				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(this.materials.get(id).colors.specular));
-				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(this.materials.get(id).colors.emissive));
-				glMaterialf(GL_FRONT, GL_SHININESS, this.materials.get(id).colors.shinisess);
+				glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT, F3D.GetBuffer.Float(mat.colors.ambient));
+				glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, F3D.GetBuffer.Float(mat.colors.diffuse));
+				glMaterial(GL_FRONT_AND_BACK, GL_SPECULAR, F3D.GetBuffer.Float(mat.colors.specular));
+				glMaterial(GL_FRONT_AND_BACK, GL_EMISSION, F3D.GetBuffer.Float(mat.colors.emissive));
+				glMaterialf(GL_FRONT, GL_SHININESS, mat.colors.shinisess);
 
 			
 
-			if (this.materials.get(id).use_shader)
+			if (mat.use_shader)
 			{
-				F3D.Shaders.UseProgram(F3D.Surfaces.materials.get(id).shader_id);
+				F3D.Shaders.UseProgram(mat.shader_id);
 			}
 			
 			for (int u = 0; u < F3D.MAX_TMU; u++)
 			{
-				if (this.materials.get(id).texture_unit[u].bEvent)
+				if (mat.texture_unit[u].bEvent)
 				{
-					F3D.MaterialEvents.Apply(u, this.materials.get(id).texture_unit[u].event_id);
+					F3D.MaterialEvents.Apply(u, mat.texture_unit[u].event_id);
 				} else
 				{
 					F3D.MaterialEvents.ResetEvent(u);
 				}
 
-				if (this.materials.get(id).texture_unit[u].bTexture)
+				if (mat.texture_unit[u].bTexture)
 				{
 					F3D.Textures.ActivateLayer(u);
-					F3D.Textures.Bind(this.materials.get(id).texture_unit[u].texture_id);
+					F3D.Textures.Bind(mat.texture_unit[u].texture_id);
 
 				} else
 				{
@@ -245,7 +253,6 @@ public class TF3D_SurfaceManager
 		}
 		
 	}
-
 	public void ResetMaterial()
 	{
 		F3D.Textures.DeactivateLayers();
