@@ -17,22 +17,35 @@ import AGFX.F3D.Entity.TF3D_Entity;
 public class TF3D_Particles extends TF3D_Entity
 {
 
-	private int						PARTICLES_COUNT	= 500;
-	private TF3D_Particle_item[]	particles;
-	private TF3D_Particle_Sprite	sprite;
+	private int                  PARTICLES_COUNT = 500;
+	private TF3D_Particle_item[] particles;
+	private TF3D_Particle_Sprite sprite;
 
-	private float					lifetime		= 1000f;
-	private Vector3f				gravity;
-	private Vector3f				direction;
+	private float                lifetime        = 1000f;
+	private Vector3f             gravity;
+	private Vector3f             direction;
 
 	// -------------------------------------------------------
 
-	private boolean					doBurst;
-	private float					slowdown;
-	private float					xspeed;
-	private float					yspeed;
+	private boolean              doBurst;
+	private float                slowdown;
+	private float                xspeed;
+	private float                yspeed;
 
-	private float					colors[][]		= { { 1.0f, 0.5f, 0.5f }, { 1.0f, 0.75f, 0.5f }, { 1.0f, 1.0f, 0.5f }, { 0.75f, 1.0f, 0.5f }, { 0.5f, 1.0f, 0.5f }, { 0.5f, 1.0f, 0.75f }, { 0.5f, 1.0f, 1.0f }, { 0.5f, 0.75f, 1.0f }, { 0.5f, 0.5f, 1.0f }, { 0.75f, 0.5f, 1.0f }, { 1.0f, 0.5f, 1.0f }, { 1.0f, 0.5f, 0.75f } };
+	private float                colors[][]      =
+	                                             {
+	                                             { 1.0f, 0.5f, 0.5f },
+	                                             { 1.0f, 0.75f, 0.5f },
+	                                             { 1.0f, 1.0f, 0.5f },
+	                                             { 0.75f, 1.0f, 0.5f },
+	                                             { 0.5f, 1.0f, 0.5f },
+	                                             { 0.5f, 1.0f, 0.75f },
+	                                             { 0.5f, 1.0f, 1.0f },
+	                                             { 0.5f, 0.75f, 1.0f },
+	                                             { 0.5f, 0.5f, 1.0f },
+	                                             { 0.75f, 0.5f, 1.0f },
+	                                             { 1.0f, 0.5f, 1.0f },
+	                                             { 1.0f, 0.5f, 0.75f } };
 
 	public TF3D_Particles(String name, int count, TF3D_Particle_Sprite sprite, float life)
 	{
@@ -51,9 +64,12 @@ public class TF3D_Particles extends TF3D_Entity
 		this.gravity = new Vector3f(0, 0, 0);
 		this.direction = new Vector3f(0, 0, 0);
 
-		this.slowdown = 1.0f;
+		this.slowdown = 2.0f;
 		this.xspeed = Math.min(200, this.xspeed + 1);
 		this.yspeed = Math.min(200, this.yspeed + 1);
+		
+		
+		F3D.Worlds.RemoveEntity(F3D.Worlds.GetCurrentName(), sprite.name);
 	}
 
 	public void Init()
@@ -72,12 +88,12 @@ public class TF3D_Particles extends TF3D_Entity
 			particles[loop].active = true;
 
 			// Give All The Particles Full Life
-			particles[loop].life = this.lifetime;
-
-			particles[loop].delta_life = 1f / this.lifetime;
+			particles[loop].life = 0f;// this.lifetime;
 
 			// Random Fade Speed
-			particles[loop].fade = (float) (100 * Math.random()) / this.lifetime + 0.003f;
+			particles[loop].inc_life = this.GetLifeIncrement();
+
+			F3D.Log.info("fade", String.valueOf(particles[loop].inc_life));
 
 			// Select Rainbow Color
 			particles[loop].r = colors[loop * (12 / this.PARTICLES_COUNT)][0];
@@ -100,7 +116,7 @@ public class TF3D_Particles extends TF3D_Entity
 	public void Update()
 	{
 
-		for (int loop = 0; loop < this.PARTICLES_COUNT; loop++) 
+		for (int loop = 0; loop < this.PARTICLES_COUNT; loop++)
 		{
 			if (particles[loop].active) // If The Particle Is Active
 			{
@@ -110,9 +126,12 @@ public class TF3D_Particles extends TF3D_Entity
 					particles[loop].position.set(0, 0, 0);
 
 					particles[loop].direction.x = (float) ((50 * Math.random()) - 26.0f) * 10.0f;
-					particles[loop].direction.y = (float) ((50 * Math.random()) - 25.0f) * 10.0f; 
+					particles[loop].direction.y = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
 					particles[loop].direction.z = (float) ((50 * Math.random()) - 25.0f) * 10.0f;
 				}
+			} else
+			{
+				this.ResetParticleItem(loop);
 			}
 		}
 
@@ -121,7 +140,7 @@ public class TF3D_Particles extends TF3D_Entity
 
 	public void Render()
 	{
-		for (int loop = 0; loop < this.PARTICLES_COUNT; loop++) 
+		for (int loop = 0; loop < this.PARTICLES_COUNT; loop++)
 		{
 			if (particles[loop].active) // If The Particle Is Active
 			{
@@ -154,40 +173,31 @@ public class TF3D_Particles extends TF3D_Entity
 				// ADD GRAVITY
 				particles[loop].direction.add(particles[loop].gravity);
 
-				particles[loop].life -= particles[loop].fade; // Reduce
-																// Particles
-																// Life By
-																// 'Fade'
+				particles[loop].life += particles[loop].inc_life;
 
-				if (particles[loop].life < 0.0f) // If Particle Is Burned Out
+				if (particles[loop].life > this.lifetime)
 				{
-					particles[loop].life = this.lifetime; // Give It New Life
-					particles[loop].fade = (float) (100 * Math.random()) / this.lifetime + 0.003f; // Random
-																									// Fade
-																									// Value
-					particles[loop].position.set(0, 0, 0);
-					particles[loop].direction.x = xspeed + (float) ((60 * Math.random()) - 32.0f); // X
-																									// Axis
-																									// Speed
-																									// And
-																									// Direction
-					particles[loop].direction.y = yspeed + (float) ((60 * Math.random()) - 30.0f); // Y
-																									// Axis
-																									// Speed
-																									// And
-																									// Direction
-					particles[loop].direction.z = (float) ((60 * Math.random()) - 30.0f); // Z
-																							// Axis
-																							// Speed
-																							// And
-																							// Direction
-					// Reset color
-					// TODO color reset
+					particles[loop].active = false;
 				}
 			}
 
 		}
 
+	}
+
+	public void ResetParticleItem(int ID)
+	{
+		particles[ID].active = true;
+		particles[ID].life = 0f;// this.lifetime; // Give It New Life
+
+		particles[ID].inc_life = this.GetLifeIncrement();
+
+		particles[ID].position.set(0, 0, 0);
+		particles[ID].direction.x = xspeed + (float) ((60 * Math.random()) - 32.0f);
+		particles[ID].direction.y = yspeed + (float) ((60 * Math.random()) - 30.0f);
+		particles[ID].direction.z = (float) ((60 * Math.random()) - 30.0f);
+		// Reset color
+		// TODO color reset
 	}
 
 	public void SetGravity(float gx, float gy, float gz)
@@ -220,6 +230,11 @@ public class TF3D_Particles extends TF3D_Entity
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	public float GetLifeIncrement()
+	{
+		return (float) (100 * Math.random()) / this.lifetime + 0.003f;
 	}
 
 	public void createBurst()

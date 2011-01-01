@@ -18,8 +18,7 @@ public class TF3D_Particle_item
 
 	boolean					active;						// Active (Yes/No)
 	float					life;							// Particle Life
-	float					fade;							// Fade Speed
-	float					delta_life;
+	float					inc_life;
 	float					r;								// Red Value
 	float					g;								// Green Value
 	float					b;								// Blue Value

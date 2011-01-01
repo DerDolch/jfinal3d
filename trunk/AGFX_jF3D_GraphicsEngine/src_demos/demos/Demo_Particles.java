@@ -80,14 +80,15 @@ public class Demo_Particles extends TF3D_AppWrapper
 		light.SetPosition(3, 3, 3);
 		light.Enable();
 	
+		// get MATERIAL ID
 		int mid=F3D.Surfaces.FindByName("MAT_BEAM_3");
 		
-		this.mat=F3D.Surfaces.materials.get(mid).Copy();
-		
+		// create sprite for clone particle elements
 		TF3D_Particle_Sprite sprite1 = new TF3D_Particle_Sprite();
 
+		// define sprite properties
 		sprite1.mode = F3D.BM_SPRITE;
-		sprite1.name = "BM_sprite";
+		sprite1.name = "TMP_Particle_sprite";
 		sprite1.enable = true;
 		sprite1.SetScale(1.0f, 1.0f, 0.0f);
 		sprite1.bFadeAlpha = false;
@@ -98,10 +99,12 @@ public class Demo_Particles extends TF3D_AppWrapper
 		sprite1.SetScale(0.5f, 0.5f, 0.5f);
 		sprite1.Dir.set(0, 0, 0);
 		
-		this.particles = new TF3D_Particles("PARTICLE_01",500,sprite1,1000f);
-		this.particles.SetGravity(0, 1, 0);
+		// create particle emitter
+		this.particles = new TF3D_Particles("PARTICLE_01",100,sprite1,200f);
+		this.particles.SetGravity(0, 0.2f, 0);
 		this.particles.SetDirection(1, 0, 0);
 		this.particles.Init();
+		
 		
 	}
 	

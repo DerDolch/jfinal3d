@@ -57,27 +57,12 @@ public class TF3D_Material
 	/**
 	 * <BR>
 	 * -------------------------------------------------------------------<BR>
-	 * Create copy of material <BR>
+	 * Create clone of material <BR>
 	 * -------------------------------------------------------------------<BR>
 	 * 
 	 * @return material
 	 */
 	// -----------------------------------------------------------------------
-	public TF3D_Material Copy()
-	{
-		TF3D_Material m = new TF3D_Material();
-
-		try
-		{
-			m = (TF3D_Material) this.clone();
-		} catch (CloneNotSupportedException e)
-		{
-			e.printStackTrace();
-		}
-
-		return m;
-	}
-
 	public TF3D_Material Clone()
 	{
 		TF3D_Material mat = new TF3D_Material();
