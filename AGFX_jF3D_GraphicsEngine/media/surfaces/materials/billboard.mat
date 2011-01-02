@@ -50,7 +50,7 @@
      specular = 0,0,0,1
     shinisess = 0
  vertex_color = false
-    texture_0 = plasmalight
+    texture_0 = spark_white
     texture_1 = none
     texture_2 = none
     texture_3 = none
