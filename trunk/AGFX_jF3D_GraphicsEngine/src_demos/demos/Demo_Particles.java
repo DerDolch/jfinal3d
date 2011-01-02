@@ -102,11 +102,11 @@ public class Demo_Particles extends TF3D_AppWrapper
 		sprite1.Dir.set(0, 0, 0);
 		
 		// create particle emitter
-		this.particles = new TF3D_Particles("PARTICLE_01",100,sprite1,200f);
-		this.particles.SetGravity(0, 0.2f, 0);
-		this.particles.SetDirection(10.1f, 0, 0);
+		this.particles = new TF3D_Particles("PARTICLE_01",10,sprite1,100f);
+		this.particles.SetGravity(0, 0.1f, 0);
+		this.particles.SetDirection(0f, 0, 0);
 		this.particles.SetPosition(3,0,0);
-		this.particles.setColorStart(new Vector4f(1,1,1,1));
+		this.particles.setColorStart(new Vector4f(0,0,0,1));
 		this.particles.setColorEnd(new Vector4f(1,1,1,0));
 		this.particles.setScaleStart(new Vector3f(1,1,1));
 		this.particles.setScaleEnd(new Vector3f(1,1,1));

@@ -141,18 +141,10 @@ public class TF3D_Particles extends TF3D_Entity
 				// Draw The Particle Using Our RGB Values, Fade The Particle
 				// Based On It's Life
 
-				// SET COLOR !!!!
-				// TODO rewrite TF3D_Billboard to special version for particle
-				// with separated material per particle item
-
-				particles[loop].sprite.material.colors.diffuse[0] = particles[loop].r;
-				particles[loop].sprite.material.colors.diffuse[1] = particles[loop].g;
-				particles[loop].sprite.material.colors.diffuse[2] = particles[loop].b;
-				particles[loop].sprite.material.colors.diffuse[3] = particles[loop].a;
-
 				// POS = POS + ((appApeed)*(DIR/(2 * this.lifetime)
 
 				Vector3f delta_dir = new Vector3f(particles[loop].direction);
+
 				delta_dir.scale(F3D.Timer.AppSpeed() * (1f / (2.0f * this.lifetime)));
 				particles[loop].position.add(delta_dir);
 
@@ -160,6 +152,14 @@ public class TF3D_Particles extends TF3D_Entity
 				particles[loop].direction.add(particles[loop].gravity);
 
 				particles[loop].life += particles[loop].inc_life;
+
+				// SET COLOR
+
+				this.SetActualColor(loop);
+				particles[loop].sprite.material.colors.diffuse[0] = particles[loop].r;
+				particles[loop].sprite.material.colors.diffuse[1] = particles[loop].g;
+				particles[loop].sprite.material.colors.diffuse[2] = particles[loop].b;
+				particles[loop].sprite.material.colors.diffuse[3] = particles[loop].a;
 
 				if (particles[loop].life > this.lifetime)
 				{
@@ -215,10 +215,10 @@ public class TF3D_Particles extends TF3D_Entity
 
 		// Reset color
 		// TODO color modification
-		particles[ID].r = 1.0f;
-		particles[ID].g = 1.0f;
-		particles[ID].b = 1.0f;
-		particles[ID].a = 1.0f;
+		particles[ID].r = this.ColorStart.x;
+		particles[ID].g = this.ColorStart.y;
+		particles[ID].b = this.ColorStart.z;
+		particles[ID].a = this.ColorStart.w;
 
 		// Random life increment
 		particles[ID].inc_life = this.GetLifeIncrement();
@@ -262,57 +262,70 @@ public class TF3D_Particles extends TF3D_Entity
 		this.direction = new Vector3f(g);
 	}
 
-	
-    public Vector4f getColorStart()
-    {
-    	return ColorStart;
-    }
+	public Vector4f getColorStart()
+	{
+		return ColorStart;
+	}
 
-	
-    public void setColorStart(Vector4f colorStart)
-    {
-    	ColorStart = colorStart;
-    }
+	public void setColorStart(Vector4f colorStart)
+	{
+		ColorStart = colorStart;
+	}
 
-	
-    public Vector4f getColorEnd()
-    {
-    	return ColorEnd;
-    }
+	public Vector4f getColorEnd()
+	{
+		return ColorEnd;
+	}
 
-	
-    public void setColorEnd(Vector4f colorEnd)
-    {
-    	ColorEnd = colorEnd;
-    }
+	public void setColorEnd(Vector4f colorEnd)
+	{
+		ColorEnd = colorEnd;
+	}
 
-    
-    public Vector3f getScaleStart()
-    {
-    	return ScaleStart;
-    }
+	public Vector3f getScaleStart()
+	{
+		return ScaleStart;
+	}
 
-	
-    public void setScaleStart(Vector3f scaleStart)
-    {
-    	ScaleStart = scaleStart;
-    }
+	public void setScaleStart(Vector3f scaleStart)
+	{
+		ScaleStart = scaleStart;
+	}
 
-	
-    public Vector3f getScaleEnd()
-    {
-    	return ScaleEnd;
-    }
+	public Vector3f getScaleEnd()
+	{
+		return ScaleEnd;
+	}
 
-	
-    public void setScaleEnd(Vector3f scaleEnd)
-    {
-    	ScaleEnd = scaleEnd;
-    }
-	
+	public void setScaleEnd(Vector3f scaleEnd)
+	{
+		ScaleEnd = scaleEnd;
+	}
+
 	public float GetLifeIncrement()
 	{
-		return (float) (100 * Math.random()) / this.lifetime + 0.003f;
+		return (float) (100f * Math.random()) / this.lifetime + 0.003f;
+	}
+
+	private void SetActualColor(int ID)
+	{
+		Vector4f res = new Vector4f();
+
+		float perc = this.particles[ID].life * (1f / this.lifetime);
+
+		res.interpolate(this.ColorStart, this.ColorEnd, perc);
+		/*
+		 * this.particles[ID].r = F3D.MathUtils.Interpolate(this.ColorStart.x, this.ColorEnd.x, perc, 1f / this.lifetime); this.particles[ID].g = F3D.MathUtils.Interpolate(this.ColorStart.y,
+		 * this.ColorEnd.y, perc, 1f / this.lifetime); this.particles[ID].b = F3D.MathUtils.Interpolate(this.ColorStart.z, this.ColorEnd.z, perc, 1f / this.lifetime); this.particles[ID].a =
+		 * F3D.MathUtils.Interpolate(this.ColorStart.w, this.ColorEnd.w, perc, 1f / this.lifetime);
+		 */
+
+		this.particles[ID].r = res.x;
+		this.particles[ID].g = res.y;
+		this.particles[ID].b = res.z;
+		this.particles[ID].a = res.w;
+
+		// if (ID==0) F3D.Log.info("R", String.valueOf(perc));
 	}
 
 	public void createBurst()
@@ -320,10 +333,10 @@ public class TF3D_Particles extends TF3D_Entity
 		this.doBurst = true;
 	}
 
-	
-    @Override
-    public void Destroy()
-    {
-	  
-    }
+	@Override
+	public void Destroy()
+	{
+
+	}
+
 }
