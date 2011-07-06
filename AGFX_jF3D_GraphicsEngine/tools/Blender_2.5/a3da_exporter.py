@@ -73,8 +73,11 @@ def write_matfile(materialName,txt_col):
 {
          type = MAT_TEXTURE
          name = %(mat)s
-        color = 1,1,1,1
- vertex_color = %(vertexcolor)s
+      diffuse = 1,1,1,1
+      ambient = 0.1,0.1,0.1,1.0
+     emissive = 0,0,0,1
+     specular = 0,0,0,1
+    shinisess = 0
     texture_0 = %(tex)s
     texture_1 = none
     texture_2 = none
@@ -87,7 +90,7 @@ def write_matfile(materialName,txt_col):
     alphatest = false
   faceculling = true
 }
-    """%{"mat":materialName,"vertexcolor":txt_col,"tex":materialName})
+    """%{"mat":materialName,"tex":materialName})
     mat_file.close()
 
 ##########################
@@ -103,8 +106,7 @@ def write_texturfile(materialName,textureName):
     name= %(tex_name)s
     file= abstract::%(image_name)s
   mipmap= true
-}      
-    """%{"tex_name":materialName,"image_name":textureName})
+}"""%{"tex_name":materialName,"image_name":textureName})
     tex_file.close()
 
 
@@ -121,9 +123,7 @@ def main():
      
     #  preprocessing
     
-    bpy.ops.object.scale_apply()
-    bpy.ops.object.rotation_apply()
-    bpy.ops.object.location_apply()
+    bpy.ops.object.transform_apply()
     
     if os.name == "posix":
          file_path = str.split(bpy.data.filepath,"/") 
@@ -133,7 +133,10 @@ def main():
         path = '\\'.join(file_path[0:-1])+"\\"
     
     os.chdir(path)
-    os.mkdir(bpy.data.meshes[0].name)
+    try:
+        os.mkdir(bpy.data.meshes[0].name)
+    except:
+        print("Warning: Directory already exist.\n")
     os.chdir(path+bpy.data.meshes[0].name)
     
     # data maining
